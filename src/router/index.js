@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import AppView from '../App.vue'
+import AdminEditUsers from '../views/AdminEditUsers.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/AdminEditUsers',
+    name: 'AdminEditUsers',
+    component: AdminEditUsers
+  },
+  {
     path: '/',
-    name: 'AppView',
-    component: AppView
+    name: 'HOME',
+    component: () => import('../App.vue')
   },
 ]
 
