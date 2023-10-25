@@ -10,11 +10,6 @@ const routes = [
     name: 'AdminEditUsers',
     component: AdminEditUsers
   },
-  {
-    path: '/',
-    name: 'HOME',
-    component: () => import('../App.vue')
-  },
 ]
 
 const router = new VueRouter({

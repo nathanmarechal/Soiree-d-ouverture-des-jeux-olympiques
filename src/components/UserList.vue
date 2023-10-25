@@ -1,17 +1,103 @@
 <template>
-    <div>
-      <User v-for="user in users" :key="user.id" :user="user" />
+    <div class="user-list">
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Stand Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in filteredUsers" :key="index">
+            <td>{{ user.prenom }}</td>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.stand ? user.stand.nom_stand : '-' }}</td>
+            <td>
+              <button class="blue-button" @click="editUser(index)">Edit</button>
+              <button class="red-button" @click="deleteUser(index)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </template>
   
   <script>
-  import User from './UserItem.vue';
-  
   export default {
-    components: {
-      User,
+    props: {
+      users: {
+        type: Array,
+        required: true,
+      },
+      filteredUsers: {
+        type: Array,
+        required: true,
+      },
     },
-    props: ['users'],
+    methods: {
+      editUser(index) {
+        this.$emit('edit-user', index);
+      },
+      deleteUser(index) {
+        this.$emit('delete-user', index);
+      },
+    },
   };
   </script>
   
+  <style scoped>
+  .user-list {
+    margin-top: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .red-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .blue-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4d79ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .blue-button:hover {
+    background-color: #1a53ff;
+  }
+  
+  .red-button:hover {
+    background-color: #e60000;
+  }
+
+  </style>
