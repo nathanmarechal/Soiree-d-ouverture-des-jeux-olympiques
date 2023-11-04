@@ -18,15 +18,9 @@
           <label for="role">Role:</label>
           <select id="role" v-model="role" required>
             <option value="">Select a role</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-          </select>
-        </div>
-        <div>
-          <label for="stand">Stand Name:</label>
-          <select id="stand" v-model="stand" required>
-            <option value="">Select a stand</option>
-            <option v-for="(stand, index) in stands" :key="index" :value="stand">{{ stand.nom_stand }}</option>
+            <option value="Admin">Admin</option>
+            <option value="Vendeur">vendeur</option>
+            <option value="Client">client</option>
           </select>
         </div>
         <button class="blue-button" type="submit">Add User</button>
@@ -49,12 +43,6 @@
         lastName: '',
         email: '',
         role: '',
-        stand: '',
-        stands: [
-          { nom_stand: 'Stand 1' },
-          { nom_stand: 'Stand 2' },
-          { nom_stand: 'Stand 3' },
-        ],
       };
     },
     methods: {
@@ -64,14 +52,12 @@
           nom: this.lastName,
           email: this.email,
           role: this.role,
-          stand: this.stand,
         };
         this.$emit('add-user', newUser);
         this.firstName = '';
         this.lastName = '';
         this.email = '';
         this.role = '';
-        this.stand = '';
       },
     },
   };

@@ -1,6 +1,7 @@
 {
     "users": [
       {
+        "id_user": 0,
         "email": "admin@olympics.com",
         "prenom": "Jean",
         "nom": "Dufour",
@@ -11,6 +12,7 @@
         "stand": null
       },
       {
+        "id_user": 1,
         "email": "vendor1@olympics.com",
         "prenom": "Marie",
         "nom": "Dupont",
@@ -27,6 +29,7 @@
         }
       },
       {
+        "id_user": 2,
         "email": "vendor2@olympics.com",
         "prenom": "Paul",
         "nom": "Durand",
@@ -43,6 +46,7 @@
         }
       },
       {
+        "id_user": 3,
         "email": "client@olympics.com",
         "prenom": "Sophie",
         "nom": "Martin",

@@ -1,0 +1,117 @@
+<template>
+    <div class="edit-user-form">
+        <h2>Edit User</h2>
+        <form @submit.prevent="submitForm">
+            <div>
+                <input type="hidden" id="id" :value="localUser.id" @input="localUser.id = $event.target.value" required>
+            </div>
+            <div>
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" :value="localUser.prenom" @input="localUser.prenom = $event.target.value" required>
+            </div>
+            <div>
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" :value="localUser.nom" @input="localUser.nom = $event.target.value" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" :value="localUser.email" @input="localUser.email = $event.target.value" required>
+            </div>
+            <div>
+                <label for="role">Role:</label>
+                <select id="role" :value="localUser.role" @input="localUser.role = $event.target.value" required>
+                    <option value="">Select a role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Vendeur">Vendeur</option>
+                    <option value="Client">client</option>
+                </select>
+            </div>
+            <button class="blue-button" type="submit">Save Changes </button>
+            <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
+        </form>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            localUser: JSON.parse(JSON.stringify(this.user)), // Deep copy of user
+        };
+    },
+    methods: {
+        submitForm() {
+            this.$emit('update-user', this.localUser);
+        },
+    },
+};
+</script>
+
+<style scoped>
+.edit-user-form {
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+select {
+    width: 100%;
+}
+
+button[type='submit'] {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4d79ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button[type='submit']:hover {
+    background-color: #1a53ff;
+}
+
+.red-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.red-button:hover {
+    background-color: #e60000;
+}</style>
+
