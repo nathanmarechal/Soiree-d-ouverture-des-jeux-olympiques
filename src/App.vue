@@ -1,27 +1,51 @@
 <template>
-  <div>
-    <button @click="addUser">Add User</button>
-    <UserList :users="users" />
+  <div id="app">
+    <div class="nav">
+      <PageNavbar/>
+    </div>
+    <router-link to="/"></router-link>
+    <router-view></router-view>
+    <PageFooter />
   </div>
 </template>
 
+
 <script>
-import UserList from './components/UserList.vue';
-import dataTest from "./datasources/testUsers.json";
+
+import PageNavbar from './components/PageNavbar.vue'
+import PageFooter from './components/PageFooter.vue'
 export default {
   components: {
-    UserList,
-  },
-  data() {
-    console.log(dataTest.users);
-    return {
-      users: dataTest.users,
-    };
-  },
-  methods: {
-    addUser() {
-      console.log('add user');
-    },
-  },
-};
+    PageNavbar,
+    PageFooter
+  }
+}
 </script>
+
+<style scoped>
+#app {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.nav{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1050;
+}
+
+#app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url(~@/assets/logotest.png) repeat;
+  background-color: #FEFEE2 ;
+  opacity: 0.2;
+  z-index: -1;
+}
+</style>
