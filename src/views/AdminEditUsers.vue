@@ -1,7 +1,7 @@
 <template>
     <div class="container" style="margin-top: 70px;">
-        <h1 class="title">User List :</h1>
-        <button v-if="showAddButton" class="blue-button" @click="showAddForm">Add User</button> <br><br>
+        <h1 class="title">Liste d'utilisateurs :</h1>
+        <button v-if="showAddButton" class="blue-button" @click="showAddForm">Ajouter utilisateurs</button> <br><br>
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
         <add-user-form v-if="showAddUserForm" :users="users" @add-user="addUser" @close="closeAddForm"></add-user-form>
         <edit-user-form v-if="showEditUserForm" :user="selectedUser" @update-user="updateUser" @close="closeEditForm"></edit-user-form>

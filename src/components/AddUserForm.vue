@@ -1,13 +1,13 @@
 <template>
     <div class="add-user-form">
-      <h2>Add User</h2>
+      <h2>Ajouter un utilisateur</h2>
       <form @submit.prevent="submitForm">
         <div>
-          <label for="first-name">First Name:</label>
+          <label for="first-name">Prénom:</label>
           <input type="text" id="first-name" v-model="firstName" required>
         </div>
         <div>
-          <label for="last-name">Last Name:</label>
+          <label for="last-name">Nom:</label>
           <input type="text" id="last-name" v-model="lastName" required>
         </div>
         <div>
@@ -17,14 +17,14 @@
         <div>
           <label for="role">Role:</label>
           <select id="role" v-model="role" required>
-            <option value="">Select a role</option>
+            <option value="">Sélectionner un role</option>
             <option value="Admin">Admin</option>
             <option value="Vendeur">vendeur</option>
             <option value="Client">client</option>
           </select>
         </div>
-        <button class="blue-button" type="submit">Add User</button>
-        <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
+        <button class="blue-button" type="submit">Ajouter utilisateur</button>
+        <button class="red-button" type="button" @click="$emit('close')">Annuler</button>
       </form>
     </div>
   </template>

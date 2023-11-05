@@ -9,7 +9,8 @@
         "adresse": "123 Rue de Paris",
         "commune": "Paris",
         "role": "Admin",
-        "stand": null
+        "stand": null,
+        "password": "admin"
       },
       {
         "id_user": 1,
@@ -26,7 +27,8 @@
           "description_stand": "Spécialités françaises",
           "date_achat": "2023-07-01",
           "prix": 1000
-        }
+        },
+        "password": "vendor1"
       },
       {
         "id_user": 2,
@@ -43,7 +45,8 @@
           "description_stand": "Arts and traditions",
           "date_achat": "2023-07-02",
           "prix": 800
-        }
+        },
+        "password": "vendor2"
       },
       {
         "id_user": 3,
@@ -54,7 +57,8 @@
         "adresse": "126 Rue de Paris",
         "commune": "Paris",
         "role": "Client",
-        "stand": null
+        "stand": null,
+        "password": "client"
       }
     ]
   }

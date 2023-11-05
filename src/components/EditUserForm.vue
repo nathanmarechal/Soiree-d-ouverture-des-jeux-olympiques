@@ -1,16 +1,16 @@
 <template>
     <div class="edit-user-form">
-        <h2>Edit User</h2>
+        <h2>Modifier Utilisateur</h2>
         <form @submit.prevent="submitForm">
             <div>
                 <input type="hidden" id="id" :value="localUser.id" @input="localUser.id = $event.target.value" required>
             </div>
             <div>
-                <label for="first-name">First Name:</label>
+                <label for="first-name">Prénom:</label>
                 <input type="text" id="first-name" :value="localUser.prenom" @input="localUser.prenom = $event.target.value" required>
             </div>
             <div>
-                <label for="last-name">Last Name:</label>
+                <label for="last-name">Nom:</label>
                 <input type="text" id="last-name" :value="localUser.nom" @input="localUser.nom = $event.target.value" required>
             </div>
             <div>
@@ -20,14 +20,14 @@
             <div>
                 <label for="role">Role:</label>
                 <select id="role" :value="localUser.role" @input="localUser.role = $event.target.value" required>
-                    <option value="">Select a role</option>
+                    <option value="">Séléctionner un role</option>
                     <option value="Admin">Admin</option>
                     <option value="Vendeur">Vendeur</option>
                     <option value="Client">client</option>
                 </select>
             </div>
-            <button class="blue-button" type="submit">Save Changes </button>
-            <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
+            <button class="blue-button" type="submit">Sauvegarder</button>
+            <button class="red-button" type="button" @click="$emit('close')">Annuler</button>
         </form>
     </div>
 </template>

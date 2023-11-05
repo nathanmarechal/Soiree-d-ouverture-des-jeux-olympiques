@@ -3,11 +3,11 @@
       <table>
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Prénom</th>
+            <th>Nom</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Stand Name</th>
+            <th>Nom du stand</th>
           </tr>
         </thead>
         <tbody>
@@ -18,8 +18,8 @@
             <td>{{ user.role }}</td>
             <td>{{ user.stand ? user.stand.nom_stand : '-' }}</td>
             <td>
-              <button class="blue-button" @click="editUser(index)">Edit</button>
-              <button class="red-button" @click="deleteUser(index)">Delete</button>
+              <button class="blue-button" @click="editUser(index)">Modifier</button>
+              <button class="red-button" @click="deleteUser(index)">Supprimer</button>
             </td>
           </tr>
         </tbody>
