@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.title {
+    color: red;
+    text-align: center;
+}
+
+.slideshow {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.slideshow img {
+    width: 100%;
+    display: none;
+}
+
+.card-insertion {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    color: red;
+}
+
+.description {
+    color: blue;
+    text-align: center;
+}
+
+.footer {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

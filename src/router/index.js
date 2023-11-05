@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import Home from '../Views/HomePage.vue'
+import Information from '../Views/InformationPage.vue'
 import VueRouter from 'vue-router'
 import AdminEditUsers from '../views/AdminEditUsers.vue'
 
@@ -6,10 +8,20 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'homeView',
+    component: Home
+  },
+  {
+    path: '/information',
+    name: 'InformationView',
+    component: Information
+  },
+  {
     path: '/AdminEditUsers',
     name: 'AdminEditUsers',
     component: AdminEditUsers
-  },
+  }
 ]
 
 const router = new VueRouter({
