@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="margin-top: 70px;">
         <h1 class="title">User List :</h1>
         <button v-if="showAddButton" class="blue-button" @click="showAddForm">Add User</button> <br><br>
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
@@ -108,5 +108,5 @@ export default {
     
     .blue-button:hover {
         background-color: #1a53ff;
-    }    </style>
-
+    }    
+</style>

@@ -21,6 +21,9 @@
             <b-dropdown-item href="#" class = "dp">Découverte internationale</b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">RATP</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
+            <b-dropdown-item href="/AdminEditUsers" class = "dp">Comptes</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-brand href="#" @click="showLoginModal"> <img src="../assets/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
@@ -41,6 +44,9 @@
           <b-dropdown-item href="#">Activités</b-dropdown-item>
           <b-dropdown-item href="#">Découverte internationale</b-dropdown-item>
           <b-dropdown-item href="#">RATP</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Gestion" right>
+          <b-dropdown-item href="/AdminEditUsers">Comptes</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-nav>
     </b-sidebar>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import Home from '../Views/HomePage.vue'
-import Information from '../Views/InformationPage.vue'
+import Home from '../views/HomePage.vue'
+import Information from '../views/InformationPage.vue'
 import VueRouter from 'vue-router'
 import AdminEditUsers from '../views/AdminEditUsers.vue'
 
