@@ -23,7 +23,6 @@
                     <option value="">Séléctionner un role</option>
                     <option value="Admin">Admin</option>
                     <option value="Vendeur">Vendeur</option>
-                    <option value="Client">client</option>
                 </select>
             </div>
             <button class="blue-button" type="submit">Sauvegarder</button>

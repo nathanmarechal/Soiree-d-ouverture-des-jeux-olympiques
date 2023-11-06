@@ -1,7 +1,7 @@
 {
     "users": [
       {
-        "id_user": 0,
+        "id": 0,
         "email": "admin@olympics.com",
         "prenom": "Jean",
         "nom": "Dufour",
@@ -13,7 +13,7 @@
         "password": "admin"
       },
       {
-        "id_user": 1,
+        "id": 1,
         "email": "vendor1@olympics.com",
         "prenom": "Marie",
         "nom": "Dupont",
@@ -31,7 +31,7 @@
         "password": "vendor1"
       },
       {
-        "id_user": 2,
+        "id": 2,
         "email": "vendor2@olympics.com",
         "prenom": "Paul",
         "nom": "Durand",
@@ -47,18 +47,6 @@
           "prix": 800
         },
         "password": "vendor2"
-      },
-      {
-        "id_user": 3,
-        "email": "client@olympics.com",
-        "prenom": "Sophie",
-        "nom": "Martin",
-        "code_postal": 75004,
-        "adresse": "126 Rue de Paris",
-        "commune": "Paris",
-        "role": "Client",
-        "stand": null,
-        "password": "client"
       }
     ]
   }
