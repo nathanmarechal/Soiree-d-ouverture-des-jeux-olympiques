@@ -1,13 +1,13 @@
 <template>
     <div class="add-user-form">
-      <h2>Ajouter un utilisateur</h2>
+      <h2>Add User</h2>
       <form @submit.prevent="submitForm">
         <div>
-          <label for="first-name">Prénom:</label>
+          <label for="first-name">First Name:</label>
           <input type="text" id="first-name" v-model="firstName" required>
         </div>
         <div>
-          <label for="last-name">Nom:</label>
+          <label for="last-name">Last Name:</label>
           <input type="text" id="last-name" v-model="lastName" required>
         </div>
         <div>
@@ -22,8 +22,15 @@
             <option value="Vendeur">vendeur</option>
           </select>
         </div>
-        <button class="blue-button" type="submit">Ajouter utilisateur</button>
-        <button class="red-button" type="button" @click="$emit('close')">Annuler</button>
+        <div>
+          <label for="stand">Stand Name:</label>
+          <select id="stand" v-model="stand" required>
+            <option value="">Select a stand</option>
+            <option v-for="(stand, index) in stands" :key="index" :value="stand">{{ stand.nom_stand }}</option>
+          </select>
+        </div>
+        <button class="blue-button" type="submit">Add User</button>
+        <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
       </form>
     </div>
   </template>
@@ -42,6 +49,12 @@
         lastName: '',
         email: '',
         role: '',
+        stand: '',
+        stands: [
+          { nom_stand: 'Stand 1' },
+          { nom_stand: 'Stand 2' },
+          { nom_stand: 'Stand 3' },
+        ],
       };
     },
     methods: {
@@ -51,12 +64,14 @@
           nom: this.lastName,
           email: this.email,
           role: this.role,
+          stand: this.stand,
         };
         this.$emit('add-user', newUser);
         this.firstName = '';
         this.lastName = '';
         this.email = '';
         this.role = '';
+        this.stand = '';
       },
     },
   };
