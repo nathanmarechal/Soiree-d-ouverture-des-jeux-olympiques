@@ -26,8 +26,12 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
-      <b-navbar-brand href="#" @click="showLoginModal"> <img src="../assets/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
-      <b-navbar-brand v-if="isUserConnected" style="color: red">{{email}}</b-navbar-brand>
+      <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
+      <b-navbar-brand v-if="isUserConnected" href="#" @click="disconnect" > <img src="../assets/logout.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
+      <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="email">
+        <b-dropdown-item href="#" class = "dp">Mes espaces</b-dropdown-item>
+        <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>
+      </b-nav-item-dropdown>
     </b-navbar>
 
     <b-sidebar id="mobile-nav" title="" width="250px" no-header v-model="isSidebarOpen">
@@ -87,6 +91,11 @@ export default {
   methods: {
     showLoginModal() {
       this.$store.commit('SET_LOGIN_MODAL', true);
+    },
+    disconnect() {
+      this.$store.commit('SET_USER_CONNECTED', false);
+      this.$store.commit('SET_EMAIL', '');
+      this.$store.commit('SET_PASSWORD', '');
     },
   },
 };
