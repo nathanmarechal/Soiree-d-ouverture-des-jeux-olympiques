@@ -1,0 +1,20 @@
+{
+  "zone": [
+    {
+      "id": 0,
+      "libelle": "Tuillerie"
+    },
+    {
+      "id": 1,
+      "libelle": "Champs de Mars"
+    },
+    {
+      "id": 2,
+      "libelle": "Jardin des plantes"
+    },
+    {
+      "id": 3,
+      "libelle": "Seine"
+    }
+  ]
+}

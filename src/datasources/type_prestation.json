@@ -1,0 +1,16 @@
+{
+  "type_prestation": [
+    {
+      "id":0,
+      "libelle": "Sport"
+    },
+    {
+      "id":1,
+      "libelle": "Boisson"
+    },
+    {
+      "id":2,
+      "libelle": "Nourriture"
+    }
+  ]
+}
