@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Home from '../views/HomePage.vue'
 import Information from '../views/InformationPage.vue'
+import Shop from '../views/ShopPage.vue'
 import VueRouter from 'vue-router'
 import AdminEditUsers from '../views/AdminEditUsers.vue'
 import mapPage from "@/views/mapPage.vue";
@@ -22,6 +23,11 @@ const routes = [
     path: '/AdminEditUsers',
     name: 'AdminEditUsers',
     component: AdminEditUsers
+  },
+  {
+    path: '/shop',
+    name: 'shopView',
+    component: Shop
   },
   {
     path: '/map',
