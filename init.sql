@@ -13,25 +13,25 @@ DROP TABLE IF EXISTS role;
 
 
 CREATE TABLE role(
-   id_role INT AUTO_INCREMENT,
+   id_role SERIAL,
    libelle VARCHAR(50),
    PRIMARY KEY(id_role)
 );
 
 CREATE TABLE type_zone(
-   id_type_zone INT AUTO_INCREMENT,
+   id_type_zone SERIAL,
    libelle VARCHAR(50),
    PRIMARY KEY(id_type_zone)
 );
 
 CREATE TABLE type_prestation(
-   id_type_prestation INT AUTO_INCREMENT,
+   id_type_prestation SERIAL,
    libelle VARCHAR(50),
    PRIMARY KEY(id_type_prestation)
 );
 
 CREATE TABLE zone(
-   id_zone INT AUTO_INCREMENT,
+   id_zone SERIAL,
    libelle VARCHAR(50),
    id_type_zone INT NOT NULL,
    PRIMARY KEY(id_zone),
@@ -39,7 +39,7 @@ CREATE TABLE zone(
 );
 
 CREATE TABLE emplacement(
-   id_emplacement INT AUTO_INCREMENT,
+   id_emplacement SERIAL,
    coordonnes json,
    surface int,
    id_zone INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE emplacement(
 );
 
 CREATE TABLE stand(
-   id_stand INT AUTO_INCREMENT,
+   id_stand SERIAL,
    nom_stand VARCHAR(50),
    image_stand VARCHAR(50),
    description_stand VARCHAR(50),
@@ -60,7 +60,7 @@ CREATE TABLE stand(
 );
 
 CREATE TABLE prestation(
-   id_prestation INT AUTO_INCREMENT,
+   id_prestation SERIAL,
    libelle VARCHAR(50),
    prix VARCHAR(50),
    id_type_prestation INT NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE prestation(
 );
 
 CREATE TABLE utilisateur(
-   id_user INT AUTO_INCREMENT,
+   id_user SERIAL,
    email VARCHAR(50) UNIQUE,
    password VARCHAR(50),
    nom VARCHAR(50),
@@ -87,7 +87,7 @@ CREATE TABLE utilisateur(
 );
 
 CREATE TABLE commande(
-   id_commande INT AUTO_INCREMENT,
+   id_commande SERIAL,
    date_commande DATE,
    id_user INT NOT NULL,
    PRIMARY KEY(id_commande),
@@ -95,7 +95,7 @@ CREATE TABLE commande(
 );
 
 CREATE TABLE ligne_commande(
-   id_prestation INT AUTO_INCREMENT,
+   id_prestation SERIAL,
    id_commande INT,
    prix INT,
    quantite VARCHAR(50),
@@ -105,7 +105,7 @@ CREATE TABLE ligne_commande(
 );
 
 CREATE TABLE ligne_panier(
-   id_user INT AUTO_INCREMENT,
+   id_user SERIAL,
    id_prestation INT,
    prix INT,
    quantite VARCHAR(50),
@@ -114,15 +114,43 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
 );
 
+INSERT INTO role VALUES
+(1,'admin'),
+(2,'prestataire');
+
 INSERT INTO type_zone (libelle) VALUES ('Ambulant'),('Fixe');
 
-INSERT INTO `type_prestation` VALUES
+INSERT INTO type_prestation VALUES
 (1,'sport'),
 (2,'nourriture'),
 (3,'boisson'),
 (4,'magasin'),
 (5,'billeterie');
 
-INSERT INTO `role` VALUES
-(1,'admin'),
-(2,'prestataire');
+INSERT INTO zone (libelle, id_type_zone) VALUES
+('Zone A', 2),
+('Zone B', 2),
+('Zone C', 2),
+('Zone D', 2);
+
+INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES
+('{"latitude": 48.8566, "longitude": 2.3522}', 100, 1),
+('{"latitude": 40.7128, "longitude": -74.0060}', 200, 2),
+('{"latitude": 34.0522, "longitude": -118.2437}', 150, 3);
+
+INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
+('Stand1', 'image1.jpg', 'Description du stand 1', '2023-01-01', 1000, 1),
+('Stand2', 'image2.jpg', 'Description du stand 2', '2023-02-01', 1500, 2),
+('Stand3', 'image3.jpg', 'Description du stand 3', '2023-03-01', 2000, 3);
+
+INSERT INTO prestation (libelle, prix, id_type_prestation, id_stand) VALUES
+('Prestation A', '100€', 1, 1),
+('Prestation B', '200€', 2, 2),
+('Prestation C', '150€', 3, 3);
+
+INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
+('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', 1, 1),
+('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 2, 2),
+('email3@example.com', 'password3', 'Nom3', 'Prenom3', 75003, 'Adresse3', 'Commune3', 3, 1),
+('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 2, 2),
+('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 1, 1);
