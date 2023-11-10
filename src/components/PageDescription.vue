@@ -24,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    const map = L.map('map').setView([51.505, -0.09], 13); // Coordonnées de la carte et niveau de zoom initial
+    const map = L.map('map').setView([48.8619798,2.3318246], 13); // Coordonnées de la carte et niveau de zoom initial
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
