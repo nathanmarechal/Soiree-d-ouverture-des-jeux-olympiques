@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="marge">
     <PageSlideshow />
     <PageTitle />
     <PageDescription />
@@ -20,3 +20,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.marge{
+  margin-bottom: 5%;
+}
+</style>

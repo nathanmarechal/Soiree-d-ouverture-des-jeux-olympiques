@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="carte">
     <PageMapShow :zones="zones" :type_prestations="type_prestations"></PageMapShow>
   </div>
 </template>
@@ -24,3 +24,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.carte{
+  margin-top: 7%;
+  margin-bottom: 5%;
+}
+</style>
