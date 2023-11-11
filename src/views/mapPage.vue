@@ -1,3 +1,4 @@
+
 <template>
   <div class="container">
     <div class="d-flex flex-column gap-3 justify-content-center">
@@ -38,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-top: 8vh;
   display: flex;

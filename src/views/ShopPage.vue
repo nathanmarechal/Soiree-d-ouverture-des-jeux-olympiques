@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .marge{
   margin-bottom: 5%;
 }
