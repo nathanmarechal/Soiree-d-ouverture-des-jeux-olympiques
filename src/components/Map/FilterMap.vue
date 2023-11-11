@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-3">
+  <div>
     <h3>Filtre</h3>
 
     <h4>Prix</h4>

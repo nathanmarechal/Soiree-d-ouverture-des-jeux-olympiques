@@ -3,7 +3,7 @@
     <div class="col-lg-8">
       <div class="card">
           <div>
-            <div id="map" style="width: 50vh; height: 80vh;"></div>
+            <div id="map" style="width: 100vh; height: 50vh;"></div>
           </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
   methods: {
     showZoneInfo(zone) {
       // Affichez les informations de la zone, par exemple, en utilisant une boîte de dialogue modale
-      alert(`Zone: ${zone.zone}\nSurface Area: ${zone.surface_area}\nStand: ${zone.stand.nom}\nDescription: ${zone.stand.description}`);
+      alert(`ID: ${zone.id} Zone: ${zone.zone}\nSurface Area: ${zone.surface_area}\nStand: ${zone.stand.nom}\nDescription: ${zone.stand.description}`);
     }
   }
 };
