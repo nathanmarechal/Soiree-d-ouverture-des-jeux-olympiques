@@ -1,14 +1,17 @@
 
 <template>
-  <div class="container">
-    <div class="d-flex flex-column gap-3 justify-content-center">
-      <div class="d-flex flex-row gap-3 justify-content-center" style="height: 50vh;">
-        <FilterMap :type_prestations="type_prestations" :zones="zones" />
-        <MapZone :areas="areas" />
+  <div class="d-flex justify-content-center">
+    <div class="filter-map d-flex flex-column gap-3 justify-content-center">
+      <div class="d-flex flex-row gap-3 justify-content-between" style="border: red solid; height: 50vh;">
+        <FilterMap :type_prestations="type_prestations" :zones="zones" style="width: 20%"/>
+        <MapZone :areas="areas" style="width: 75%; height: 100%"/>
       </div>
+
       <CardPrestation :prestations="prestation"></CardPrestation>
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -40,9 +43,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  margin-top: 8vh;
-  display: flex;
-  flex-direction: row;
+
+.filter-map{
+  width: 90%;
+  margin-top: 10vh;
 }
+
 </style>

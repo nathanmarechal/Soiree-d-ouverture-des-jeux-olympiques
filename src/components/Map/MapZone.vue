@@ -1,12 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="card">
-          <div>
-            <div id="map" style="width: 100vh; height: 50vh;"></div>
-          </div>
-      </div>
-    </div>
+  <div class="map-container">
+    <div id="map"></div>
   </div>
 </template>
 
@@ -51,3 +45,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+</style>

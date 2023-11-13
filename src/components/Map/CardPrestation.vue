@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row flex-wrap gap-3 justify-content-center">
+  <div class="d-flex flex-row flex-wrap gap-3 justify-content-start" style="border: solid">
     <div v-for="prestation in prestations" :key="prestation.id" class="card border" style="width: 18vh; height: 25%;">
       <img class="card-img-top" :src="getImageUrl(prestation.stand.image)" style="border-radius: 50%;" alt="Card image cap">
       <div class="card-body text-center">

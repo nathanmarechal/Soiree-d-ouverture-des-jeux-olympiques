@@ -62,7 +62,7 @@ CREATE TABLE stand(
 CREATE TABLE prestation(
    id_prestation SERIAL,
    libelle VARCHAR(50),
-   prix VARCHAR(50),
+   prix INT,
    id_type_prestation INT NOT NULL,
    id_stand INT NOT NULL,
    PRIMARY KEY(id_prestation),
