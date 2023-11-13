@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="margeS">
     <shopcomponent></shopcomponent>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
 </script>
 
 <style scoped>
-.marge{
+.margeS{
   margin-bottom: 5%;
+  margin-top: 6%;
 }
 </style>

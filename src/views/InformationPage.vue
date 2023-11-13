@@ -61,14 +61,12 @@ export default {
       }
     },
     moveToNextComponent() {
-      // Logic to move to the next component
       const currentIndex = this.getCurrentComponentIndex();
       if (currentIndex < this.componentIds.length - 1) {
         this.$refs[this.componentIds[currentIndex + 1]].$el.scrollIntoView({ behavior: 'smooth' });
       }
     },
     moveToPreviousComponent() {
-      // Logic to move to the previous component
       const currentIndex = this.getCurrentComponentIndex();
       if (currentIndex > 0) {
         this.$refs[this.componentIds[currentIndex - 1]].$el.scrollIntoView({ behavior: 'smooth' });

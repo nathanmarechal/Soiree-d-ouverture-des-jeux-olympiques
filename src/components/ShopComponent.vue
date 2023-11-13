@@ -1,14 +1,27 @@
 <template>
   <div class="container mt-4">
     <h2>Liste des Prestations</h2>
+    <div class="form-check form-switch"
+         v-for="typePrestation in getallType"
+         :key="typePrestation.id_type_prestation">
+      <input class="form-check-input"
+             type="checkbox"
+             v-model="selectedTypes[typePrestation.id_type_prestation]"
+             :id="'flexSwitchCheck' + typePrestation.id_type_prestation">
+      <label class="form-check-label"
+             :for="'flexSwitchCheck' + typePrestation.id_type_prestation">
+        {{ getTypePrestationLabel(typePrestation.id_type_prestation) }}
+      </label>
+    </div>
+
     <div class="row">
-      <div class="col-md-4 mb-3" v-for="prestation in allPrestations" :key="prestation.id_prestation">
+      <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
         <div class="card">
-          <img :src="require('@/assets/' + prestation.image)" class="card-img-top" alt="Image de la prestation">
+          <img :src="getImageSrc(prestation.image)" class="card-img-top size" alt="Image de la prestation">
           <div class="card-body">
             <h5 class="card-title">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }}</p>
-            <p class="card-text">Type : {{ getTypePrestation(prestation.id_type_prestation) }}</p>
+            <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
             <p class="card-text">Stand : {{ prestation.id_stand }}</p>
             <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
           </div>
@@ -17,28 +30,42 @@
     </div>
   </div>
 </template>
-
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
+  data() {
+    return {
+      selectedTypes: {}
+    };
+  },
   computed: {
-    ...mapGetters(['allPrestations'])
+    ...mapGetters(['getallPrestations', "getallType", 'filteredPrestations']),
+    filteredPrestations() {
+      if (Object.values(this.selectedTypes).every(v => !v)) { //veut dire que la méthode vérifie si chaque valeur v est fausse en gros !v.
+        return this.getallPrestations;
+      }
+      return this.getallPrestations.filter(prestation =>
+          this.selectedTypes[prestation.id_type_prestation]
+      );
+    }
   },
   methods: {
+    ...mapMutations(['SET_SELECTED_TYPE']),
     getTypePrestation(idType) {
-      // Logique pour retourner le libellé du type de prestation
-      // en fonction de l'idType. À adapter selon la structure de vos données.
-      const typePrestationMap = {
-        1: 'Sport',
-        2: 'Nourriture',
-        3: 'Boisson',
-        4: 'Magasin',
-        5: 'Billetterie',
-        6: 'Fanzone',
-        7: 'RATP'
-      };
-      return typePrestationMap[idType] || 'Type Inconnu';
+      const typePrestationMap = this.$store.getters.getallType;
+      return typePrestationMap[idType];
+    },
+    getTypePrestationLabel(idType) {
+      const type = this.getallType.find(type => type.id_type_prestation === idType);
+      return type ? type.libelle : 'Type inconnu';
+    },
+    getImageSrc(imageName) {
+      try {
+        return require('@/assets/' + imageName);
+      } catch {
+        return require('@/assets/' + "4.png");
+      }
     }
   }
 }
@@ -46,5 +73,9 @@ export default {
 
 
 <style scoped>
+
+.size{
+  height: 300px;
+}
 
 </style>
