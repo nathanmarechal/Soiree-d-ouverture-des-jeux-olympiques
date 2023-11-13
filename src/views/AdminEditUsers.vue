@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import UserList from '../components/UserList.vue';
-import AddUserForm from '../components/AddUserForm.vue';
-import EditUserForm from '../components/EditUserForm.vue';
+import UserList from '../components/Admin/UserList.vue';
+import AddUserForm from '../components/Admin/AddUserForm.vue';
+import EditUserForm from '../components/Admin/EditUserForm.vue';
 import dataTest from "../datasources/testUsers.json";
 
 export default {
