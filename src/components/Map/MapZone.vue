@@ -12,37 +12,85 @@ export default {
     areas: {
       type: Array,
       required: true
-    }
+    },
+    showZoneList: {type: Array},
+    showPrestationList: {type: Array}
+
+  },
+  data() {
+    return {
+      map: null,
+      polygons: [] // Stockez les références des polygones pour pouvoir les supprimer
+    };
   },
   mounted() {
-    const map = L.map('map').setView([48.857572, 2.2977709], 13);
+    this.initializeMap();
+  },
+  methods: {
+    initializeMap() {
+      // Créez la carte et ajoutez la couche de tuiles
+      this.map = L.map('map').setView([48.857572, 2.2977709], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(this.map);
 
-    // Affichez le contenu de la variable areas dans la console
-    console.log(this.areas[0]);
+      // Créez les polygones pour chaque zone
+      this.areas.forEach(zone => {
+        const polygon = L.polygon(zone.coordinates, {
+          color: 'blue',
+          fillOpacity: 0.5
+        }).addTo(this.map);
 
-    // Ajoutez des polygones pour chaque zone
-    this.areas.forEach(zone => {
+        polygon.on('click', () => {
+          this.showZoneInfo(zone);
+        });
+
+        this.polygons.push(polygon);
+      });
+    },
+    showZoneInfo(zone) {
+      // Affichez les informations de la zone, par exemple, en utilisant une boîte de dialogue modale
+      alert(`ID: ${zone.id} Zone: ${zone.zone}\nSurface Area: ${zone.surface_area}\nStand: ${zone.nom}\nDescription: ${zone.description}`);
+    },
+
+    updateMap() {
+      // Supprimez les polygones actuels de la carte
+      this.polygons.forEach(polygon => {
+        this.map.removeLayer(polygon);
+      });
+      console.log("coucou")
+
+      // Filtrer les zones à afficher en fonction des sélections
+      const filteredAreas = this.areas.filter(zone => {
+        return (
+            this.showZoneList.includes(zone.id_zone) &&
+            zone.id_prestation.some(id => this.showPrestationList.includes(id))
+        );
+      });
+
+    // Ajoutez à nouveau les polygones filtrés à la carte
+    filteredAreas.forEach(zone => {
       const polygon = L.polygon(zone.coordinates, {
         color: 'blue',
         fillOpacity: 0.5
-      }).addTo(map);
+      }).addTo(this.map);
 
-      // Ajoutez un gestionnaire d'événements de clic pour afficher les informations de la zone
       polygon.on('click', () => {
         this.showZoneInfo(zone);
       });
+
+      this.polygons.push(polygon);
     });
-  },
-  methods: {
-    showZoneInfo(zone) {
-      // Affichez les informations de la zone, par exemple, en utilisant une boîte de dialogue modale
-      alert(`ID: ${zone.id} Zone: ${zone.zone}\nSurface Area: ${zone.surface_area}\nStand: ${zone.stand.nom}\nDescription: ${zone.stand.description}`);
-    }
   }
+
+  },
+  watch: {
+    // Surveillez les changements dans les tableaux selectedZones et selectedTypePrestations
+    selectedZones: 'updateMap',
+    selectedTypePrestations: 'updateMap'
+  },
+
 };
 </script>
 
