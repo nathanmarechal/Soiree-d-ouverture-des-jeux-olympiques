@@ -10,7 +10,7 @@ export default new Vuex.Store({
     isUserConnected: false,
     email: '',
     password: '',
-    selectedType: null,
+    selectedType: {},
     prestations: [
       {"id_prestation": 1, "libelle": "Prestation 1", "prix": "241.92 €", "id_type_prestation": 2, "id_stand": 8, "creneau_horaire": "2023-11-14 16:00:00", "image": "1.jpeg"},
       {"id_prestation": 2, "libelle": "Prestation 2", "prix": "153.07 €", "id_type_prestation": 6, "id_stand": 9, "creneau_horaire": "2023-11-12 15:00:00", "image": "1.jpg"},
@@ -41,9 +41,9 @@ export default new Vuex.Store({
     getemail: state => state.email,
     getpassword: state => state.password,
     getallPrestations: state => state.prestations,
-    getallType : state => state.typePrestations,
+    getallType: state => state.typePrestations,
     getSelectedType: state => state.selectedType,
-    },
+  },
   mutations: {
     SET_LOGIN_MODAL(state, value) {
       state.isLoginOpen = value;
@@ -57,12 +57,12 @@ export default new Vuex.Store({
     SET_PASSWORD(state, value) {
       state.password = value;
     },
-    SET_PRESTATIONS(state, prestations) {  // Mutation pour mettre à jour les prestations
+    SET_PRESTATIONS(state, prestations) {
       state.prestations = prestations;
     },
     SET_SELECTED_TYPE(state, type) {
       state.selectedType = type;
-    }
+    },
   },
   actions: {
     //changeSelectedType({ commit }, type) {

@@ -1,5 +1,6 @@
 <template>
   <div class="margeS">
+    <filterByTypeComponent></filterByTypeComponent>
     <shopcomponent></shopcomponent>
   </div>
 </template>
@@ -8,8 +9,10 @@
 <script>
 
 import shopcomponent from '../components/ShopComponent.vue'
+import filterByTypeComponent from "@/components/FilterByTypeComponent.vue";
 export default {
   components: {
+    filterByTypeComponent,
     shopcomponent,
   }
 }

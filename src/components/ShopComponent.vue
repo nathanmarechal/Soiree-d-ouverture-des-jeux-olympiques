@@ -1,18 +1,15 @@
 <template>
-  <div class="container mt-4">
-    <h2>Liste des Prestations</h2>
-    <div class="form-check form-switch"
-         v-for="typePrestation in getallType"
-         :key="typePrestation.id_type_prestation">
-      <input class="form-check-input"
-             type="checkbox"
-             v-model="selectedTypes[typePrestation.id_type_prestation]"
-             :id="'flexSwitchCheck' + typePrestation.id_type_prestation">
-      <label class="form-check-label"
-             :for="'flexSwitchCheck' + typePrestation.id_type_prestation">
-        {{ getTypePrestationLabel(typePrestation.id_type_prestation) }}
-      </label>
-    </div>
+<!--  <div class="container mt-4">-->
+<!--    <h2>Liste des Prestations</h2>-->
+<!--    <div class="form-check form-switch"-->
+<!--         v-for="typePrestation in getallType"-->
+<!--         :key="typePrestation.id_type_prestation">-->
+<!--      <input class="form-check-input"-->
+<!--             type="checkbox"-->
+<!--             v-model="selectedTypes[typePrestation.id_type_prestation]"-->
+<!--             :id="'flexSwitchCheck' + typePrestation.id_type_prestation">-->
+<!--      <label class="form-check-label" :for="'flexSwitchCheck' + typePrestation.id_type_prestation">{{ getTypePrestationLabel(typePrestation.id_type_prestation) }}</label>-->
+<!--    </div>-->
 
     <div class="row">
       <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
@@ -28,10 +25,10 @@
         </div>
       </div>
     </div>
-  </div>
+<!--  </div>-->
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -40,18 +37,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getallPrestations', "getallType", 'filteredPrestations']),
+    ...mapGetters(['getallPrestations', "getallType"]),
     filteredPrestations() {
-      if (Object.values(this.selectedTypes).every(v => !v)) { //veut dire que la méthode vérifie si chaque valeur v est fausse en gros !v.
+      if (Object.keys(this.$store.state.selectedType).every(key => !this.$store.state.selectedType[key])) {
         return this.getallPrestations;
       }
       return this.getallPrestations.filter(prestation =>
-          this.selectedTypes[prestation.id_type_prestation]
+          this.$store.state.selectedType[prestation.id_type_prestation]
       );
-    }
+    },
   },
   methods: {
-    ...mapMutations(['SET_SELECTED_TYPE']),
     getTypePrestation(idType) {
       const typePrestationMap = this.$store.getters.getallType;
       return typePrestationMap[idType];
