@@ -1,10 +1,12 @@
 {
-  "prestation":[
+  "prestation": [
     {
       "id": 1,
       "libelle": "kebab frites",
       "prix": 12,
       "stand": {
+        "id_zone": 2,
+        "id_prestation": 3,
         "nom": "Kebab de besançon",
         "description": "Kebab délicieux",
         "image": "kebab-semih.png"
@@ -12,33 +14,14 @@
     },
     {
       "id": 2,
-      "libelle": "kebab simple",
-      "prix": 9,
+      "libelle": "Coca",
+      "prix": 12,
       "stand": {
+        "id_zone": 2,
+        "id_prestation": 2,
         "nom": "Kebab de besançon",
         "description": "Kebab délicieux",
         "image": "kebab-semih.png"
-      }
-
-    },
-    {
-      "id": 3,
-      "libelle": "dorum frites",
-      "prix": 15,
-      "stand": {
-        "nom": "Kebab de besançon",
-        "description": "Kebab délicieux",
-        "image": "kebab-semih.png"
-      }
-    },
-    {
-      "id": 4,
-      "libelle": "coca",
-      "prix": 3,
-      "stand": {
-        "nom": "Kebab de besançon",
-        "description": "Kebab délicieux",
-        "image": "mma-besancon.png"
       }
     }
   ]

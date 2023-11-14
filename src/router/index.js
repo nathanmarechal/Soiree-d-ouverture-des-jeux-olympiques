@@ -5,7 +5,7 @@ import Shop from '../views/ShopPage.vue'
 import VueRouter from 'vue-router'
 import AdminEditUsers from '../views/AdminEditUsers.vue'
 import mapPage from "@/views/mapPage.vue";
-
+import standPage from "../views/standPage.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +33,11 @@ const routes = [
     path: '/map',
     name: 'MapView',
     component: mapPage
+  },
+  {
+    path: '/stand',
+    name: 'StandView',
+    component: standPage
   }
 ]
 

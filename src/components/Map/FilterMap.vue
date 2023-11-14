@@ -19,13 +19,13 @@
 
     <h4>Zone</h4>
     <div v-for="(zone, index) in zones" :key="index" class="form-check">
-      <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.libelle">
+      <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id">
       <label class="form-check-label" :for="'zoneCheck' + index">{{ zone.libelle }}</label>
     </div>
 
     <h4>Type de prestation</h4>
     <div v-for="(type_prestation, index) in type_prestations" :key="index" class="form-check">
-      <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.libelle">
+      <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
     </div>
   </div>
@@ -41,7 +41,8 @@ export default {
     type_prestations: {
       type: Array,
       required: true
-    }
+    },
+
   },
   data() {
     return {
@@ -51,6 +52,20 @@ export default {
       selectedTypePrestations: []
     };
   },
+  methods: {
+    // Appelé lorsque les sélections changent
+    handleSelectionChange() {
+      this.$emit('selection-change', {
+        selectedZones: this.selectedZones,
+        selectedTypePrestations: this.selectedTypePrestations
+      });
+    }
+  },
+  watch: {
+    // Écoute les changements dans les sélections
+    selectedZones: 'handleSelectionChange',
+    selectedTypePrestations: 'handleSelectionChange'
+  }
 };
 </script>
 
