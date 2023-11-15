@@ -82,7 +82,7 @@ export default {
       return this.$store.getters.isUserConnected;
     },
     email() {
-      return this.$store.getters.email;
+      return this.$store.getters.getemail;
     },
   },
   components: {

@@ -33,7 +33,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      selectedTypes: {}
+      selectedTypes: this.$store.getters.getSelectedType
     };
   },
   computed: {
