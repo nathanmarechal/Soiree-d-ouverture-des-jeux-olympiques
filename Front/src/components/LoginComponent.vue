@@ -27,7 +27,7 @@ export default {
   computed: {
     email: {
       get() {
-        return this.$store.getters.email;
+        return this.$store.getters.getemail;
       },
       set(value) {
         this.$store.commit('SET_EMAIL', value);
@@ -35,7 +35,7 @@ export default {
     },
     password: {
       get() {
-        return this.$store.getters.password;
+        return this.$store.getters.getpassword;
       },
       set(value) {
         this.$store.commit('SET_PASSWORD', value);
