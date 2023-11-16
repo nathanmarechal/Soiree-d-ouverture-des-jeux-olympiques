@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     users: [],
     isLoginOpen: false,
+    isAreaSelected: false,
     isUserConnected: false,
     email: '',
     password: '',
@@ -106,6 +107,9 @@ export default new Vuex.Store({
     SET_SELECTED_ZONE(state, zone) {
       state.selectedZone = zone;
     },
+    SET_IS_AREA_SELECTED(state,isSelected){
+      state.isAreaSelected = isSelected
+    }
   },
   actions: {
 

@@ -1,4 +1,4 @@
--- Drop the tables with foreign key constraints
+        -- Drop the tables with foreign key constraints
 DROP TABLE IF EXISTS ligne_panier CASCADE;
 DROP TABLE IF EXISTS ligne_commande CASCADE;
 DROP TABLE IF EXISTS prestation CASCADE;
@@ -128,7 +128,7 @@ INSERT INTO zone VALUES
 (3,'zones_ambulantes',2),
 (4,'jardin_des_plantes',1);
 
-INSERT INTO emplacement VALUES
+INSERT INTO emplacement (id_emplacement,coordonnes,surface,id_zone) VALUES
 (1,'[[48.857572, 2.2977709], [48.8575631, 2.2977724], [48.8575566, 2.2977726], [48.857554, 2.2977637], [48.8575404, 2.2976456], [48.8575318, 2.2975923], [48.8575262, 2.2975621], [48.8575281, 2.2975502], [48.8575798, 2.2975381], [48.8576294, 2.297513], [48.8576625, 2.2974845], [48.8577107, 2.297447], [48.8577602, 2.2973924], [48.8577737, 2.2973886], [48.8577838, 2.2973952], [48.8577886, 2.297414], [48.857789, 2.2974299], [48.857572, 2.2977709]]',443,1),
 (2,'[[48.8580521, 2.2963765], [48.8580445, 2.2963764], [48.8580387, 2.2963565], [48.858035, 2.296242], [48.8580298, 2.2961346], [48.8580379, 2.2961337], [48.8580339, 2.2960491], [48.8580247, 2.2960504], [48.8580035, 2.2957834], [48.8580078, 2.2957652], [48.8580158, 2.2957515], [48.8580275, 2.2957602], [48.8582676, 2.2961086], [48.8582676, 2.2961228], [48.858263, 2.2961348], [48.8582263, 2.2961566], [48.8581787, 2.296187], [48.8581443, 2.2962204], [48.8581074, 2.2962744], [48.8580747, 2.2963307], [48.8580521, 2.2963765]]',920,1),
 (3,'[[48.8569054, 2.2973425], [48.8569272, 2.2973183], [48.8569658, 2.2974223], [48.8569893, 2.2975001], [48.8570241, 2.297653], [48.8570432, 2.297766], [48.8570588, 2.2979002], [48.857066, 2.2980394], [48.8570669, 2.2981832], [48.8570577, 2.298309], [48.8570348, 2.2984538], [48.8570107, 2.2985601], [48.8569834, 2.2986426], [48.8569612, 2.2986128], [48.8569866, 2.2985302], [48.8570083, 2.2984363], [48.8570315, 2.2982674], [48.8570385, 2.2981574], [48.857036, 2.2980235], [48.8570284, 2.2979073], [48.8570151, 2.2977852], [48.8569949, 2.2976586], [48.8569621, 2.2975131], [48.8569389, 2.2974298], [48.8569054, 2.2973425]]',485,1),
@@ -377,20 +377,21 @@ INSERT INTO emplacement VALUES
 (246,'[[48.8426403, 2.358011], [48.8426734, 2.358138], [48.8425908, 2.3581876], [48.8425577, 2.3580606], [48.8426403, 2.358011]]',149,4),
 (247,'[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4);
 
-INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
-('Stand1', 'image1.jpg', 'Description du stand 1', '2023-01-01', 1000, 1),
-('Stand2', 'image2.jpg', 'Description du stand 2', '2023-02-01', 1500, 2),
-('Stand3', 'image3.jpg', 'Description du stand 3', '2023-03-01', 2000, 3);
+INSERT INTO stand (id_stand,nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
+(1,'mmm-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
+(2,'kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2);
 
-INSERT INTO prestation (libelle, prix, id_type_prestation, id_stand) VALUES
-('Prestation A', 100, 1, 1),
-('Prestation B', 200, 2, 2),
-('Prestation C', 150, 3, 3);
+INSERT INTO prestation (id_prestation,libelle, prix, id_type_prestation, id_stand) VALUES
+(1,'kebab frites',12,2,2),
+(2,'kebab simple',9,2,2),
+(3,'Dorum frites',15,2,2),
+(4,'Coca',3,3,2),
+(5,'initation au mma',0,1,1),
+(6,'inscription au club',120,1,1);
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
 ('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', null, 1),
-('email3@example.com', 'password3', 'Nom3', 'Prenom3', 75003, 'Adresse3', 'Commune3', 3, 2),
 ('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 2, 2),
 ('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 1, 2);
 

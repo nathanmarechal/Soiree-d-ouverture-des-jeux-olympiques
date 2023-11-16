@@ -6,7 +6,7 @@
       "description": "Le délicieux kébab aux saveurs de la turquie",
       "zone": "champs_de_mars",
       "id_zone": 2,
-      "id_prestation": [3,2],
+      "id_type_zone": [3,2],
       "coordinates": [
         [
           48.8580521,
@@ -95,6 +95,5 @@
       ],
       "surface_area": 920
       }
-
   ]
 }

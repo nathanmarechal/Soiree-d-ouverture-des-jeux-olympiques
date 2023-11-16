@@ -1,5 +1,5 @@
 <template>
-  <div style="border: solid; padding: 1vh">
+  <div style=" padding: 1vh">
     <h3>Filtre</h3>
 
     <h4>Prix</h4>
