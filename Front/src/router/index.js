@@ -38,7 +38,8 @@ const routes = [
     path: '/stand',
     name: 'StandView',
     component: standPage
-  }
+  },
+
 ]
 
 const router = new VueRouter({

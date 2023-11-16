@@ -1,17 +1,5 @@
 <template>
-<!--  <div class="container mt-4">-->
-<!--    <h2>Liste des Prestations</h2>-->
-<!--    <div class="form-check form-switch"-->
-<!--         v-for="typePrestation in getallType"-->
-<!--         :key="typePrestation.id_type_prestation">-->
-<!--      <input class="form-check-input"-->
-<!--             type="checkbox"-->
-<!--             v-model="selectedTypes[typePrestation.id_type_prestation]"-->
-<!--             :id="'flexSwitchCheck' + typePrestation.id_type_prestation">-->
-<!--      <label class="form-check-label" :for="'flexSwitchCheck' + typePrestation.id_type_prestation">{{ getTypePrestationLabel(typePrestation.id_type_prestation) }}</label>-->
-<!--    </div>-->
-
-    <div class="row">
+   <div class="row">
       <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
         <div class="card">
           <img :src="getImageSrc(prestation.image)" class="card-img-top size" alt="Image de la prestation">
@@ -25,7 +13,6 @@
         </div>
       </div>
     </div>
-<!--  </div>-->
 </template>
 <script>
 import { mapGetters } from 'vuex';

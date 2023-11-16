@@ -54,6 +54,7 @@ export default new Vuex.Store({
     getpassword: state => state.password,
     getallPrestations: state => state.prestations,
     getallType: state => state.typePrestations,
+    getAllStands: state => state.typePrestations,
     getSelectedType: state => state.selectedType,
     getSelectedZone: state => state.selectedZone,
 

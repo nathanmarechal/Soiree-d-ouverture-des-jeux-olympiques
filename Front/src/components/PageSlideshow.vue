@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import image1 from '../assets/11.jpg';
+import image1 from '../assets/flamme.jpeg';
 import image2 from '../assets/2.jpg';
 import image3 from '../assets/3.jpeg';
 
@@ -88,13 +88,21 @@ export default {
 
 <style scoped>
 
+.carousel-title {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  z-index: 3;
+  color: white;
+  font-size: 2em;
+}
 
-/* Customizing the carousel control buttons */
 .carousel-inner img {
-  width: 100%; /* cela garantira que l'image prend toute la largeur du conteneur */
+  width: 100%;
   height: 100vh;
   object-fit: cover;
-  object-position: center; /* centre l'image dans le cadre */
+  object-position: center;
 }
 
 .carousel-inner {
@@ -107,8 +115,8 @@ export default {
   background: rgba(0, 0, 0, 0.5);
   width: 40px;
   height: 40px;
-  top: 50%;                 /* Centre les boutons verticalement */
-  transform: translateY(-50%); /* Utilise une translation pour les centrer parfaitement */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {

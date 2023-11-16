@@ -14,7 +14,7 @@
           <b-nav-item to="/shop" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">Shop</b-nav-item>
 
           <b-nav-item-dropdown right text="Stands" @mouseover="underline = 'Stands'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Stands' }">
-            <b-dropdown-item href="#" class = "dp">Nourriture</b-dropdown-item>
+            <b-dropdown-item href="#" class = "dp"><router-link to="/Shop" @mouseover="underline = 'Informations'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Informations' }">Nourriture</router-link></b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">Boisson</b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">Fanzone</b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">Billeterie</b-dropdown-item>

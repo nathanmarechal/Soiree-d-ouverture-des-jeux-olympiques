@@ -2,8 +2,9 @@
   "areas": [
     {
       "id": 1,
-      "nom": "Kebab de besançon",
-      "description": "Le délicieux kébab aux saveurs de la turquie",
+      "nom": "champs_de_mars1",
+      "stand" : "",
+      "description": "",
       "zone": "champs_de_mars",
       "id_zone": 2,
       "id_prestation": [3,2],
