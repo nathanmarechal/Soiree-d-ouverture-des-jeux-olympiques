@@ -2,21 +2,28 @@ import {getRequest} from "@/services/axios.service";
 //import LocalSource from "@/datasource/controller"
 
 async function getAllAreasFromAPI() {
-    return getRequest('/users', 'GETALLUSERS')
+    let answer = await getRequest('/map/areas', 'GETALLAREAS')
+    console.log("getAllAreasFromAPI: ", answer)
+    return answer
 }
 
-/*
-async function getAllCharactersFromLocalSource() {
-  return LocalSource.getAllCharacters()
+async function getAllAreas() {
+    let answer = await getAllAreasFromAPI()
+    console.log("getAllAreas: ", answer)
+    return answer
 }
-*/
 
-async function getAllUsers() {
-    let answer = await getAllUsersFromAPI()
-    //let answer = await getAllCharactersFromLocalSource()
+async function getAllZonesFromAPI() {
+    return getRequest('/map/zones', 'GETALLZONES')
+}
+
+async function getAllZones() {
+    let answer = await getAllZonesFromAPI()
+    console.log("getAllZones: ", answer)
     return answer
 }
 
 export {
-    getAllUsers
+    getAllAreas,
+    getAllZones
 }

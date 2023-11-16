@@ -6,4 +6,6 @@ const mapController = require('../controllers/map.controller');
 
 router.get("/areas", mapController.getAreas);
 
+router.get("/zones", mapController.getZones);
+
 module.exports = router;

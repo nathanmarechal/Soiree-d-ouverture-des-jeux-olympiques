@@ -6,22 +6,37 @@
 
 <script>
 import L from 'leaflet';
-import { mapGetters, mapMutations } from 'vuex';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+
 
 export default {
   data() {
     return {
       map: null,
       polygons: [],
+
     };
   },
   mounted() {
     this.initializeMap();
   },
   computed: {
-    ...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
+    //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
+    ...mapGetters(['getSelectedZone', 'getSelectedType']),
+
+    ...mapState(['areas', 'zones']),
+
   },
+
+  created() {
+    this.$store.dispatch('getAreas')
+    this.$store.dispatch('getZones')
+  },
+
   methods: {
+
+    ...mapActions(['getAreas', 'getZones']),
+
     initializeMap() {
       this.map = L.map('map').setView([48.857572, 2.2977709], 13);
 
@@ -42,12 +57,17 @@ export default {
         this.map.removeLayer(polygon);
       });
 
-      // Filtrer les zones à afficher en fonction des sélections
       const selectedZoneIds = this.getSelectedZone;
       const selectedTypeIds = this.getSelectedType;
 
-      const filteredAreas = this.getAreas.filter(zone => {
+      console.log("test de mes burnes", this.getAreas)
+
+      const areas = this.areas;
+
+
+      const filteredAreas = areas.filter(zone => {
         return (
+
             (selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone)) &&
             (selectedTypeIds.length === 0 || selectedTypeIds.some(id => zone.id_prestation.includes(id)))
         );

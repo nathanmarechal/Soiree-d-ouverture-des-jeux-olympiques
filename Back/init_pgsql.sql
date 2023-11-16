@@ -393,3 +393,28 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email3@example.com', 'password3', 'Nom3', 'Prenom3', 75003, 'Adresse3', 'Commune3', 3, 2),
 ('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 2, 2),
 ('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 1, 2);
+
+SELECT
+    e.id_emplacement AS "id_emplacement",
+    CONCAT(s.nom_stand, ' ', e.id_emplacement) AS "nom_emplacement",
+    s.nom_stand AS "nom_stand",
+    s.description_stand AS "description_stand",
+    z.libelle AS "zone",
+    CASE WHEN s.id_emplacement IS NULL THEN true ELSE false END AS isFree,
+    z.id_zone AS "id_zone",
+    z.id_type_zone AS "id_type_zone",
+    (
+        SELECT JSON_AGG(p.id_prestation) FROM prestation p WHERE p.id_stand = s.id_stand
+    ) AS "id_type_prestation",
+    e.coordonnes AS "coordinates",
+    e.surface AS "surface_area"
+FROM
+    emplacement e
+LEFT JOIN
+    stand s ON e.id_emplacement = s.id_emplacement
+LEFT JOIN
+    zone z ON e.id_zone = z.id_zone
+ORDER BY
+    e.id_emplacement;
+
+SELECT * FROM utilisateur;

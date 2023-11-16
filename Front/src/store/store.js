@@ -2,13 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import {getAllUsers} from "@/services/utilisateur.service";
+import {getAllAreas} from "@/services/map.service";
+import {getAllZones} from "@/services/map.service";
 
 Vue.use(Vuex)
 
-import area_json from '../datasources/areas.json'
+//import area_json from '../datasources/areas.json'
+//import zone_json from '../datasources/zones.json'
 
 export default new Vuex.Store({
   state: {
+    users: [],
     isLoginOpen: false,
     isUserConnected: false,
     email: '',
@@ -37,26 +41,12 @@ export default new Vuex.Store({
       {"id_type_prestation": 7, "libelle": "International"},
       {"id_type_prestation": 8, "libelle": "Transport"}
     ],
-    zones:[
-      {
-        "id_zone": 1,
-        "libelle": "Tuillerie"
-      },
-      {
-        "id_zone": 2,
-        "libelle": "Champs de Mars"
-      },
-      {
-        "id_zone": 3,
-        "libelle": "Jardin des plantes"
-      },
-      {
-        "id_zone": 4,
-        "libelle": "Seine"
-      }
-    ],
-  areas : area_json.areas,
+    zones: [],
+    //zones: zone_json.zone,
+    areas : [],
+    //areas : area_json.areas,
   },
+
   getters: {
     isLoginOpen: state => state.isLoginOpen,
     isUserConnected: state => state.isUserConnected,
@@ -65,16 +55,33 @@ export default new Vuex.Store({
     getallPrestations: state => state.prestations,
     getallType: state => state.typePrestations,
     getSelectedType: state => state.selectedType,
-    getallZone: state => state.zones,
     getSelectedZone: state => state.selectedZone,
+
+    getallZone: state => state.zones,
     getAreas: state=> state.areas
   },
   mutations: {
 
+    setUsers(state, users) {
+      state.users = users;
+    },
 
+    /*
     setUsers(state, users) {
       state.users.splice(0)
       users.forEach(p => state.users.push(p))
+    },
+
+     */
+
+    setZones(state, zones) {
+        state.zones.splice(0)
+        zones.forEach(p => state.zones.push(p))
+    },
+
+    setAreas(state, areas) {
+        state.areas.splice(0)
+        areas.forEach(p => state.areas.push(p))
     },
 
 
@@ -102,20 +109,67 @@ export default new Vuex.Store({
   },
   actions: {
 
+      /*
     async getUsers({commit}) {
-      console.log("STORE: get all users")
-      let result = null
-      try {
-        result = await getAllUsers()
-        if (result.error === 0) {
-          commit('setUsers',result.data)
+        console.log("STORE: get all users")
+        let result = null
+        try {
+            result = await getAllUsers()
+            console.log("Response from getAllUsers:", result);
+
+            if (result.error === 0) {
+              console.log("Dans le if : ", result.data)
+              commit('setUsers',result.data)
+            }
+            else {
+              console.log("Dans le else : ", result.data)
+            }
         }
-        else {
-          console.log(result.data)
-        }
-      }
-      catch(err) {
+        catch(err) {
         console.log("Cas anormal dans getUsers()")
+        }
+    },
+
+       */
+
+    async getUsers({ commit }) {
+      try {
+          const result = await getAllUsers();
+          if (Array.isArray(result)) {
+              commit('setUsers', result);
+          } else {
+              console.error("Unexpected response format:", result);
+          }
+      } catch (err) {
+          console.error("Error in getUsers():", err);
+      }
+    },
+
+    async getZones({ commit }) {
+      try {
+          const result = await getAllZones();
+          console.log("Response from getAllZones:", result)
+          if (Array.isArray(result)) {
+              commit('setZones', result);
+          } else {
+              console.error("Unexpected response format:", result);
+          }
+      } catch (err) {
+          console.error("Error in getZones():", err);
+      }
+    },
+
+    async getAreas({ commit }) {
+      try {
+          const result = await getAllAreas();
+            console.log("Response from getAllAreas:", result)
+          if (Array.isArray(result)) {
+              commit('setAreas', result);
+          } else {
+              console.error("Unexpected response format:", result);
+          }
+      } catch (err) {
+          console.error("Error in getAreas():", err);
       }
     },
 
@@ -127,6 +181,7 @@ export default new Vuex.Store({
       // Par exemple, utiliser axios pour faire une requête GET
       // puis commit('SET_PRESTATIONS', responseData)
      //}
+
   },
   modules: {
     // autres modules si nécessaire

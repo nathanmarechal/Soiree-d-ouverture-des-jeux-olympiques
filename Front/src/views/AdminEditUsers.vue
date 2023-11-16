@@ -5,7 +5,6 @@
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
         <add-user-form v-if="showAddUserForm" :users="users" @add-user="addUser" @close="closeAddForm"></add-user-form>
         <edit-user-form v-if="showEditUserForm" :user="selectedUser" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
-        <!-- <UserList filtered-users="" users=""></UserList> -->
     </div>
 </template>
 
@@ -15,11 +14,8 @@ import AddUserForm from '../components/Admin/AddUserForm.vue';
 import EditUserForm from '../components/Admin/EditUserForm.vue';
 
 
-//import {mapActions, mapState} from 'vuex'
-import {getAllUsers} from "@/services/utilisateur.service";
-
-
-//import dataTest from "../datasources/testUsers.json";
+import {mapActions, mapState} from 'vuex'
+//import {getAllUsers} from "@/services/utilisateur.service";
 
 export default {
     components: {
@@ -30,7 +26,7 @@ export default {
     data() {
         return {
             //users: dataTest.users,
-            users: [],
+            //users: [],
             filterRole: '',
             showAddUserForm: false,
             showEditUserForm: false,
@@ -41,16 +37,12 @@ export default {
     },
 
     created() {
-      getAllUsers().then(users => {
-        this.users = users;
-      }).catch(error => {
-        console.error('Error fetching users:', error);
-      });
+      this.$store.dispatch('getUsers')
     },
 
     computed: {
 
-      //...mapState(['users']),
+      ...mapState(['users']),
 
       filteredUsers() {
           if (this.filterRole === '') {
@@ -62,9 +54,7 @@ export default {
     },
     methods: {
 
-
-      //...mapActions(['getUsers']),
-
+        ...mapActions(['getUsers']),
 
         addUser(user) {
             user.id = this.users.length + 1;
