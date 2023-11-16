@@ -6,7 +6,7 @@
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
         <h2 class="subtitle">Une cérémonie sur l'eau</h2>
-        <p class="lead text">{{ pageDescription }}</p>
+        <p class="lead text justi">{{ pageDescription }}</p>
       </div>
     </div>
   </div>
@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style scoped>
+.justi{
+  text-align: justify;
+}
+
 .image-container {
   background-image: url('../assets/parcours.jpg');
   background-size: cover;

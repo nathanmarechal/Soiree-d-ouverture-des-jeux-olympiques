@@ -5,6 +5,8 @@
     <PageDescription />
     <SlideshowTitleComponent/>
     <PageSlideshow/>
+    <CardHomeTitleComponent></CardHomeTitleComponent>
+    <CarteForHomePage/>
   </div>
 </template>
 
@@ -16,6 +18,8 @@ import PageSlideshow from '../components/PageSlideshow.vue'
 import PageDescription from '../components/PageDescription.vue'
 import MainImageAndTitle from "@/components/MainImageAndTitle.vue";
 import SlideshowTitleComponent from "@/components/SlideshowTitleComponent.vue";
+import CarteForHomePage from "@/components/CarteForHomePage.vue";
+import CardHomeTitleComponent from "@/components/CardHomeTitleComponent.vue";
 export default {
   components: {
     SlideshowTitleComponent,
@@ -23,6 +27,8 @@ export default {
     PageSlideshow,
     PageTitle,
     PageDescription,
+    CarteForHomePage,
+    CardHomeTitleComponent
   }
 }
 </script>

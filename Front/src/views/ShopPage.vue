@@ -1,6 +1,7 @@
 <template>
   <div class="margeS">
     <filterByTypeComponent></filterByTypeComponent>
+    <filter-by-stand></filter-by-stand>
     <shopcomponent></shopcomponent>
   </div>
 </template>
@@ -10,10 +11,12 @@
 
 import shopcomponent from '../components/ShopComponent.vue'
 import filterByTypeComponent from "@/components/FilterByTypeComponent.vue";
+import filterByStand from "@/components/FilterByStand.vue";
 export default {
   components: {
     filterByTypeComponent,
     shopcomponent,
+    filterByStand,
   }
 }
 </script>

@@ -6,7 +6,8 @@
          :key="typePrestation.id_type_prestation">
       <input class="form-check-input"
              type="checkbox"
-             v-model="selectedTypes[typePrestation.id_type_prestation]"
+             :value="typePrestation.id_type_prestation"
+             v-model="selectedTypes"
              @change="updateFilter"
              :id="'flexSwitchCheck' + typePrestation.id_type_prestation">
       <label class="form-check-label" :for="'flexSwitchCheck' + typePrestation.id_type_prestation">{{ getTypePrestationLabel(typePrestation.id_type_prestation) }}</label>
@@ -23,14 +24,13 @@ export default {
   },
   data() {
     return {
-      selectedTypes: {}
+      selectedTypes: []
     };
   },
   methods: {
     ...mapMutations(['SET_SELECTED_TYPE']),
     updateFilter() {
       this.$store.commit('SET_SELECTED_TYPE', this.selectedTypes);
-      console.log(this.$store.state.selectedTypes)
     },
     getTypePrestationLabel(idType) {
       const type = this.getallType.find(type => type.id_type_prestation === idType);

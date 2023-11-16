@@ -6,7 +6,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }}</p>
-            <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
+            <p class="card-text">Type : {{ getStandName(prestation.id_stand) }}</p>
             <p class="card-text">Stand : {{ prestation.id_stand }}</p>
             <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
           </div>
@@ -16,29 +16,23 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
 export default {
-  data() {
-    return {
-      selectedTypes: {}
-    };
-  },
   computed: {
-    ...mapGetters(['getallPrestations', "getallType"]),
+    ...mapGetters(['getallPrestations', 'getallType', 'getAllStands', "getSelectedStands", "getSelectedType"]),
+
     filteredPrestations() {
-      if (Object.keys(this.$store.state.selectedType).every(key => !this.$store.state.selectedType[key])) {
-        return this.getallPrestations;
-      }
-      return this.getallPrestations.filter(prestation =>
-          this.$store.state.selectedType[prestation.id_type_prestation]
-      );
+      return this.getallPrestations.filter(prestation => {
+        const isTypeSelected = this.getSelectedType.length > 0;
+        const isStandSelected = this.getSelectedStands.length > 0;
+
+        const typeFilter = isTypeSelected ? this.getSelectedType.includes(prestation.id_type_prestation) : true;
+        const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
+
+        return typeFilter && standFilter;
+      });
     },
   },
   methods: {
-    getTypePrestation(idType) {
-      const typePrestationMap = this.$store.getters.getallType;
-      return typePrestationMap[idType];
-    },
     getTypePrestationLabel(idType) {
       const type = this.getallType.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';
@@ -49,6 +43,11 @@ export default {
       } catch {
         return require('@/assets/' + "4.png");
       }
+
+    },
+    getStandName(idStand) {
+      const stand = this.getAllStands.find(stand => stand.id_stand === idStand);
+      return stand ? stand.nom_stand : 'Stand inconnu';
     }
   }
 }
