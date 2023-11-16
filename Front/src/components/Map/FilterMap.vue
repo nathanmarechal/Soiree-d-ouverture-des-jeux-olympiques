@@ -18,54 +18,49 @@
     </div>
 
     <h4>Zone</h4>
-    <div v-for="(zone, index) in zones" :key="index" class="form-check">
-      <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id">
+    <div v-for="(zone, index) in getallZone" :key="index" class="form-check">
+      <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
       <label class="form-check-label" :for="'zoneCheck' + index">{{ zone.libelle }}</label>
     </div>
 
+
     <h4>Type de prestation</h4>
-    <div v-for="(type_prestation, index) in type_prestations" :key="index" class="form-check">
-      <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id">
+    <div v-for="(type_prestation, index) in getallType" :key="index" class="form-check">
+      <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id_type_prestation" @change="updateFilterTypePrestation">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
     </div>
+
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
-  props: {
-    zones: {
-      type: Array,
-      required: true
-    },
-    type_prestations: {
-      type: Array,
-      required: true
-    },
+  computed: {
+    ...mapGetters(['getallType', 'getSelectedType','getallZone', 'getSelectedZone']),
 
   },
   data() {
     return {
-      minPrice: 0,
-      maxPrice: 100,
-      selectedZones: [],
-      selectedTypePrestations: []
+      selectedTypePrestations:[],
+      selectedZones:[],
+
+
     };
   },
   methods: {
-    // Appelé lorsque les sélections changent
-    handleSelectionChange() {
-      this.$emit('selection-change', {
-        selectedZones: this.selectedZones,
-        selectedTypePrestations: this.selectedTypePrestations
-      });
-    }
+    ...mapMutations(['SET_SELECTED_TYPE', 'SET_SELECTED_ZONE']),
+    updateFilterTypePrestation() {
+      this.$store.commit('SET_SELECTED_TYPE', this.selectedTypePrestations);
+      console.log(this.selectedTypePrestations),
+      console.log(this.$store.state.selectedType)
+    },
+    updateFilterZone() {
+      this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
+      console.log(this.selectedZones)
+    },
   },
-  watch: {
-    // Écoute les changements dans les sélections
-    selectedZones: 'handleSelectionChange',
-    selectedTypePrestations: 'handleSelectionChange'
-  }
 };
 </script>
 

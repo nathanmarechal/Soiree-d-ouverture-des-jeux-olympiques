@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import area_json from '../datasources/areas.json'
 
 export default new Vuex.Store({
   state: {
@@ -10,7 +11,8 @@ export default new Vuex.Store({
     isUserConnected: false,
     email: '',
     password: '',
-    selectedType: {},
+    selectedType: [],
+    selectedZone: [],
     prestations: [
       {"id_prestation": 1, "libelle": "Prestation 1", "prix": "241.92 €", "id_type_prestation": 2, "id_stand": 8, "creneau_horaire": "2023-11-14 16:00:00", "image": "1.jpeg"},
       {"id_prestation": 2, "libelle": "Prestation 2", "prix": "153.07 €", "id_type_prestation": 6, "id_stand": 9, "creneau_horaire": "2023-11-12 15:00:00", "image": "1.jpg"},
@@ -32,8 +34,26 @@ export default new Vuex.Store({
       {"id_type_prestation": 6, "libelle": "Activité"},
       {"id_type_prestation": 7, "libelle": "International"},
       {"id_type_prestation": 8, "libelle": "Transport"}
-    ]
-
+    ],
+    zones:[
+      {
+        "id_zone": 1,
+        "libelle": "Tuillerie"
+      },
+      {
+        "id_zone": 2,
+        "libelle": "Champs de Mars"
+      },
+      {
+        "id_zone": 3,
+        "libelle": "Jardin des plantes"
+      },
+      {
+        "id_zone": 4,
+        "libelle": "Seine"
+      }
+    ],
+  areas : area_json.areas,
   },
   getters: {
     isLoginOpen: state => state.isLoginOpen,
@@ -43,6 +63,9 @@ export default new Vuex.Store({
     getallPrestations: state => state.prestations,
     getallType: state => state.typePrestations,
     getSelectedType: state => state.selectedType,
+    getallZone: state => state.zones,
+    getSelectedZone: state => state.selectedZone,
+    getAreas: state=> state.areas
   },
   mutations: {
     SET_LOGIN_MODAL(state, value) {
@@ -62,6 +85,9 @@ export default new Vuex.Store({
     },
     SET_SELECTED_TYPE(state, type) {
       state.selectedType = type;
+    },
+    SET_SELECTED_ZONE(state, zone) {
+      state.selectedZone = zone;
     },
   },
   actions: {

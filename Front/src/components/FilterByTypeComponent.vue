@@ -30,6 +30,7 @@ export default {
     ...mapMutations(['SET_SELECTED_TYPE']),
     updateFilter() {
       this.$store.commit('SET_SELECTED_TYPE', this.selectedTypes);
+      console.log(this.$store.state.selectedTypes)
     },
     getTypePrestationLabel(idType) {
       const type = this.getallType.find(type => type.id_type_prestation === idType);
