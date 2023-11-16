@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import {getAllUsers} from "@/services/utilisateur.service";
+
 Vue.use(Vuex)
 
 import area_json from '../datasources/areas.json'
@@ -68,6 +70,14 @@ export default new Vuex.Store({
     getAreas: state=> state.areas
   },
   mutations: {
+
+
+    setUsers(state, users) {
+      state.users.splice(0)
+      users.forEach(p => state.users.push(p))
+    },
+
+
     SET_LOGIN_MODAL(state, value) {
       state.isLoginOpen = value;
     },
@@ -91,6 +101,24 @@ export default new Vuex.Store({
     },
   },
   actions: {
+
+    async getUsers({commit}) {
+      console.log("STORE: get all users")
+      let result = null
+      try {
+        result = await getAllUsers()
+        if (result.error === 0) {
+          commit('setUsers',result.data)
+        }
+        else {
+          console.log(result.data)
+        }
+      }
+      catch(err) {
+        console.log("Cas anormal dans getUsers()")
+      }
+    },
+
     //changeSelectedType({ commit }, type) {
     //  commit('SET_SELECTED_TYPE', type); Si jamais on a besoin de faire de l'asynchrone
     //},

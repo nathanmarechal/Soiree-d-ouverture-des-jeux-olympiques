@@ -5,6 +5,7 @@
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
         <add-user-form v-if="showAddUserForm" :users="users" @add-user="addUser" @close="closeAddForm"></add-user-form>
         <edit-user-form v-if="showEditUserForm" :user="selectedUser" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
+        <!-- <UserList filtered-users="" users=""></UserList> -->
     </div>
 </template>
 
@@ -12,7 +13,13 @@
 import UserList from '../components/Admin/UserList.vue';
 import AddUserForm from '../components/Admin/AddUserForm.vue';
 import EditUserForm from '../components/Admin/EditUserForm.vue';
-import dataTest from "../datasources/testUsers.json";
+
+
+//import {mapActions, mapState} from 'vuex'
+import {getAllUsers} from "@/services/utilisateur.service";
+
+
+//import dataTest from "../datasources/testUsers.json";
 
 export default {
     components: {
@@ -22,7 +29,8 @@ export default {
     },
     data() {
         return {
-            users: dataTest.users,
+            //users: dataTest.users,
+            users: [],
             filterRole: '',
             showAddUserForm: false,
             showEditUserForm: false,
@@ -31,16 +39,33 @@ export default {
             selectedUser: null,
         };
     },
+
+    created() {
+      getAllUsers().then(users => {
+        this.users = users;
+      }).catch(error => {
+        console.error('Error fetching users:', error);
+      });
+    },
+
     computed: {
-        filteredUsers() {
-            if (this.filterRole === '') {
-                return this.users;
-            } else {
-                return this.users.filter(user => user.role === this.filterRole);
-            }
-        },
+
+      //...mapState(['users']),
+
+      filteredUsers() {
+          if (this.filterRole === '') {
+              return this.users;
+          } else {
+              return this.users.filter(user => user.role === this.filterRole);
+          }
+      },
     },
     methods: {
+
+
+      //...mapActions(['getUsers']),
+
+
         addUser(user) {
             user.id = this.users.length + 1;
             this.users.push(user);

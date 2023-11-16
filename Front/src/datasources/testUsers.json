@@ -1,53 +1,52 @@
 {
-    "users": [
-      {
-        "id": 0,
-        "email": "admin@olympics.com",
-        "prenom": "Jean",
-        "nom": "Dufour",
-        "code_postal": 75001,
-        "adresse": "123 Rue de Paris",
-        "commune": "Paris",
-        "role": "Admin",
-        "stand": null,
-        "password": "admin"
+  "users": [
+    {
+      "id": 0,
+      "email": "admin@olympics.com",
+      "prenom": "Jean",
+      "nom": "Dufour",
+      "code_postal": 75001,
+      "adresse": "123 Rue de Paris",
+      "commune": "Paris",
+      "role": "Admin",
+      "stand": null,
+      "password": "admin"
+    },
+    {
+      "id": 1,
+      "email": "vendor1@olympics.com",
+      "prenom": "Marie",
+      "nom": "Dupont",
+      "code_postal": 75002,
+      "adresse": "124 Rue de Paris",
+      "commune": "Paris",
+      "role": "Vendeur",
+      "stand": {
+        "nom_stand": "Stand Gastronomique",
+        "image_stand": "img1.jpg",
+        "description_stand": "Spécialités françaises",
+        "date_achat": "2023-07-01",
+        "prix": 1000
       },
-      {
-        "id": 1,
-        "email": "vendor1@olympics.com",
-        "prenom": "Marie",
-        "nom": "Dupont",
-        "code_postal": 75002,
-        "adresse": "124 Rue de Paris",
-        "commune": "Paris",
-        "role": "Vendeur",
-        "stand": {
-          "nom_stand": "Stand Gastronomique",
-          "image_stand": "img1.jpg",
-          "description_stand": "Spécialités françaises",
-          "date_achat": "2023-07-01",
-          "prix": 1000
-        },
-        "password": "vendor1"
+      "password": "vendor1"
+    },
+    {
+      "id": 2,
+      "email": "vendor2@olympics.com",
+      "prenom": "Paul",
+      "nom": "Durand",
+      "code_postal": 75003,
+      "adresse": "125 Rue de Paris",
+      "commune": "Paris",
+      "role": "Vendeur",
+      "stand": {
+        "nom_stand": "Stand Culturel",
+        "image_stand": "img2.jpg",
+        "description_stand": "Arts and traditions",
+        "date_achat": "2023-07-02",
+        "prix": 800
       },
-      {
-        "id": 2,
-        "email": "vendor2@olympics.com",
-        "prenom": "Paul",
-        "nom": "Durand",
-        "code_postal": 75003,
-        "adresse": "125 Rue de Paris",
-        "commune": "Paris",
-        "role": "Vendeur",
-        "stand": {
-          "nom_stand": "Stand Culturel",
-          "image_stand": "img2.jpg",
-          "description_stand": "Arts and traditions",
-          "date_achat": "2023-07-02",
-          "prix": 800
-        },
-        "password": "vendor2"
-      }
-    ]
-  }
-  
+      "password": "vendor2"
+    }
+  ]
+}

@@ -1,11 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const usersRoutes = require('./routes/users.router');
+const mapRoutes = require('./routes/map.router');
 dotenv.config();
 const app = express();
+const cors = require('cors');
+
+app.use(cors({
+  origin: '*'  // Autorise les requêtes de toutes les origines
+}));
 
 app.use(express.json());
-app.use("/users", usersRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/map", mapRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
