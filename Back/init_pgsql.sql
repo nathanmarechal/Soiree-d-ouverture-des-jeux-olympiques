@@ -1,4 +1,4 @@
-        -- Drop the tables with foreign key constraints
+            -- Drop the tables with foreign key constraints
 DROP TABLE IF EXISTS ligne_panier CASCADE;
 DROP TABLE IF EXISTS ligne_commande CASCADE;
 DROP TABLE IF EXISTS prestation CASCADE;
@@ -405,7 +405,10 @@ SELECT
     z.id_zone AS "id_zone",
     z.id_type_zone AS "id_type_zone",
     (
-        SELECT JSON_AGG(p.id_prestation) FROM prestation p WHERE p.id_stand = s.id_stand
+        SELECT JSON_AGG(DISTINCT tp.id_type_prestation)
+        FROM prestation p
+        JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
+        WHERE p.id_stand = s.id_stand
     ) AS "id_type_prestation",
     e.coordonnes AS "coordinates",
     e.surface AS "surface_area"
@@ -418,4 +421,7 @@ LEFT JOIN
 ORDER BY
     e.id_emplacement;
 
+
+
 SELECT * FROM utilisateur;
+

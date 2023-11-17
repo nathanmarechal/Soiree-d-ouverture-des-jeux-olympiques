@@ -26,7 +26,10 @@ async function getAllAreasAsync() {
             "    z.id_zone AS \"id_zone\",\n" +
             "    z.id_type_zone AS \"id_type_zone\",\n" +
             "    (\n" +
-            "        SELECT JSON_AGG(p.id_prestation) FROM prestation p WHERE p.id_stand = s.id_stand\n" +
+            "        SELECT JSON_AGG(DISTINCT tp.id_type_prestation)\n" +
+            "        FROM prestation p\n" +
+            "        JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation\n" +
+            "        WHERE p.id_stand = s.id_stand\n" +
             "    ) AS \"id_type_prestation\",\n" +
             "    e.coordonnes AS \"coordinates\",\n" +
             "    e.surface AS \"surface_area\"\n" +
@@ -37,7 +40,8 @@ async function getAllAreasAsync() {
             "LEFT JOIN\n" +
             "    zone z ON e.id_zone = z.id_zone\n" +
             "ORDER BY\n" +
-            "    e.id_emplacement;");
+            "    e.id_emplacement;"
+        );
         conn.release();
         return result.rows;
     } catch (error) {

@@ -60,7 +60,9 @@ export default {
       const selectedZoneIds = this.getSelectedZone;
       const selectedTypeIds = this.getSelectedType;
 
-      console.log("test de mes burnes", this.getAreas)
+
+      console.log('Zone selectionné' + selectedZoneIds);
+      console.log('Type de prestation selectionnée' + selectedTypeIds)
 
       const areas = this.areas;
 
@@ -69,7 +71,7 @@ export default {
         return (
 
             (selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone)) &&
-            (selectedTypeIds.length === 0 || selectedTypeIds.some(id => zone.id_prestation.includes(id)))
+            (selectedTypeIds.length === 0 || selectedTypeIds.some(id => zone.id_type_prestation.includes(id)))
         );
       });
 
