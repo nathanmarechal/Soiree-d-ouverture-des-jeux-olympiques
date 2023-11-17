@@ -19,7 +19,9 @@ async function getAllAreasAsync() {
         const result = await conn.query("SELECT\n" +
             "    e.id_emplacement AS \"id_emplacement\",\n" +
             "    CONCAT(s.nom_stand, ' ', e.id_emplacement) AS \"nom_emplacement\",\n" +
+            "    s.image_stand AS \"image_stand\"," +
             "    s.nom_stand AS \"nom_stand\",\n" +
+            "s.id_stand,"+
             "    s.description_stand AS \"description_stand\",\n" +
             "    z.libelle AS \"zone\",\n" +
             "    CASE WHEN s.id_emplacement IS NULL THEN true ELSE false END AS isFree,\n" +

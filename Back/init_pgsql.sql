@@ -398,6 +398,8 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 SELECT
     e.id_emplacement AS "id_emplacement",
     CONCAT(s.nom_stand, ' ', e.id_emplacement) AS "nom_emplacement",
+    s.image_stand AS "image_stand",
+    s.id_stand,
     s.nom_stand AS "nom_stand",
     s.description_stand AS "description_stand",
     z.libelle AS "zone",
