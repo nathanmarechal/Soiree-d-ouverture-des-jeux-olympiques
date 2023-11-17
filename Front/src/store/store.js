@@ -224,15 +224,6 @@ export default new Vuex.Store({
       }
     },
 
-    //changeSelectedType({ commit }, type) {
-    //  commit('SET_SELECTED_TYPE', type); Si jamais on a besoin de faire de l'asynchrone
-    //},
-      //fetchPrestations({ commit }) {
-      // Logique d'appel à l'API pour récupérer les prestations
-      // Par exemple, utiliser axios pour faire une requête GET
-      // puis commit('SET_PRESTATIONS', responseData)
-     //}
-
   },
   modules: {
     // autres modules si nécessaire

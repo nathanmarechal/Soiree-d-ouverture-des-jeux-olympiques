@@ -6,8 +6,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }}</p>
-            <p class="card-text">Type : {{ getStandName(prestation.id_stand) }}</p>
-            <p class="card-text">Stand : {{ prestation.id_stand }}</p>
+            <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
+            <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
             <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
           </div>
         </div>
