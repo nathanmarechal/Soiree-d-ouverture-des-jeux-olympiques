@@ -20,6 +20,10 @@ export default new Vuex.Store({
       selectedType: [],
       selectedZone: [],
       selectedStands: [],
+      minPrice: 0,
+      maxPrice: 0,
+      searchQuery: '',
+
     prestations: [
       {"id_prestation": 1, "libelle": "Prestation 1", "prix": "241.92 €", "id_type_prestation": 2, "id_stand": 1, "creneau_horaire": "2023-11-14 16:00:00", "image": "1.jpeg"},
       {"id_prestation": 2, "libelle": "Prestation 2", "prix": "153.07 €", "id_type_prestation": 6, "id_stand": 1, "creneau_horaire": "2023-11-12 15:00:00", "image": "1.jpg"},
@@ -107,7 +111,10 @@ export default new Vuex.Store({
       getSelectedType: state => state.selectedType,
       getallZone: state => state.zones,
       getSelectedZone: state => state.selectedZone,
-      getAreas: state=> state.areas  },
+      getAreas: state=> state.areas,
+      getMinPrice: state => state.minPrice,
+      getMaxPrice: state => state.maxPrice,
+      getSearchQuery: state => state.searchQuery},
   mutations: {
 
     setUsers(state, users) {
@@ -156,7 +163,17 @@ export default new Vuex.Store({
     },
       SET_SELECTED_STANDS(state, stands) {
           state.selectedStands = stands;
-      }
+          },
+      SET_MIN_PRICE(state, price) {
+          state.minPrice = price;
+      },
+      SET_MAX_PRICE(state, price) {
+          state.maxPrice = price;
+      },
+      SET_SEARCH_QUERY(state, query) {
+          state.searchQuery = query;
+      },
+
   },
   actions: {
 

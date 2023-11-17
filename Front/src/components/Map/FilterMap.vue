@@ -2,19 +2,21 @@
   <div style="border: solid; padding: 1vh">
     <h3>Filtre</h3>
 
+    <!--
     <h4>Prix</h4>
 
     <label for="minPrice">Prix minimum :</label>
-    <input type="number" id="minPrice" v-model="minPrice" min="0">
+    <input type="number" id="minPrice" v-model="minPrice" min="0" @change="updateMinPrice" >
 
     <label for="maxPrice">Prix maximum :</label>
-    <input type="number" id="maxPrice" v-model="maxPrice" min="0">
+    <input type="number" id="maxPrice" v-model="maxPrice" min="0" @change="updateMaxPrice">
 
     <p>Plage de prix : {{ minPrice }} € - {{ maxPrice }} €</p>
+    -->
 
     <h4>Entreprise</h4>
     <div class="form-outline">
-      <input type="search" id="form1" class="form-control" placeholder="Chercher entreprise" aria-label="Search"/>
+      <input type="search" id="form1" class="form-control" placeholder="Chercher entreprise" aria-label="Search" @input="updateSearchQuery"/>
     </div>
 
     <h4>Zone</h4>
@@ -45,12 +47,15 @@ export default {
     return {
       selectedTypePrestations:[],
       selectedZones:[],
+      minPrice: this.$store.state.minPrice,
+      maxPrice: this.$store.state.maxPrice,
+      searchQuery: this.$store.state.searchQuery
 
 
     };
   },
   methods: {
-    ...mapMutations(['SET_SELECTED_TYPE', 'SET_SELECTED_ZONE']),
+    ...mapMutations(['SET_SELECTED_TYPE', 'SET_SELECTED_ZONE','SET_MIN_PRICE','SET_MAX_PRICE','SET_SEARCH_QUERY']),
     updateFilterTypePrestation() {
       this.$store.commit('SET_SELECTED_TYPE', this.selectedTypePrestations);
       console.log(this.selectedTypePrestations),
@@ -59,6 +64,22 @@ export default {
     updateFilterZone() {
       this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
       console.log(this.selectedZones)
+    },
+    updateMinPrice(newVal) {
+      this.$store.commit('SET_MIN_PRICE', newVal);
+    },
+    updateMaxPrice(newVal) {
+      this.$store.commit('SET_MAX_PRICE', newVal);
+    },
+    updateSearchQuery(event) {
+      console.log(event); // Pour déboguer et voir l'objet de l'événement
+      if (event && event.target && event.target.value !== undefined) {
+        const searchValue = event.target.value;
+        this.$store.commit('SET_SEARCH_QUERY', searchValue);
+        console.log('inside filter: ' + searchValue);
+      } else {
+        console.log('Erreur : L\'événement ou la valeur de l\'événement est undefined');
+      }
     },
   },
 };
