@@ -64,8 +64,11 @@ export default {
     ...mapActions(['getAreas', 'getZones']),
 
     initializeMap() {
+      console.log('initalized')
       // Initialise la carte Leaflet avec une vue par défaut
-      this.map = L.map('map').setView([48.857572, 2.2977709], 13);
+      this.map = L.map('map').setView([48.859024, 2.329182], 14);
+
+
 
       // Ajoute une couche de tuiles OpenStreetMap à la carte
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
