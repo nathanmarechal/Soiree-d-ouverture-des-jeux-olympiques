@@ -97,10 +97,10 @@ export default {
 
       const filteredAreas = areas.filter(zone => {
         return (
-            (zone.isfree===false)&&
-            (selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone)) &&
-            (selectedTypeIds.length === 0 || selectedTypeIds.some(id => zone.id_type_zone.includes(id)))
-        );
+          (zone.isfree === false) &&
+          (selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone)) &&
+          (selectedTypeIds.length === 0 || selectedTypeIds.some(id => zone.id_type_prestation.includes(id)))
+      );
       });
 
       // Ajoutez à nouveau les polygones filtrés à la carte
