@@ -3,8 +3,8 @@
         <h1 class="title">Liste d'utilisateurs :</h1>
         <button v-if="showAddButton" class="blue-button" @click="showAddForm">Ajouter utilisateurs</button> <br><br>
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
-        <add-user-form v-if="showAddUserForm" :users="users" @add-user="addUser" @close="closeAddForm"></add-user-form>
-        <edit-user-form v-if="showEditUserForm" :user="selectedUser" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
+        <add-user-form v-if="showAddUserForm" :users="users" :roles="roles" :type-presentation="typePresentation" :type-zone="typeZone" @add-user="addUser" @close="closeAddForm"></add-user-form>
+        <edit-user-form v-if="showEditUserForm" :user="selectedUser" :roles="roles" :type-presentation="typePresentation" :type-zone="typeZone" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
     </div>
 </template>
 

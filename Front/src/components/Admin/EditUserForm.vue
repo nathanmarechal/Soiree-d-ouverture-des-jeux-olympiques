@@ -3,27 +3,35 @@
         <h2>Modifier Utilisateur</h2>
         <form @submit.prevent="submitForm">
             <div>
-                <input type="hidden" id="id" :value="localUser.id" @input="localUser.id = $event.target.value" required>
+                <input type="hidden" id="id" v-model="localUser.id" required>
             </div>
             <div>
                 <label for="first-name">Prénom:</label>
-                <input type="text" id="first-name" :value="localUser.prenom" @input="localUser.prenom = $event.target.value" required>
+                <input type="text" id="first-name" v-model="localUser.prenom" required>
             </div>
             <div>
                 <label for="last-name">Nom:</label>
-                <input type="text" id="last-name" :value="localUser.nom" @input="localUser.nom = $event.target.value" required>
+                <input type="text" id="last-name" v-model="localUser.nom" required>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" :value="localUser.email" @input="localUser.email = $event.target.value" required>
+                <input type="email" id="email" v-model="localUser.email" required>
             </div>
             <div>
                 <label for="role">Role:</label>
-                <select id="role" :value="localUser.role" @input="localUser.role = $event.target.value" required>
-                    <option value="">Séléctionner un role</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Vendeur">Vendeur</option>
+                <select id="role" v-model="localUser.role" required>
+                    <option value="">Sélectionner un rôle</option>
+                    <option value="admin">Admin</option>
+                    <option value="prestataire">Prestataire</option>
                 </select>
+            </div>
+            <div v-if="localUser.stand">
+                <label for="stand">Stand :</label>
+                <div>
+                    <p>Nom du stand: {{ localUser.stand.nom_stand }}</p>
+                    <p>Date d'achat: {{ localUser.stand.date_achat }}</p>
+                    <p>Prix: {{ localUser.stand.prix }}</p>
+                </div>
             </div>
             <button class="blue-button" type="submit">Sauvegarder</button>
             <button class="red-button" type="button" @click="$emit('close')">Annuler</button>
@@ -36,6 +44,18 @@ export default {
     props: {
         user: {
             type: Object,
+            required: true,
+        },
+        roles: {
+            type: Array,
+            required: true,
+        },
+        typePresentation: {
+            type: String,
+            required: true,
+        },
+        typeZone: {
+            type: String,
             required: true,
         },
     },
@@ -112,5 +132,5 @@ button[type='submit']:hover {
 
 .red-button:hover {
     background-color: #e60000;
-}</style>
-
+}
+</style>
