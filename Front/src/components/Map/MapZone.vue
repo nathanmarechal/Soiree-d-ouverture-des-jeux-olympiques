@@ -101,8 +101,6 @@ export default {
       const searchQuery = this.getSearchQuery;
 
       const areas = this.areas;
-      console.log('GROS FLOP DE ALEXIS')
-      console.log(areas)
 
       const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypeIds.length > 0;
 
@@ -110,7 +108,7 @@ export default {
 
       if (hasSearchCriteria) {
         filteredAreas = areas.filter(zone => {
-          const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase()));
+          const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
           const matchesType = selectedTypeIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypeIds.includes(id)));
 
@@ -119,18 +117,14 @@ export default {
       }
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
-        console.log("flop")
         filteredAreas = areas.filter(zone => {
           return (zone.isfree === false)       });
       }
       // Ajoutez à nouveau les polygones filtrés à la carte
-      console.log("FILS DE PUTE")
-      console.log(filteredAreas)
       filteredAreas.forEach(zone => {
-        console.log("Wesh");
         const polygon = L.polygon(zone.coordinates, {
           color: 'blue',
-          fillOpacity: 0.5,
+          fillOpacity: 0.8,
         }).addTo(this.map);
 
         polygon.on('click', () => {

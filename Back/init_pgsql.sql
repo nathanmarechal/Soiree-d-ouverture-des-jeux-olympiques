@@ -43,9 +43,9 @@ CREATE TABLE emplacement(
 
 CREATE TABLE stand(
    id_stand SERIAL PRIMARY KEY,
-   nom_stand VARCHAR(50),
-   image_stand VARCHAR(50),
-   description_stand VARCHAR(50),
+   nom_stand VARCHAR(100),
+   image_stand VARCHAR(100),
+   description_stand TEXT,
    date_achat DATE,
    prix INT,
    id_emplacement INT,
@@ -123,10 +123,10 @@ INSERT INTO type_prestation (libelle) VALUES
 ('billeterie');
 
 INSERT INTO zone VALUES
-(1,'champs_de_mars',1),
+(1,'champs de mars',1),
 (2,'tuillerie',1),
-(3,'zones_ambulantes',2),
-(4,'jardin_des_plantes',1);
+(3,'zones ambulantes',2),
+(4,'jardin des plantes',1);
 
 INSERT INTO emplacement (id_emplacement,coordonnes,surface,id_zone) VALUES
 (1,'[[48.857572, 2.2977709], [48.8575631, 2.2977724], [48.8575566, 2.2977726], [48.857554, 2.2977637], [48.8575404, 2.2976456], [48.8575318, 2.2975923], [48.8575262, 2.2975621], [48.8575281, 2.2975502], [48.8575798, 2.2975381], [48.8576294, 2.297513], [48.8576625, 2.2974845], [48.8577107, 2.297447], [48.8577602, 2.2973924], [48.8577737, 2.2973886], [48.8577838, 2.2973952], [48.8577886, 2.297414], [48.857789, 2.2974299], [48.857572, 2.2977709]]',443,1),
@@ -377,9 +377,15 @@ INSERT INTO emplacement (id_emplacement,coordonnes,surface,id_zone) VALUES
 (246,'[[48.8426403, 2.358011], [48.8426734, 2.358138], [48.8425908, 2.3581876], [48.8425577, 2.3580606], [48.8426403, 2.358011]]',149,4),
 (247,'[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4);
 
-INSERT INTO stand (id_stand,nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
-(1,'mmm-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
-(2,'kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2);
+INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
+('mmm-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
+('kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2),
+('arthur le clown','arthur-clown.png','venez assiter au spectacle mélangeant humour et informatique ','2023-11-04',3000,80),
+('Boulangerie de Paris','boulangerie-paris.png','venez les gouter spécialitées les plus populaires de France','2023-11-04',3000,247),
+('SNCF','train-promotion.png','Découvrez Paris et la France par le train','2023-11-04',3000,144),
+('Judo Folie','judo-combat.png','initation au judo','2023-11-04',3000,84),
+('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
+('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107);
 
 INSERT INTO prestation (id_prestation,libelle, prix, id_type_prestation, id_stand) VALUES
 (1,'kebab frites',12,2,2),
@@ -391,9 +397,15 @@ INSERT INTO prestation (id_prestation,libelle, prix, id_type_prestation, id_stan
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
-('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', null, 1),
-('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 2, 2),
-('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 1, 2);
+('email20@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 1, 2),
+('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 2, 2),
+('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 3, 2),
+('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 4, 2),
+('email6@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 5, 2),
+('email7@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 6, 2),
+('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
+('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
+
 
 SELECT
     e.id_emplacement AS "id_emplacement",

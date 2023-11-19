@@ -24,7 +24,7 @@ export default {
   computed: {
     imagePath() {
       // Adaptez ce chemin selon la structure de votre projet
-      return require(`@/assets/${this.stand.image_stand}`);
+      return require(`@/assets/stand/${this.stand.image_stand}`);
     }
   },
   methods: {
