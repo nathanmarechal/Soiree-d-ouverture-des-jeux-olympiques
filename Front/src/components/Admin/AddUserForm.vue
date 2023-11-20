@@ -33,7 +33,7 @@
           <option v-for="role in roles" :key="role" :value="role.id_role">{{ role.libelle }}</option>
         </select>
       </div>
-      <div v-if="role === 'prestataire'">
+      <div v-if="role.libelle === 'prestataire'">
         <button v-if="!showStandForm" type="button" @click="showStandForm = true">Add Stand</button>
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
         <div v-if="showStandForm">
