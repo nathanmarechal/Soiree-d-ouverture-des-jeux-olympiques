@@ -9,7 +9,12 @@ DROP TABLE IF EXISTS emplacement CASCADE;
 DROP TABLE IF EXISTS zone CASCADE;
 DROP TABLE IF EXISTS type_zone CASCADE;
 DROP TABLE IF EXISTS type_prestation CASCADE;
+
+DROP TABLE IF EXISTS session;
+DROP TABLE IF EXISTS droits;
+DROP TABLE IF EXISTS role_droits;
 DROP TABLE IF EXISTS role CASCADE;
+
 
 CREATE TABLE role(
    id_role SERIAL PRIMARY KEY,
@@ -106,6 +111,16 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
 );
 
+CREATE TABLE session
+(
+    session_id VARCHAR(255),
+    id_user INT PRIMARY KEY ,
+    timeLimit TIMESTAMP,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user)
+);
+
+
+
 -- Insert data into tables
 INSERT INTO role (libelle) VALUES
 ('admin'),
@@ -127,6 +142,7 @@ INSERT INTO zone VALUES
 (2,'tuillerie',1),
 (3,'zones ambulantes',2),
 (4,'jardin des plantes',1);
+
 
 INSERT INTO emplacement (id_emplacement,coordonnes,surface,id_zone) VALUES
 (1,'[[48.857572, 2.2977709], [48.8575631, 2.2977724], [48.8575566, 2.2977726], [48.857554, 2.2977637], [48.8575404, 2.2976456], [48.8575318, 2.2975923], [48.8575262, 2.2975621], [48.8575281, 2.2975502], [48.8575798, 2.2975381], [48.8576294, 2.297513], [48.8576625, 2.2974845], [48.8577107, 2.297447], [48.8577602, 2.2973924], [48.8577737, 2.2973886], [48.8577838, 2.2973952], [48.8577886, 2.297414], [48.857789, 2.2974299], [48.857572, 2.2977709]]',443,1),
@@ -434,8 +450,3 @@ LEFT JOIN
     zone z ON e.id_zone = z.id_zone
 ORDER BY
     e.id_emplacement;
-
-
-
-SELECT * FROM utilisateur;
-
