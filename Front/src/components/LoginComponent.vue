@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {getSession} from "@/services/login.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -58,10 +59,19 @@ export default {
     submitForm() {
       if (this.isEmailValid() && this.isPasswordValid()) {
         alert('Formulaire envoyé !')
-        console.log(this.email, this.password)
-        this.$store.commit('SET_EMAIL', this.email);
-        this.$store.commit('SET_PASSWORD', this.password);
-        this.$store.commit('SET_USER_CONNECTED', true);
+        getSession(this.email,this.password)
+            .then(res=>
+            {
+              console.log("res : "+res);
+              console.log(this.email, this.password,res)
+              this.$store.commit('SET_UUID',res);
+              this.$store.commit('SET_EMAIL', this.email);
+              this.$store.commit('SET_PASSWORD', this.password);
+              this.$store.commit('SET_USER_CONNECTED', true);
+            })
+        //const uuid = getSession(this.email,this.password)
+
+
         this.closeModal();
       } else {
         alert('Veuillez remplir correctement le formulaire !')

@@ -11,6 +11,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    uuid:'',
     users: [],
     isLoginOpen: false,
     isUserConnected: false,
@@ -103,6 +104,7 @@ export default new Vuex.Store({
       isUserConnected: state => state.isUserConnected,
       getemail: state => state.email,
       getpassword: state => state.password,
+      getuuid: state => state.uuid,
       getallPrestations: state => state.prestations,
       getallType: state => state.typePrestations,
       getAllStands: state => state.stands,
@@ -171,6 +173,11 @@ export default new Vuex.Store({
     },
       SET_SELECTED_STANDS(state, stands) {
           state.selectedStands = stands;
+      SET_UUID(state,uuid)
+      {
+          state.uuid = uuid;
+      }
+      },
           },
       SET_MIN_PRICE(state, price) {
           state.minPrice = price;
