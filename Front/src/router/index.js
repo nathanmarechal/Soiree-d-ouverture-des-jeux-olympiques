@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import AdminEditUsers from '../views/AdminEditUsers.vue'
 import mapPage from "@/views/mapPage.vue";
 import standPage from "../views/standPage.vue"
+import addUserForm from "../components/User/AddUserForm.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     path: '/stand',
     name: 'StandView',
     component: standPage
+  },
+  {
+    path: '/sign-up',
+    name: 'addUserFormView',
+    component: addUserForm
   },
 
 ]
