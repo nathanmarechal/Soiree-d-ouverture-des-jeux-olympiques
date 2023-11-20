@@ -1,4 +1,4 @@
-Back/.env
+.env
 .DS_Store
 Back/node_modules
 dist
