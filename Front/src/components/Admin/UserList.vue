@@ -38,6 +38,7 @@
         type: Array,
         required: true,
       },
+      
     },
     methods: {
       editUser(index) {

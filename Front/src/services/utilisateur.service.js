@@ -12,6 +12,20 @@ async function getAllUsers() {
     return answer
 }
 
+async function getAllRoles() {
+    let answer = await getAllRolesFromAPI()
+    console.log("getAllRoles: ", answer)
+    return answer
+}
+
+async function getAllRolesFromAPI() {
+    let answer = await getRequest('/users/roles', 'GETALLROLES')
+    console.log("getAllRolesFromAPI: ", answer)
+    return answer
+}
+
+
 export {
-    getAllUsers
+    getAllUsers,
+    getAllRoles
 }

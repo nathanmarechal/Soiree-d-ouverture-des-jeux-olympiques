@@ -15,25 +15,29 @@
         <input type="email" id="email" v-model="email" required>
       </div>
       <div>
+        <label for="adresse">Adresse :</label>
+        <input type="text" id="adresse" v-model="adresse" required>
+      </div>
+      <div>
+        <label for="code_postal">Code Postal :</label>
+        <input type="text" id="code_postal" v-model="code_postal" required>
+      </div>
+      <div>
+        <label for="password">Password :</label>
+        <input type="text" id="password" v-model="password" required>
+      </div>
+      <div>
         <label for="role">Role:</label>
         <select id="role" v-model="role" required>
           <option value="">Sélectionner un role</option>
-          <!--temp--><option value="prestataire">TempPrestataire</option>
-          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+          <option v-for="role in roles" :key="role" :value="role.id_role">{{ role.libelle }}</option>
         </select>
       </div>
       <div v-if="role === 'prestataire'">
-        <div>
-          <label for="type-prestation">Type Prestation</label>
-          <select id="type-prestation" v-model="prestation" required>
-            <option value="">Sélectionner un type de prestation</option>
-            <option v-for="prestation in typePrestation" :key="prestation" :value="prestation">{{ prestation }}</option>
-          </select>
-        </div>
         <button v-if="!showStandForm" type="button" @click="showStandForm = true">Add Stand</button>
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
         <div v-if="showStandForm">
-          <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone"></AddStandForm>
+          <AddStandForm :typeZone="typeZone" ></AddStandForm>
         </div>
       </div>
       <div>
@@ -61,10 +65,6 @@ export default {
       type: Array,
       required: true,
     },
-    typePrestation: {
-      type: Array,
-      required: true,
-    },
     typeZone: {
       type: Array,
       required: true,
@@ -76,23 +76,25 @@ export default {
       lastName: '',
       email: '',
       role: '',
+      adresse: '',
+      code_postal: '',
+      password: '',
       showStandForm: false,
-      stand: '',
-      list_roles: '',
-      list_types: '',
     };
   },
   methods: {
     submitForm() {
       const newUser = {
-        prenom: this.firstName,
-        nom: this.lastName,
+        firstName: this.firstName,
+        lastName: this.lastName,
         email: this.email,
         role: this.role,
         stand: this.stand,
-        type_prestation: this.typePrestation,
-        type_zone: this.typeZone,
-        zone_id: this.zoneId,
+        typeZone: this.typeZone,
+        zoneId: this.zoneId,
+        adresse: this.adresse,
+        code_postal: this.code_postal,
+        password: this.password,
       };
       this.$emit('add-user', newUser);
       this.firstName = '';
@@ -100,9 +102,12 @@ export default {
       this.email = '';
       this.role = '';
       this.stand = '';
-      this.prestation = '';
       this.zoneType = '';
       this.zoneId = '';
+      this.adresse = '';
+      this.code_postal = '';
+      this.password = '';
+      this.showStandForm = false;
     },
     validateStand() {
       // Add your validation logic here

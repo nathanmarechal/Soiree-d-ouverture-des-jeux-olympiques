@@ -3,8 +3,8 @@
         <h1 class="title">Liste d'utilisateurs :</h1>
         <button v-if="showAddButton" class="blue-button" @click="showAddForm">Ajouter utilisateurs</button> <br><br>
         <user-list v-if="showUserList" :users="users" :filtered-users="filteredUsers" @edit-user="editUser" @delete-user="deleteUser"></user-list>
-        <add-user-form v-if="showAddUserForm" :users="users" :roles="roles" :type-presentation="typePresentation" :type-zone="typeZone" @add-user="addUser" @close="closeAddForm"></add-user-form>
-        <edit-user-form v-if="showEditUserForm" :user="selectedUser" :roles="roles" :type-presentation="typePresentation" :type-zone="typeZone" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
+        <add-user-form v-if="showAddUserForm" :users="users" :roles="roles" :type-zone="typeZone" @add-user="addUser" @close="closeAddForm"></add-user-form>
+        <edit-user-form v-if="showEditUserForm" :user="selectedUser" :roles="roles" :type-zone="typeZone" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
     </div>
 </template>
 
@@ -38,11 +38,13 @@ export default {
 
     created() {
       this.$store.dispatch('getUsers')
+      this.$store.dispatch('getRoles');
+      this.$store.dispatch('getTypeZone');
     },
 
     computed: {
 
-      ...mapState(['users']),
+        ...mapState(['users', 'roles', 'typeZone']),
 
       filteredUsers() {
           if (this.filterRole === '') {
@@ -55,6 +57,8 @@ export default {
     methods: {
 
         ...mapActions(['getUsers']),
+        ...mapActions(['getRoles']),
+        ...mapActions(['getTypeZone']),
 
         addUser(user) {
             user.id = this.users.length + 1;

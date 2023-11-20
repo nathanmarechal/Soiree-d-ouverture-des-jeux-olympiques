@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {getAllUsers} from "@/services/utilisateur.service";
-import {getAllAreas} from "@/services/map.service";
-import {getAllZones} from "@/services/map.service";
+import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
+import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
 
 Vue.use(Vuex)
 
@@ -107,6 +106,8 @@ export default new Vuex.Store({
       getallPrestations: state => state.prestations,
       getallType: state => state.typePrestations,
       getAllStands: state => state.stands,
+      getAllTypeZone: state => state.typeZone,
+      getAllRoles: state => state.roles,
       getSelectedStands : state => state.selectedStands,
       getSelectedType: state => state.selectedType,
       getallZone: state => state.zones,
@@ -139,6 +140,13 @@ export default new Vuex.Store({
         areas.forEach(p => state.areas.push(p))
     },
 
+    setRoles(state, roles) {
+      state.roles = roles;
+    },
+
+    setTypeZone(state, typeZone) {
+      state.typeZone = typeZone;
+    },
 
     SET_LOGIN_MODAL(state, value) {
       state.isLoginOpen = value;
@@ -199,6 +207,31 @@ export default new Vuex.Store({
     },
 
        */
+    async getRoles({ commit }) {
+      try {
+        const roles = await getAllRoles();
+        if (Array.isArray(roles)) {
+          commit('setRoles', roles);
+        } else {
+          console.error("Unexpected response format:", roles);
+        }
+      } catch (err) {
+        console.error("Error in getRoles():", err);
+      }
+    },
+
+    async getTypeZone({ commit }) {
+      try {
+        const typeZone = await getAllTypeZone();
+        if (Array.isArray(typeZone)) {
+          commit('setTypeZone', typeZone);
+        } else {
+          console.error("Unexpected response format:", typeZone);
+        }
+      } catch (err) {
+        console.error("Error in getTypeZone():", err);
+      }
+    },
 
     async getUsers({ commit }) {
       try {
@@ -246,3 +279,8 @@ export default new Vuex.Store({
     // autres modules si nécessaire
   }
 })
+
+
+
+
+

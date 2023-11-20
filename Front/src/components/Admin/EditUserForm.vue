@@ -18,9 +18,21 @@
                 <input type="email" id="email" v-model="localUser.email" required>
             </div>
             <div>
+                <label for="adresse">Adresse :</label>
+                <input type="text" id="adresse" v-model="localUser.adresse" required>
+            </div>
+            <div>
+                <label for="code_postal">Code Postal :</label>
+                <input type="text" id="code_postal" v-model="localUser.code_postal" required>
+            </div>
+            <div>
+                <label for="password">Password :</label>
+                <input type="text" id="password" v-model="localUser.password" required>
+            </div>
+            <div>
                 <label for="role">Role:</label>
                 <select id="role" v-model="localUser.role" required>
-                    <option value="">Sélectionner un rôle</option>
+                    <option value="">Sélectionner un role</option>
                     <option value="admin">Admin</option>
                     <option value="prestataire">Prestataire</option>
                 </select>

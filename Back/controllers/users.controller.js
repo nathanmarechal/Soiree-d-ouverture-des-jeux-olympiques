@@ -39,6 +39,18 @@ exports.getUserById = (req, res) => {
     })
 }
 
+
+exports.getRoles = (req, res) => {
+    usersService.getAllRoles((error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.getUserWithLongestPrenom = (req, res) => {
     usersService.getUserWithLongestPrenom((error, data) => {
         if (error) {

@@ -14,7 +14,7 @@
                         <label for="description_stand">Description du stand:</label><br>
                         <textarea id="description_stand" v-model="stand.description_stand" required></textarea><br>
                 </div>
-                <SelectEmplacement v-model="stand.id_emplacement" required></SelectEmplacement>
+                <SelectEmplacement v-model="stand.id_emplacement" :typeZone="typeZone" required></SelectEmplacement>
             <button type="submit">Add Stand</button>
         </form>
     </div>
@@ -26,6 +26,12 @@ import SelectEmplacement from './SelectEmplacement.vue';
 export default {
     components: {
         SelectEmplacement
+    },
+    props: {
+        typeZone: {
+            type: Array,
+            required: true,
+        }
     },
     data() {
         return {
@@ -51,3 +57,20 @@ export default {
     }
 };
 </script>
+
+<style scopped>
+button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4d79ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: #1a53ff;
+}
+</style>

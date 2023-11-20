@@ -2,9 +2,9 @@
     <div>
         <div>
             <label for="type_zone">Type Zone</label>
-            <select id="type_zone" v-model="typeZone" required>
+            <select id="type_zone" v-model="emplacement.typeZone" required>
                 <option value="">Sélectionner un type de zone</option>
-                <option v-for="type_zone in list_zones" :key="type_zone" :value="type_zone">{{ type_zone }}</option>
+                <option v-for="typeZone in typeZone" :key="typeZone" :value="typeZone.id_type_zone">{{ typeZone.libelle }}</option>
             </select>
         </div>
         <div class="map-container">
@@ -22,17 +22,22 @@ export default {
             type: Array,
             required: true,
         },
+        typeZone: {
+            type: String,
+            required: true,
+        },
     },
     data() {
         return {
-            typeZone: '',
-            list_zones: '',
+            emplacement: {
+                typeZone: '',
+            },
         };
     },
     methods: {
         submitForm() {
             const newEmplacement = {
-                type_zone: this.typeZone,
+                typeZone: this.typeZone,
             };
             this.$emit('add-emplacement', newEmplacement);
         },

@@ -76,8 +76,31 @@ async function getAllZonesAsync() {
 
 }
 
+const getAllTypeZones = (callback) => {
+    getAllTypeZoneAsync()
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getAllTypeZoneAsync() {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT * FROM type_zone");
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAllTypeZoneAsync:', error);
+        throw error;
+    }
+}
 
 module.exports = {
     getAllAreas: getAllAreas,
-    getAllZones: getAllZones
+    getAllZones: getAllZones,
+    getAllTypeZones: getAllTypeZones
 }

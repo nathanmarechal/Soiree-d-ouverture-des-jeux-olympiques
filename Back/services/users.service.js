@@ -92,6 +92,30 @@ async function getUserWithLongestPrenomAsync() {
     }
 }
 
+async function getAllRolesAsync() {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT * FROM role");
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAllRolesAsync:', error);
+        throw error;
+    }
+}
+
+const getAllRoles = (callback) => {
+    getAllRolesAsync()
+        .then(res => {
+            console.log('Roles:', res);
+            callback(null, res);
+        })
+        .catch(error => {
+            console.error('Error in getAllRoles:', error);
+            callback(error, null);
+        });
+}
+
 const updateUser = (id, nom, prenom, callback) => {
     try{
         updateUserAsync(id, nom, prenom)
@@ -145,6 +169,7 @@ module.exports = {
     , getAllUsers: getAllUsers
     , getUserById: getUserById
     , getUserWithLongestPrenom: getUserWithLongestPrenom
+    , getAllRoles: getAllRoles
     , updateUser: updateUser
     , deleteUser: deleteUser
 }
