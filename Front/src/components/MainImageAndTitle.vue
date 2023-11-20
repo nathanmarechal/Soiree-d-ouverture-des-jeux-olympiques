@@ -1,7 +1,7 @@
 <template>
   <div class="full-screen-image">
     <img :src="imageUrl" alt="Full Screen Image"/>
-    <h1 class="image-title">Vivez Le Rève Olympique</h1>
+    <h1 class="image-title">Vivez Le Rêve Olympique</h1>
   </div>
 </template>
 
