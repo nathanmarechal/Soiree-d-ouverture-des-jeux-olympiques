@@ -1,18 +1,18 @@
 <template>
     <div>
-        <h1>Add Stand Form</h1>
+      <h4>Création du stand</h4>
         <form @submit.prevent="submitForm">
-                <div>
-                        <label for="nom_stand">Nom du stand:</label><br>
-                        <input type="text" id="nom_stand" v-model="stand.nom_stand" required> <br>
+                <div class="form">
+                        <label for="nom_stand">Nom du stand</label>
+                        <input type="text" id="nom_stand" v-model="stand.nom_stand" required>
                 </div>
-                <div>
-                        <label for="image_stand">Image du stand:</label><br>
-                        <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required> <br>
+                <div class="form">
+                        <label for="image_stand">Image du stand</label><br>
+                        <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
                 </div>
-                <div>
-                        <label for="description_stand">Description du stand:</label><br>
-                        <textarea id="description_stand" v-model="stand.description_stand" required></textarea><br>
+                <div  class="d-flex flex-column">
+                        <label for="description_stand">Description du stand:</label>
+                  <textarea id="description_stand" v-model="stand.description_stand" required class="w-100"></textarea>
                 </div>
                 <SelectEmplacement v-model="stand.id_emplacement" :typeZone="typeZone" required></SelectEmplacement>
             <button type="submit">Add Stand</button>
@@ -70,7 +70,31 @@ button[type="submit"] {
   transition: background-color 0.2s ease-in-out;
 }
 
-button[type="submit"]:hover {
-  background-color: #1a53ff;
+
+input, select {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+
+button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4d79ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
 }
 </style>
