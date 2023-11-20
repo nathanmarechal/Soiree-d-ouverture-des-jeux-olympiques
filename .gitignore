@@ -1,6 +1,6 @@
-.env
+./Back/.env
 .DS_Store
-node_modules
+./Back/node_modules
 /dist
 
 
