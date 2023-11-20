@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import AddStandForm from '../Add/StandForm.vue';
+import AddStandForm from '../User/AddStandForm.vue';
 
 export default {
   components: {
