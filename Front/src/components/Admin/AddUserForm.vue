@@ -34,7 +34,7 @@
           <option value="prestataire">prestataireTemp</option>
         </select>
       </div>
-      <div v-if="role === 'prestataire'">
+      <div v-if="role.id_role == 2">
         <button v-if="!showStandForm" type="button" @click="showStandForm = true">Add Stand</button>
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
         <div v-if="showStandForm">
@@ -91,8 +91,6 @@ export default {
         email: this.email,
         role: this.role,
         stand: this.stand,
-        typeZone: this.typeZone,
-        zoneId: this.zoneId,
         adresse: this.adresse,
         code_postal: this.code_postal,
         password: this.password,
@@ -103,12 +101,9 @@ export default {
       this.email = '';
       this.role = '';
       this.stand = '';
-      this.zoneType = '';
-      this.zoneId = '';
       this.adresse = '';
       this.code_postal = '';
       this.password = '';
-      this.showStandForm = false;
     },
     validateStand() {
       // Add your validation logic here

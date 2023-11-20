@@ -8,7 +8,7 @@ router.get("/roles", usersController.getRoles);
 router.get("/home",(req, res) => {
 res.send("HOME");
 });
-
+ 
 router.post("/", usersMiddleware.validateUserInput,usersController.saveUser);
 
 router.get("/", usersController.getUsers);
