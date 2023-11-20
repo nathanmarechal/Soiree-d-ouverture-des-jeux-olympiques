@@ -171,23 +171,21 @@ export default new Vuex.Store({
     SET_SELECTED_ZONE(state, zone) {
       state.selectedZone = zone;
     },
-      SET_SELECTED_STANDS(state, stands) {
-          state.selectedStands = stands;
-      SET_UUID(state,uuid)
-      {
+    SET_SELECTED_STANDS(state, stands) {
+        state.selectedStands = stands;
+    },
+    SET_UUID(state,uuid) {
           state.uuid = uuid;
-      }
-      },
-          },
-      SET_MIN_PRICE(state, price) {
-          state.minPrice = price;
-      },
-      SET_MAX_PRICE(state, price) {
-          state.maxPrice = price;
-      },
-      SET_SEARCH_QUERY(state, query) {
-          state.searchQuery = query;
-      },
+    },
+    SET_MIN_PRICE(state, price) {
+        state.minPrice = price;
+    },
+    SET_MAX_PRICE(state, price) {
+        state.maxPrice = price;
+    },
+    SET_SEARCH_QUERY(state, query) {
+        state.searchQuery = query;
+    },
 
   },
   actions: {
