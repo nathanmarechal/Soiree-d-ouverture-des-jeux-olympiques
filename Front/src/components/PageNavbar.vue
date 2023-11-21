@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" class="desktop-navbar">
-      <b-navbar-brand href="#"><img src="../assets/logovecto.svg" alt="Logo" class="navbar-logo"></b-navbar-brand>
+      <b-navbar-brand href="#"><img src="../assets/Logos/logovecto.svg" alt="Logo" class="navbar-logo"></b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
@@ -28,7 +28,7 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
-      <b-navbar-brand href="#" @click="showLoginModal" > <img src="../assets/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
+      <b-navbar-brand href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="email">
         <b-dropdown-item href="#" class = "dp">Mes espaces</b-dropdown-item>
         <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>

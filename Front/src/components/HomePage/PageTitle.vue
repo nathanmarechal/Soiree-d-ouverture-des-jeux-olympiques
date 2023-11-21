@@ -1,7 +1,6 @@
 <template>
-  <div class="container text-center my-5"> <!-- Ajout d'une marge verticale -->
+  <div class="container text-center my-5">
     <h1 class="display-4 border-bottom pb-2">{{ pageTitle }}</h1>
-    <!-- Bordure sous le titre et espace en dessous pour le distinguer -->
   </div>
 </template>
 
@@ -9,7 +8,7 @@
 export default {
   data() {
     return {
-      pageTitle: 'Ouverture des jeux de Paris'
+      pageTitle: "Déroulement et plan de la soirée d'ouverture des jeux olympiques de Paris 2024"
     }
   }
 }

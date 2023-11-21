@@ -14,7 +14,7 @@
 
 
 <script>
-import MapZone from '../components/Map/MapZone.vue'
+import MapZone from '../Map/MapZone.vue'
 
 export default {
   data() {

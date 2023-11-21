@@ -2,18 +2,53 @@
   <div class="container-fluid h-100">
     <div class="row h-100">
       <div class="col-lg-6 d-flex align-items-center justify-content-center">
-        <div class="image-container"></div>
+        <div ><img  class="img" :src="image" alt="image du parcours"></div>
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
-        <h2 class="subtitle">Une cérémonie sur l'eau</h2>
-        <p class="lead text justi">{{ pageDescription }}</p>
+        <h2 class="subtitle">Une cérémonie sur l'eau : accès gratuit</h2>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">horaire</th>
+            <th scope="col">prestation</th>
+            <th scope="col">lieu d'observation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">19h</th>
+            <td>Discours, Parade des athlètes et présentation de la flamme olympique</td>
+            <td>Quais Notre-Dame / Hôtel de ville</td>
+          </tr>
+          <tr>
+            <th scope="row">20h30</th>
+            <td>Défilé de mode olympique </td>
+            <td>Quais Louvre</td>
+          </tr>
+          <tr>
+            <th scope="row">21h</th>
+            <td >Spectacles culturels internationaux</td>
+            <td>Quais Tuileries</td>
+          </tr>
+          <tr>
+            <th scope="row">22h30</th>
+            <td>Spectacles culturels français</td>
+            <td>Quais grand palais / Invalides</td>
+          </tr>
+          <tr>
+            <th scope="row">00h</th>
+            <td >Concerts et feux d'artifice</td>
+            <td>Quais Tour Eiffel / Trocadéro / Pont d'Iena</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import image from '../assets/parcours.jpg';
+import image from '../../assets/HomePage/parcours.jpg';
 
 export default {
   data() {
@@ -30,12 +65,9 @@ export default {
   text-align: justify;
 }
 
-.image-container {
-  background-image: url('../assets/parcours.jpg');
-  background-size: cover;
-  background-position: center;
-  min-height: 500px;
+.img {
   width: 100%;
+  height: 100%;
 }
 .row {
   min-height: 500px;

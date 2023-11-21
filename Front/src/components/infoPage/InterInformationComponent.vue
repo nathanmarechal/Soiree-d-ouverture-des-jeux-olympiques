@@ -1,6 +1,6 @@
 <template>
   <div class="inter-image-container">
-    <img src="../assets/inter.jpg" alt="Background" class="inter-img-fluid w-100 h-100">
+    <img src="../../assets/infoPage/inter.jpg" alt="Background" class="inter-img-fluid w-100 h-100">
     <div class="inter-overlay-text">
       <p>{{ description }}</p>
       <button class="inter-overlay-button">Cliquez ici</button>

@@ -1,6 +1,6 @@
 <template>
   <div class="ratp-image-container">
-    <img src="../assets/ratp.jpg" alt="Background" class="ratp-img-fluid w-100 h-100">
+    <img src="../../assets/infoPage/ratp.jpg" alt="Background" class="ratp-img-fluid w-100 h-100">
     <div class="ratp-overlay-text">
       <div class="ratp-text-content">
         <p>{{ ratpDescription }}</p>

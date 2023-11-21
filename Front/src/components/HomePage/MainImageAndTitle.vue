@@ -1,12 +1,12 @@
 <template>
   <div class="full-screen-image">
     <img :src="imageUrl" alt="Full Screen Image"/>
-    <h1 class="image-title">Vivez Le Rêve Olympique</h1>
+    <h1 class="image-title">Ouverture des jeux de Paris</h1>
   </div>
 </template>
 
 <script>
-import image1 from '../assets/flamme.jpeg';
+import image1 from '../../assets/HomePage/flamme.jpeg';
 export default {
   name: 'FullScreenImage',
   data() {

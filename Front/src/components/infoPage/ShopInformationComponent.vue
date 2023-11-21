@@ -1,9 +1,9 @@
 <template>
-  <div class="fan-image-container">
-    <img src="../assets/fanzone.jpg" alt="Background" class="fan-img-fluid w-100 h-100">
-    <div class="fan-overlay-text">
+  <div class="shop-image-container">
+    <img src="../../assets/infoPage/shop.avif" alt="Background" class="shop-img-fluid w-100 h-100">
+    <div class="shop-overlay-text">
       <p>{{ description }}</p>
-      <button class="fan-overlay-button">Cliquez ici</button>
+      <button class="shop-overlay-button">Cliquez ici</button>
     </div>
   </div>
 </template>
@@ -19,17 +19,17 @@ export default {
 </script>
 
 <style scoped>
-.fan-image-container {
+.shop-image-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-.fan-img-fluid {
+.shop-img-fluid {
   object-fit: cover;
 }
 
-.fan-overlay-text {
+.shop-overlay-text {
   position: absolute;
   top: 50%;
   right: 5%;
@@ -40,14 +40,14 @@ export default {
   max-width: 45%;
 }
 
-.fan-overlay-text p {
+.shop-overlay-text p {
   color: white;
   font-size: 24px;
   margin: 0;
   text-align: justify;
 }
 
-.fan-overlay-button {
+.shop-overlay-button {
   display: block;
   margin-top: 20px;
   padding: 10px 20px;
@@ -59,7 +59,7 @@ export default {
   transition: background-color 0.3s;
 }
 
-.fan-overlay-button:hover {
+.shop-overlay-button:hover {
   background-color: #a09860;
 }
 </style>

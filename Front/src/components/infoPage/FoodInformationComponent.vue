@@ -1,9 +1,9 @@
 <template>
-  <div class="shop-image-container">
-    <img src="../assets/shop.avif" alt="Background" class="shop-img-fluid w-100 h-100">
-    <div class="shop-overlay-text">
+  <div class="food-image-container">
+    <img src="../../assets/infoPage/food.jpg" alt="Background" class="food-img-fluid w-100 h-100">
+    <div class="food-overlay-text">
       <p>{{ description }}</p>
-      <button class="shop-overlay-button">Cliquez ici</button>
+      <button class="food-overlay-button">Cliquez ici</button>
     </div>
   </div>
 </template>
@@ -19,17 +19,17 @@ export default {
 </script>
 
 <style scoped>
-.shop-image-container {
+.food-image-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-.shop-img-fluid {
+.food-img-fluid {
   object-fit: cover;
 }
 
-.shop-overlay-text {
+.food-overlay-text {
   position: absolute;
   top: 50%;
   right: 5%;
@@ -40,14 +40,14 @@ export default {
   max-width: 45%;
 }
 
-.shop-overlay-text p {
+.food-overlay-text p {
   color: white;
   font-size: 24px;
   margin: 0;
   text-align: justify;
 }
 
-.shop-overlay-button {
+.food-overlay-button {
   display: block;
   margin-top: 20px;
   padding: 10px 20px;
@@ -59,7 +59,7 @@ export default {
   transition: background-color 0.3s;
 }
 
-.shop-overlay-button:hover {
+.food-overlay-button:hover {
   background-color: #a09860;
 }
 </style>

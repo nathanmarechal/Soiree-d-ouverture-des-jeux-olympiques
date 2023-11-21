@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      SlideTitle: "Les monuments de paris mis à l'honneur"
+      SlideTitle: "Comment profiter de la soirée ?"
     }
   }
 }
