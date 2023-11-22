@@ -53,3 +53,4 @@ Back/node_modules/uuid/package.json
 Front/src/components/temp
 
 Front/package-lock.json
+Back/.env
