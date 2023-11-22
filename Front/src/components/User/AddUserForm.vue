@@ -37,13 +37,7 @@
 
       <div class="form" >
         <label for="role ">Role</label>
-        <!--
-        <select id="role" v-model="role" required>
-          <option value="">Sélectionner un rôle</option> -->
-          <!-- <option v-for="role in roles" :key="role" :value="role">{{ role }}</option> -->
-        <!--  <option v-for="(role, index) in roles" :key="index" :value="role">{{ role }}</option>
-        </select>
-        -->
+
 
         <select id="role" v-model="role" required>
           <option value="">Sélectionner un rôle</option>
@@ -52,6 +46,7 @@
 
 
       </div>
+      <h4> {{role.libelle}}</h4>
       <div v-if="role.libelle === 'prestataire'" style="width: 100%">
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
           <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone" ></AddStandForm>

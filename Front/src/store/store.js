@@ -23,6 +23,8 @@ state: {
     selectedType: [],
     selectedZone: [],
     selectedStands: [],
+    selectedTypeZones: [],
+    typeZone: [],
     minPrice: 0,
     maxPrice: 0,
     searchQuery: '',
@@ -121,8 +123,8 @@ state: {
       getMinPrice: state => state.minPrice,
       getMaxPrice: state => state.maxPrice,
       getSearchQuery: state => state.searchQuery,
-      getSessionId: state => state.sessionId
-  },
+      getSessionId: state => state.sessionId,
+      getSelectedTypeZones: state=> state.selectedTypeZones},
   mutations: {
 
     setUsers(state, users) {
@@ -178,22 +180,25 @@ state: {
     SET_SELECTED_ZONE(state, zone) {
       state.selectedZone = zone;
     },
-      SET_SELECTED_STANDS(state, stands) {
-          state.selectedStands = stands;
-      },
-      SET_SESSION_ID(state,uuid)
-      {
-          state.sessionId = uuid;
-      },
-      SET_MIN_PRICE(state, price) {
-          state.minPrice = price;
-      },
-      SET_MAX_PRICE(state, price) {
-          state.maxPrice = price;
-      },
-      SET_SEARCH_QUERY(state, query) {
-          state.searchQuery = query;
-      },
+    SET_SELECTED_STANDS(state, stands) {
+        state.selectedStands = stands;
+    },
+    SET_SELECTED_TYPE_ZONES(state, typeZones) {
+        state.selectedTypeZones = typeZones;
+    },
+    SET_SESSION_ID(state,uuid) {
+          state.uuid = uuid;
+    },
+    SET_MIN_PRICE(state, price) {
+        state.minPrice = price;
+    },
+    SET_MAX_PRICE(state, price) {
+        state.maxPrice = price;
+    },
+    SET_SEARCH_QUERY(state, query) {
+        state.searchQuery = query;
+    },
+
 
   },
   actions: {

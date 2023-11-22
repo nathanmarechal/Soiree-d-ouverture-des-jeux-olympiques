@@ -2,18 +2,6 @@
   <div>
     <h3>Filtre</h3>
 
-    <!--
-    <h4>Prix</h4>
-
-    <label for="minPrice">Prix minimum :</label>
-    <input type="number" id="minPrice" v-model="minPrice" min="0" @change="updateMinPrice" >
-
-    <label for="maxPrice">Prix maximum :</label>
-    <input type="number" id="maxPrice" v-model="maxPrice" min="0" @change="updateMaxPrice">
-
-    <p>Plage de prix : {{ minPrice }} € - {{ maxPrice }} €</p>
-    -->
-
     <h4>Entreprise</h4>
     <div class="form-outline">
       <input type="search" id="form1" class="form-control" placeholder="Chercher entreprise" aria-label="Search" @input="updateSearchQuery"/>

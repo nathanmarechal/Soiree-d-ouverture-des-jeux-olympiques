@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div >
       <h4>Création du stand</h4>
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm" class="stand">
                 <div class="form">
                         <label for="nom_stand">Nom du stand</label>
                         <input type="text" id="nom_stand" v-model="stand.nom_stand" required>
@@ -14,28 +14,32 @@
                         <label for="description_stand">Description du stand:</label>
                   <textarea id="description_stand" v-model="stand.description_stand" required class="w-100"></textarea>
                 </div>
-                <SelectEmplacement v-model="stand.id_emplacement" :typeZone="typeZone" required></SelectEmplacement>
-            <button type="submit">Add Stand</button>
+              <map-sign-up-pre-view style="width: 100%; height: 25vh;"> </map-sign-up-pre-view>
+
+              <div class="d-flex justify-content-center"> <!-- Flexbox for centering -->
+                <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">Reserver un emplacement</button>
+              </div>
+               <SelectEmplacement @close="toggleSelectEmplacementModal"  :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
+
+          <button type="submit">Add Stand</button>
         </form>
     </div>
 </template>
 
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
+import MapSignUpPreView from '../User/MapSignUpPreView.vue'
 
 export default {
     components: {
-        SelectEmplacement
+        SelectEmplacement,
+        MapSignUpPreView
     },
-    props: {
-        typeZone: {
-            type: Array,
-            required: true,
-        }
-    },
+
     data() {
         return {
-            stand: {
+          showSelectEmplacementModal: false,
+          stand: {
                 nom_stand: '',
                 image_stand: null,
                 description_stand: '',
@@ -53,7 +57,11 @@ export default {
         submitForm() {
             // Perform form submission logic here
             console.log(this.stand);
-        }
+        },
+
+      toggleSelectEmplacementModal() {
+        this.showSelectEmplacementModal = !this.showSelectEmplacementModal;
+      }
     }
 };
 </script>
@@ -78,18 +86,11 @@ input, select {
   border: 1px solid #ddd;
 }
 
-
-button[type="submit"] {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #4d79ff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+.stand{
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 }
-
 
 .form {
   display: flex;

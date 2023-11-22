@@ -26,7 +26,7 @@ async function createUserAsync(prenom, nom, email, password, adresse, code_posta
     try {
         const conn = await pool.connect();
         await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [email, password, nom, prenom, code_postal, adresse, commune, id_role, id_stand]);
+            [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
         conn.release();
     } catch (error) {
         console.error('Error in createUserAsync:', error);
