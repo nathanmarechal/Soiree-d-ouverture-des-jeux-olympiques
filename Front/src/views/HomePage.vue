@@ -13,13 +13,13 @@
 
 <script>
 
-import PageTitle from '../components/PageTitle.vue'
-import PageSlideshow from '../components/PageSlideshow.vue'
-import PageDescription from '../components/PageDescription.vue'
-import MainImageAndTitle from "@/components/MainImageAndTitle.vue";
-import SlideshowTitleComponent from "@/components/SlideshowTitleComponent.vue";
-import CarteForHomePage from "@/components/CarteForHomePage.vue";
-import CardHomeTitleComponent from "@/components/CardHomeTitleComponent.vue";
+import PageTitle from '../components/HomePage/PageTitle.vue'
+import PageSlideshow from '../components/HomePage/PageSlideshow.vue'
+import PageDescription from '../components/HomePage/PageDescription.vue'
+import MainImageAndTitle from "@/components/HomePage/MainImageAndTitle.vue";
+import SlideshowTitleComponent from "@/components/HomePage/SlideshowTitleComponent.vue";
+import CarteForHomePage from "@/components/HomePage/CarteForHomePage.vue";
+import CardHomeTitleComponent from "@/components/HomePage/CardHomeTitleComponent.vue";
 export default {
   components: {
     SlideshowTitleComponent,

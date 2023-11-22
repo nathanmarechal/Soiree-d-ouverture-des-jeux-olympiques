@@ -1,6 +1,6 @@
 <template>
   <div class="drink-image-container">
-    <img src="../assets/drink.jpg" alt="Background" class="drink-img-fluid w-100 h-100">
+    <img src="../../assets/infoPage/drink.jpg" alt="Background" class="drink-img-fluid w-100 h-100">
     <div class="drink-overlay-text">
       <div class="drink-text-content">
         <p>{{ drinkDescription }}</p>

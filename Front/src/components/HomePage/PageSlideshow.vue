@@ -28,14 +28,23 @@
 </template>
 
 <script>
-import image1 from '../assets/flamme.jpeg';
-import image2 from '../assets/2.jpg';
-import image3 from '../assets/3.jpeg';
+import image0 from '../../assets/slideShow/11.jpg';
+import image1 from '../../assets/slideShow/seine.jpeg';
+import image2 from '../../assets/slideShow/2.jpg';
+import image3 from '../../assets/slideShow/notredame.jpg';
+import image4 from '../../assets/slideShow/louvre.webp';
+import image5 from '../../assets/slideShow/notredame.jpg';
+import image6 from '../../assets/slideShow/trocadero.jpg';
+import image7 from '../../assets/slideShow/tuileries.jpg';
+import image8 from '../../assets/slideShow/grandpalais.png';
+import image9 from '../../assets/slideShow/invalide.webp';
+import image10 from '../../assets/slideShow/hdv.jpg';
+
 
 export default {
   data() {
     return {
-      images: [image1, image2, image3],
+      images: [image0, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10],
       currentIndex: 0,
       direction: 'forward',
       interval: null,

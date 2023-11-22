@@ -9,9 +9,9 @@
 
 <script>
 
-import shopcomponent from '../components/ShopComponent.vue'
-import filterByTypeComponent from "@/components/FilterByTypeComponent.vue";
-import filterByStand from "@/components/FilterByStand.vue";
+import shopcomponent from '../components/ShopPage/ShopComponent.vue'
+import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.vue";
+import filterByStand from "@/components/ShopPage/FilterByStand.vue";
 export default {
   components: {
     filterByTypeComponent,

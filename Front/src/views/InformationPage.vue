@@ -17,14 +17,14 @@
 
 
 <script>
-import food from "../components/FoodInformationComponent.vue"
-import drink from "../components/DrinkInformationComponent.vue"
-import fan from "../components/FanInformationComponent.vue"
-import billetterie from "../components/BilleterieInformationComponent.vue"
-import shop from "../components/ShopInformationComponent.vue"
-import activity from "../components/ActivityInformationComponent.vue"
-import inter from "../components/InterInformationComponent.vue"
-import ratp from "../components/RATPInformationComponent.vue"
+import food from "../components/infoPage/FoodInformationComponent.vue"
+import drink from "../components/infoPage/DrinkInformationComponent.vue"
+import fan from "../components/infoPage/FanInformationComponent.vue"
+import billetterie from "../components/infoPage/BilleterieInformationComponent.vue"
+import shop from "../components/infoPage/ShopInformationComponent.vue"
+import activity from "../components/infoPage/ActivityInformationComponent.vue"
+import inter from "../components/infoPage/InterInformationComponent.vue"
+import ratp from "../components/infoPage/RATPInformationComponent.vue"
 
 
 export default {

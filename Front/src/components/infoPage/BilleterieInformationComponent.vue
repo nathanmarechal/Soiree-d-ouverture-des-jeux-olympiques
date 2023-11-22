@@ -1,6 +1,6 @@
 <template>
   <div class="billetterie-image-container">
-    <img src="../assets/billet.jpg" alt="Background" class="billetterie-img-fluid w-100 h-100">
+    <img src="../../assets/infoPage/billet.jpg" alt="Background" class="billetterie-img-fluid w-100 h-100">
     <div class="billetterie-overlay-text">
       <div class="billetterie-text-content">
         <p>{{ billetterieDescription }}</p>

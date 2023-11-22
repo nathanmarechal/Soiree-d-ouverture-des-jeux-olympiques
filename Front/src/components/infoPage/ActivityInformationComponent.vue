@@ -1,6 +1,6 @@
 <template>
   <div class="act-image-container">
-    <img src="../assets/activity.jpeg" alt="Background" class="act-img-fluid w-100 h-100">
+    <img src="../../assets/infoPage/activity.jpeg" alt="Background" class="act-img-fluid w-100 h-100">
     <div class="act-overlay-text">
       <div class="act-text-content">
         <p>{{ actDescription }}</p>

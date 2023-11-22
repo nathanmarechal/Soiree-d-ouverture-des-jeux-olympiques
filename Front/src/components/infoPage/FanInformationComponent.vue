@@ -1,9 +1,9 @@
 <template>
-  <div class="food-image-container">
-    <img src="../assets/food.jpg" alt="Background" class="food-img-fluid w-100 h-100">
-    <div class="food-overlay-text">
+  <div class="fan-image-container">
+    <img src="../../assets/infoPage/fanzone.jpg" alt="Background" class="fan-img-fluid w-100 h-100">
+    <div class="fan-overlay-text">
       <p>{{ description }}</p>
-      <button class="food-overlay-button">Cliquez ici</button>
+      <button class="fan-overlay-button">Cliquez ici</button>
     </div>
   </div>
 </template>
@@ -19,17 +19,17 @@ export default {
 </script>
 
 <style scoped>
-.food-image-container {
+.fan-image-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-.food-img-fluid {
+.fan-img-fluid {
   object-fit: cover;
 }
 
-.food-overlay-text {
+.fan-overlay-text {
   position: absolute;
   top: 50%;
   right: 5%;
@@ -40,14 +40,14 @@ export default {
   max-width: 45%;
 }
 
-.food-overlay-text p {
+.fan-overlay-text p {
   color: white;
   font-size: 24px;
   margin: 0;
   text-align: justify;
 }
 
-.food-overlay-button {
+.fan-overlay-button {
   display: block;
   margin-top: 20px;
   padding: 10px 20px;
@@ -59,7 +59,7 @@ export default {
   transition: background-color 0.3s;
 }
 
-.food-overlay-button:hover {
+.fan-overlay-button:hover {
   background-color: #a09860;
 }
 </style>
