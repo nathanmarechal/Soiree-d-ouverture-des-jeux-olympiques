@@ -38,7 +38,7 @@ export default {
 
     created() {
       this.$store.dispatch('getUsers')
-      this.$store.dispatch('getRoles');
+      //this.$store.dispatch('getRoles');
       this.$store.dispatch('getTypeZone');
     },
 
