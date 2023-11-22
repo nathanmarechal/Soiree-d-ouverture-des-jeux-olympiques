@@ -3,11 +3,6 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <!-- Utilisez un élément pour afficher la modal -->
-
-    <ModalStand @close="toggleModal" :modalActive="modalActive" :stand="selectedStand">
-      <!-- Contenu personnalisé ici -->
-    </ModalStand>
   </div>
 </template>
 
@@ -16,10 +11,6 @@
 import L from 'leaflet';
 import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
 
-
-import ModalStand from './ModalStand.vue';
-
-
 export default {
 
   data() {
@@ -27,14 +18,14 @@ export default {
       map: null,
       selectedStand: null,
       polygons: [],
-      modalActive: false
+
     };
   },
   async mounted() {
     try {
       await this.$store.dispatch('getAreas');
       await this.$store.dispatch('getZones');
-      this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
+      this.initializeMap();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
@@ -43,42 +34,35 @@ export default {
     //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
     ...mapGetters([
       'getSelectedZone',
-      'getSelectedType',
-      'getMinPrice',
-      'getMaxPrice',
-      'getSearchQuery'
+      'getSelectedTypeZones',
     ]),
     ...mapState(['areas', 'zones']),
-
-    isAreaSelected() {
-      return this.$store.getters.getIsAreaSelected
-    }
   },
-  methods: {
 
+  methods: {
     ...mapActions(['getAreas', 'getZones']),
 
     initializeMap() {
       console.log('initalized')
-      // Initialise la carte Leaflet avec une vue par défaut
+
+
+
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
 
 
+      // Initialise la carte Leaflet avec une vue par défaut
 
       // Ajoute une couche de tuiles OpenStreetMap à la carte
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
 
+      console.log('end of initalization')
       this.updateMap()
     },
     showZoneInfo(zone) {
       console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
-      this.$store.commit('SET_IS_AREA_SELECTED', true);
-      console.log('state: ' + this.$store.getters.getIsAreaSelected);
-      this.modalActive = true;
-
     },
     updateMap() {
       console.log('updateMAP');
@@ -87,30 +71,35 @@ export default {
         this.map.removeLayer(polygon);
       });
 
-      const selectedZoneIds = this.getSelectedZone;
-      const selectedTypeIds = this.getSelectedType;
-      const searchQuery = this.getSearchQuery;
 
+      const selectedZoneIds = this.getSelectedZone;
+      const selectedTypeZoneIds = this.getSelectedTypeZones;
       const areas = this.areas;
 
-      const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypeIds.length > 0;
+      console.log("zone")
+      console.log(selectedZoneIds)
+      console.log("type zone")
+      console.log(selectedTypeZoneIds)
+
+      const hasSearchCriteria = selectedZoneIds.length > 0 || selectedTypeZoneIds.length > 0;
 
       let filteredAreas = [];
 
       if (hasSearchCriteria) {
         filteredAreas = areas.filter(zone => {
-          const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
-          const matchesType = selectedTypeIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypeIds.includes(id)));
+          const matchesType = selectedTypeZoneIds.length === 0 || selectedTypeZoneIds.includes(zone.id_type_zone);
 
-          return (zone.isfree === false) && matchesSearch && matchesZone && matchesType;
+          return (zone.isfree === true) && matchesZone && matchesType;
         });
       }
+
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
         filteredAreas = areas.filter(zone => {
-          return (zone.isfree === false)       });
+          return (zone.isfree === true)});
       }
+
       // Ajoutez à nouveau les polygones filtrés à la carte
       filteredAreas.forEach(zone => {
         const polygon = L.polygon(zone.coordinates, {
@@ -125,23 +114,16 @@ export default {
         this.polygons.push(polygon);
       });
     },
-    toggleModal() {
-      this.modalActive = !this.modalActive;
-      if (!this.modalActive) {
-        this.selectedStand = null; // Réinitialiser lors de la fermeture de la modal
-      }
-    },
     ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE','SET_IS_AREA_SELECTED']),
   },
   watch: {
     // Surveillez les changements dans les sélections
     getSelectedZone: 'updateMap',
-    getSelectedType: 'updateMap',
-    getSearchQuery: 'updateMap'
+    getSelectedTypeZones: 'updateMap'
   },
 
   components: {
-    ModalStand // Enregistrez le composant ModalStand
+     // Enregistrez le composant ModalStand
   },
 };
 </script>

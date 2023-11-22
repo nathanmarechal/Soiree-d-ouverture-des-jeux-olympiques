@@ -23,6 +23,8 @@ state: {
     selectedType: [],
     selectedZone: [],
     selectedStands: [],
+    selectedTypeZones: [],
+    typeZone: [],
     minPrice: 0,
     maxPrice: 0,
     searchQuery: '',
@@ -50,6 +52,7 @@ state: {
     {"id_type_prestation": 8, "libelle": "Transport"}
     ],
     zones: [],
+
     areas : [],
     stands: [
       {
@@ -121,7 +124,8 @@ state: {
       getAreas: state=> state.areas,
       getMinPrice: state => state.minPrice,
       getMaxPrice: state => state.maxPrice,
-      getSearchQuery: state => state.searchQuery},
+      getSearchQuery: state => state.searchQuery,
+      getSelectedTypeZones: state=> state.selectedTypeZones},
   mutations: {
 
     setUsers(state, users) {
@@ -180,6 +184,9 @@ state: {
     SET_SELECTED_STANDS(state, stands) {
         state.selectedStands = stands;
     },
+    SET_SELECTED_TYPE_ZONES(state, typeZones) {
+        state.selectedTypeZones = typeZones;
+    },
     SET_UUID(state,uuid) {
           state.uuid = uuid;
     },
@@ -192,6 +199,7 @@ state: {
     SET_SEARCH_QUERY(state, query) {
         state.searchQuery = query;
     },
+
 
   },
   actions: {
