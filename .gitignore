@@ -35,3 +35,17 @@ Back/node_modules/.bin/nopt
 Back/node_modules/.bin/nodetouch
 Back/node_modules/.bin/nodemon
 Back/node_modules/.bin/mime
+Back/.env
+Back/.env
+Back/node_modules/.bin/mime
+Back/node_modules/.bin/nodemon
+Back/node_modules/.bin/nodetouch
+Back/node_modules/.bin/nopt
+Back/node_modules/.bin/semver
+Back/node_modules/.bin/uuid
+Back/node_modules/.package-lock.json
+Back/node_modules/mime/package.json
+Back/node_modules/nodemon/package.json
+Back/node_modules/nopt/package.json
+Back/node_modules/touch/package.json
+Back/node_modules/uuid/package.json
