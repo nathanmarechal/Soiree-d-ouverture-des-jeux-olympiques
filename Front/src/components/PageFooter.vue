@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-3">
           <div class="logo">
-            <img src="../assets/Logos/logovecto.svg" alt="Logo SAE_S3" />
+            <img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo SAE_S3" />
           </div>
         </div>
         <div class="col-md-3">
