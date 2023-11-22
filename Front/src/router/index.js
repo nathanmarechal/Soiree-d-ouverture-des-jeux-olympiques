@@ -7,6 +7,7 @@ import AdminEditUsers from '../views/AdminEditUsers.vue'
 import mapPage from "@/views/mapPage.vue";
 import standPage from "../views/standPage.vue"
 import signUpPage from "../views/SignUpPage.vue"
+import AdminEditRoles from '@/views/AdminEditRoles.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/AdminEditUsers',
     name: 'AdminEditUsers',
     component: AdminEditUsers
+  },
+  {
+    path: '/AdminEditRoles',
+    name: 'AdminEditRoles',
+    component: AdminEditRoles
   },
   {
     path: '/shop',

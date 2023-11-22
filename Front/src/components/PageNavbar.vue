@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" class="desktop-navbar">
-      <b-navbar-brand href="#"><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand>
+      <b-navbar-brand href="/"><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
@@ -53,6 +53,7 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Gestion" right>
           <b-dropdown-item href="/AdminEditUsers">Comptes</b-dropdown-item>
+          <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-nav>
     </b-sidebar>
