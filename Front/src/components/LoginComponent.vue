@@ -2,6 +2,7 @@
   <div v-if="isLoginOpen">
   <div class="d-flex justify-content-center align-items-center overlay">
     <div class="login-box bg-white p-4 rounded shadow">
+
       <button class="close-btn" @click="closeModal">×</button>
       <h2 class="text-center mb-4">Login</h2>
       <form @submit.prevent="submitForm">
@@ -15,6 +16,8 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">Se connecter</button>
       </form>
+       <router-link to="/sign-up" @click="closeModal">s'inscrire</router-link>
+
     </div>
   </div>
 </div>
