@@ -11,9 +11,12 @@ DROP TABLE IF EXISTS type_zone CASCADE;
 DROP TABLE IF EXISTS type_prestation CASCADE;
 
 DROP TABLE IF EXISTS session;
-DROP TABLE IF EXISTS droits;
+
+
 DROP TABLE IF EXISTS role_droits;
 DROP TABLE IF EXISTS role CASCADE;
+DROP TABLE IF EXISTS droits;
+DROP TABLE IF EXISTS messages;
 
 
 CREATE TABLE role(
@@ -118,12 +121,48 @@ CREATE TABLE session(
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user)
 );
 
+CREATE TABLE droits
+(
+    id SERIAL PRIMARY KEY,
+    libelle VARCHAR(255)
+);
+
+CREATE TABLE role_droits
+(
+    id_droit INT,
+    id_role INT,
+    PRIMARY KEY (id_droit, id_role),
+    FOREIGN KEY(id_droit) REFERENCES droits(id),
+    FOREIGN KEY(id_role) REFERENCES role(id_role)
+);
 
 
 -- Insert data into tables
-INSERT INTO role (libelle) VALUES
-('admin'),
-('prestataire');
+INSERT INTO droits(id, libelle) VALUES
+(1,'create_users'),
+(2,'update_users'),
+(3,'delete_users'),
+(4,'create_zones'),
+(5,'update_zones'),
+(6,'delete_zones')
+;
+
+INSERT INTO role (id_role,libelle) VALUES
+(1,'admin'),
+(2,'prestataire');
+
+INSERT INTO role_droits(id_droit, id_role) VALUES
+(1,1),
+(2,1),
+(3,1),
+(4,1),
+(5,1),
+(6,1),
+(4,2),
+(5,2),
+(6,2)
+;
+
 
 INSERT INTO type_zone VALUES
 (1,'Ambulant'),
@@ -450,10 +489,31 @@ LEFT JOIN
 ORDER BY
     e.id_emplacement;
 
+SELECT now()<=session.timeLimit FROM session
+WHERE session_id = '6649c09c-76d1-4f61-ab1b-a43967a87839'
+;
+
 SELECT * FROM utilisateur;
+
+SELECT * FROM utilisateur;
+
+SELECT * FROM role;
 
 SELECT * FROM stand;
 
 SELECT * FROM session;
 
 SELECT * FROM type_zone;
+
+SELECT * FROM utilisateur;
+
+SELECT id FROM droits
+WHERE libelle = 'create_user'
+;
+SELECT * FROM droits;
+
+SELECT * FROM session;
+
+SELECT now()<=session.timeLimit AS ok FROM session
+WHERE session_id = 'ffa92734-8e5f-47ec-b7a2-1a0a6f47505b'
+;

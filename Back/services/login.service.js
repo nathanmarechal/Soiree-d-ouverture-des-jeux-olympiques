@@ -90,7 +90,51 @@ async function getSessionTokenAsync(email, password) {
         throw error;
     }
 }
+async function checkRight_by_name(session_id,right_name)
+{
+    const conn = await pool.connect();
+    const res = await conn.query(
+        "SELECT id FROM droits\n" +
+        "WHERE libelle = $1\n" +
+        ";",[right_name])
+    conn.release()
+    if(res.rows.length!=1)
+    {
+        console.log("different than 1 row :: "+right_name)
+        return false;
+    }
+    console.log("rows:"+res.rows)
+    console.log("id : "+res.rows[0].id)
+    return checkRight_by_id(session_id,res.rows[0].id)
+}
+async function checkRight_by_id(session_id,right_id)
+{
+    const conn = await pool.connect();
+
+    const timeQuerry = await conn.query(
+        "SELECT now()<=session.timeLimit AS ok FROM session\n" +
+        "WHERE session_id = $1\n" +
+        ";",[session_id]
+    )
+    const timeOK = timeQuerry.rows[0].ok;
+    console.log("timeOk :"+timeOK)
+    if(!timeOK)
+        return false;
+
+    console.log()
+    const res = await conn.query(
+        "SELECT $1 IN (\n" +
+        "SELECT role_droits.id_droit FROM session\n" +
+        "LEFT JOIN utilisateur ON utilisateur.id_user = session.id_user\n" +
+        "LEFT JOIN role_droits ON role_droits.id_role = utilisateur.id_role\n" +
+        "WHERE session_id = $2)\n" +
+        ";",[right_id,session_id])
+    conn.release()
+    return res.rows[0];
+}
 
 module.exports = {
-    getLoginToken:getLoginToken
+    getLoginToken:getLoginToken,
+    checkRight_by_id:checkRight_by_id,
+    checkRight_by_name:checkRight_by_name
 }

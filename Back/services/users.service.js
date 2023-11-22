@@ -1,19 +1,29 @@
 //const {v4:uuid4} = require("uuid");
 const pool = require("../database/db");
+const {checkRight_by_name} = require("./login.service");
 
-const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
-    try{
-        createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
-        callback(null, "success");
-    } catch (error) {
-        console.log(error);
-        callback(error, null);
-    }
+
+const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand,session_id, callback) => {
+    createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand,session_id)
+        .catch(
+        (error)=>
+        {
+            console.log("threw inside createUserAsync :"+error)
+            //callback(error,null);
+        })
+    callback(null, "success");
 }
 
-async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
+async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, session_id) {
+    console.log("before droits")
+    const droitsOk = await checkRight_by_name(session_id,"create_users")
+    console.log("out of droits")
+    if(!droitsOk)
+    {
+        throw "pas les droits nécessaires"
+    }
+    console.log("droits ok : "+droitsOk)
     try {
-        console.log("createUserAsync: ")
         const conn = await pool.connect();
         await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
             [email, password, nom, prenom, code_postal, adresse, commune, id_role, id_stand]);

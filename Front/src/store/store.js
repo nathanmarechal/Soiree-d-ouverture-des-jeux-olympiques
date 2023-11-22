@@ -14,7 +14,7 @@ export default new Vuex.Store({
 state: {
     //roles: [{"id_role": 1, "libelle": "test"}, {"id_role": 2, "libelle": "test2"}, {"id_role": 3, "libelle": "test3"}],
     roles : [],
-    uuid:'',
+    sessionId:'',
     users: [],
     isLoginOpen: false,
     isUserConnected: false,
@@ -108,7 +108,6 @@ state: {
       isUserConnected: state => state.isUserConnected,
       getemail: state => state.email,
       getpassword: state => state.password,
-      getuuid: state => state.uuid,
       getallPrestations: state => state.prestations,
       getallType: state => state.typePrestations,
       getAllStands: state => state.stands,
@@ -121,7 +120,9 @@ state: {
       getAreas: state=> state.areas,
       getMinPrice: state => state.minPrice,
       getMaxPrice: state => state.maxPrice,
-      getSearchQuery: state => state.searchQuery},
+      getSearchQuery: state => state.searchQuery,
+      getSessionId: state => state.sessionId
+  },
   mutations: {
 
     setUsers(state, users) {
@@ -177,21 +178,22 @@ state: {
     SET_SELECTED_ZONE(state, zone) {
       state.selectedZone = zone;
     },
-    SET_SELECTED_STANDS(state, stands) {
-        state.selectedStands = stands;
-    },
-    SET_UUID(state,uuid) {
-          state.uuid = uuid;
-    },
-    SET_MIN_PRICE(state, price) {
-        state.minPrice = price;
-    },
-    SET_MAX_PRICE(state, price) {
-        state.maxPrice = price;
-    },
-    SET_SEARCH_QUERY(state, query) {
-        state.searchQuery = query;
-    },
+      SET_SELECTED_STANDS(state, stands) {
+          state.selectedStands = stands;
+      },
+      SET_SESSION_ID(state,uuid)
+      {
+          state.sessionId = uuid;
+      },
+      SET_MIN_PRICE(state, price) {
+          state.minPrice = price;
+      },
+      SET_MAX_PRICE(state, price) {
+          state.maxPrice = price;
+      },
+      SET_SEARCH_QUERY(state, query) {
+          state.searchQuery = query;
+      },
 
   },
   actions: {

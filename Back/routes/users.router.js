@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/users.controller');
 const usersMiddleware = require('../middlewares/users.middleware');
+const {checkRight_by_name} = require("../services/login.service");
 
 router.get("/roles", usersController.getRoles);
 
@@ -18,7 +19,7 @@ router.get("/:id", usersController.getUserById);
 
 router.put("/:id",usersMiddleware.validateUserInput, usersController.updateUser);
 
-router.delete("/", usersController.deleteUser);
+router.delete("/",usersController.deleteUser);
 
  */
 
