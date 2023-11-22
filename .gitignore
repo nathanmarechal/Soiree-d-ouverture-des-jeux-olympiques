@@ -49,3 +49,7 @@ Back/node_modules/nodemon/package.json
 Back/node_modules/nopt/package.json
 Back/node_modules/touch/package.json
 Back/node_modules/uuid/package.json
+
+Front/src/components/temp
+
+Front/package-lock.json

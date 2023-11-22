@@ -1,9 +1,9 @@
 //const {v4:uuid4} = require("uuid");
 const pool = require("../database/db");
 
-const createUser = (prenom, nom, email, role, stand, callback) => {
+const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
     try{
-        createUserAsync(prenom,nom, email, role, stand)
+        createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
         callback(null, "success");
     } catch (error) {
         console.log(error);
@@ -11,11 +11,12 @@ const createUser = (prenom, nom, email, role, stand, callback) => {
     }
 }
 
-async function createUserAsync(prenom, nom, email, role, stand) {
+async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
     try {
+        console.log("createUserAsync: ")
         const conn = await pool.connect();
         await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [email, '0000', nom, prenom, 90000, 'Valenciennes', 'Belfort', 1, 2]);
+            [email, password, nom, prenom, code_postal, adresse, commune, id_role, id_stand]);
         conn.release();
     } catch (error) {
         console.error('Error in createUserAsync:', error);
@@ -107,7 +108,7 @@ async function getAllRolesAsync() {
 const getAllRoles = (callback) => {
     getAllRolesAsync()
         .then(res => {
-            console.log('Roles:', res);
+            //console.log('Roles:', res);
             callback(null, res);
         })
         .catch(error => {

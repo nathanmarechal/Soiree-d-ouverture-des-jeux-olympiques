@@ -3,8 +3,15 @@ const usersService = require("../services/users.service");
 exports.saveUser = (req, res) => {
     const nom = req.body.nom;
     const prenom = req.body.prenom;
-    console.log(nom, " ", prenom);
-    usersService.createUser(prenom, nom, (error, data) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const adresse = req.body.adresse;
+    const code_postal = req.body.code_postal;
+    const commune = req.body.commune;
+    const id_role = req.body.id_role;
+    const id_stand = req.body.id_stand;
+    console.log(nom, " ", prenom, " ", email, " ", password, " ", adresse, " ", code_postal, " ", commune, " ", id_role, " ", id_stand);
+    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, (error, data) => {
         if (error) {
             return res.status(500).send("error");
         }

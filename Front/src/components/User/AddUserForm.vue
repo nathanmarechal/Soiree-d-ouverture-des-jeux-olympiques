@@ -37,20 +37,24 @@
 
       <div class="form" >
         <label for="role ">Role</label>
+        <!--
+        <select id="role" v-model="role" required>
+          <option value="">Sélectionner un rôle</option> -->
+          <!-- <option v-for="role in roles" :key="role" :value="role">{{ role }}</option> -->
+        <!--  <option v-for="(role, index) in roles" :key="index" :value="role">{{ role }}</option>
+        </select>
+        -->
 
         <select id="role" v-model="role" required>
           <option value="">Sélectionner un rôle</option>
-          <!--temp--><option value="prestataire">prestaire</option>
-          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+          <option v-for="role in roles" :key="role.id_role" :value="role.id_role">{{ role.libelle }}</option>
         </select>
+
+
       </div>
       <div v-if="role === 'prestataire'" style="width: 100%">
-
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
           <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone" ></AddStandForm>
-      </div>
-      <div>
-
       </div>
       <div class="form">
         <button class="blue-button" type="submit">Add User</button>
@@ -63,11 +67,13 @@
 
 <script>
 import AddStandForm from '../User/AddStandForm.vue';
+import {createUser} from "@/services/utilisateur.service";
 
 export default {
   components: {
     AddStandForm,
   },
+  /*
   props: {
     users: {
       type: Array,
@@ -86,40 +92,72 @@ export default {
       required: true,
     }
   },
+     */
+  created() {
+    this.$store.dispatch('getRoles');
+  },
+
+  computed: {
+    roles() {
+      return this.$store.state.roles;
+    }
+  },
   data() {
     return {
       firstName: '',
       lastName: '',
       email: '',
       role: '',
+      password: '',
+      adresse: '',
+      code_postal: '',
+      commune: '',
+
       showStandForm: false,
-      stand: '',
-      list_roles: '',
-      list_types: '',
+      //stand: '',
+      //list_roles: '',
+      //list_types: '',
     };
   },
   methods: {
+
     submitForm() {
+      console.log("role selectionné " + this.role)
       const newUser = {
         prenom: this.firstName,
         nom: this.lastName,
         email: this.email,
-        role: this.role,
-        stand: this.stand,
-        type_prestation: this.typePrestation,
-        type_zone: this.typeZone,
-        zone_id: this.zoneId,
+        password: this.password,
+        //role: this.role,
+
+        adresse: this.adresse,
+        code_postal: this.code_postal,
+        commune: this.commune,
+        id_role: this.role.id_role,
+        //id_stand: this.stand,
+        id_stand : null,
+        //stand: this.stand,
+        //type_prestation: this.typePrestation,
+        //type_zone: this.typeZone,
+        //zone_id: this.zoneId,
       };
+
       this.$emit('add-user', newUser);
       this.firstName = '';
       this.lastName = '';
       this.email = '';
       this.role = '';
       this.stand = '';
-      this.prestation = '';
-      this.zoneType = '';
-      this.zoneId = '';
+
+
+      //this.prestation = '';
+      //this.zoneType = '';
+      //this.zoneId = '';
+
+      console.log(newUser)
+      createUser(newUser)
     },
+
     validateStand() {
       // Add your validation logic here
       if (this.stand === '') {
@@ -129,6 +167,7 @@ export default {
         console.log('Stand is valid');
       }
     },
+
   },
 };
 </script>

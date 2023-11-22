@@ -111,8 +111,7 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
 );
 
-CREATE TABLE session
-(
+CREATE TABLE session(
     session_id VARCHAR(255),
     id_user INT PRIMARY KEY ,
     timeLimit TIMESTAMP,
@@ -450,3 +449,11 @@ LEFT JOIN
     zone z ON e.id_zone = z.id_zone
 ORDER BY
     e.id_emplacement;
+
+SELECT * FROM utilisateur;
+
+SELECT * FROM stand;
+
+SELECT * FROM session;
+
+SELECT * FROM type_zone;

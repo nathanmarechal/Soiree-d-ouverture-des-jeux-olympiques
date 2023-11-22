@@ -46,6 +46,12 @@
       },
       deleteUser(index) {
         this.$emit('delete-user', index);
+/*
+        DeleteUser(id) {
+          return axios.delete(`${API_URL}/utilisateur/${id}`)
+        }
+
+ */
       },
     },
   };
