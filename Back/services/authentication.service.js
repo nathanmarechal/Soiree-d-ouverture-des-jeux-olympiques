@@ -1,6 +1,5 @@
 const pool = require("../database/db");
 const { v4: uuidv4 } = require('uuid');
-const {callback} = require("pg/lib/native/query");
 const getLoginToken = (email,password,callback) =>
 {
     getSessionTokenAsync(email,password)
@@ -11,28 +10,13 @@ const getLoginToken = (email,password,callback) =>
             callback(error,null);
         })
 }
-async function updateSession(userId)
-{
-
-}
-async function getSessionAsync(userId)
-{
-    const conn = await pool.connect();
-    console.log("before ");
-    const res = await conn.query('SELECT * FROM session WHERE id_user='+userId+';');
-    //console.log("after"+res[0]);
-    conn.release()
-    console.log("res = "+res)
-    if(res==null)
-        return null;
-    return res[0];
-}
 async function createSessionAsync(userId)
 {
     const conn = await pool.connect();
     const uuid = uuidv4();
 
-    const res = await conn.query('INSERT INTO session(session_id, id_user, timeLimit) ' +
+
+    await conn.query('INSERT INTO session(session_id, id_user, timeLimit) ' +
         'VALUES($1,$2,CURRENT_TIMESTAMP+INTERVAL \'1 hour\');', [uuid,userId]);
     conn.release();
     return uuid;
@@ -40,7 +24,7 @@ async function createSessionAsync(userId)
 async function deleteSessionAsync(userId)
 {
     const conn = await pool.connect();
-    const res = await conn.query('DELETE FROM session WHERE id_user = $1;',[userId]);
+    await conn.query('DELETE FROM session WHERE id_user = $1;',[userId]);
     conn.release();
 }
 async function getUserIdAsync(email,password)

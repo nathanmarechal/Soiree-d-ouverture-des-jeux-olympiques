@@ -18,7 +18,7 @@ exports.checkRight = (req, res, next,right_name) => {
         .catch(error=>
         {
             console.log("error!")
-            return res.status(400).send("erreur");
+            return res.status(400).send("erreur:"+error);
         })
 }
 
@@ -30,7 +30,7 @@ async function checkRight_by_name(session_id,right_name)
         "WHERE libelle = $1\n" +
         ";",[right_name])
     conn.release()
-    if(res.rows.length!=1)
+    if(res.rows.length!==1)
     {
         //console.log("different than 1 row :: "+right_name)
         return false;

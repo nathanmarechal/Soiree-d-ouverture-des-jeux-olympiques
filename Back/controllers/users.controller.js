@@ -77,7 +77,7 @@ exports.updateUser = (req, res) => {
     const {nom, prenom} = req.body;
     usersService.updateUser(uuid, nom, prenom, (error, data) => {
         if (error) {
-            if (error == "User not found"){
+            if (error === "User not found"){
                 return res.status(404).send("User not found");
             }
             return res.status(500).send("internal error");
@@ -93,7 +93,7 @@ exports.deleteUser = (req, res) => {
     }
     usersService.deleteUser(id, (error, data) => {
         if (error) {
-            if (error == "User not found"){
+            if (error === "User not found"){
                 return res.status(404).send("User not found");
             }
             return res.status(500).send("internal error");
