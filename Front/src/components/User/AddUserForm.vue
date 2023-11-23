@@ -63,7 +63,7 @@
 <script>
 import AddStandForm from '../User/AddStandForm.vue';
 import {createUser} from "@/services/utilisateur.service";
-import store from "@/store/store";
+
 
 export default {
   components: {
@@ -132,7 +132,7 @@ export default {
         id_role: this.role.id_role,
         //id_stand: this.stand,
         id_stand : null,
-        session_id : store.getters.getSessionId,
+        session_id : this.$store.getters.getSessionId,
         //stand: this.stand,
         //type_prestation: this.typePrestation,
         //type_zone: this.typeZone,

@@ -1,4 +1,4 @@
-const loginService = require("../services/login.service");
+const loginService = require("../services/authentication.service");
 
 exports.getLoginToken = (req, res) => {
     const email = req.query.email;

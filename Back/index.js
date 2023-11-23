@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const usersRoutes = require('./routes/users.router');
 const mapRoutes = require('./routes/map.router');
-const loginRoutes = require('./routes/login.router');
+const loginRoutes = require('./routes/authentication.router');
 dotenv.config();
 const app = express();
 const cors = require('cors');

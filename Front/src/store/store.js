@@ -186,8 +186,8 @@ state: {
     SET_SELECTED_TYPE_ZONES(state, typeZones) {
         state.selectedTypeZones = typeZones;
     },
-    SET_SESSION_ID(state,uuid) {
-          state.uuid = uuid;
+    SET_SESSION_ID(state,sessionId) {
+          state.sessionId = sessionId;
     },
     SET_MIN_PRICE(state, price) {
         state.minPrice = price;
