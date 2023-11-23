@@ -18,6 +18,7 @@ state: {
     users: [],
     isLoginOpen: false,
     isUserConnected: false,
+    areaSelectedForStand: null,
     email: '',
     password: '',
     selectedType: [],
@@ -124,7 +125,9 @@ state: {
       getMaxPrice: state => state.maxPrice,
       getSearchQuery: state => state.searchQuery,
       getSessionId: state => state.sessionId,
-      getSelectedTypeZones: state=> state.selectedTypeZones},
+      getSelectedTypeZones: state=> state.selectedTypeZones,
+      getAreaSelectedForStand: state=> state.areaSelectedForStand},
+
   mutations: {
 
     setUsers(state, users) {
@@ -197,6 +200,9 @@ state: {
     },
     SET_SEARCH_QUERY(state, query) {
         state.searchQuery = query;
+    },
+    SET_SELECTED_AREA(state, payload) {
+        state.areaSelectedForStand = payload;
     },
 
 

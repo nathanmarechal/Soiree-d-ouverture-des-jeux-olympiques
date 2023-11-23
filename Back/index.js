@@ -18,4 +18,4 @@ app.use("/api/login",loginRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
-}); // npm startx
+}); // npm start

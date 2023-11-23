@@ -3,6 +3,12 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
+
+    <div class="d-flex justify-content-between " v-if="isAreaSelected">
+      <p>Emplacement : {{selectedStand.id_emplacement}}</p>
+      <p>Zone : {{selectedStand.zone}}</p>
+      <button type="button" class="btn btn-success" @click="saveSelectedArea">Valider</button>
+    </div>
   </div>
 </template>
 
@@ -17,6 +23,7 @@ export default {
     return {
       map: null,
       selectedStand: null,
+      isAreaSelected: false,
       polygons: [],
 
     };
@@ -63,6 +70,8 @@ export default {
     showZoneInfo(zone) {
       console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
+      this.$store.state.isAreaSelected = true;
+      this.isAreaSelected = true;
     },
     updateMap() {
       console.log('updateMAP');
@@ -114,7 +123,15 @@ export default {
         this.polygons.push(polygon);
       });
     },
-    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE','SET_IS_AREA_SELECTED']),
+    ...mapMutations(['SET_SELECTED_AREA']),
+
+    saveSelectedArea() {
+      this.SET_SELECTED_AREA(this.selectedStand);
+      console.log('la gadji c est un paqueta')
+      console.log(this.$store.state.areaSelectedForStand)
+      // Vous pouvez également inclure d'autres logiques ici si nécessaire
+    },
+
   },
   watch: {
     // Surveillez les changements dans les sélections
@@ -131,7 +148,7 @@ export default {
 <style scoped>
 .map-container {
   width: 100%;
-  height: 100%;
+  height: 95%;
 }
 #map {
   width: 100%;
