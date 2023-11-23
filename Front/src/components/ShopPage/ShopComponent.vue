@@ -18,10 +18,10 @@
 import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapGetters(['getallPrestations', 'getallType', 'getAllStands', "getSelectedStands", "getSelectedType"]),
+    ...mapGetters(['getAllPrestation', 'getAllTypePrestation', 'getAllStand', "getSelectedStands", "getSelectedType"]),
 
     filteredPrestations() {
-      return this.getallPrestations.filter(prestation => {
+      return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedType.length > 0;
         const isStandSelected = this.getSelectedStands.length > 0;
 
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getTypePrestationLabel(idType) {
-      const type = this.getallType.find(type => type.id_type_prestation === idType);
+      const type = this.getAllTypePrestation.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';
     },
     getImageSrc(imageName) {
@@ -46,7 +46,7 @@ export default {
 
     },
     getStandName(idStand) {
-      const stand = this.getAllStands.find(stand => stand.id_stand === idStand);
+      const stand = this.getAllStand.find(stand => stand.id_stand === idStand);
       return stand ? stand.nom_stand : 'Stand inconnu';
     }
   }

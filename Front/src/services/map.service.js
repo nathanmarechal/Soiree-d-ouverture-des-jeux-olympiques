@@ -24,7 +24,7 @@ async function getAllZones() {
 }
 
 async function getAllTypeZoneFromAPI() {
-    return getRequest('/map/typeZone', 'GETALLTYPEZONE')
+    return getRequest('/map/typeZones', 'GETALLTYPEZONE')
 }
 
 async function getAllTypeZone() {

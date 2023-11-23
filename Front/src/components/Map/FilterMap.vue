@@ -8,14 +8,14 @@
     </div>
 
     <h4>Zone</h4>
-    <div v-for="(zone, index) in getallZone" :key="index" class="form-check">
+    <div v-for="(zone, index) in getAllZone" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
       <label class="form-check-label" :for="'zoneCheck' + index">{{ zone.libelle }}</label>
     </div>
 
 
     <h4>Type de prestation</h4>
-    <div v-for="(type_prestation, index) in getallType" :key="index" class="form-check">
+    <div v-for="(type_prestation, index) in getAllTypePrestation" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id_type_prestation" @change="updateFilterTypePrestation">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
     </div>
@@ -27,10 +27,6 @@
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
-  computed: {
-    ...mapGetters(['getallType', 'getSelectedType','getallZone', 'getSelectedZone']),
-
-  },
   data() {
     return {
       selectedTypePrestations:[],
@@ -38,9 +34,18 @@ export default {
       minPrice: this.$store.state.minPrice,
       maxPrice: this.$store.state.maxPrice,
       searchQuery: this.$store.state.searchQuery
-
-
     };
+  },
+  async mounted() {
+    try {
+      await this.$store.dispatch('getTypePrestations');
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
+  computed: {
+    ...mapGetters(['getAllTypePrestation', 'getSelectedType','getAllZone', 'getSelectedZone']),
+
   },
   methods: {
     ...mapMutations(['SET_SELECTED_TYPE', 'SET_SELECTED_ZONE','SET_MIN_PRICE','SET_MAX_PRICE','SET_SEARCH_QUERY']),

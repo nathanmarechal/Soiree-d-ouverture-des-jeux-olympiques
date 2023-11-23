@@ -16,9 +16,7 @@
 import L from 'leaflet';
 import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
 
-
 import ModalStand from './ModalStand.vue';
-
 
 export default {
 
@@ -40,7 +38,6 @@ export default {
     }
   },
   computed: {
-    //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
     ...mapGetters([
       'getSelectedZone',
       'getSelectedType',
@@ -49,21 +46,14 @@ export default {
       'getSearchQuery'
     ]),
     ...mapState(['areas', 'zones']),
-
-    isAreaSelected() {
-      return this.$store.getters.getIsAreaSelected
-    }
   },
   methods: {
-
     ...mapActions(['getAreas', 'getZones']),
-
     initializeMap() {
       console.log('initalized')
+
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
-
-
 
       // Ajoute une couche de tuiles OpenStreetMap à la carte
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -75,10 +65,7 @@ export default {
     showZoneInfo(zone) {
       console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
-      this.$store.commit('SET_IS_AREA_SELECTED', true);
-      console.log('state: ' + this.$store.getters.getIsAreaSelected);
       this.modalActive = true;
-
     },
     updateMap() {
       console.log('updateMAP');
@@ -131,7 +118,7 @@ export default {
         this.selectedStand = null; // Réinitialiser lors de la fermeture de la modal
       }
     },
-    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE','SET_IS_AREA_SELECTED']),
+    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE']),
   },
   watch: {
     // Surveillez les changements dans les sélections

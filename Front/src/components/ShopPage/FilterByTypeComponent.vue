@@ -1,8 +1,8 @@
 <template>
   <div class="container mt-4">
-    <h2>Liste des Prestations</h2>
+    <h2>Liste des Types de prestations</h2>
     <div class="form-check form-switch"
-         v-for="typePrestation in getallType"
+         v-for="typePrestation in getAllTypePrestation"
          :key="typePrestation.id_type_prestation">
       <input class="form-check-input"
              type="checkbox"
@@ -20,7 +20,7 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['getallType']),
+    ...mapGetters(['getAllTypePrestation']),
   },
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
       this.$store.commit('SET_SELECTED_TYPE', this.selectedTypes);
     },
     getTypePrestationLabel(idType) {
-      const type = this.getallType.find(type => type.id_type_prestation === idType);
+      const type = this.getAllTypePrestation.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';
     },
   }

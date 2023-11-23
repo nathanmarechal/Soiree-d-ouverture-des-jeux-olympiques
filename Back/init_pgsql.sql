@@ -507,9 +507,11 @@ SELECT * FROM type_zone;
 
 SELECT * FROM utilisateur;
 
+SELECT * FROM prestation;
+
 SELECT id FROM droits
-WHERE libelle = 'create_user'
-;
+WHERE libelle = 'create_user';
+
 SELECT * FROM droits;
 
 SELECT * FROM role_droits;
@@ -521,5 +523,4 @@ SELECT * FROM role;
 SELECT * FROM utilisateur;
 
 SELECT now()<=session.timeLimit AS ok FROM session
-WHERE session_id = 'ffa92734-8e5f-47ec-b7a2-1a0a6f47505b'
-;
+WHERE session_id = 'ffa92734-8e5f-47ec-b7a2-1a0a6f47505b';

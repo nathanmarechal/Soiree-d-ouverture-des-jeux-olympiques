@@ -13,6 +13,15 @@ import shopcomponent from '../components/ShopPage/ShopComponent.vue'
 import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.vue";
 import filterByStand from "@/components/ShopPage/FilterByStand.vue";
 export default {
+  async mounted() {
+    try {
+      await this.$store.dispatch('getTypePrestations');
+      await this.$store.dispatch('getStands');
+      await this.$store.dispatch('getPrestations');
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
   components: {
     filterByTypeComponent,
     shopcomponent,

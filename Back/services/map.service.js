@@ -1,4 +1,3 @@
-//const {v4:uuid4} = require("uuid");
 const pool = require("../database/db");
 
 

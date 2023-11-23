@@ -2,7 +2,7 @@
   <div class="container mt-4">
     <h2>Filtrer par Stand</h2>
     <div class="form-check form-switch"
-         v-for="stand in getAllStands"
+         v-for="stand in getAllStand"
          :key="stand.id_stand">
       <input class="form-check-input"
              type="checkbox"
@@ -20,7 +20,7 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['getAllStands']),
+    ...mapGetters(['getAllStand']),
   },
   data() {
     return {
