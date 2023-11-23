@@ -26,7 +26,6 @@ export default new Vuex.Store({
             "role": null,
         },
         areaSelectedForStand: null,
-
         roles : [],
         isLoginOpen: false,
         isUserConnected: false,
@@ -167,6 +166,9 @@ export default new Vuex.Store({
         SET_SEARCH_QUERY(state, query) {
             state.searchQuery = query;
         },
+        SET_SELECTED_AREA(state, area){
+            state.areaSelectedForStand = area;
+        }
 
     },
 
