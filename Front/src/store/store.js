@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        users : [],
+        //users : [],
         email: '',
         password: '',
         userCourant: {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
         getMaxPrice: state => state.maxPrice,
         getSearchQuery: state => state.searchQuery,
 
-        getAllUser : state => state.users,
+        //getAllUser : state => state.users,
         getAllRole : state => state.roles,
 
         getAllTypePrestation: state => state.typePresations,
@@ -84,10 +84,10 @@ export default new Vuex.Store({
           users.forEach(p => state.users.push(p))
         },
 
-        SET_USERS(state, users) {
-            state.users.splice(0)
-            users.forEach(p => state.users.push(p))
-        },
+        //SET_USERS(state, users) {
+        //    state.users.splice(0)
+        //    users.forEach(p => state.users.push(p))
+        //},
 
         SET_ZONES(state, zones) {
             state.zones.splice(0)
@@ -174,6 +174,30 @@ export default new Vuex.Store({
 
     actions: {
 
+        async getUsers() {
+            try {
+                const users = await getAllUsers();
+                return users; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        },
+
+        /*
+        async getUsers({ commit }) {
+            try {
+                const result = await getAllUsers();
+                if (Array.isArray(result)) {
+                    commit('SET_USERS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getUsers():", err);
+            }
+        },
+         */
+
         async getRoles({ commit }) {
           try {
             const roles = await getAllRoles();
@@ -198,20 +222,6 @@ export default new Vuex.Store({
             }
           } catch (err) {
             console.error("Error in getTypeZone():", err);
-          }
-        },
-
-
-        async getUsers({ commit }) {
-          try {
-              const result = await getAllUsers();
-              if (Array.isArray(result)) {
-                  commit('SET_USERS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getUsers():", err);
           }
         },
 

@@ -161,9 +161,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (6,1),
 (4,2),
 (5,2),
-(6,2)
-;
-
+(6,2);
 
 INSERT INTO type_zone VALUES
 (1,'Ambulant'),

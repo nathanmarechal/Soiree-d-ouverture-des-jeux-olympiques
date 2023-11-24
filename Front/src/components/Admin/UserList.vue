@@ -15,7 +15,7 @@
             <td>{{ user.prenom }}</td>
             <td>{{ user.nom }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.role }}</td>
+            <td>{{ getRoleName(user.id_role) }}</td>
             <td>{{ user.stand ? user.stand.nom_stand : '-' }}</td>
             <td>
               <button class="blue-button" @click="editUser(index)">Modifier</button>
@@ -40,19 +40,35 @@
       },
       
     },
+
+    created() {
+      console.log('users loaded', JSON.stringify(this.users, null, 2));
+    },
+
     methods: {
       editUser(index) {
         this.$emit('edit-user', index);
       },
       deleteUser(index) {
         this.$emit('delete-user', index);
+      },
 /*
         DeleteUser(id) {
           return axios.delete(`${API_URL}/utilisateur/${id}`)
         }
 
  */
-      },
+        getRoleName(id_role) {
+          switch (id_role) {
+            case 1:
+              return 'Administrateur';
+            case 2:
+              return 'Prestataire';
+            default:
+              return 'Unknown Role';
+          }
+
+        }
     },
   };
   </script>

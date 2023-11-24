@@ -28,9 +28,7 @@
 
     <section class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div v-for="i in 3" :key="i-1">
-
-      <!-- Card: City -->
+      <div v-for="(stand, index) in firstThreeStands" :key="index">      <!-- Card: City -->
       <section class="card-section">
         <div class="card">
           <div class="flip-card">
@@ -60,7 +58,7 @@
                                </svg>
 
                   <h2 class="card-front__heading">
-                    {{getAllStand[i].nom_stand}}
+                    {{ stand.nom_stand }}
                   </h2>
 
                 </div>
@@ -72,7 +70,7 @@
                 </div>
               </div>
               <div class="card-back">
-                <img :src="getImageSrc(getAllStand[i].image_stand)" class="insideIMG" alt="image qui représente le stand">
+                <img :src="getImageSrc(stand.image_stand)" class="insideIMG" alt="image qui représente le stand">
               </div>
             </div>
           </div>
@@ -80,10 +78,11 @@
           <div class="inside-page">
             <div class="inside-page__container">
               <h3 class="inside-page__heading inside-page__heading--city">
-                {{getAllStand[i].nom_stand}}
+                {{ stand.nom_stand}}
+                <!--{{ getStandName(i) }}-->
               </h3>
               <p class="inside-page__text">
-                {{getAllStand[i].description_stand}}
+                {{ stand.description_stand }}
               </p>
               <a href="#" class="inside-page__btn inside-page__btn--city">View deals</a>
             </div>
@@ -190,6 +189,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getAllStand']),
+    firstThreeStands() {
+      return this.getAllStand.slice(0, 3);
+    },
   },
   methods: {
     getImageSrc(imageName) {
