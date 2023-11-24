@@ -106,7 +106,7 @@ h1 {
 
   @keyframes sequencePopup {
     0%, 100% { content: "d'ouverture"; }
-    25% { content: "olympique"; }
+    50% { content: "olympique"; }
   }
 
   .typewriter::before {

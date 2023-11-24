@@ -60,7 +60,7 @@
                                </svg>
 
                   <h2 class="card-front__heading">
-                    {{getAllStands[i].nom_stand}}
+                    {{getAllStand[i].nom_stand}}
                   </h2>
 
                 </div>
@@ -72,7 +72,7 @@
                 </div>
               </div>
               <div class="card-back">
-                <img :src="getImageSrc(getAllStands[i].image_stand)" class="insideIMG" alt="image qui représente le stand">
+                <img :src="getImageSrc(getAllStand[i].image_stand)" class="insideIMG" alt="image qui représente le stand">
               </div>
             </div>
           </div>
@@ -80,10 +80,10 @@
           <div class="inside-page">
             <div class="inside-page__container">
               <h3 class="inside-page__heading inside-page__heading--city">
-                {{getAllStands[i].nom_stand}}
+                {{getAllStand[i].nom_stand}}
               </h3>
               <p class="inside-page__text">
-                {{getAllStands[i].description_stand}}
+                {{getAllStand[i].description_stand}}
               </p>
               <a href="#" class="inside-page__btn inside-page__btn--city">View deals</a>
             </div>
@@ -101,7 +101,7 @@
 
     <section class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div v-for="stand in getAllStands" :key="stand">
+      <div v-for="stand in getAllStand" :key="stand">
 
         <!-- Card: City -->
         <section class="card-section">
@@ -181,13 +181,20 @@ export default {
       discoverMore : false
     };
   },
+  async mounted() {
+    try {
+      await this.$store.dispatch('getStands');
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
   computed: {
-    ...mapGetters(['getAllStands']),
+    ...mapGetters(['getAllStand']),
   },
   methods: {
     getImageSrc(imageName) {
       try {
-        return require('@/assets/' + imageName);
+        return require('@/assets/stand/' + imageName);
       } catch {
         return require('@/assets/' + "4.png");
       }
