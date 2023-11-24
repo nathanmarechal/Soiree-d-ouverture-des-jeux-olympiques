@@ -493,7 +493,7 @@ SELECT now()<=session.timeLimit FROM session
 WHERE session_id = '6649c09c-76d1-4f61-ab1b-a43967a87839'
 ;
 
-SELECT * FROM utilisateur;
+SELECT *, FROM zone;
 
 SELECT * FROM utilisateur;
 
