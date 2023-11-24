@@ -26,6 +26,7 @@ async function getAllAreasAsync() {
             "    CASE WHEN s.id_emplacement IS NULL THEN true ELSE false END AS isFree,\n" +
             "    z.id_zone AS \"id_zone\",\n" +
             "    z.id_type_zone AS \"id_type_zone\",\n" +
+            "    z.couleur_hexa, "+
             "    (\n" +
             "        SELECT JSON_AGG(DISTINCT tp.id_type_prestation)\n" +
             "        FROM prestation p\n" +

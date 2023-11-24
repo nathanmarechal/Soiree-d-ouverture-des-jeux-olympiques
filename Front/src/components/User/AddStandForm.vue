@@ -21,7 +21,6 @@
                 <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">Reserver un emplacement</button>
               </div>
                <SelectEmplacement @close="toggleSelectEmplacementModal"  :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
-
           <button type="submit">Add Stand</button>
         </form>
     </div>

@@ -8,6 +8,7 @@ import mapPage from "@/views/mapPage.vue";
 import standPage from "../views/standPage.vue"
 import signUpPage from "../views/SignUpPage.vue"
 import AdminEditRoles from '@/views/AdminEditRoles.vue'
+import AdminMapPage from '../views/AdminMapPage.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/sign-up',
     name: 'signUpView',
     component: signUpPage
+  },
+  {
+    path: '/edit-area',
+    name: 'AdminMapView',
+    component: AdminMapPage
   },
 
 ]

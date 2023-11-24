@@ -56,7 +56,7 @@ export default {
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
 
       // Ajoute une couche de tuiles OpenStreetMap à la carte
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
 
@@ -99,11 +99,25 @@ export default {
           return (zone.isfree === false)       });
       }
       // Ajoutez à nouveau les polygones filtrés à la carte
-      filteredAreas.forEach(zone => {
+
+
+
+      const averageCenter = findAverageCenter(filteredAreas);
+
+      this.map.setView(averageCenter)
+      const bounds = L.latLngBounds();
+
+      filteredAreas.forEach((zone) => {
+        console.log(zone.couleur_hexa)
         const polygon = L.polygon(zone.coordinates, {
-          color: 'blue',
-          fillOpacity: 0.8,
+          color: zone.couleur_hexa,
+          fillOpacity: 0.9,
+          weight: 5,
         }).addTo(this.map);
+
+        zone.coordinates.forEach((coord) => {
+          bounds.extend(coord);
+        });
 
         polygon.on('click', () => {
           this.showZoneInfo(zone);
@@ -111,6 +125,8 @@ export default {
 
         this.polygons.push(polygon);
       });
+
+      this.map.fitBounds(bounds);
     },
     toggleModal() {
       this.modalActive = !this.modalActive;
@@ -131,6 +147,26 @@ export default {
     ModalStand // Enregistrez le composant ModalStand
   },
 };
+
+
+
+
+function findAverageCenter(polygons) {
+  let totalLat = 0, totalLng = 0, totalCount = 0;
+
+  polygons.forEach(zone => {
+    zone.coordinates.forEach(coord => {
+      totalLat += coord[0]; // Assurez-vous que coord[0] est la latitude
+      totalLng += coord[1]; // et coord[1] est la longitude
+      totalCount++;
+    });
+  });
+
+  const avgLat = totalLat / totalCount;
+  const avgLng = totalLng / totalCount;
+
+  return [avgLat, avgLng];
+}
 </script>
 
 <style scoped>
