@@ -6,7 +6,7 @@
         <th>ID Zone</th>
         <th>Libellé</th>
         <th>Couleur</th>
-        <th>ID Type Zone</th>
+        <th>Type Zone</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -15,9 +15,9 @@
         <td>{{ zone.id_zone }}</td>
         <td>{{ zone.libelle }}</td>
         <td>
-          <div class="color-box" :style="{ backgroundColor: zone.couleur_hexa }"></div>
+          <div class="cercle" :style="{ background: zone.couleur_hexa }"></div>
         </td>
-        <td>{{ zone.id_type_zone }}</td>
+        <td>{{ zone.type_zone_libelle }}</td>
         <td>
           <button class="btn btn-primary" @click="editZone(index)">Modifier</button>
           <button class="btn btn-danger" @click="deleteZone(index)">Supprimer</button>
@@ -27,6 +27,7 @@
     </table>
   </div>
 </template>
+
 
 <script>
 import { mapActions, mapState } from 'vuex';
@@ -46,12 +47,12 @@ export default {
 
 
 <style scoped>
-/* Styles pour les boutons et autres éléments si nécessaire */
-.blue-button {
-  /* Style pour le bouton bleu */
-}
-.red-button {
-  /* Style pour le bouton rouge */
+.cercle {
+  width: 2vh;
+  height: 2vh;
+  border-radius: 50%; /* Pour un cercle parfait */
+  border: 2px solid black; /* Optionnel, pour une bordure subtile */
+  display: inline-block; /* Assure que le div se comporte comme un élément en ligne */
 }
 </style>
 

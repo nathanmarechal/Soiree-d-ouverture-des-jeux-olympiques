@@ -66,7 +66,7 @@ const getAllZones = (callback) => {
 async function getAllZonesAsync() {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("SELECT * FROM zone");
+        const result = await conn.query("SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as \"type_zone_libelle\" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone;");
         conn.release();
         return result.rows;
     } catch (error) {

@@ -493,7 +493,7 @@ SELECT now()<=session.timeLimit FROM session
 WHERE session_id = '6649c09c-76d1-4f61-ab1b-a43967a87839'
 ;
 
-SELECT *, FROM zone;
+SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as "type_zone_libelle" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone;
 
 SELECT * FROM utilisateur;
 
