@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-center align-items-center overlay">
     <div class="login-box bg-white p-4 rounded shadow">
 
-      <button class="close-btn" @click="closeModal">×</button>
+      <button class="close-btn" @click="closeModal">X</button>
       <h2 class="text-center mb-4">Login</h2>
       <form @submit.prevent="submitForm">
         <div class="form-group">
@@ -69,7 +69,7 @@ export default {
               console.log(this.email, this.password,res)
               this.$store.commit('SET_SESSION_ID',res);
               this.$store.commit('SET_EMAIL', this.email);
-              this.$store.commit('SET_PASSWORD', this.password);
+              // this.$store.commit('SET_PASSWORD', this.password);
               this.$store.commit('SET_USER_CONNECTED', true);
             })
         //const uuid = getSession(this.email,this.password)

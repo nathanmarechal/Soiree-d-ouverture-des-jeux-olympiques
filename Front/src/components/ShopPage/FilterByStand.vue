@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      selectedStands: [] // Maintenant un tableau
+      selectedStands: []
     };
   },
   methods: {
