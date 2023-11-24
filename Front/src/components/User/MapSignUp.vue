@@ -109,12 +109,21 @@ export default {
           return (zone.isfree === true)});
       }
 
-      // Ajoutez à nouveau les polygones filtrés à la carte
-      filteredAreas.forEach(zone => {
+      const averageCenter = this.findAverageCenter(filteredAreas);
+
+      this.map.setView(averageCenter)
+      const bounds = L.latLngBounds();
+
+      filteredAreas.forEach((zone) => {
         const polygon = L.polygon(zone.coordinates, {
-          color: 'blue',
+          color: zone.couleur_hexa,
           fillOpacity: 0.8,
+          weight: 5,
         }).addTo(this.map);
+
+        zone.coordinates.forEach((coord) => {
+          bounds.extend(coord);
+        });
 
         polygon.on('click', () => {
           this.showZoneInfo(zone);
@@ -122,6 +131,8 @@ export default {
 
         this.polygons.push(polygon);
       });
+      this.map.fitBounds(bounds);
+
     },
     ...mapMutations(['SET_SELECTED_AREA']),
 
@@ -132,6 +143,22 @@ export default {
       // Vous pouvez également inclure d'autres logiques ici si nécessaire
     },
 
+    findAverageCenter(polygons) {
+      let totalLat = 0, totalLng = 0, totalCount = 0;
+
+      polygons.forEach(zone => {
+        zone.coordinates.forEach(coord => {
+          totalLat += coord[0]; // Assurez-vous que coord[0] est la latitude
+          totalLng += coord[1]; // et coord[1] est la longitude
+          totalCount++;
+        });
+      });
+
+      const avgLat = totalLat / totalCount;
+      const avgLng = totalLng / totalCount;
+
+      return [avgLat, avgLng];
+    },
   },
   watch: {
     // Surveillez les changements dans les sélections

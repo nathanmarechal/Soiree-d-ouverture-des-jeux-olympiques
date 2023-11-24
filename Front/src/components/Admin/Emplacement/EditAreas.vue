@@ -1,7 +1,11 @@
 <template>
+  <div>
     <div class="map-container">
       <div id="map"></div>
     </div>
+    <modal-edit :modalActiveEdit="modalActiveEdit" :zone="zone" @close="toggleModalEdit"></modal-edit>
+    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" @close="toggleModalAdd"></modal-add>
+  </div>
 </template>
 
 <script>
@@ -9,15 +13,25 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-draw';
 
+import ModalEdit from '../Emplacement/ModalEdit.vue'
+import ModalAdd from '../Emplacement/ModalAdd.vue'
+
 import { mapActions, mapState } from 'vuex';
 
 export default {
   data() {
     return {
       map: null,
+      zone: null,
       polygons: [],
-      modalActive: false,
+      newArea: null,
+      modalActiveEdit: false,
+      modalActiveAdd: false,
     };
+  },
+  components: {
+    ModalEdit,
+    ModalAdd
   },
   async mounted() {
     try {
@@ -60,15 +74,16 @@ export default {
       // Handle draw events
       this.map.on('draw:created', (event) => {
         const layer = event.layer;
+        this.newArea = {
+          coordinates: [],
+          surface: 0,
+        };
         this.addZone(layer.getLatLngs());
       });
 
       this.updateMap();
     },
 
-    addZone(coordinates) {
-      alert(coordinates);
-    },
     updateMap() {
       console.log('updateMAP');
       // Supprimez les polygones actuels de la carte
@@ -91,14 +106,70 @@ export default {
         this.polygons.push(polygon);
       });
     },
-    toggleModal() {
-      this.modalActive = !this.modalActive;
-      if (!this.modalActive) {
-        this.selectedStand = null; // Réinitialisez lors de la fermeture de la modal
+
+    addZone(coordinates) {
+      console.log('add coordinate');
+      this.toggleModalAdd();
+
+      // Initialisez l'objet newArea avec des propriétés vides
+
+      // Convertir les coordonnées au format souhaité
+      const formattedCoordinates = [];
+
+      for (const coord of coordinates[0]) {
+        formattedCoordinates.push([
+          parseFloat(coord.lat.toFixed(7)), // Conserver 7 décimales pour la latitude
+          parseFloat(coord.lng.toFixed(7)), // Conserver 7 décimales pour la longitude
+        ]);
       }
+      // Assigner les coordonnées et calculer la surface
+      this.newArea.coordinates = formattedCoordinates;
+      this.newArea.surface = this.calculateEarthSurfaceArea(formattedCoordinates);
+      console.log(this.newArea);
     },
-  },
+  showZoneInfo(zone){
+      this.toggleModalEdit();
+      this.zone =zone
+    },
+
+    toggleModalEdit() {
+      this.modalActiveEdit = !this.modalActiveEdit;
+    },
+
+    toggleModalAdd() {
+      this.modalActiveAdd = !this.modalActiveAdd;
+    },
+
+    calculateEarthSurfaceArea(coords) {
+      if (coords.length < 3) {
+        return 0; // Pas un polygone
+      }
+
+      const radius = 6371000; // Rayon moyen de la Terre en mètres
+      let area = 0;
+
+      for (let i = 0; i < coords.length; i++) {
+        const [lat1, lon1] = coords[i];
+        const [lat2, lon2] = coords[(i + 1) % coords.length];
+
+        const radLat1 = lat1 * Math.PI / 180;
+        const radLon1 = lon1 * Math.PI / 180;
+        const radLat2 = lat2 * Math.PI / 180;
+        const radLon2 = lon2 * Math.PI / 180;
+
+        const a = (Math.sin(radLat2) - Math.sin(radLat1)) * (radLon2 - radLon1) / 2;
+        area += a;
+      }
+
+      return Math.round((Math.abs(area * radius * radius)));
+    }
+
+
+},
 };
+
+
+
 </script>
 
 <style scoped>

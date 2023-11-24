@@ -102,16 +102,15 @@ export default {
 
 
 
-      const averageCenter = findAverageCenter(filteredAreas);
+      const averageCenter = this.findAverageCenter(filteredAreas);
 
       this.map.setView(averageCenter)
       const bounds = L.latLngBounds();
 
       filteredAreas.forEach((zone) => {
-        console.log(zone.couleur_hexa)
         const polygon = L.polygon(zone.coordinates, {
           color: zone.couleur_hexa,
-          fillOpacity: 0.9,
+          fillOpacity: 0.8,
           weight: 5,
         }).addTo(this.map);
 
@@ -134,6 +133,22 @@ export default {
         this.selectedStand = null; // Réinitialiser lors de la fermeture de la modal
       }
     },
+    findAverageCenter(polygons) {
+      let totalLat = 0, totalLng = 0, totalCount = 0;
+
+      polygons.forEach(zone => {
+        zone.coordinates.forEach(coord => {
+          totalLat += coord[0]; // Assurez-vous que coord[0] est la latitude
+          totalLng += coord[1]; // et coord[1] est la longitude
+          totalCount++;
+        });
+      });
+
+      const avgLat = totalLat / totalCount;
+      const avgLng = totalLng / totalCount;
+
+      return [avgLat, avgLng];
+    },
     ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE']),
   },
   watch: {
@@ -151,22 +166,7 @@ export default {
 
 
 
-function findAverageCenter(polygons) {
-  let totalLat = 0, totalLng = 0, totalCount = 0;
 
-  polygons.forEach(zone => {
-    zone.coordinates.forEach(coord => {
-      totalLat += coord[0]; // Assurez-vous que coord[0] est la latitude
-      totalLng += coord[1]; // et coord[1] est la longitude
-      totalCount++;
-    });
-  });
-
-  const avgLat = totalLat / totalCount;
-  const avgLng = totalLng / totalCount;
-
-  return [avgLat, avgLng];
-}
 </script>
 
 <style scoped>
