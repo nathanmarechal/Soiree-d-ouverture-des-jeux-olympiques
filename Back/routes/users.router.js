@@ -8,6 +8,8 @@ router.get("/roles", usersController.getRoles);
 
 router.get("/get", usersController.getUsers);
 
+router.get("/getBySessionId",usersController.getUserBySessionId)
+
 router.post("/post",
     (req,res,next)=>
         checkRight(req,res,next,"create_users"),

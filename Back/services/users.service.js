@@ -71,6 +71,37 @@ async function getUserByIdAsync(id) {
     }
 }
 
+const getUserBySessionId = (session_id, callback) => {
+    getUserBySessionIdAsync(session_id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback('Error in getUserBySessionId', null);
+        })
+}
+
+async function getUserBySessionIdAsync(session_id) {
+    try {
+        const client = await pool.connect();
+        const res = await client.query("SELECT utilisateur.id_user, id_role,email,prenom,nom,adresse,code_postal,commune " +
+            "FROM session\n" +
+            "LEFT JOIN utilisateur on session.id_user = utilisateur.id_user\n" +
+            "WHERE session_id = $1;", [session_id]);
+        client.release();
+        if(res.rows.length!=1)
+        {
+            console.log("row length : "+res.rows.length);
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error in getUserBySessionIdAsync:', error);
+        throw error;
+    }
+}
+
 const getUserWithLongestPrenom = (callback) => {
     getUserWithLongestPrenomAsync()
         .then(res => {
@@ -170,6 +201,7 @@ module.exports = {
     createUser: createUser
     , getAllUsers: getAllUsers
     , getUserById: getUserById
+    , getUserBySessionId: getUserBySessionId
     , getUserWithLongestPrenom: getUserWithLongestPrenom
     , getAllRoles: getAllRoles
     , updateUser: updateUser

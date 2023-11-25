@@ -48,9 +48,18 @@ async function getAllRolesFromAPI() {
     return answer
 }
 
+async function getUserFromSessionIdFromAPI(session_id) {
+    const request = '/users/getBySessionId?session_id='+session_id;
+    return await getRequest(request, 'GETUSER_BY_SESSION_ID');
+}
+async function getUserFromSessionId(session_id)
+{
+    return await getUserFromSessionIdFromAPI(session_id);
+}
 
 export {
     createUser,
     getAllRoles,
     getAllUsers,
+    getUserFromSessionId
 }

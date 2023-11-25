@@ -25,6 +25,7 @@
 
 <script>
 import {getSession} from "@/services/login.service";
+import {getUserFromSessionId} from "@/services/utilisateur.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -49,7 +50,7 @@ export default {
         adresse : null,
         commune : null,
         panier : null,
-        role : null,
+        id_role : null,
       };
     },
   },
@@ -95,13 +96,27 @@ export default {
         getSession(this.email,this.password)
             .then(res=> {
               //getUserData()
-
-              this.sessionId = res
+              this.sessionId = res;
               if(this.sessionId!="")
               {
-                this.$store.commit('SET_CURRENT_USER', this.currentUser)
-                console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
 
+                getUserFromSessionId(this.sessionId)
+                    .then(res=>{
+                      console.log("res : "+JSON.stringify(res))
+
+                      this.currentUser.id_user = res.id_user;
+                      this.currentUser.email = res.email;
+                      this.currentUser.nom = res.nom;
+                      this.currentUser.prenom = res.prenom;
+                      this.currentUser.code_postal = res.code_postal;
+                      this.currentUser.adresse = res.adresse;
+                      this.currentUser.commune = res.commune;
+                      this.currentUser.panier = res.panier;
+                      this.currentUser.id_role = res.id_role;
+                      this.$store.commit('SET_CURRENT_USER', this.currentUser)
+
+                      console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
+                    })
                 //this.$store.commit('SET_EMAIL', this.email);
                 //this.$store.commit('SET_PASSWORD', this.password);
                 this.$store.commit('SET_IS_USER_CONNECTED', true);

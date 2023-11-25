@@ -46,6 +46,20 @@ exports.getUserById = (req, res) => {
         return res.status(200).send(data);
     })
 }
+exports.getUserBySessionId = (req, res) =>
+{
+    const session_id = req.query.session_id;
+    usersService.getUserBySessionId(session_id,(error,data)=>{
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            console.log("sending the data"+data.id_role)
+            return res.status(200).send(data);
+        }
+    })
+    return null
+}
 
 
 exports.getRoles = (req, res) => {
