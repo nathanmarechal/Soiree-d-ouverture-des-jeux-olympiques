@@ -171,8 +171,8 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (6,2);
 
 INSERT INTO type_zone (libelle) VALUES
-('Ambulant'),
-('Fixe');
+('Fixe'),
+('Ambulant');
 
 INSERT INTO type_prestation (libelle, image , description_type_prestation) VALUES
 ('nourriture','food.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
