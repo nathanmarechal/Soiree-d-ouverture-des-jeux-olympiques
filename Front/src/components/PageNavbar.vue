@@ -41,6 +41,7 @@
         <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="#" class = "dp">se déconnecter</b-dropdown-item>
       </b-nav-item-dropdown>
+      <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
     </b-navbar>
 
     <b-sidebar id="mobile-nav" title="" width="250px" no-header v-model="isSidebarOpen">
