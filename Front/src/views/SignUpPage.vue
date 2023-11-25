@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import addUserForm from "../components/User/AddUserForm.vue"
+import addUserForm from "../components/Admin/User/AddUserForm.vue"
 
 export default {
   components: {

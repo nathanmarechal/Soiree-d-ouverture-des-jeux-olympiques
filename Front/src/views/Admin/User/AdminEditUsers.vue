@@ -10,7 +10,7 @@
 
 <script>
 import UserList from '@/components/Admin/User/UserList.vue';
-import AddUserForm from '@/components/User/AddUserForm.vue';
+import AddUserForm from '@/components/Admin/User/AddUserForm.vue';
 import EditUserForm from '@/components/Admin/User/EditUserForm.vue';
 
 
