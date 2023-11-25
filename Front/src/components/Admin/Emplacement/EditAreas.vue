@@ -70,6 +70,7 @@ export default {
           rectangle: false,
           circle: false,
           marker: false,
+          circlemarker:false
         },
       });
 

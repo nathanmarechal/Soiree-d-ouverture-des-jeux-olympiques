@@ -33,6 +33,8 @@ export default {
   },
   async mounted() {
     try {
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_STANDS', []);
       this.areas = await this.getAreas();
       this.zones = await this.getZones();
       //await this.$store.dispatch('getAreas');
