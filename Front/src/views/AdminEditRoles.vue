@@ -10,9 +10,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import RoleList from '../components/Role/RoleList.vue';
-import AddRoleForm from '../components/Role/AddRoleForm.vue';
-import EditRoleForm from '../components/Role/EditRoleForm.vue';
+import RoleList from '../components/Admin/Role/RoleList.vue';
+import AddRoleForm from '../components/Admin/Role/AddRoleForm.vue';
+import EditRoleForm from '../components/Admin/Role/EditRoleForm.vue';
 
 export default {
     components: {

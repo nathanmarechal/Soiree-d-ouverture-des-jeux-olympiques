@@ -25,12 +25,12 @@ const routes = [
     component: Information
   },
   {
-    path: '/AdminEditUsers',
+    path: '/admin/users',
     name: 'AdminEditUsers',
     component: AdminEditUsers
   },
   {
-    path: '/AdminEditRoles',
+    path: '/admin/roles',
     name: 'AdminEditRoles',
     component: AdminEditRoles
   },
@@ -55,12 +55,12 @@ const routes = [
     component: signUpPage
   },
   {
-    path: '/edit-area',
+    path: '/admin/areas',
     name: 'AdminMapView',
     component: AdminMapPage
   },
   {
-    path: '/edit-zone',
+    path: '/admin/zones',
     name: 'AdminZoneView',
     component: AdminZonePage
   },

@@ -24,10 +24,10 @@
             <b-dropdown-item href="#" class = "dp">RATP</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
-            <b-dropdown-item href="/AdminEditUsers" class = "dp">Comptes</b-dropdown-item>
-            <b-dropdown-item href="/edit-area" class = "dp">Emplacements</b-dropdown-item>
-            <b-dropdown-item href="/edit-zone" class = "dp">Zones</b-dropdown-item>
-            <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
+            <b-dropdown-item href="/admin/users" class = "dp">Comptes</b-dropdown-item>
+            <b-dropdown-item href="/admin/areas" class = "dp">Emplacements</b-dropdown-item>
+            <b-dropdown-item href="/admin/zones" class = "dp">Zones</b-dropdown-item>
+            <b-dropdown-item href="/admin/roles" class = "dp">Rôles</b-dropdown-item>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
