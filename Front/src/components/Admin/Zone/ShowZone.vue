@@ -19,7 +19,7 @@
         </td>
         <td>{{ zone.type_zone_libelle }}</td>
         <td>
-          <button class="btn btn-primary" @click="editZone(index)">Modifier</button>
+          <router-link :to="{ name: 'AdminEditZoneView', params: { id_zone: zone.id_zone } }" class="btn btn-primary">Modifier</router-link>
           <button class="btn btn-danger" @click="deleteZone(index)">Supprimer</button>
         </td>
       </tr>
