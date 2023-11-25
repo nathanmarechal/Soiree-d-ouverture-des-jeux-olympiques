@@ -7,11 +7,14 @@
       <input type="search" id="form1" class="form-control" placeholder="Chercher entreprise" aria-label="Search" @input="updateSearchQuery"/>
     </div>
 
-    <h4>Zone</h4>
-    <div v-for="(zone, index) in zones" :key="index" class="form-check">
-      <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
-      <label class="form-check-label" :for="'zoneCheck' + index">{{ zone.libelle }}</label>
-    </div>
+
+      <h4>Zone</h4>
+      <div v-for="(zone, index) in zones" :key="index" class="form-check">
+        <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
+        <label class="d-flex gap-2 form-check-label" :for="'zoneCheck' + index">
+          <span class="color-circle" :style="{ background: zone.couleur_hexa }"></span>{{ zone.libelle }}
+        </label>
+      </div>
 
 
     <h4>Type de prestation</h4>
@@ -77,5 +80,14 @@ export default {
 </script>
 
 <style scoped>
-/* Ajoutez ici les styles CSS spécifiques si nécessaire */
+.color-circle {
+  width: 20px; /* Ajustez la taille du cercle selon vos préférences */
+  height: 20px; /* Ajustez la taille du cercle selon vos préférences */
+  border-radius: 50%;
+  border: black solid 1px;
+  display: inline-block;
+  margin-left: 10px; /* Ajoutez une marge à gauche pour séparer le cercle du texte */
+  vertical-align: middle; /* Alignez le cercle au milieu du texte */
+}
+
 </style>
