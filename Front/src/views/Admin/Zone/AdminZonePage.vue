@@ -1,5 +1,6 @@
 <template>
-  <div class="main" style="margin-top: 10vh;  width: 90%;">
+  <div class="main">
+    <router-link to="/admin/zones/add" class="btn btn-success">Ajouter une zone</router-link>
     <show-zone></show-zone>
   </div>
 
@@ -20,8 +21,12 @@ export default {
 <style scoped>
 
 .main{
+  margin-top: 10vh;
+  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 </style>

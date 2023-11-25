@@ -42,7 +42,7 @@ export default {
     }
   },
   async created() {
-    this.zones = await this.getZones()
+    this.zones = await this.getZones();
   },
   methods: {
     ...mapActions(['getZones']),
