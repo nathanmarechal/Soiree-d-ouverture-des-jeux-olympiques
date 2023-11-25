@@ -48,7 +48,7 @@
           <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone" ></AddStandForm>
       </div>
       <div class="form">
-        <button class="blue-button" type="submit">Add User</button>
+        <button class="blue-button" type="submit" @click="$emit('add-user')">Add User</button>
         <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
       </div>
     </form>
