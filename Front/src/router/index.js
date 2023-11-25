@@ -7,10 +7,10 @@ import MapPage from "@/views/mapPage.vue";
 import StandPage from "../views/standPage.vue";
 import SignUpPage from "../views/SignUpPage.vue";
 import NotFound from "../views/Error404Page.vue";
-import AdminEditUsers from '../views/AdminEditUsers.vue';
-import AdminEditRoles from '../views/AdminEditRoles.vue';
-import AdminMapPage from '../views/AdminMapPage.vue';
-import AdminZonePage from '../views/AdminZonePage.vue';
+import AdminEditUsers from '../views/Admin/User/AdminEditUsers.vue';
+import AdminEditRoles from '../views/Admin/Role/AdminEditRoles.vue';
+import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue';
+import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue';
 
 Vue.use(VueRouter);
 
