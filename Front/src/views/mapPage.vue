@@ -30,6 +30,7 @@ export default {
 .filter-map{
   width: 90%;
   margin-top: 10vh;
+  margin-bottom: 5vh;
   height: 80vh;
 }
 
