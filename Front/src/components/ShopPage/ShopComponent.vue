@@ -11,6 +11,7 @@
           <select>
             <option v-for="creneau in getAllCreneau" :key="creneau" >{{ creneau.time }}</option>
           </select>
+          <button type="button" class="btn btn-success">Réserver</button>
 
         </div>
       </div>
