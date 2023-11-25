@@ -49,8 +49,7 @@ async function checkRight_by_id(session_id,right_id)
         "WHERE session_id = $1\n" +
         ";",[session_id]
     )
-    const timeOK = timeQuerry.rows[0].ok;
-    if(!timeOK)
+    if(timeQuerry.rows.length!=1 || !timeQuerry.rows[0].ok)
         return false;
 
     console.log()
@@ -62,5 +61,5 @@ async function checkRight_by_id(session_id,right_id)
         "WHERE session_id = $2) AS ok\n" +
         ";",[right_id,session_id])
     conn.release()
-    return res.rows[0].ok;
+    return res.rows.length==1 && res.rows[0].ok;
 }
