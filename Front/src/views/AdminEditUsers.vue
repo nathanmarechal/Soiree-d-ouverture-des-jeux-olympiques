@@ -14,7 +14,8 @@ import AddUserForm from '../components/User/AddUserForm.vue';
 import EditUserForm from '../components/Admin/EditUserForm.vue';
 
 
-import {mapActions, mapState} from 'vuex'
+//import {mapActions, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 //import {getAllUsers} from "@/services/utilisateur.service";
 
 export default {
@@ -25,27 +26,41 @@ export default {
     },
     data() {
         return {
-            //users: dataTest.users,
-            //users: [],
-            filterRole: '',
-            showAddUserForm: false,
-            showEditUserForm: false,
-            showUserList: true,
-            showAddButton: true,
-            selectedUser: null,
+          users: [], // Variable locale
+          roles: [], // Variable locale
+          //typeZone: [], // Variable locale
+
+          filterRole: '',
+          showAddUserForm: false,
+          showEditUserForm: false,
+          showUserList: true,
+          showAddButton: true,
+          selectedUser: null,
         };
     },
 
-    created() {
-      this.$store.dispatch('getUsers')
-      //this.$store.dispatch('getRoles');
-      this.$store.dispatch('getTypeZone');
+    async created() {
+      try {
+        this.users = await this.getUsers();
+        this.roles = await this.getRoles();
+        //this.typeZone = await this.getTypeZone();
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     },
+    /*
+    created() {
+      this.loadUsers().then(() => {
+        console.log('users loaded ' + this.users)
+      })
+      //this.$store.dispatch('getAllUsers')
+      //this.$store.dispatch('getRoles');
+      //this.$store.dispatch('getTypeZone');
+    },
+     */
 
     computed: {
-
-        ...mapState(['users', 'roles', 'typeZone']),
-
+      //...mapState(['users', 'roles', 'typeZone']),
       filteredUsers() {
           if (this.filterRole === '') {
               return this.users;
@@ -55,10 +70,22 @@ export default {
       },
     },
     methods: {
+      /*
+      async loadUsers() {
+        try {
+          const response = await getAllUsers(); // Replace with your actual function to fetch users
+          //console.log('response ' + response)
+          this.users = response; // Assuming response.data holds your users
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      },
+
+       */
 
         ...mapActions(['getUsers']),
         ...mapActions(['getRoles']),
-        ...mapActions(['getTypeZone']),
+        //...mapActions(['getTypeZone']),
 
         addUser(user) {
             user.id = this.users.length + 1;

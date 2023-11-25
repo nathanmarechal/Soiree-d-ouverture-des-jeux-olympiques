@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-center align-items-center overlay">
     <div class="login-box bg-white p-4 rounded shadow">
 
-      <button class="close-btn" @click="closeModal">×</button>
+      <button class="close-btn" @click="closeModal">X</button>
       <h2 class="text-center mb-4">Login</h2>
       <form @submit.prevent="submitForm">
         <div class="form-group">
@@ -28,6 +28,34 @@ import {getSession} from "@/services/login.service";
 
 export default {
   props : ['isLoginOpen'],
+  data() {
+    return {
+      sessionId: '',
+      email: '',
+
+      password: '', //variable locale
+    }
+  },
+
+  computed: {
+    currentUser() {
+      return {
+        session_id: this.sessionId,
+        id_user: null,
+        email: this.email,
+        nom : null,
+        prenom : null,
+        code_postal : null,
+        adresse : null,
+        commune : null,
+        panier : null,
+        role : null,
+      };
+    },
+  },
+
+
+  /*
   computed: {
     email: {
       get() {
@@ -46,6 +74,8 @@ export default {
       }
     },
   },
+
+   */
   methods: {
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);
@@ -63,18 +93,19 @@ export default {
       if (this.isEmailValid() && this.isPasswordValid()) {
         alert('Formulaire envoyé !')
         getSession(this.email,this.password)
-            .then(res=>
-            {
-              console.log("res : "+res);
-              console.log(this.email, this.password,res)
-              this.$store.commit('SET_SESSION_ID',res);
-              this.$store.commit('SET_EMAIL', this.email);
-              this.$store.commit('SET_PASSWORD', this.password);
-              this.$store.commit('SET_USER_CONNECTED', true);
+            .then(res=> {
+              //getUserData()
+
+              this.sessionId = res
+              //this.$store.commit('SET_SESSION_ID',res)
+
+              this.$store.commit('SET_CURRENT_USER', this.currentUser)
+              console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
+
+              //this.$store.commit('SET_EMAIL', this.email);
+              //this.$store.commit('SET_PASSWORD', this.password);
+              this.$store.commit('SET_IS_USER_CONNECTED', true);
             })
-        //const uuid = getSession(this.email,this.password)
-
-
         this.closeModal();
       } else {
         alert('Veuillez remplir correctement le formulaire !')

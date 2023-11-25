@@ -3,9 +3,8 @@
     <div v-if="showSelectEmplacementModal" class="overlay">
       <button class="close-btn" @click="$emit('close')">×</button>
       <div class="modal-inner">
-        <FilterAreas></FilterAreas>
-        <MapSignUp style="width: 50vh; height : 50vh;"></MapSignUp>
-
+        <FilterAreas style="width: 20%; height : 100%;"></FilterAreas>
+        <MapSignUp style="width: 70%; height : 100%;"></MapSignUp>
       </div>
     </div>
   </div>
@@ -74,6 +73,9 @@ export default {
 .modal-inner {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 60%;
+  height: 85%;
   background: white;
   padding: 20px;
   border-radius: 10px;

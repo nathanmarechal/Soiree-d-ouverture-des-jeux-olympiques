@@ -1,14 +1,17 @@
 const express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/users.controller');
-const usersMiddleware = require('../middlewares/users.middleware');
-const {checkRight_by_name} = require("../services/login.service");
+const {checkRight} = require("../middlewares/authentication.middleware");
+
 
 router.get("/roles", usersController.getRoles);
 
 router.get("/get", usersController.getUsers);
 
-router.post("/post", usersController.saveUser);
+router.post("/post",
+    (req,res,next)=>
+        checkRight(req,res,next,"create_users"),
+    usersController.saveUser);
 
 //router.post("/post", usersMiddleware.validateUserInput,usersController.saveUser);
 

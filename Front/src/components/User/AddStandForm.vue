@@ -14,13 +14,13 @@
                         <label for="description_stand">Description du stand:</label>
                   <textarea id="description_stand" v-model="stand.description_stand" required class="w-100"></textarea>
                 </div>
+
               <map-sign-up-pre-view style="width: 100%; height: 25vh;"> </map-sign-up-pre-view>
 
               <div class="d-flex justify-content-center"> <!-- Flexbox for centering -->
                 <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">Reserver un emplacement</button>
               </div>
                <SelectEmplacement @close="toggleSelectEmplacementModal"  :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
-
           <button type="submit">Add Stand</button>
         </form>
     </div>
@@ -29,6 +29,8 @@
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
 import MapSignUpPreView from '../User/MapSignUpPreView.vue'
+
+import {mapGetters} from 'vuex';
 
 export default {
     components: {
@@ -62,6 +64,16 @@ export default {
       toggleSelectEmplacementModal() {
         this.showSelectEmplacementModal = !this.showSelectEmplacementModal;
       }
+    },
+
+  computed: {
+    //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
+    ...mapGetters([
+      'getAreaSelectedForStand',
+    ]),
+  },
+    watch: {
+      getAreaSelectedForStand: 'toggleSelectEmplacementModal',
     }
 };
 </script>

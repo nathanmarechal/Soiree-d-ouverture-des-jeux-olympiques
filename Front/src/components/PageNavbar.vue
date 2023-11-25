@@ -25,12 +25,15 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
             <b-dropdown-item href="/AdminEditUsers" class = "dp">Comptes</b-dropdown-item>
+            <b-dropdown-item href="/edit-area" class = "dp">Emplacements</b-dropdown-item>
+            <b-dropdown-item href="/edit-zone" class = "dp">Zones</b-dropdown-item>
             <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
           </b-nav-item-dropdown>
+
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-brand href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
-      <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="email">
+      <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item href="#" class = "dp">Mes espaces</b-dropdown-item>
         <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="#" class = "dp">se déconnecter</b-dropdown-item>
@@ -58,7 +61,6 @@
         </b-nav-item-dropdown>
       </b-nav>
     </b-sidebar>
-
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>
     <div id="loginModal" title="Login" class="centered hide-footer">
       <login-component :isLoginOpen="isLoginOpen" @closeModal="isLoginOpen = false"></login-component> <!-- pour refiler le booléen à l'enfant -->
@@ -85,9 +87,14 @@ export default {
     isUserConnected() {
       return this.$store.getters.isUserConnected;
     },
+    currentUser() {
+      return this.$store.getters.getCurrentUser;
+    },
+    /*
     email() {
       return this.$store.getters.getemail;
     },
+     */
   },
   components: {
     'login-component': LoginComponent
@@ -97,9 +104,10 @@ export default {
       this.$store.commit('SET_LOGIN_MODAL', true);
     },
     disconnect() {
-      this.$store.commit('SET_USER_CONNECTED', false);
-      this.$store.commit('SET_EMAIL', '');
-      this.$store.commit('SET_PASSWORD', '');
+      this.$store.commit('SET_IS_USER_CONNECTED', false);
+      this.$store.commit('SET_CURRENT_USER', null);
+      //this.$store.commit('SET_EMAIL', '');
+      //this.$store.commit('SET_PASSWORD', '');
     },
   },
 };

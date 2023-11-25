@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 20vh">
+  <div>
     <h3>Filtre</h3>
 
     <h4>Type de zone</h4>

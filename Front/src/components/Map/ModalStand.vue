@@ -23,7 +23,6 @@ export default {
   props: ['modalActive', 'stand'],
   computed: {
     imagePath() {
-      // Adaptez ce chemin selon la structure de votre projet
       return require(`@/assets/stand/${this.stand.image_stand}`);
     }
   },

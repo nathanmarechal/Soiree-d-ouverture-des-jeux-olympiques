@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS session;
 
 DROP TABLE IF EXISTS role_droits;
 DROP TABLE IF EXISTS role CASCADE;
-DROP TABLE IF EXISTS droits;
+DROP TABLE IF EXISTS droits CASCADE;
 DROP TABLE IF EXISTS messages;
 
 
@@ -37,6 +37,7 @@ CREATE TABLE type_prestation(
 CREATE TABLE zone(
    id_zone SERIAL PRIMARY KEY,
    libelle VARCHAR(50),
+   couleur_hexa VARCHAR(50),
    id_type_zone INT NOT NULL,
    FOREIGN KEY(id_type_zone) REFERENCES type_zone(id_type_zone)
 );
@@ -160,9 +161,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (6,1),
 (4,2),
 (5,2),
-(6,2)
-;
-
+(6,2);
 
 INSERT INTO type_zone VALUES
 (1,'Ambulant'),
@@ -176,10 +175,10 @@ INSERT INTO type_prestation (libelle) VALUES
 ('billeterie');
 
 INSERT INTO zone VALUES
-(1,'champs de mars',1),
-(2,'tuillerie',1),
-(3,'zones ambulantes',2),
-(4,'jardin des plantes',1);
+(1,'champs de mars','#4CE79E',1),
+(2,'tuillerie','#75BD31',1),
+(3,'zones ambulantes','#BD7531',2),
+(4,'jardin des plantes','#CF2525',1);
 
 
 INSERT INTO emplacement (id_emplacement,coordonnes,surface,id_zone) VALUES
@@ -472,6 +471,7 @@ SELECT
     CASE WHEN s.id_emplacement IS NULL THEN true ELSE false END AS isFree,
     z.id_zone AS "id_zone",
     z.id_type_zone AS "id_type_zone",
+    z.couleur_hexa,
     (
         SELECT JSON_AGG(DISTINCT tp.id_type_prestation)
         FROM prestation p
@@ -489,31 +489,7 @@ LEFT JOIN
 ORDER BY
     e.id_emplacement;
 
-SELECT now()<=session.timeLimit FROM session
-WHERE session_id = '6649c09c-76d1-4f61-ab1b-a43967a87839'
-;
-
-SELECT * FROM utilisateur;
-
-SELECT * FROM utilisateur;
-
-SELECT * FROM role;
-
-SELECT * FROM stand;
-
-SELECT * FROM session;
-
-SELECT * FROM type_zone;
-
-SELECT * FROM utilisateur;
+SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as "type_zone_libelle" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone;
 
 SELECT id FROM droits
-WHERE libelle = 'create_user'
-;
-SELECT * FROM droits;
-
-SELECT * FROM session;
-
-SELECT now()<=session.timeLimit AS ok FROM session
-WHERE session_id = 'ffa92734-8e5f-47ec-b7a2-1a0a6f47505b'
-;
+WHERE libelle = 'create_user';

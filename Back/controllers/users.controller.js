@@ -11,8 +11,8 @@ exports.saveUser = (req, res) => {
     const id_role = req.body.id_role;
     const id_stand = req.body.id_stand;
     const session_id = req.body.session_id;
-    console.log(nom, " ", prenom, " ", email, " ", password, " ", adresse, " ", code_postal, " ", commune, " ", id_role, " ", id_stand);
-    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, session_id,(error, data) => {
+    console.log(nom, " ", prenom, " ", email, " ", password, " ", adresse, " ", code_postal, " ", commune, " ", id_role, " ", id_stand," ",session_id);
+    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand,(error, data) => {
         if (error) {
             return res.status(500).send("error");
         }
@@ -77,7 +77,7 @@ exports.updateUser = (req, res) => {
     const {nom, prenom} = req.body;
     usersService.updateUser(uuid, nom, prenom, (error, data) => {
         if (error) {
-            if (error == "User not found"){
+            if (error === "User not found"){
                 return res.status(404).send("User not found");
             }
             return res.status(500).send("internal error");
@@ -93,7 +93,7 @@ exports.deleteUser = (req, res) => {
     }
     usersService.deleteUser(id, (error, data) => {
         if (error) {
-            if (error == "User not found"){
+            if (error === "User not found"){
                 return res.status(404).send("User not found");
             }
             return res.status(500).send("internal error");

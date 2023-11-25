@@ -14,16 +14,17 @@
 
 <script>
 import L from 'leaflet';
-import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
-
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 import ModalStand from './ModalStand.vue';
-
 
 export default {
 
   data() {
     return {
+      areas : [],
+      zones : [],
+
       map: null,
       selectedStand: null,
       polygons: [],
@@ -32,41 +33,33 @@ export default {
   },
   async mounted() {
     try {
-      await this.$store.dispatch('getAreas');
-      await this.$store.dispatch('getZones');
+      this.areas = await this.getAreas();
+      this.zones = await this.getZones();
+      //await this.$store.dispatch('getAreas');
+      //await this.$store.dispatch('getZones');
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   computed: {
-    //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
     ...mapGetters([
       'getSelectedZone',
-      'getSelectedType',
-      'getMinPrice',
-      'getMaxPrice',
+      'getSelectedTypePrestation',
       'getSearchQuery'
     ]),
-    ...mapState(['areas', 'zones']),
-
-    isAreaSelected() {
-      return this.$store.getters.getIsAreaSelected
-    }
+    //...mapState(['areas', 'zones']),
   },
   methods: {
-
     ...mapActions(['getAreas', 'getZones']),
-
     initializeMap() {
       console.log('initalized')
+
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
 
-
-
       // Ajoute une couche de tuiles OpenStreetMap à la carte
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
 
@@ -75,10 +68,7 @@ export default {
     showZoneInfo(zone) {
       console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
-      this.$store.commit('SET_IS_AREA_SELECTED', true);
-      console.log('state: ' + this.$store.getters.getIsAreaSelected);
       this.modalActive = true;
-
     },
     updateMap() {
       console.log('updateMAP');
@@ -88,12 +78,11 @@ export default {
       });
 
       const selectedZoneIds = this.getSelectedZone;
-      const selectedTypeIds = this.getSelectedType;
+      const selectedTypePrestationIds = this.getSelectedTypePrestation;
       const searchQuery = this.getSearchQuery;
-
       const areas = this.areas;
 
-      const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypeIds.length > 0;
+      const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypePrestationIds.length > 0;
 
       let filteredAreas = [];
 
@@ -101,7 +90,7 @@ export default {
         filteredAreas = areas.filter(zone => {
           const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
-          const matchesType = selectedTypeIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypeIds.includes(id)));
+          const matchesType = selectedTypePrestationIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypePrestationIds.includes(id)));
 
           return (zone.isfree === false) && matchesSearch && matchesZone && matchesType;
         });
@@ -112,11 +101,22 @@ export default {
           return (zone.isfree === false)       });
       }
       // Ajoutez à nouveau les polygones filtrés à la carte
-      filteredAreas.forEach(zone => {
+
+      const averageCenter = this.findAverageCenter(filteredAreas);
+
+      this.map.setView(averageCenter)
+      const bounds = L.latLngBounds();
+
+      filteredAreas.forEach((zone) => {
         const polygon = L.polygon(zone.coordinates, {
-          color: 'blue',
+          color: zone.couleur_hexa,
           fillOpacity: 0.8,
+          weight: 5,
         }).addTo(this.map);
+
+        zone.coordinates.forEach((coord) => {
+          bounds.extend(coord);
+        });
 
         polygon.on('click', () => {
           this.showZoneInfo(zone);
@@ -124,6 +124,8 @@ export default {
 
         this.polygons.push(polygon);
       });
+
+      this.map.fitBounds(bounds);
     },
     toggleModal() {
       this.modalActive = !this.modalActive;
@@ -131,12 +133,28 @@ export default {
         this.selectedStand = null; // Réinitialiser lors de la fermeture de la modal
       }
     },
-    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE','SET_IS_AREA_SELECTED']),
+    findAverageCenter(polygons) {
+      let totalLat = 0, totalLng = 0, totalCount = 0;
+
+      polygons.forEach(zone => {
+        zone.coordinates.forEach(coord => {
+          totalLat += coord[0]; // Assurez-vous que coord[0] est la latitude
+          totalLng += coord[1]; // et coord[1] est la longitude
+          totalCount++;
+        });
+      });
+
+      const avgLat = totalLat / totalCount;
+      const avgLng = totalLng / totalCount;
+
+      return [avgLat, avgLng];
+    },
+    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
   },
   watch: {
     // Surveillez les changements dans les sélections
     getSelectedZone: 'updateMap',
-    getSelectedType: 'updateMap',
+    getSelectedTypePrestation: 'updateMap',
     getSearchQuery: 'updateMap'
   },
 
@@ -144,6 +162,7 @@ export default {
     ModalStand // Enregistrez le composant ModalStand
   },
 };
+
 </script>
 
 <style scoped>
