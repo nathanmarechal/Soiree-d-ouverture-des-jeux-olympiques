@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions} from 'vuex';
 import RoleList from '../components/Admin/Role/RoleList.vue';
 import AddRoleForm from '../components/Admin/Role/AddRoleForm.vue';
 import EditRoleForm from '../components/Admin/Role/EditRoleForm.vue';
@@ -22,6 +22,7 @@ export default {
     },
     data() {
         return {
+            roles: [],
             showAddRoleForm: false,
             showEditRoleForm: false,
             showRoleList: true,
@@ -29,11 +30,14 @@ export default {
             selectedRole: null
         };
     },
-    created() {
-        this.getRoles();
+    async created() {
+      try {
+        this.roles = await this.getRoles();
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     },
     computed: {
-        ...mapState(['roles'])
     },
     methods: {
         ...mapActions(['getRoles']),
