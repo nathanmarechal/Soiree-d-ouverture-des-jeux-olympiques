@@ -1,5 +1,4 @@
 import {getRequest} from "@/services/axios.service";
-//import LocalSource from "@/datasource/controller"
 
 async function getAllAreasFromAPI() {
     let answer = await getRequest('/map/areas', 'GETALLAREAS')
@@ -23,6 +22,17 @@ async function getAllZones() {
     return answer
 }
 
+async function getZoneByIdFromAPI(id) {
+    return getRequest('/map/zone?id_zone=' + id, 'GETZONEBYID')
+}
+
+async function getZoneById(id) {
+    let answer = await getZoneByIdFromAPI(id)
+    //console.log("getZoneById: ", answer)
+    return answer
+
+}
+
 async function getAllTypeZoneFromAPI() {
     return getRequest('/map/typeZones', 'GETALLTYPEZONE')
 }
@@ -36,5 +46,6 @@ async function getAllTypeZone() {
 export {
     getAllAreas,
     getAllZones,
-    getAllTypeZone
+    getAllTypeZone,
+    getZoneById
 }

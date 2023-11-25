@@ -6,7 +6,7 @@ router.get("/typeZones", mapController.getTypeZones);
 
 router.get("/areas", mapController.getAreas);
 
-router.get("/zones", mapController.getZoneById);
+router.get("/zone", mapController.getZoneById);
 
 router.get("/zones", mapController.getZones);
 
