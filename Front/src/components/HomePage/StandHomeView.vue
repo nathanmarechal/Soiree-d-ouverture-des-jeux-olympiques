@@ -84,7 +84,7 @@
               <p class="inside-page__text">
                 {{ stand.description_stand }}
               </p>
-              <a href="#" class="inside-page__btn inside-page__btn--city">View deals</a>
+              <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">View deals</a>
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@
                 <p class="inside-page__text">
                   {{stand.description_stand}}
                 </p>
-                <a href="#" class="inside-page__btn inside-page__btn--city">View deals</a>
+                <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">View deals</a>
               </div>
             </div>
           </div>
@@ -178,6 +178,7 @@ export default {
   data() {
     return {
       stands : [],
+      selectedStand: [],
       discoverMore : false
     };
   },
@@ -197,6 +198,31 @@ export default {
   },
   methods: {
     ...mapActions(['getStands']),
+    updateFilterH(stand) {
+      let newSelection = [...this.selectedStand];
+
+      // Vérifier si le type est déjà sélectionné
+      const index = newSelection.findIndex(t => t.id_stand === stand.id_stand);
+      if (index === -1) {
+        // Ajouter le type s'il n'est pas déjà sélectionné
+        newSelection.push(stand.id_stand);
+      } else {
+        // Retirer le type s'il est déjà sélectionné
+        newSelection.splice(index, 1);
+      }
+
+      // Commiter la nouvelle sélection dans le store
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_STANDS', newSelection);
+
+    },
+
+    goToStore(stand){
+      this.updateFilterH(stand)
+      this.$store.commit('SET_PROVENANCE', 1)
+      this.$router.push({ name: 'shopView'});
+    },
     getImageSrc(imageName) {
       try {
         return require('@/assets/stand/' + imageName);
@@ -210,6 +236,7 @@ export default {
     isDiscoverMore() {
       return this.discoverMore;
     },
+
     setDiscoverMoreTrue() {
       this.discoverMore = true;
     },

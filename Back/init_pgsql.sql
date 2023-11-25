@@ -31,7 +31,9 @@ CREATE TABLE type_zone(
 
 CREATE TABLE type_prestation(
    id_type_prestation SERIAL PRIMARY KEY,
-   libelle VARCHAR(50)
+   libelle VARCHAR(50),
+   image varchar(255),
+   description_type_prestation TEXT
 );
 
 CREATE TABLE zone(
@@ -59,6 +61,11 @@ CREATE TABLE stand(
    prix INT,
    id_emplacement INT,
    FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement)
+);
+
+CREATE TABLE creneau(
+    id_creneau SERIAL PRIMARY KEY,
+    heure_creneau timestamp
 );
 
 CREATE TABLE prestation(
@@ -167,12 +174,15 @@ INSERT INTO type_zone VALUES
 (1,'Ambulant'),
 (2,'Fixe');
 
-INSERT INTO type_prestation (libelle) VALUES
-('sport'),
-('nourriture'),
-('boisson'),
-('magasin'),
-('billeterie');
+INSERT INTO type_prestation (libelle, image , description_type_prestation) VALUES
+('nourriture','food.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('boisson', 'drink.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('activité','activity.jpeg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('magasin', 'shop.avif','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('fanzone', 'fanzone.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('transport', 'ratp.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('international', 'inter.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
+('billeterie', 'ratp.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long');
 
 INSERT INTO zone VALUES
 (1,'champs de mars','#4CE79E',1),
@@ -493,3 +503,5 @@ SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as "typ
 
 SELECT id FROM droits
 WHERE libelle = 'create_user';
+
+SELECT * FROM type_prestation;

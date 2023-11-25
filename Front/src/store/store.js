@@ -41,12 +41,16 @@ export default new Vuex.Store({
         isLoginOpen: false,
         isUserConnected: false,
 
-        selectedTypePrestation: [],
         selectedZone: [],
         searchQuery: '',
-
-        selectedStands: [],
         selectedTypeZones: [],
+
+
+        selectedTypePrestation: [],
+        selectedStands: [],
+        provenance : null,
+
+
     },
 
     getters: {
@@ -63,6 +67,7 @@ export default new Vuex.Store({
         //getpassword: state => state.password,
         //getSessionId: state => state.sessionId,
 
+        getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
 
         getSelectedZone: state => state.selectedZone,
@@ -126,6 +131,10 @@ export default new Vuex.Store({
         //SET_SESSION_ID(state,sessionId) {
         //    state.sessionId = sessionId;
         //},
+
+        SET_PROVENANCE(state, provenance) {
+            state.provenance = provenance;
+        },
 
         SET_CURRENT_USER(state, users) {
             state.userCourant = users;

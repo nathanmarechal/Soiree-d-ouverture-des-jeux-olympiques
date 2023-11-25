@@ -1,14 +1,6 @@
 <template>
     <div>
       <food ref="food"></food>
-      <drink ref="drink"></drink>
-      <fan ref="fan"></fan>
-      <billetterie ref="billetterie"></billetterie>
-      <shop ref="shop"></shop>
-      <activity ref="activity"></activity>
-      <inter ref="inter"></inter>
-      <ratp ref="ratp"></ratp>
-
     </div>
 </template>
 
@@ -18,29 +10,16 @@
 
 <script>
 import food from "../components/infoPage/FoodInformationComponent.vue"
-import drink from "../components/infoPage/DrinkInformationComponent.vue"
-import fan from "../components/infoPage/FanInformationComponent.vue"
-import billetterie from "../components/infoPage/BilleterieInformationComponent.vue"
-import shop from "../components/infoPage/ShopInformationComponent.vue"
-import activity from "../components/infoPage/ActivityInformationComponent.vue"
-import inter from "../components/infoPage/InterInformationComponent.vue"
-import ratp from "../components/infoPage/RATPInformationComponent.vue"
 
 
 export default {
   components: {
-    ratp,
-    inter,
-    activity,
-    shop,
-    billetterie,
-    fan,
     food,
-    drink
   },
   data() {
     return {
-      componentIds: ['food', 'drink', 'fan', 'billetterie', 'shop', 'activity', 'inter', 'ratp']
+
+      componentIds: ['food']
     }
   },
   mounted() {
@@ -49,6 +28,7 @@ export default {
   beforeDestroy() {
     window.removeEventListener('wheel', this.handleScroll);
   },
+
   methods: {
     handleScroll(event) {
       event.preventDefault();

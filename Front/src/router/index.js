@@ -28,8 +28,8 @@ const routes = [
     component: Information
   },
   {
+    name: 'shopView',
     path: '/shop',
-    name: 'ShopView',
     component: Shop
   },
   {

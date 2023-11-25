@@ -1,18 +1,18 @@
 <template>
-   <div class="row">
-      <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
-        <div class="card">
-          <img :src="getImageSrc(prestation.image)" class="card-img-top size" alt="Image de la prestation">
-          <div class="card-body">
-            <h5 class="card-title">{{ prestation.libelle }}</h5>
-            <p class="card-text">Prix : {{ prestation.prix }}</p>
-            <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
-            <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
-            <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
-          </div>
+  <div class="row">
+    <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
+      <div class="card">
+        <img :src="getImageSrc(prestation.image)" class="card-img-top size" alt="Image de la prestation">
+        <div class="card-body">
+          <h5 class="card-title">{{ prestation.libelle }}</h5>
+          <p class="card-text">Prix : {{ prestation.prix }}</p>
+          <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
+          <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
+          <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
         </div>
       </div>
     </div>
+  </div>
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';

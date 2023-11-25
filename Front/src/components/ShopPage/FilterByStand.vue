@@ -1,7 +1,9 @@
 <template>
   <div class="container mt-4">
     <h2>Filtrer par Stand</h2>
-    <div class="form-check form-switch" v-for="stand in stands" :key="stand.id_stand">
+    <div class="form-check form-switch"
+         v-for="stand in stands"
+         :key="stand">
       <input class="form-check-input"
              type="checkbox"
              :value="stand.id_stand"

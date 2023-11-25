@@ -1,7 +1,11 @@
 <template>
   <div class="margeS">
+    <div v-if="getProvenance!=0" >
     <filterByTypeComponent></filterByTypeComponent>
+    </div>
+    <div v-if="getProvenance!=1">
     <filter-by-stand></filter-by-stand>
+    </div>
     <shopcomponent></shopcomponent>
   </div>
 </template>
@@ -12,7 +16,9 @@
 import shopcomponent from '../components/ShopPage/ShopComponent.vue'
 import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.vue";
 import filterByStand from "@/components/ShopPage/FilterByStand.vue";
+import {mapGetters, mapMutations} from "vuex";
 export default {
+
   /*
   async mounted() {
     try {
@@ -25,11 +31,16 @@ export default {
     }
   },
    */
+
   components: {
     filterByTypeComponent,
     shopcomponent,
     filterByStand,
-  }
+  },
+  computed: {
+    ...mapGetters(['getProvenance']),
+    ...mapMutations(['SET_PROVENANCE', "SET_SELECTED_TYPE_PRESTATION", "SET_SELECTED_STANDS"]),
+  },
 }
 </script>
 

@@ -5,6 +5,7 @@ async function getAllTypePrestationsAsync() {
         const conn = await pool.connect();
         const result = await conn.query("SELECT * FROM type_prestation");
         conn.release();
+        console.log("result : " + result.rows)
         return result.rows;
     } catch (error) {
         console.error('Error in getAllTypePrestationsAsync:', error);

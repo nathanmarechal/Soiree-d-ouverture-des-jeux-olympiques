@@ -11,7 +11,7 @@
             <router-link to="/information" @mouseover="underline = 'Informations'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Informations' }">Informations</router-link>
           </b-nav-item>
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">Carte</b-nav-item>
-          <b-nav-item to="/shop" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">Shop</b-nav-item>
+          <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">Shop</b-nav-item>
 
           <b-nav-item-dropdown right text="Stands" @mouseover="underline = 'Stands'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Stands' }">
             <b-dropdown-item href="#" class = "dp"><router-link to="/Shop" @mouseover="underline = 'Informations'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Informations' }">Nourriture</router-link></b-dropdown-item>
@@ -111,6 +111,9 @@ export default {
     'login-component': LoginComponent
   },
   methods: {
+    fromNav() {
+      this.$store.commit('SET_PROVENANCE', null);
+    },
     showLoginModal() {
       this.$store.commit('SET_LOGIN_MODAL', true);
     },
