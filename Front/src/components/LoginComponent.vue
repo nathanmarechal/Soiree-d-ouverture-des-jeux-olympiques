@@ -91,22 +91,30 @@ export default {
     },
     submitForm() {
       if (this.isEmailValid() && this.isPasswordValid()) {
-        alert('Formulaire envoyé !')
+        //alert('Formulaire envoyé !')
         getSession(this.email,this.password)
             .then(res=> {
               //getUserData()
 
               this.sessionId = res
-              //this.$store.commit('SET_SESSION_ID',res)
+              if(this.sessionId!="")
+              {
+                this.$store.commit('SET_CURRENT_USER', this.currentUser)
+                console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
 
-              this.$store.commit('SET_CURRENT_USER', this.currentUser)
-              console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
-
-              //this.$store.commit('SET_EMAIL', this.email);
-              //this.$store.commit('SET_PASSWORD', this.password);
-              this.$store.commit('SET_IS_USER_CONNECTED', true);
+                //this.$store.commit('SET_EMAIL', this.email);
+                //this.$store.commit('SET_PASSWORD', this.password);
+                this.$store.commit('SET_IS_USER_CONNECTED', true);
+                this.closeModal();
+              }
+              else
+              {
+                alert("email ou mot de passe incorrect")
+                this.email=""
+                this.password=""
+              }
             })
-        this.closeModal();
+
       } else {
         alert('Veuillez remplir correctement le formulaire !')
       }
