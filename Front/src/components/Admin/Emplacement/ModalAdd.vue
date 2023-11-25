@@ -11,7 +11,7 @@
           <th>Zone</th>
           <td>
             <select>
-              <option v-for="(zoneList, index) in getAllZone" :key="index" >{{ zoneList.libelle }}</option>
+              <option v-for="(zoneList, index) in zones" :key="index" >{{ zoneList.libelle }}</option>
             </select>
           </td>
         </tr>
@@ -24,15 +24,27 @@
 
 <script>
 
-import {mapGetters} from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['modalActiveAdd','newArea'],
-  computed: {
-    ...mapGetters([
-      'getAllZone',
-    ]),
+  data() {
+    return {
+      zones : [],
+    };
   },
+  async created() {
+    this.zones = await this.getZones()
+  },
+  methods: {
+    ...mapActions(['getZones']),
+  },
+  //computed: {
+  //  ...mapGetters([
+  //    'getAllZone',
+  //  ]),
+  //},
+
 }
 </script>
 

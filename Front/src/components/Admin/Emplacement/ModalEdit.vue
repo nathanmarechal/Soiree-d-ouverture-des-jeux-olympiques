@@ -14,7 +14,7 @@
           <td v-if="!isEditZoneActive">{{ zone.zone }}</td>
           <td v-if="isEditZoneActive">
             <select>
-                <option v-for="(zoneList, index) in getAllZone" :key="index" >{{ zoneList.libelle }}</option>
+                <option v-for="(zoneList, index) in zones" :key="index" >{{ zoneList.libelle }}</option>
             </select>
           </td>
         </tr>
@@ -39,20 +39,25 @@
 
 <script>
 
-import {mapGetters} from 'vuex';
+import { mapActions } from 'vuex';
 export default {
   props: ['modalActiveEdit','zone'],
-  computed: {
-    ...mapGetters([
-      'getAllZone',
-    ]),
-  },
   data() {
     return {
+      zones : [],
       isEditZoneActive:false,
     };
   },
+  async created() {
+    this.zones = await this.getZones()
+  },
+  //computed: {
+  //  ...mapGetters([
+  //    'getAllZone',
+  //  ]),
+  //},
   methods: {
+    ...mapActions(['getZones']),
     toggleIsEditZoneActive(){
       this.isEditZoneActive = !this.isEditZoneActive;
     }

@@ -16,11 +16,18 @@ import 'leaflet-draw';
 import ModalEdit from '../Emplacement/ModalEdit.vue'
 import ModalAdd from '../Emplacement/ModalAdd.vue'
 
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    ModalEdit,
+    ModalAdd
+  },
   data() {
     return {
+      areas : [],
+      zones : [],
+
       map: null,
       zone: null,
       polygons: [],
@@ -29,22 +36,20 @@ export default {
       modalActiveAdd: false,
     };
   },
-  components: {
-    ModalEdit,
-    ModalAdd
-  },
   async mounted() {
     try {
-      await this.$store.dispatch('getAreas');
-      await this.$store.dispatch('getZones');
+      //await this.$store.dispatch('getAreas');
+      //await this.$store.dispatch('getZones');
+      this.areas = await this.getAreas();
+      this.zones = await this.getZones();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
-  computed: {
-    ...mapState(['areas', 'zones']),
-  },
+  //computed: {
+  //  ...mapState(['areas', 'zones']),
+  //},
   methods: {
     ...mapActions(['getAreas', 'getZones']),
     initializeMap() {
@@ -163,7 +168,6 @@ export default {
 
       return Math.round((Math.abs(area * radius * radius)));
     }
-
 
 },
 };

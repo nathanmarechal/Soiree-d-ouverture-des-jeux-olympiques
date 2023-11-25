@@ -30,18 +30,23 @@
 
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-  computed: {
-    ...mapState(['zones']), // Récupération de l'état du store Vuex
+  //computed: {
+  //  ...mapState(['zones']), // Récupération de l'état du store Vuex
+  //},
+  data () {
+    return {
+      zones: [],
+    }
+  },
+  async created() {
+    this.zones = await this.getZones()
   },
   methods: {
     ...mapActions(['getZones']),
   },
-  mounted() {
-    this.getZones(); // Appel de l'action Vuex pour peupler le state 'zones'
-  }
 }
 </script>
 
