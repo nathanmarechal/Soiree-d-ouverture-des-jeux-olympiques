@@ -73,7 +73,29 @@ async function getAllZonesAsync() {
         console.error('Error in getAllZonesAsync:', error);
         throw error;
     }
+}
 
+const getZoneById = (id, callback) => {
+    getZoneByIdAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getZoneByIdAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as \"type_zone_libelle\" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone WHERE z.id_zone = $1;", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getZoneByIdAsync:', error);
+        throw error;
+    }
 }
 
 const getAllTypeZones = (callback) => {
@@ -102,5 +124,6 @@ async function getAllTypeZoneAsync() {
 module.exports = {
     getAllAreas: getAllAreas,
     getAllZones: getAllZones,
-    getAllTypeZones: getAllTypeZones
+    getAllTypeZones: getAllTypeZones,
+    getZoneById: getZoneById
 }
