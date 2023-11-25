@@ -15,17 +15,30 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 export default {
-  computed: {
-    ...mapGetters(['getAllPrestation', 'getAllTypePrestation', 'getAllStand', "getSelectedStands", "getSelectedType"]),
+  data() {
+    return {
+      prestations : [],
+      typePrestations: [],
+      stands: [],
 
+      //prestation : [],
+    }
+  },
+  async mounted() {
+    this.prestations = await this.getPrestations();
+    this.typePrestations = await this.getTypePrestations();
+    this.stands = await this.getStands();
+  },
+  computed: {
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation"]),
     filteredPrestations() {
-      return this.getAllPrestation.filter(prestation => {
-        const isTypeSelected = this.getSelectedType.length > 0;
+      return this.prestations.filter(prestation => {
+        const isTypeSelected = this.getSelectedTypePrestation.length > 0;
         const isStandSelected = this.getSelectedStands.length > 0;
 
-        const typeFilter = isTypeSelected ? this.getSelectedType.includes(prestation.id_type_prestation) : true;
+        const typeFilter = isTypeSelected ? this.getSelectedTypePrestation.includes(prestation.id_type_prestation) : true;
         const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
 
         return typeFilter && standFilter;
@@ -33,8 +46,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['getPrestations', 'getTypePrestations', 'getStands']),
     getTypePrestationLabel(idType) {
-      const type = this.getAllTypePrestation.find(type => type.id_type_prestation === idType);
+      const type = this.typePrestations.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';
     },
     getImageSrc(imageName) {
@@ -46,7 +60,7 @@ export default {
 
     },
     getStandName(idStand) {
-      const stand = this.getAllStand.find(stand => stand.id_stand === idStand);
+      const stand = this.stands.find(stand => stand.id_stand === idStand);
       return stand ? stand.nom_stand : 'Stand inconnu';
     }
   }

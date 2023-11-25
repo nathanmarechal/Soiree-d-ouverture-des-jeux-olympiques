@@ -8,14 +8,14 @@
     </div>
 
     <h4>Zone</h4>
-    <div v-for="(zone, index) in getAllZone" :key="index" class="form-check">
+    <div v-for="(zone, index) in zones" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
       <label class="form-check-label" :for="'zoneCheck' + index">{{ zone.libelle }}</label>
     </div>
 
 
     <h4>Type de prestation</h4>
-    <div v-for="(type_prestation, index) in getAllTypePrestation" :key="index" class="form-check">
+    <div v-for="(type_prestation, index) in typePrestations" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id_type_prestation" @change="updateFilterTypePrestation">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
     </div>
@@ -24,45 +24,42 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
   data() {
     return {
+      typePrestations : [],
+      zones : [],
+
       selectedTypePrestations:[],
       selectedZones:[],
-      minPrice: this.$store.state.minPrice,
-      maxPrice: this.$store.state.maxPrice,
       searchQuery: this.$store.state.searchQuery
     };
   },
   async mounted() {
     try {
-      await this.$store.dispatch('getTypePrestations');
+      //await this.$store.dispatch('getTypePrestations');
+      this.typePrestations = await this.getTypePrestations();
+      this.zones = await this.getZones();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   computed: {
-    ...mapGetters(['getAllTypePrestation', 'getSelectedType','getAllZone', 'getSelectedZone']),
-
+    ...mapGetters(['getSelectedTypePrestation', 'getSelectedZone']),
   },
   methods: {
-    ...mapMutations(['SET_SELECTED_TYPE', 'SET_SELECTED_ZONE','SET_MIN_PRICE','SET_MAX_PRICE','SET_SEARCH_QUERY']),
+    ...mapActions(['getTypePrestations', 'getZones']),
     updateFilterTypePrestation() {
-      this.$store.commit('SET_SELECTED_TYPE', this.selectedTypePrestations);
-      console.log(this.selectedTypePrestations),
-      console.log(this.$store.state.selectedType)
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestations);
+      console.log(this.selectedTypePrestations)
+      console.log(this.$store.state.selectedTypePrestation)
     },
     updateFilterZone() {
       this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
       console.log(this.selectedZones)
-    },
-    updateMinPrice(newVal) {
-      this.$store.commit('SET_MIN_PRICE', newVal);
-    },
-    updateMaxPrice(newVal) {
-      this.$store.commit('SET_MAX_PRICE', newVal);
+      console.log(this.$store.state.selectedZone)
     },
     updateSearchQuery(event) {
       console.log(event); // Pour déboguer et voir l'objet de l'événement
@@ -74,6 +71,7 @@ export default {
         console.log('Erreur : L\'événement ou la valeur de l\'événement est undefined');
       }
     },
+    ...mapMutations(['SET_SELECTED_TYPE_PRESTATION', 'SET_SELECTED_ZONE', 'SET_SEARCH_QUERY']),
   },
 };
 </script>

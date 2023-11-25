@@ -57,13 +57,10 @@ export default {
       //this.$store.dispatch('getRoles');
       //this.$store.dispatch('getTypeZone');
     },
-
      */
 
     computed: {
-
       //...mapState(['users', 'roles', 'typeZone']),
-
       filteredUsers() {
           if (this.filterRole === '') {
               return this.users;

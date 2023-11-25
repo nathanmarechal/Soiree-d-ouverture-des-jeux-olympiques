@@ -14,7 +14,7 @@
 
 <script>
 import L from 'leaflet';
-import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 import ModalStand from './ModalStand.vue';
 
@@ -22,6 +22,9 @@ export default {
 
   data() {
     return {
+      areas : [],
+      zones : [],
+
       map: null,
       selectedStand: null,
       polygons: [],
@@ -30,8 +33,10 @@ export default {
   },
   async mounted() {
     try {
-      await this.$store.dispatch('getAreas');
-      await this.$store.dispatch('getZones');
+      this.areas = await this.getAreas();
+      this.zones = await this.getZones();
+      //await this.$store.dispatch('getAreas');
+      //await this.$store.dispatch('getZones');
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
@@ -40,12 +45,10 @@ export default {
   computed: {
     ...mapGetters([
       'getSelectedZone',
-      'getSelectedType',
-      'getMinPrice',
-      'getMaxPrice',
+      'getSelectedTypePrestation',
       'getSearchQuery'
     ]),
-    ...mapState(['areas', 'zones']),
+    //...mapState(['areas', 'zones']),
   },
   methods: {
     ...mapActions(['getAreas', 'getZones']),
@@ -75,12 +78,11 @@ export default {
       });
 
       const selectedZoneIds = this.getSelectedZone;
-      const selectedTypeIds = this.getSelectedType;
+      const selectedTypePrestationIds = this.getSelectedTypePrestation;
       const searchQuery = this.getSearchQuery;
-
       const areas = this.areas;
 
-      const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypeIds.length > 0;
+      const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypePrestationIds.length > 0;
 
       let filteredAreas = [];
 
@@ -88,7 +90,7 @@ export default {
         filteredAreas = areas.filter(zone => {
           const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
-          const matchesType = selectedTypeIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypeIds.includes(id)));
+          const matchesType = selectedTypePrestationIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypePrestationIds.includes(id)));
 
           return (zone.isfree === false) && matchesSearch && matchesZone && matchesType;
         });
@@ -99,8 +101,6 @@ export default {
           return (zone.isfree === false)       });
       }
       // Ajoutez à nouveau les polygones filtrés à la carte
-
-
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
@@ -154,7 +154,7 @@ export default {
   watch: {
     // Surveillez les changements dans les sélections
     getSelectedZone: 'updateMap',
-    getSelectedType: 'updateMap',
+    getSelectedTypePrestation: 'updateMap',
     getSearchQuery: 'updateMap'
   },
 

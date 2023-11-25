@@ -1,9 +1,7 @@
 <template>
   <div class="container mt-4">
     <h2>Filtrer par Stand</h2>
-    <div class="form-check form-switch"
-         v-for="stand in getAllStand"
-         :key="stand.id_stand">
+    <div class="form-check form-switch" v-for="stand in stands" :key="stand.id_stand">
       <input class="form-check-input"
              type="checkbox"
              :value="stand.id_stand"
@@ -16,22 +14,27 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import {mapActions, mapMutations} from 'vuex';
 
 export default {
-  computed: {
-    ...mapGetters(['getAllStand']),
-  },
+  //computed: {
+  //  ...mapGetters(['getAllStand']),
+  //},
   data() {
     return {
+      stands : [],
       selectedStands: []
     };
   },
+  async mounted() {
+    this.stands = await this.getStands();
+  },
   methods: {
-    ...mapMutations(['SET_SELECTED_STANDS']),
+    ...mapActions(['getStands']),
     updateStandFilter() {
       this.$store.commit('SET_SELECTED_STANDS', this.selectedStands);
-    }
+    },
+    ...mapMutations(['SET_SELECTED_STANDS'])
   }
 };
 </script>

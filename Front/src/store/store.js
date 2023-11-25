@@ -10,9 +10,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        //users : [],
         email: '',
         password: '',
+
         userCourant: {
             "session_id": null,
             "id_user": null,
@@ -25,86 +25,97 @@ export default new Vuex.Store({
             "panier": null,
             "role": null,
         },
+
+        //users : [],
+        //roles : [],
+        //typeZone: [],
+        //zones: [],
+        //areas : [],
+        //stands: [],
+        //prestations: [],
+        //typePresations: [],
+
+
         areaSelectedForStand: null,
-        roles : [],
         isLoginOpen: false,
         isUserConnected: false,
 
-        selectedType: [],
+        selectedTypePrestation: [],
         selectedZone: [],
-        minPrice: 0,
-        maxPrice: 0,
         searchQuery: '',
 
         selectedStands: [],
         selectedTypeZones: [],
-        typeZone: [],
-        zones: [],
-        areas : [],
-
-        prestations: [],
-        typePresations: [],
-        stands: [],
     },
 
     getters: {
-        getAllZone: state => state.zones,
+
+        //getAllZone: state => state.zones,
+        //getAllUser : state => state.users,
+        //getAllRole : state => state.roles,
+        //getAllTypeZone: state => state.typeZone,
+        //getAllAreas: state=> state.areas,
+        //getAllStand: state => state.stands,
+        //getAllTypePrestation: state => state.typePresations,
+        //getAllPrestation: state => state.prestations,
+
+
         getSelectedZone: state => state.selectedZone,
-        getSelectedType: state => state.selectedType,
+        getSelectedTypePrestation: state => state.selectedTypePrestation,
         getSelectedStands : state => state.selectedStands,
-        getMinPrice: state => state.minPrice,
-        getMaxPrice: state => state.maxPrice,
         getSearchQuery: state => state.searchQuery,
 
-        //getAllUser : state => state.users,
-        getAllRole : state => state.roles,
+        isLoginOpen: state => state.isLoginOpen,
 
-        getAllTypePrestation: state => state.typePresations,
-        getAllPrestation: state => state.prestations,
-        getAllStand: state => state.stands,
+        isUserConnected: state => state.isUserConnected,
+        getemail: state => state.email,
+        getpassword: state => state.password,
 
-      isLoginOpen: state => state.isLoginOpen,
-
-      isUserConnected: state => state.isUserConnected,
-      getemail: state => state.email,
-      getpassword: state => state.password,
-
-      getAllTypeZone: state => state.typeZone,
-      getAllRoles: state => state.roles,
-      getAreas: state=> state.areas,
-      getSessionId: state => state.sessionId,
-      getAreaSelectedForStand: state=> state.areaSelectedForStand,
-      getSelectedTypeZones: state=> state.selectedTypeZones,
+        getSessionId: state => state.sessionId,
+        getAreaSelectedForStand: state=> state.areaSelectedForStand,
+        getSelectedTypeZones: state=> state.selectedTypeZones,
     },
 
     mutations: {
-
-        SET_CURRENT_USER(state, users) {
-          state.users.splice(0)
-          users.forEach(p => state.users.push(p))
-        },
 
         //SET_USERS(state, users) {
         //    state.users.splice(0)
         //    users.forEach(p => state.users.push(p))
         //},
 
-        SET_ZONES(state, zones) {
-            state.zones.splice(0)
-            zones.forEach(p => state.zones.push(p))
-        },
+        //SET_ROLES(state, roles) {
+        //  state.roles = roles;
+        //},
 
-        SET_AREAS(state, areas) {
-            state.areas.splice(0)
-            areas.forEach(p => state.areas.push(p))
-        },
+        //SET_ZONES(state, zones) {
+        //    state.zones.splice(0)
+        //    zones.forEach(p => state.zones.push(p))
+        //},
 
-        SET_ROLES(state, roles) {
-          state.roles = roles;
-        },
+        //SET_AREAS(state, areas) {
+        //    state.areas.splice(0)
+        //    areas.forEach(p => state.areas.push(p))
+        //},
 
-        SET_TYPE_ZONE(state, typeZone) {
-          state.typeZone = typeZone;
+        //SET_TYPE_ZONE(state, typeZone) {
+        //  state.typeZone = typeZone;
+        //},
+
+        //SET_STANDS(state, stands) {
+        //    state.stands = stands;
+        //},
+
+        //SET_TYPE_PRESTATIONS(state, typePresations) {
+        //    state.typePresations = typePresations;
+        //},
+
+        //SET_PRESTATIONS(state, prestations) {
+        //    state.prestations = prestations;
+        //},
+
+        SET_CURRENT_USER(state, users) {
+          state.users.splice(0)
+          users.forEach(p => state.users.push(p))
         },
 
         SET_LOGIN_MODAL(state, value) {
@@ -127,20 +138,8 @@ export default new Vuex.Store({
           state.password = value;
         },
 
-        SET_PRESTATIONS(state, prestations) {
-          state.prestations = prestations;
-        },
-
-        SET_TYPE_PRESTATIONS(state, typePresations) {
-            state.typePresations = typePresations;
-        },
-
-        SET_STANDS(state, stands) {
-            state.stands = stands;
-        },
-
-        SET_SELECTED_TYPE(state, type) {
-          state.selectedType = type;
+        SET_SELECTED_TYPE_PRESTATION(state, type) {
+          state.selectedTypePrestation = type;
         },
 
         SET_SELECTED_ZONE(state, zone) {
@@ -198,6 +197,16 @@ export default new Vuex.Store({
         },
          */
 
+        async getRoles(){
+            try {
+                const roles = await getAllRoles();
+                return roles; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching roles:', error);
+            }
+        },
+
+        /*
         async getRoles({ commit }) {
           try {
             const roles = await getAllRoles();
@@ -211,7 +220,18 @@ export default new Vuex.Store({
             console.error("Error in getRoles():", err);
           }
         },
+         */
 
+        async getTypesZone(){
+            try {
+                const typeZone = await getAllTypeZone();
+                return typeZone; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching typeZone:', error);
+            }
+        },
+
+        /*
         async getTypeZone({ commit }) {
           try {
             const typeZone = await getAllTypeZone();
@@ -224,7 +244,18 @@ export default new Vuex.Store({
             console.error("Error in getTypeZone():", err);
           }
         },
+         */
 
+        async getZones(){
+            try {
+                const zones = await getAllZones();
+                return zones; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching zones:', error);
+            }
+        },
+
+        /*
         async getZones({ commit }) {
           try {
               const result = await getAllZones();
@@ -237,7 +268,18 @@ export default new Vuex.Store({
               console.error("Error in getZones():", err);
           }
         },
+         */
 
+        async getAreas(){
+            try {
+                const areas = await getAllAreas();
+                return areas; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching areas:', error);
+            }
+        },
+
+        /*
         async getAreas({ commit }) {
           try {
               const result = await getAllAreas();
@@ -250,7 +292,66 @@ export default new Vuex.Store({
               console.error("Error in getAreas():", err);
           }
         },
+         */
 
+        async getStands(){
+            try {
+                const stands = await getAllStands();
+                return stands; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching stands:', error);
+            }
+        },
+
+        /*
+        async getStands({ commit }) {
+          try {
+              const result = await getAllStands();
+              if (Array.isArray(result)) {
+                  commit('SET_STANDS', result);
+              } else {
+                  console.error("Unexpected response format:", result);
+              }
+          } catch (err) {
+              console.error("Error in getStands():", err);
+          }
+        },
+         */
+
+        async getTypePrestations(){
+            try {
+                const typePresations = await getAllTypePrestations();
+                return typePresations; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching typePresations:', error);
+            }
+        },
+
+        /*
+        async getTypePrestations({ commit }) {
+            try {
+                const result = await getAllTypePrestations();
+                if (Array.isArray(result)) {
+                    commit('SET_TYPE_PRESTATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getTypePrestations():", err);
+            }
+        },
+         */
+
+        async getPrestations(){
+            try {
+                const prestations = await getAllPrestations();
+                return prestations; // Return the fetched data
+            } catch (error) {
+                console.error('Error fetching prestations:', error);
+            }
+        },
+
+        /*
         async getPrestations({ commit }) {
           try {
               const result = await getAllPrestations();
@@ -264,31 +365,7 @@ export default new Vuex.Store({
           }
         },
 
-        async getTypePrestations({ commit }) {
-          try {
-              const result = await getAllTypePrestations();
-              if (Array.isArray(result)) {
-                  commit('SET_TYPE_PRESTATIONS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getTypePrestations():", err);
-          }
-        },
-
-        async getStands({ commit }) {
-          try {
-              const result = await getAllStands();
-              if (Array.isArray(result)) {
-                  commit('SET_STANDS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getStands():", err);
-          }
-        }
+         */
     },
     modules: {
       //autres modules si nécessaire

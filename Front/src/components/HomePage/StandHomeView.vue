@@ -1,7 +1,7 @@
 <template>
 
 <!--  Stands disponibles :-->
-<!--  <div v-for="stand in getAllStands" :key="stand.id_stand">-->
+<!--  <div v-for="stand in stands" :key="stand.id_stand">-->
 <!--    <h3>{{stand.nom_stand}}</h3>-->
 <!--    <p>{{stand.description_stand}}</p>-->
 <!--    <button>Acheter</button>-->
@@ -100,7 +100,7 @@
 
     <section class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div v-for="stand in getAllStand" :key="stand">
+      <div v-for="stand in stands" :key="stand">
 
         <!-- Card: City -->
         <section class="card-section">
@@ -172,28 +172,31 @@
 
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   data() {
     return {
+      stands : [],
       discoverMore : false
     };
   },
   async mounted() {
     try {
-      await this.$store.dispatch('getStands');
+      //await this.$store.dispatch('getStands');
+      this.stands = await this.getStands();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   computed: {
-    ...mapGetters(['getAllStand']),
+    //...mapGetters(['getAllStand']),
     firstThreeStands() {
-      return this.getAllStand.slice(0, 3);
+      return this.stands.slice(0, 3);
     },
   },
   methods: {
+    ...mapActions(['getStands']),
     getImageSrc(imageName) {
       try {
         return require('@/assets/stand/' + imageName);

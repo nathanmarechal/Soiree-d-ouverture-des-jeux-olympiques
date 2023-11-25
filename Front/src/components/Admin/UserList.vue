@@ -38,11 +38,6 @@
         type: Array,
         required: true,
       },
-      
-    },
-
-    created() {
-      console.log('users loaded', JSON.stringify(this.users, null, 2));
     },
 
     methods: {
@@ -67,7 +62,6 @@
             default:
               return 'Unknown Role';
           }
-
         }
     },
   };

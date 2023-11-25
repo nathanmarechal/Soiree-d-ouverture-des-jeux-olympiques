@@ -37,16 +37,12 @@
 
       <div class="form" >
         <label for="role ">Role</label>
-
-
         <select id="role" v-model="role" required>
           <option value="">Sélectionner un rôle</option>
           <option v-for="role in roles" :key="role.id_role" :value="role">{{ role.libelle }}</option>
         </select>
-
-
       </div>
-      <h4> {{role.libelle}}</h4>
+
       <div v-if="role.libelle === 'prestataire'" style="width: 100%">
         <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
           <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone" ></AddStandForm>
@@ -55,7 +51,6 @@
         <button class="blue-button" type="submit">Add User</button>
         <button class="red-button" type="button" @click="$emit('close')">Cancel</button>
       </div>
-
     </form>
   </div>
 </template>
@@ -63,6 +58,7 @@
 <script>
 import AddStandForm from '../User/AddStandForm.vue';
 import {createUser} from "@/services/utilisateur.service";
+import {mapActions} from "vuex";
 
 
 export default {
@@ -90,15 +86,6 @@ export default {
   },
      */
 
-  created() {
-    this.$store.dispatch('getRoles');
-  },
-
-  computed: {
-    roles() {
-      return this.$store.state.roles;
-    }
-  },
   data() {
     return {
       firstName: '',
@@ -109,15 +96,26 @@ export default {
       adresse: '',
       code_postal: '',
       commune: '',
-
+      roles : [],
       showStandForm: false,
       //stand: '',
       //list_roles: '',
       //list_types: '',
     };
   },
+  async created() {
+    //this.$store.dispatch('getRoles');
+    this.roles = await this.getRoles();
+  },
+  /*
+  computed: {
+    roles() {
+      return this.$store.state.roles;
+    }
+  },
+   */
   methods: {
-
+    ...mapActions(['getRoles']),
     submitForm() {
       console.log("role selectionné " + this.role)
       const newUser = {
