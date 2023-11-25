@@ -149,7 +149,7 @@ export default {
 
       return [avgLat, avgLng];
     },
-    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE']),
+    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
   },
   watch: {
     // Surveillez les changements dans les sélections
@@ -162,10 +162,6 @@ export default {
     ModalStand // Enregistrez le composant ModalStand
   },
 };
-
-
-
-
 
 </script>
 
