@@ -1,17 +1,18 @@
-import Vue from 'vue'
-import Home from '../views/HomePage.vue'
-import Information from '../views/InformationPage.vue'
-import Shop from '../views/ShopPage.vue'
-import VueRouter from 'vue-router'
-import AdminEditUsers from '../views/AdminEditUsers.vue'
-import mapPage from "@/views/mapPage.vue";
-import standPage from "../views/standPage.vue"
-import signUpPage from "../views/SignUpPage.vue"
-import AdminEditRoles from '@/views/AdminEditRoles.vue'
-import AdminMapPage from '../views/AdminMapPage.vue'
-import AdminZonePage from '../views/AdminZonePage.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/HomePage.vue';
+import Information from '../views/InformationPage.vue';
+import Shop from '../views/ShopPage.vue';
+import MapPage from "@/views/mapPage.vue";
+import StandPage from "../views/standPage.vue";
+import SignUpPage from "../views/SignUpPage.vue";
+import NotFound from "../views/Error404Page.vue";
+import AdminEditUsers from '../views/AdminEditUsers.vue';
+import AdminEditRoles from '../views/AdminEditRoles.vue';
+import AdminMapPage from '../views/AdminMapPage.vue';
+import AdminZonePage from '../views/AdminZonePage.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -25,6 +26,27 @@ const routes = [
     component: Information
   },
   {
+    path: '/shop',
+    name: 'ShopView',
+    component: Shop
+  },
+  {
+    path: '/map',
+    name: 'MapView',
+    component: MapPage
+  },
+  {
+    path: '/stand',
+    name: 'StandView',
+    component: StandPage
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUpView',
+    component: SignUpPage
+  },
+  // Routes d'administration
+  {
     path: '/admin/users',
     name: 'AdminEditUsers',
     component: AdminEditUsers
@@ -33,26 +55,6 @@ const routes = [
     path: '/admin/roles',
     name: 'AdminEditRoles',
     component: AdminEditRoles
-  },
-  {
-    path: '/shop',
-    name: 'shopView',
-    component: Shop
-  },
-  {
-    path: '/map',
-    name: 'MapView',
-    component: mapPage
-  },
-  {
-    path: '/stand',
-    name: 'StandView',
-    component: standPage
-  },
-  {
-    path: '/sign-up',
-    name: 'signUpView',
-    component: signUpPage
   },
   {
     path: '/admin/areas',
@@ -64,13 +66,18 @@ const routes = [
     name: 'AdminZoneView',
     component: AdminZonePage
   },
-
-]
+  // Gestion des routes non trouvées
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+  }
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;
