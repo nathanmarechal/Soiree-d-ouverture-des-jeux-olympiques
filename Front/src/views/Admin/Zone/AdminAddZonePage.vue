@@ -1,18 +1,17 @@
 <template>
   <div class="main" style="margin-top: 10vh;  width: 90%;">
-    <show-zone></show-zone>
+    <add-zone></add-zone>
   </div>
-
 </template>
 
 
 <script>
-import ShowZone from '../components/Admin/Zone/ShowZone.vue'
+import addZone from '@/components/Admin/Zone/AddZone.vue'
 
 
 export default {
   components: {
-    ShowZone
+    addZone
   }
 }
 </script>

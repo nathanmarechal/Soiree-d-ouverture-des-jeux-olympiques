@@ -15,7 +15,7 @@
 
 <script>
 import L from 'leaflet';
-import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
 
@@ -43,7 +43,6 @@ export default {
       'getSelectedZone',
       'getSelectedTypeZones',
     ]),
-    ...mapState(['areas', 'zones']),
   },
 
   methods: {
@@ -51,7 +50,6 @@ export default {
 
     initializeMap() {
       console.log('initalized')
-
 
 
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
