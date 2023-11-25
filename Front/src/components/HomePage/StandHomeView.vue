@@ -65,7 +65,7 @@
 
                 <div class="card-front__bt">
                   <p class="card-front__text-view card-front__text-view--city">
-                    En savoir plus
+                    Découvrir
                   </p>
                 </div>
               </div>
@@ -79,12 +79,11 @@
             <div class="inside-page__container">
               <h3 class="inside-page__heading inside-page__heading--city">
                 {{ stand.nom_stand}}
-                <!--{{ getStandName(i) }}-->
               </h3>
               <p class="inside-page__text">
                 {{ stand.description_stand }}
               </p>
-              <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">View deals</a>
+              <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">Prestations</a>
             </div>
           </div>
         </div>
@@ -92,7 +91,7 @@
       </div>
     </section>
       <div class="marginFix">
-    <button type="button" class="btn btn-outline-info centerButton" @click="setDiscoverMoreTrue">Découvrir plus</button>
+    <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreTrue">Découvrir plus</button>
       </div>
 </div>
     <div v-else>
@@ -138,7 +137,7 @@
 
                   <div class="card-front__bt">
                     <p class="card-front__text-view card-front__text-view--city">
-                      En savoir plus
+                      Découvrir
                     </p>
                   </div>
                 </div>
@@ -156,7 +155,7 @@
                 <p class="inside-page__text">
                   {{stand.description_stand}}
                 </p>
-                <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">View deals</a>
+                <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">Prestations</a>
               </div>
             </div>
           </div>
@@ -164,7 +163,7 @@
       </div>
     </section>
       <div class="marginFix">
-    <button type="button" class="btn btn-outline-info centerButton" @click="setDiscoverMoreFalse">Réduire</button>
+    <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreFalse">Réduire</button>
       </div>
     </div>
   </main>
@@ -307,20 +306,12 @@ body {
 }
 
 .inside-page__heading--city,
-.card-front__text-view--city { color: #ff62b2; }
+.card-front__text-view--city { color: darkgray; }
 
-.inside-page__heading--ski,
-.card-front__text-view--ski { color: #2aaac1; }
-
-.inside-page__heading--beach,
-.card-front__text-view--beach { color: #fa7f67; }
-
-.inside-page__heading--camping,
-.card-front__text-view--camping { color: #00b97c; }
 
 /* Front cover */
 
-.card-front__tp { color: #fafbfa; }
+.card-front__tp { color: white; }
 
 /* For pricing text on card front cover */
 .card-front__text-price {
@@ -376,39 +367,12 @@ body {
 }
 
 .inside-page__btn--city {
-  border-color: #ff40a1;
-  color: #ff40a1;
+  border-color: darkgray;
+  color: darkgray;
 }
 
 .inside-page__btn--city::before {
-  background-color: #ff40a1;
-}
-
-.inside-page__btn--ski {
-  border-color: #279eb2;
-  color: #279eb2;
-}
-
-.inside-page__btn--ski::before {
-  background-color: #279eb2;
-}
-
-.inside-page__btn--beach {
-  border-color: #fa7f67;
-  color: #fa7f67;
-}
-
-.inside-page__btn--beach::before {
-  background-color: #fa7f67;
-}
-
-.inside-page__btn--camping {
-  border-color: #00b97d;
-  color: #00b97d;
-}
-
-.inside-page__btn--camping::before {
-  background-color: #00b97d;
+  background-color: darkgray;
 }
 
 .inside-page__btn:hover {
@@ -524,8 +488,8 @@ body {
 .card-front__tp--city {
   background: linear-gradient(
       to bottom,
-      #ff73b9,
-      #ff40a1
+      darkgray,
+      lightgray
   );
 }
 
