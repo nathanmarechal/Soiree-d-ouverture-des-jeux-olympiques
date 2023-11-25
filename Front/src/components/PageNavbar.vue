@@ -23,7 +23,7 @@
             <b-dropdown-item href="#" class = "dp">Découverte internationale</b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">RATP</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
+          <b-nav-item-dropdown v-if="isUserAdmin" right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
             <router-link to="/admin/users" class = "dp">Comptes</router-link>
             <br>
             <router-link to="/admin/areas" class = "dp">Emplacements</router-link>
@@ -58,7 +58,7 @@
           <b-dropdown-item href="#">Découverte internationale</b-dropdown-item>
           <b-dropdown-item href="#">RATP</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item-dropdown text="Gestion" right>
+        <b-nav-item-dropdown v-if="isUserAdmin" text="Gestion" right>
           <b-dropdown-item href="/AdminEditUsers">Comptes</b-dropdown-item>
           <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -89,6 +89,13 @@ export default {
     },
     isUserConnected() {
       return this.$store.getters.isUserConnected;
+    },
+    isUserAdmin() {
+      const val = this.$store.getters.isUserConnected
+          && this.$store.getters.getCurrentUser!=null
+          && this.$store.getters.getCurrentUser.id_role===1;
+      console.log("is user admin ? :"+val);
+      return val;
     },
     currentUser() {
       return this.$store.getters.getCurrentUser;
