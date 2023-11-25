@@ -8,7 +8,10 @@
           <p class="card-text">Prix : {{ prestation.prix }}</p>
           <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
           <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
-          <p class="card-text">Créneau : {{ prestation.creneau_horaire }}</p>
+          <select>
+            <option v-for="creneau in getAllCreneau" :key="creneau" >{{ creneau.time }}</option>
+          </select>
+
         </div>
       </div>
     </div>
@@ -32,7 +35,7 @@ export default {
     this.stands = await this.getStands();
   },
   computed: {
-    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation"]),
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", 'getAllCreneau']),
     filteredPrestations() {
       return this.prestations.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;

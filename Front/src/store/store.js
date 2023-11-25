@@ -27,6 +27,32 @@ export default new Vuex.Store({
             "id_role": null,
         },
 
+        creneau: [
+            {"id_creneau": 1, "time": "16h00"},
+            {"id_creneau": 2, "time": "16h30"},
+            {"id_creneau": 3, "time": "17h00"},
+            {"id_creneau": 4, "time": "17h30"},
+            {"id_creneau": 5, "time": "18h00"},
+            {"id_creneau": 6, "time": "18h30"},
+            {"id_creneau": 7, "time": "19h00"},
+            {"id_creneau": 8, "time": "19h30"},
+            {"id_creneau": 9, "time": "20h00"},
+            {"id_creneau": 10, "time": "20h30"},
+            {"id_creneau": 11, "time": "21h00"},
+            {"id_creneau": 12, "time": "21h30"},
+            {"id_creneau": 13, "time": "22h00"},
+            {"id_creneau": 14, "time": "22h30"},
+            {"id_creneau": 15, "time": "23h00"},
+            {"id_creneau": 16, "time": "23h30"},
+            {"id_creneau": 17, "time": "00h00"},
+            {"id_creneau": 18, "time": "00h30"},
+            {"id_creneau": 19, "time": "01h00"},
+            {"id_creneau": 20, "time": "01h30"},
+            {"id_creneau": 21, "time": "02h00"},
+            {"id_creneau": 22, "time": "02h30"},
+            {"id_creneau": 23, "time": "03h00"}
+        ],
+
         //users : [],
         //roles : [],
         //typeZone: [],
@@ -67,6 +93,7 @@ export default new Vuex.Store({
         //getpassword: state => state.password,
         //getSessionId: state => state.sessionId,
 
+        getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
 
@@ -131,6 +158,7 @@ export default new Vuex.Store({
         //SET_SESSION_ID(state,sessionId) {
         //    state.sessionId = sessionId;
         //},
+
 
         SET_PROVENANCE(state, provenance) {
             state.provenance = provenance;

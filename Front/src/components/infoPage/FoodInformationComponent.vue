@@ -34,13 +34,10 @@ export default {
     updateFilterI(type) {
       let newSelection = [...this.selectedTypePrestation];
 
-      // Vérifier si le type est déjà sélectionné
       const index = newSelection.findIndex(t => t.id_type_prestation === type.id_type_prestation);
       if (index === -1) {
-        // Ajouter le type s'il n'est pas déjà sélectionné
         newSelection.push(type.id_type_prestation);
       } else {
-        // Retirer le type s'il est déjà sélectionné
         newSelection.splice(index, 1);
       }
       this.$store.commit('SET_SELECTED_STANDS', []);

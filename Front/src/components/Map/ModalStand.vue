@@ -10,7 +10,7 @@
               <h1>{{ stand.nom_stand }}</h1>
               <p>{{ stand.description_stand }}</p>
             </div>
-            <button type="button" class="btn btn-success" @click="goToPrestations">Prestations</button>
+            <button type="button" class="btn btn-success" @click="goToStore(stand)">Prestations</button>
           </div>
         </transition>
       </div>
@@ -21,15 +21,38 @@
 <script>
 export default {
   props: ['modalActive', 'stand'],
+  data() {
+    return {
+      selectedStand: [],
+    };
+  },
   computed: {
     imagePath() {
       return require(`@/assets/stand/${this.stand.image_stand}`);
     }
   },
   methods: {
-    goToPrestations() {
-      this.$router.push(`/shop?id_stand=${this.stand.id_stand}`);
-    }
+    updateFilterj(stand) {
+      let newSelection = [...this.selectedStand];
+
+      const index = newSelection.findIndex(t => t.id_stand === stand.id_stand);
+      if (index === -1) {
+        newSelection.push(stand.id_stand);
+      } else {
+        newSelection.splice(index, 1);
+      }
+
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_STANDS', newSelection);
+
+    },
+
+    goToStore(stand){
+      this.updateFilterj(stand)
+      this.$store.commit('SET_PROVENANCE', 1)
+      this.$router.push({ name: 'shopView'});
+    },
   }
 }
 </script>

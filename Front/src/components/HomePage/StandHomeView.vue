@@ -201,17 +201,13 @@ export default {
     updateFilterH(stand) {
       let newSelection = [...this.selectedStand];
 
-      // Vérifier si le type est déjà sélectionné
       const index = newSelection.findIndex(t => t.id_stand === stand.id_stand);
       if (index === -1) {
-        // Ajouter le type s'il n'est pas déjà sélectionné
         newSelection.push(stand.id_stand);
       } else {
-        // Retirer le type s'il est déjà sélectionné
         newSelection.splice(index, 1);
       }
 
-      // Commiter la nouvelle sélection dans le store
       this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
       this.$store.commit('SET_SELECTED_STANDS', []);
       this.$store.commit('SET_SELECTED_STANDS', newSelection);
