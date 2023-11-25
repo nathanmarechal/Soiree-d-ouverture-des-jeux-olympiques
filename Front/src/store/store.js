@@ -10,8 +10,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        email: '',
-        password: '',
+        //email: '',
+        //password: '',
+        //sessionId: '',
 
         userCourant: {
             "session_id": null,
@@ -58,7 +59,11 @@ export default new Vuex.Store({
         //getAllStand: state => state.stands,
         //getAllTypePrestation: state => state.typePresations,
         //getAllPrestation: state => state.prestations,
+        //getemail: state => state.email,
+        //getpassword: state => state.password,
+        //getSessionId: state => state.sessionId,
 
+        getCurrentUser: state => state.userCourant,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -68,10 +73,7 @@ export default new Vuex.Store({
         isLoginOpen: state => state.isLoginOpen,
 
         isUserConnected: state => state.isUserConnected,
-        getemail: state => state.email,
-        getpassword: state => state.password,
 
-        getSessionId: state => state.sessionId,
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
     },
@@ -113,29 +115,28 @@ export default new Vuex.Store({
         //    state.prestations = prestations;
         //},
 
+        //SET_EMAIL(state, value) {
+        //    state.email = value;
+        //},
+
+        //SET_PASSWORD(state, value) {
+        //    state.password = value;
+        //},
+
+        //SET_SESSION_ID(state,sessionId) {
+        //    state.sessionId = sessionId;
+        //},
+
         SET_CURRENT_USER(state, users) {
-          state.users.splice(0)
-          users.forEach(p => state.users.push(p))
+            state.userCourant = users;
+        },
+
+        SET_IS_USER_CONNECTED(state, value) {
+            state.isUserConnected = value;
         },
 
         SET_LOGIN_MODAL(state, value) {
           state.isLoginOpen = value;
-        },
-
-        SET_SESSION_ID(state,sessionId) {
-           state.sessionId = sessionId;
-        },
-
-        SET_USER_CONNECTED(state, value) {
-          state.isUserConnected = value;
-        },
-
-        SET_EMAIL(state, value) {
-          state.email = value;
-        },
-
-        SET_PASSWORD(state, value) {
-          state.password = value;
         },
 
         SET_SELECTED_TYPE_PRESTATION(state, type) {
@@ -152,14 +153,6 @@ export default new Vuex.Store({
 
         SET_SELECTED_TYPE_ZONES(state, typeZones) {
             state.selectedTypeZones = typeZones;
-        },
-
-        SET_MIN_PRICE(state, price) {
-            state.minPrice = price;
-        },
-
-        SET_MAX_PRICE(state, price) {
-            state.maxPrice = price;
         },
 
         SET_SEARCH_QUERY(state, query) {

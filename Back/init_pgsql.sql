@@ -489,38 +489,7 @@ LEFT JOIN
 ORDER BY
     e.id_emplacement;
 
-SELECT now()<=session.timeLimit FROM session
-WHERE session_id = '6649c09c-76d1-4f61-ab1b-a43967a87839'
-;
-
 SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as "type_zone_libelle" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone;
-
-SELECT * FROM utilisateur;
-
-SELECT * FROM role;
-
-SELECT * FROM stand;
-
-SELECT * FROM session;
-
-SELECT * FROM type_zone;
-
-SELECT * FROM utilisateur;
-
-SELECT * FROM prestation;
 
 SELECT id FROM droits
 WHERE libelle = 'create_user';
-
-SELECT * FROM droits;
-
-SELECT * FROM role_droits;
-
-SELECT * FROM session;
-
-SELECT * FROM role;
-
-SELECT * FROM utilisateur;
-
-SELECT now()<=session.timeLimit AS ok FROM session
-WHERE session_id = 'ffa92734-8e5f-47ec-b7a2-1a0a6f47505b';
