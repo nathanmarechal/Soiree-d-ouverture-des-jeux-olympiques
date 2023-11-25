@@ -1,5 +1,5 @@
 <template>
-  <div class="main" style="margin-top: 10vh;  width: 90%;">
+  <div class="main" style="margin-top: 10vh;  width: 100%;">
     <add-zone></add-zone>
   </div>
 </template>
