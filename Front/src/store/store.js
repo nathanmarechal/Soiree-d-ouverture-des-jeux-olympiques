@@ -24,7 +24,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier": null,
-            "role": null,
+            "id_role": null,
         },
 
         //users : [],
