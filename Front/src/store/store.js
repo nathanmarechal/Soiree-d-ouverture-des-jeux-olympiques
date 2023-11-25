@@ -10,6 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+
         //email: '',
         //password: '',
         //sessionId: '',
@@ -394,7 +395,6 @@ export default new Vuex.Store({
               console.error("Error in getPrestations():", err);
           }
         },
-
          */
     },
     modules: {

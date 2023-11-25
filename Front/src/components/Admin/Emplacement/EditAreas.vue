@@ -3,8 +3,8 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <modal-edit :modalActiveEdit="modalActiveEdit" :zone="zone" @close="toggleModalEdit"></modal-edit>
-    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" @close="toggleModalAdd"></modal-add>
+    <modal-edit :modalActiveEdit="modalActiveEdit" :selectedZone="zone" :zones="zones" @close="toggleModalEdit"></modal-edit>
+    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" :zones="zones" @close="toggleModalAdd"></modal-add>
   </div>
 </template>
 
@@ -38,8 +38,6 @@ export default {
   },
   async mounted() {
     try {
-      //await this.$store.dispatch('getAreas');
-      //await this.$store.dispatch('getZones');
       this.areas = await this.getAreas();
       this.zones = await this.getZones();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
@@ -47,9 +45,6 @@ export default {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
-  //computed: {
-  //  ...mapState(['areas', 'zones']),
-  //},
   methods: {
     ...mapActions(['getAreas', 'getZones']),
     initializeMap() {
@@ -133,17 +128,37 @@ export default {
       this.newArea.surface = this.calculateEarthSurfaceArea(formattedCoordinates);
       console.log(this.newArea);
     },
-  showZoneInfo(zone){
+    showZoneInfo(zone){
       this.toggleModalEdit();
       this.zone =zone
     },
 
-    toggleModalEdit() {
+    async toggleModalEdit() {
       this.modalActiveEdit = !this.modalActiveEdit;
+
+      // Check if the modal was just closed
+      if (!this.modalActiveEdit) {
+        // Refresh data if necessary
+        this.areas = await this.getAreas(); // Refresh areas data
+        this.zones = await this.getZones(); // Refresh zones data
+
+        // Update the map
+        this.updateMap();
+      }
     },
 
-    toggleModalAdd() {
+    async toggleModalAdd() {
       this.modalActiveAdd = !this.modalActiveAdd;
+
+      // Check if the modal was just closed
+      if (!this.modalActiveAdd) {
+        // Refresh data if necessary
+        this.areas = await this.getAreas(); // Refresh areas data
+        this.zones = await this.getZones(); // Refresh zones data
+
+        // Update the map
+        this.updateMap();
+      }
     },
 
     calculateEarthSurfaceArea(coords) {
@@ -166,10 +181,8 @@ export default {
         const a = (Math.sin(radLat2) - Math.sin(radLat1)) * (radLon2 - radLon1) / 2;
         area += a;
       }
-
       return Math.round((Math.abs(area * radius * radius)));
     }
-
 },
 };
 

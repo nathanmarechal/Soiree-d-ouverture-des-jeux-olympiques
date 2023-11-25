@@ -12,6 +12,45 @@ exports.getAreas = (req, res) => {
     })
 }
 
+exports.updateArea = (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    console.log("updateArea: ", id, body)
+    mapService.updateArea(id, body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.createArea = (req, res) => {
+    const body = req.body;
+    console.log("createArea: ", body)
+    mapService.createArea(body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.deleteArea = (req, res) => {
+    const id = req.params.id;
+    console.log("deleteArea: ", id)
+    mapService.deleteArea(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.getZones = (req, res) => {
     mapService.getAllZones((error, data) => {
         if (error) {

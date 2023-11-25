@@ -52,6 +52,78 @@ async function getAllAreasAsync() {
     }
 }
 
+const updateArea = (id, body, callback) => {
+    updateAreaAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateAreaAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE emplacement SET id_zone = $1 WHERE id_emplacement = $2;", [body.id_zone, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateAreaAsync:', error);
+        throw error;
+    }
+}
+
+const createArea = (body, callback) => {
+    createAreaAsync(body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function createAreaAsync(body) {
+    try {
+        const conn = await pool.connect();
+        console.log("body.coordonnes: ", body.coordonnes)
+        console.log("body.surface: ", body.surface)
+        console.log("body.id_zone: ", body.id_zone)
+        const result = await conn.query("INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ($1, $2, $3);", [JSON.stringify(body.coordonnes), body.surface, body.id_zone]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in createAreaAsync:', error);
+        throw error;
+    }
+}
+
+const deleteArea = (id, callback) => {
+    deleteAreaAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function deleteAreaAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("DELETE FROM emplacement WHERE id_emplacement = $1;", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in deleteAreaAsync:', error);
+        throw error;
+    }
+}
+
 const getAllZones = (callback) => {
     getAllZonesAsync()
         .then(res => {
@@ -125,5 +197,8 @@ module.exports = {
     getAllAreas: getAllAreas,
     getAllZones: getAllZones,
     getAllTypeZones: getAllTypeZones,
-    getZoneById: getZoneById
+    getZoneById: getZoneById,
+    updateArea: updateArea,
+    createArea: createArea,
+    deleteArea: deleteArea
 }

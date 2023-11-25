@@ -10,13 +10,16 @@
         <tr>
           <th>Zone</th>
           <td>
-            <select>
-              <option v-for="(zoneList, index) in zones" :key="index" >{{ zoneList.libelle }}</option>
+            <select v-model="zone">
+              <option v-for="(zoneList, index) in zones" :key="index" :value="zoneList.id_zone">
+                {{ zoneList.libelle }}
+              </option>
             </select>
+
           </td>
         </tr>
       </table>
-      <button @click="$emit('close')" class="btn btn-success">Ajouter</button>
+      <button @click="areaCreated()" class="btn btn-success">Ajouter</button>
       <button @click="$emit('close')" class="btn btn-danger">Fermer</button>
     </div>
   </div>
@@ -24,27 +27,41 @@
 
 <script>
 
-import { mapActions } from 'vuex';
+import { createArea } from "@/services/map.service";
 
 export default {
-  props: ['modalActiveAdd','newArea'],
+  props: ['modalActiveAdd','newArea', 'zones'],
   data() {
     return {
-      zones : [],
+      zone: null,
     };
   },
-  async created() {
-    this.zones = await this.getZones()
-  },
   methods: {
-    ...mapActions(['getZones']),
-  },
-  //computed: {
-  //  ...mapGetters([
-  //    'getAllZone',
-  //  ]),
-  //},
+    initializeZone() {
+      this.zone = this.selectedZone.id_zone;
+    },
 
+    async areaCreated() {
+      if (this.zone) {
+        const areaData = {
+          coordonnes: this.newArea.coordinates,
+          surface: this.newArea.surface,
+          id_zone: this.zone,
+        };
+
+        try {
+          await createArea(areaData);
+          console.log('Area created:', areaData);
+          this.$emit('close');
+        } catch (error) {
+          console.error('Error creating area:', error);
+          // Handle errors as needed (e.g., show a notification to the user)
+        }
+      } else {
+        alert('Please select a zone.');
+      }
+    },
+  },
 }
 </script>
 
