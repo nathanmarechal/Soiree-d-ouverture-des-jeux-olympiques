@@ -11,6 +11,8 @@ import AdminEditUsers from '../views/Admin/User/AdminEditUsers.vue';
 import AdminEditRoles from '../views/Admin/Role/AdminEditRoles.vue';
 import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue';
 import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue';
+import AdminEditZonePage from '@/views/Admin/Zone/AdminEditZonePage.vue'
+
 
 Vue.use(VueRouter);
 
@@ -66,6 +68,13 @@ const routes = [
     name: 'AdminZoneView',
     component: AdminZonePage
   },
+
+  {
+    path: '/admin/zones/edit/:id_zone',
+    name: 'AdminEditZoneView',
+    component: AdminEditZonePage
+  },
+    
   // Gestion des routes non trouvées
   {
     path: '*',
