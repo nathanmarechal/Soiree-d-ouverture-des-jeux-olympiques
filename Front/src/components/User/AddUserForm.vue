@@ -131,7 +131,7 @@ export default {
         id_role: this.role.id_role,
         //id_stand: this.stand,
         id_stand : null,
-        session_id : this.$store.getters.getSessionId,
+        session_id : this.$store.getters.getCurrentUser.session_id,
         //stand: this.stand,
         //type_prestation: this.typePrestation,
         //type_zone: this.typeZone,
