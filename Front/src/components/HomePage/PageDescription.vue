@@ -1,12 +1,13 @@
 <template>
-  <div class="container-fluid h-100">
+  <div class="container-fluid h-100 customarge">
     <div class="row h-100">
       <div class="col-lg-6 d-flex align-items-center justify-content-center">
-        <div ><img  class="img" :src="image" alt="image du parcours"></div>
+        <img class="img" :src="image" alt="image du parcours">
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
         <h2 class="subtitle">Une cérémonie sur l'eau : accès gratuit</h2>
-        <table class="table">
+        <div class="table-responsive">
+          <table class="table">
           <thead>
           <tr>
             <th scope="col">horaire</th>
@@ -17,7 +18,7 @@
           <tbody>
           <tr>
             <th scope="row">19h</th>
-            <td>Discours, Parade des athlètes et présentation de la flamme olympique</td>
+            <td>Parade des athlètes / présentation de la flamme olympique</td>
             <td>Quais Notre-Dame / Hôtel de ville</td>
           </tr>
           <tr>
@@ -38,11 +39,12 @@
           <tr>
             <th scope="row">00h</th>
             <td >Concerts et feux d'artifice</td>
-            <td>Quais Tour Eiffel / Trocadéro / Pont d'Iena</td>
+            <td>Quais Tour Eiffel / Trocadéro / Iena</td>
           </tr>
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -61,18 +63,26 @@ export default {
 </script>
 
 <style scoped>
-.justi{
-  text-align: justify;
+.customarge {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 .img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
 }
+
 .row {
   min-height: 500px;
 }
+
 .subtitle {
   margin-bottom: 20px;
+}
+
+.table-responsive {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 </style>

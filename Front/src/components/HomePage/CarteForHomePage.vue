@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid h-100">
+  <div class="container-fluid h-100 " >
     <div class="row h-100">
-      <h2 class="subtitle">Une cérémonie sur l'eau</h2>
+      <h2 class="subtitle subMarge">Une cérémonie sur l'eau</h2>
       <div class="col-lg-4 d-flex align-items-center justify-content-center">
         <p class="lead test justi">{{ CarteDescription }}</p>
       </div>
@@ -31,17 +31,27 @@ export default {
 </script>
 
 <style scoped>
+
+.subMarge {
+  margin-top: 4vh;
+}
+
+.customarge {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  margin-left: 5vh;
+}
 .justi{
   text-align: justify;
 }
 
 .map-container {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
 }
 #map {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
 }
 
 </style>
