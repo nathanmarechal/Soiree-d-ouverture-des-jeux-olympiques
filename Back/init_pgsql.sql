@@ -510,3 +510,6 @@ UPDATE zone SET id_type_zone = 2, libelle = 'champs', couleur_hexa = '#444444' W
 SELECT * FROM type_zone;
 
 SELECT * FROM zone;
+
+SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as type_zone_libelle
+FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone ORDER BY z.id_zone;

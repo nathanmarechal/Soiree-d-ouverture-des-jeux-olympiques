@@ -40,7 +40,8 @@ export default {
   async created() {
     try {
       this.type_zones = await this.getTypesZone();
-      this.zone = await getZoneById(this.id_zone);
+      const zoneArray = await getZoneById(this.id_zone);
+      this.zone = zoneArray.length > 0 ? zoneArray[0] : {};
       console.log("Données de la zone dans le created :", this.zone);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
