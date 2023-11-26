@@ -11,8 +11,9 @@ exports.getPrestations = (req, res) => {
     })
 }
 
-exports.getTypePrestations = (req, res) => {
-    prestationsService.getAllTypePrestations((error, data) => {
+exports.getPrestationByUserId = (req, res) => {
+    const id = req.params.id;
+    prestationsService.getPrestationByUserId(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

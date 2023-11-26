@@ -513,3 +513,18 @@ SELECT * FROM zone;
 
 SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as type_zone_libelle
 FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone ORDER BY z.id_zone;
+
+SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle as "type_prestation_libelle"
+FROM prestation p
+JOIN ligne_commande lc on p.id_prestation = lc.id_prestation
+JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation;
+
+SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, tp.libelle as "type_prestation_libelle", COUNT(lc.id_prestation) as "nb_ventes", s.id_stand, s.nom_stand
+FROM utilisateur u
+JOIN stand s on u.id_stand = s.id_stand
+JOIN prestation p on s.id_stand = p.id_stand
+JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+LEFT JOIN ligne_commande lc on p.id_prestation = lc.id_prestation
+WHERE u.id_user = 2
+GROUP BY p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle , s.id_stand, s.nom_stand
+ORDER BY p.id_type_prestation;
