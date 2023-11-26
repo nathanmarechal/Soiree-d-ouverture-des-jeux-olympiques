@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <h1>Vous êtes perdus !</h1>
+    <h2>Error 404</h2>
     <img style="width: 20%" src="@/assets/stand/arthur-clown.png" alt="Arthur Clown">
     <h3>Vous pouvez retourner sur la page principale</h3>
   </div>

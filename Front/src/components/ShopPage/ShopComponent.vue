@@ -1,22 +1,20 @@
 <template>
-  <div class="row">
-    <div class="col-md-4 mb-3" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
-      <div class="card">
-        <img :src="getImageSrc(prestation.image)" class="card-img-top size" alt="Image de la prestation">
-        <div class="card-body">
-          <h5 class="card-title">{{ prestation.libelle }}</h5>
-          <p class="card-text">Prix : {{ prestation.prix }}</p>
+  <div class="main-card" >
+    <div class="card-prestation" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
+        <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img">
+          <h5 class="card-text">{{ prestation.libelle }}</h5>
+          <p class="card-text">Prix : {{ prestation.prix }} €</p>
           <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
           <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
+
+        <div class="d-flex align-content-center">
           <select>
             <option v-for="creneau in getAllCreneau" :key="creneau" >{{ creneau.time }}</option>
           </select>
           <button type="button" class="btn btn-success">Réserver</button>
-
+        </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
@@ -59,7 +57,7 @@ export default {
       try {
         return require('@/assets/' + imageName);
       } catch {
-        return require('@/assets/' + "4.png");
+        return require('@/assets/' + "arthur-clown.png");
       }
 
     },
@@ -73,9 +71,29 @@ export default {
 
 
 <style scoped>
-
-.size{
-  height: 300px;
+.main-card {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1vh;
+  justify-content: flex-start;
 }
-
+.card-prestation {
+  background: #f9f7f7;
+  border: black solid 2px;
+  width: 25vh;
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1vh;
+  border-radius: 3vh;
+}
+.card-img {
+  max-width: 75%;
+  max-height: 75%;
+  border-radius: 50%;
+}
+.card-text {
+  text-align: center;
+}
 </style>

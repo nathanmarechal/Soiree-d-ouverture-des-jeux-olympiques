@@ -1,12 +1,18 @@
+Copy code
 <template>
-  <div class="margeS">
-    <div v-if="getProvenance!=0" >
-    <filterByTypeComponent></filterByTypeComponent>
+  <div class="main">
+    <div class="search">
+      <div v-if="getProvenance !== 0">
+        <filterByTypeComponent></filterByTypeComponent>
+      </div>
+      <div v-if="getProvenance !== 1">
+        <filter-by-stand></filter-by-stand>
+      </div>
     </div>
-    <div v-if="getProvenance!=1">
-    <filter-by-stand></filter-by-stand>
+
+    <div class="prestation">
+      <shopcomponent></shopcomponent>
     </div>
-    <shopcomponent></shopcomponent>
   </div>
 </template>
 
@@ -45,8 +51,26 @@ export default {
 </script>
 
 <style scoped>
-.margeS{
-  margin-bottom: 5%;
-  margin-top: 6%;
+.main {
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.prestation {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 2vh;
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-4">
-    <h2>Liste des Types de prestations</h2>
+  <div>
+    <h4>Liste des Types de prestations</h4>
     <div class="form-check form-switch"
          v-for="typePrestation in typePrestations"
          :key="typePrestation">

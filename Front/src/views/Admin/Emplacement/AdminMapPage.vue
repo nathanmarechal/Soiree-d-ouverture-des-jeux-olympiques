@@ -22,6 +22,10 @@ export default {
 <style scoped>
 
 .main{
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  width: 100%;
+  height: 80vh;
   display: flex;
   justify-content: space-around;
   margin-bottom: 5%;

@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-4">
-    <h2>Filtrer par Stand</h2>
+  <div>
+    <h4>Filtrer par Stand</h4>
     <div class="form-check form-switch"
          v-for="stand in stands"
          :key="stand">
