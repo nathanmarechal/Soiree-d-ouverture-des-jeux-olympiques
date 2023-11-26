@@ -5,9 +5,6 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
-            <router-link to="/" @mouseover="underline = 'Accueil'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Accueil' }">Accueil</router-link>
-          </b-nav-item>
-          <b-nav-item>
             <router-link to="/information" @mouseover="underline = 'Informations'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Informations' }">Informations</router-link>
           </b-nav-item>
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">Carte</b-nav-item>
@@ -23,7 +20,12 @@
             <b-dropdown-item href="#" class = "dp">Découverte internationale</b-dropdown-item>
             <b-dropdown-item href="#" class = "dp">RATP</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown v-if="isUserAdmin" right text="Gestion" @mouseover="underline = 'Gestion'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Gestion' }">
+
+          <b-nav-item-dropdown v-if="isUserAdmin" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
+            <router-link to="/prestataire/prestations" class = "dp">Prestations</router-link>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">Comptes</router-link>
             <br>
             <router-link to="/admin/areas" class = "dp">Emplacements</router-link>
@@ -63,6 +65,7 @@
           <b-dropdown-item href="/AdminEditUsers">Comptes</b-dropdown-item>
           <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
         </b-nav-item-dropdown>
+
       </b-nav>
     </b-sidebar>
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>

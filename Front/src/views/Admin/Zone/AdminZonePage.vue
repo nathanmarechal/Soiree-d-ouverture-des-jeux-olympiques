@@ -21,7 +21,7 @@ export default {
 <style scoped>
 
 .main{
-  margin-top: 10vh;
+  margin-top: 15vh;
   width: 100%;
   display: flex;
   justify-content: center;

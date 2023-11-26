@@ -13,6 +13,7 @@ import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue';
 import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue';
 import AdminEditZonePage from '@/views/Admin/Zone/AdminEditZonePage.vue'
 import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
+import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 
 Vue.use(VueRouter);
 
@@ -79,7 +80,12 @@ const routes = [
     name: 'AdminAddZoneView',
     component: AdminAddZonePage
   },
-
+  {
+    path: '/prestataire/prestations',
+    name: 'PrestatairePrestationShowView',
+    component: PrestatairePrestationShowPage
+  },
+    //Error 404
   {
     path: '*',
     name: 'NotFound',
