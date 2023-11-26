@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid h-100 " >
     <div class="row h-100">
-      <h2 class="subtitle subMarge">Une cérémonie sur l'eau</h2>
+      <h2 class="subtitle subMarge" style="padding-left: 3%">Une cérémonie sur l'eau</h2>
       <div class="col-lg-4 d-flex align-items-center justify-content-center">
-        <p class="lead test justi">{{ CarteDescription }}</p>
+        <p class="lead test justi" style="margin-left: 7%">{{ CarteDescription }}</p>
       </div>
       <div class="col-lg-8 d-flex align-items-center justify-content-center">
         <MapZone style="width: 75%; height: 100%" />
