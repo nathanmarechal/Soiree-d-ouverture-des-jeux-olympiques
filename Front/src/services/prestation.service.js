@@ -24,7 +24,18 @@ async function getAllTypePrestations() {
     return answer
 }
 
+async function getPrestationByUserIdFromAPI(id) {
+    return getRequest('/prestations/get/' + id, 'GETPRESTATIONBYUSERID')
+}
+
+async function getPrestationByUserId(id) {
+    let answer = await getPrestationByUserIdFromAPI(id)
+    console.log("getPrestationByUserId: ", answer)
+    return answer
+}
+
 export {
     getAllPrestations,
     getAllTypePrestations,
+    getPrestationByUserId
 }
