@@ -1,12 +1,14 @@
 <template>
-  <div class="main" :class="{ rotate: isRotating }">
-    <h1>Vous êtes perdus !</h1>
+  <div class="main">
+    <h1>Vous êtes perdus!</h1>
     <h2>Error 404</h2>
-    <img style="width: 20%" src="@/assets/stand/arthur-clown.png" alt="Arthur Clown">
+    <img src="@/assets/stand/arthur-clown.png" alt="Arthur Clown" @click="toggleRotation">
     <h3>Vous pouvez retourner sur la page principale</h3>
     <router-link to="/">
-      <button class="btn-success">Page Principale</button>
+      <button @click="playAudio" class="btn-success">Page Principale</button>
     </router-link>
+    <button class="btn btn-danger" @click="playAudio">Arthur the Clown Main Theme</button>
+    <audio ref="audioPlayer" src="@/assets/Music/arthur-main-sound.mp3"></audio>
   </div>
 </template>
 
@@ -14,14 +16,17 @@
 export default {
   data() {
     return {
-      isRotating: true,
+      isRotating: false,
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.isRotating = false;
-    }, 1000); // Stop rotating after 10 seconds
-  },
+  methods: {
+    playAudio() {
+      this.$refs.audioPlayer.play();
+    },
+    toggleRotation() {
+      this.isRotating = !this.isRotating;
+    }
+  }
 };
 </script>
 
@@ -29,14 +34,17 @@ export default {
 .main {
   margin-top: 10vh;
   margin-bottom: 5vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
-.rotate {
-  animation: rotation 1s linear;
+img {
+  width: 20%;
+  cursor: pointer;
+  transition: transform 1s;
+}
+
+img:hover {
+  transform: rotate(360deg);
 }
 
 .btn-success {
@@ -46,14 +54,6 @@ export default {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin-top: 10px;
 }
 </style>
