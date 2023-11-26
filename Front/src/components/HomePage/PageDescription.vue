@@ -5,7 +5,17 @@
         <img class="img" :src="image" alt="image du parcours">
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
-        <h2 class="subtitle">Une cérémonie sur l'eau : accès gratuit</h2>
+        <h2 class="subtitle">Une Expérience Enchantée le Long des Quais de Paris</h2>
+        <div style="text-align: justify; margin-left: 7%; margin-right: 7%">
+          <ul>
+        <li style="margin-bottom: 5px"><b>Un Voyage à Travers l'Histoire et la Culture : </b>De l'Hôtel de Ville majestueux aux jardins des Tuileries, chaque site choisi offre un aperçu de l'histoire et de la beauté de Paris. Ces lieux ne sont pas seulement des fonds scéniques, mais des participants actifs à la célébration.</li>
+        <li style="margin-bottom: 5px"><b>Des Moments Inoubliables : </b> La parade des athlètes et la présentation de la flamme olympique s'entremêlent avec des spectacles culturels vibrants, offrant une immersion totale dans l'esprit des Jeux.</li>
+        <li style="margin-bottom: 5px"><b>Feu d'Artifice et Concerts :  </b>L'apogée de la soirée se trouve près de la Tour Eiffel avec des concerts et un feu d'artifice spectaculaire, symbolisant l'éclat et la joie des Jeux.</li>
+        <li style="margin-bottom: 5px"><b>Navigation Facilitée : </b>Notre carte interactive (trouvable en bas de la page) est conçue pour vous guider à travers ces sites enchanteurs. Chaque événement est facilement accessible, vous permettant de savourer chaque instant de cette soirée magique.</li>
+          </ul>
+        <p style="margin-bottom: 10%"><b>Ces Jeux Olympiques à Paris ne sont pas seulement un événement sportif, mais également une célébration de la diversité culturelle.</b></p>
+
+        </div>
         <div class="table-responsive">
           <table class="table">
           <thead>

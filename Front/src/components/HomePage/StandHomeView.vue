@@ -496,8 +496,8 @@ body {
 .card-front__tp--city {
   background: linear-gradient(
       to bottom,
-      darkgray,
-      lightgray
+      #af6c3d,
+      #A8783E
   );
 }
 
