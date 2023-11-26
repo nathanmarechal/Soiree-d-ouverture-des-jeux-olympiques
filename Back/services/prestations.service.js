@@ -26,6 +26,7 @@ const getAllPrestations = (callback) => {
 async function getPrestationByUserIdAsync(id) {
     try {
         const conn = await pool.connect();
+        console.log("id depuis getPrestationasync" + id)
         const result = await conn.query("SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, tp.libelle as \"type_prestation_libelle\", COUNT(lc.id_prestation) as \"nb_ventes\", s.id_stand, s.nom_stand\n" +
             "FROM utilisateur u\n" +
             "JOIN stand s on u.id_stand = s.id_stand\n" +

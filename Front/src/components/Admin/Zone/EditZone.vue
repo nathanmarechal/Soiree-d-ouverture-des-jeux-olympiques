@@ -21,7 +21,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { getZoneById, updateZone } from "@/services/map.service";
+  import { getZoneById, updateZone } from "@/services/map.service";
 
 export default {
   props: ["id_zone"],

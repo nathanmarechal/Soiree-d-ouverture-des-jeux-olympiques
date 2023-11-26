@@ -21,7 +21,7 @@
             <b-dropdown-item href="#" class = "dp">RATP</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown v-if="isUserAdmin" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
+          <b-nav-item-dropdown right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
             <router-link to="/prestataire/prestations" class = "dp">Prestations</router-link>
           </b-nav-item-dropdown>
 
