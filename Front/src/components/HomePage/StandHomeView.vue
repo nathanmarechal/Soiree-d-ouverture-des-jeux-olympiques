@@ -26,11 +26,12 @@
   <main class="setMargin">
     <div v-if="!isDiscoverMore()">
 
-    <section class="row row-cols-1 row-cols-md-3 g-4">
+      <section class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div v-for="(stand, index) in firstThreeStands" :key="index">      <!-- Card: City -->
+
+      <div v-for="(stand, index) in firstThreeStands" :key="index" >      <!-- Card: City -->
       <section class="card-section">
-        <div class="card">
+        <div class="card" style="margin: 5%">
           <div class="flip-card">
             <div class="flip-card__container">
               <div class="card-front">
@@ -103,7 +104,7 @@
 
         <!-- Card: City -->
         <section class="card-section">
-          <div class="card">
+          <div class="card" style="margin-top: 7%; margin-left: 10%;margin-right: 10%;">
             <div class="flip-card">
               <div class="flip-card__container">
                 <div class="card-front">
@@ -256,9 +257,13 @@ export default {
   margin-top: 5%;
 }
 
-.setMargin{
+.setMargin {
   margin-top: 5%;
+  margin-left: 25%;
+  padding: 0 0 0 0;
+  width: 100vh; /* Assurez-vous qus'il n'y a pas de largeur excessive */
 }
+
 
 .centerButton {
   display: block;
@@ -397,10 +402,11 @@ body {
 .card-area {
   align-items: center;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   height: 100%;
   justify-content: space-evenly;
   padding: 1rem;
+
 }
 
 /* Card ============================================*/
@@ -409,9 +415,11 @@ body {
 .card-section {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   height: 100%;
   justify-content: center;
   width: 100%;
+  max-width: 100%;
 }
 
 /* A container to hold the flip card and the inside page */
