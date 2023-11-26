@@ -101,11 +101,6 @@ export default {
     currentUser() {
       return this.$store.getters.getCurrentUser;
     },
-    /*
-    email() {
-      return this.$store.getters.getemail;
-    },
-     */
   },
   components: {
     'login-component': LoginComponent

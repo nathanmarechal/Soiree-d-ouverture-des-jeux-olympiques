@@ -21,6 +21,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { createZone} from "@/services/map.service";
 
 export default {
   data() {
@@ -42,13 +43,24 @@ export default {
   },
   methods: {
     ...mapActions(["getTypesZone"]),
-    submitForm() {
-      // Affiche une alerte avec les données de la zone actuelle
-      const alertMessage = `Libellé: ${this.zone.libelle}\nCouleur: ${this.zone.couleur_hexa}\nType de zone: ${this.zone.id_type_zone}`;
-      window.alert(alertMessage);
+    async submitForm() {
+      try {
+        console.log("Données de la zone :", this.zone);
+        // Appel de la méthode createZone avec les données de la zone
+        const response = await createZone(this.zone);
 
-      // Vous pouvez également effectuer la logique d'ajout ici
+        // Gérer la réponse ici (ex : afficher un message de succès)
+        console.log("Zone créée avec succès :", response);
+
+        // Redirection vers '/admin/zones/'
+        await this.$router.push('/admin/zones/');
+      } catch (error) {
+        // Gestion des erreurs
+        console.error("Erreur lors de la création de la zone :", error);
+        // Afficher un message d'erreur à l'utilisateur, si nécessaire
+      }
     }
+
   }
 };
 </script>

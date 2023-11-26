@@ -74,6 +74,45 @@ exports.getZoneById = (req, res) => {
     })
 }
 
+exports.updateZone = (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    console.log("updateZone: ", id, body)
+    mapService.updateZone(id, body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.createZone = (req, res) => {
+    const body = req.body;
+    console.log("createZone: ", body)
+    mapService.createZone(body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.deleteZone = (req, res) => {
+    const id = req.params.id;
+    console.log("deleteZone: ", id)
+    mapService.deleteZone(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.getTypeZones = (req, res) => {
     mapService.getAllTypeZones((error, data) => {
         if (error) {

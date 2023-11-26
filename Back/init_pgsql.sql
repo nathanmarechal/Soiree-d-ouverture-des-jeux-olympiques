@@ -12,7 +12,6 @@ DROP TABLE IF EXISTS type_prestation CASCADE;
 
 DROP TABLE IF EXISTS session;
 
-
 DROP TABLE IF EXISTS role_droits;
 DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS droits CASCADE;
@@ -42,7 +41,7 @@ CREATE TABLE zone(
    libelle VARCHAR(50),
    couleur_hexa VARCHAR(50),
    id_type_zone INT NOT NULL,
-   FOREIGN KEY(id_type_zone) REFERENCES type_zone(id_type_zone)
+   FOREIGN KEY(id_type_zone) REFERENCES type_zone(id_type_zone) ON DELETE CASCADE
 );
 
 CREATE TABLE emplacement(
@@ -50,8 +49,7 @@ CREATE TABLE emplacement(
    coordonnes json,
    surface int,
    id_zone INT NOT NULL,
-   FOREIGN KEY(id_zone) REFERENCES zone(id_zone)
-);
+   FOREIGN KEY(id_zone) REFERENCES zone(id_zone) ON DELETE CASCADE);
 
 CREATE TABLE stand(
    id_stand SERIAL PRIMARY KEY,
@@ -61,7 +59,7 @@ CREATE TABLE stand(
    date_achat DATE,
    prix INT,
    id_emplacement INT,
-   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement)
+   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
 );
 
 CREATE TABLE creneau(
@@ -70,15 +68,15 @@ CREATE TABLE creneau(
 );
 
 CREATE TABLE prestation(
-   id_prestation SERIAL PRIMARY KEY,
-   libelle VARCHAR(50),
-   prix INT,
-   date timestamp,
-   id_type_prestation INT NOT NULL,
-   id_stand INT NOT NULL,
-    
-   FOREIGN KEY(id_type_prestation) REFERENCES type_prestation(id_type_prestation),
-   FOREIGN KEY(id_stand) REFERENCES stand(id_stand)
+    id_prestation SERIAL PRIMARY KEY,
+    libelle VARCHAR(50),
+    prix INT,
+    date timestamp,
+    image varchar(255),
+    id_type_prestation INT NOT NULL,
+    id_stand INT NOT NULL,
+    FOREIGN KEY(id_type_prestation) REFERENCES type_prestation(id_type_prestation) ON DELETE CASCADE,
+    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE
 );
 
 CREATE TABLE utilisateur(
@@ -92,15 +90,15 @@ CREATE TABLE utilisateur(
    commune VARCHAR(50),
    id_stand INT,
    id_role INT,
-   FOREIGN KEY(id_stand) REFERENCES stand(id_stand),
-   FOREIGN KEY(id_role) REFERENCES role(id_role)
+   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
 CREATE TABLE commande(
    id_commande SERIAL PRIMARY KEY,
    date_commande DATE,
    id_user INT NOT NULL,
-   FOREIGN KEY(id_user) REFERENCES utilisateur(id_user)
+   FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
 );
 
 CREATE TABLE ligne_commande(
@@ -127,7 +125,7 @@ CREATE TABLE session(
     session_id VARCHAR(255),
     id_user INT PRIMARY KEY ,
     timeLimit TIMESTAMP,
-    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user)
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
 );
 
 CREATE TABLE droits
@@ -141,8 +139,8 @@ CREATE TABLE role_droits
     id_droit INT,
     id_role INT,
     PRIMARY KEY (id_droit, id_role),
-    FOREIGN KEY(id_droit) REFERENCES droits(id),
-    FOREIGN KEY(id_role) REFERENCES role(id_role)
+    FOREIGN KEY(id_droit) REFERENCES droits(id)ON DELETE CASCADE,
+    FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
 
@@ -450,13 +448,13 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
 ('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107);
 
-INSERT INTO prestation (libelle, prix, id_type_prestation, id_stand) VALUES
-('kebab frites',12,2,2),
-('kebab simple',9,2,2),
-('Dorum frites',15,2,2),
-('Coca',3,3,2),
-('initation au mma',0,1,1),
-('inscription au club',120,1,1);
+INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
+('kebab frites',12,'kebab_frites.jpg',2,2),
+('kebab simple',9,'kebab_simple.jpg',2,2),
+('Dorum frites',15,'dorum_frites.jpg',2,2),
+('Coca',3,'coca.jpg',3,2),
+('initiation au mma',0,'initiation_au_mma.jpg',1,1),
+('inscription au club',120,'inscription_au_club.jpg',1,1);
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
@@ -468,7 +466,6 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email7@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 6, 2),
 ('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
 ('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
-
 
 SELECT
     e.id_emplacement AS "id_emplacement",
@@ -505,3 +502,11 @@ SELECT id FROM droits
 WHERE libelle = 'create_user';
 
 SELECT * FROM emplacement order by id_emplacement;
+
+/*
+UPDATE zone SET id_type_zone = 2, libelle = 'champs', couleur_hexa = '#444444' WHERE id_zone = 1;
+ */
+
+SELECT * FROM type_zone;
+
+SELECT * FROM zone;

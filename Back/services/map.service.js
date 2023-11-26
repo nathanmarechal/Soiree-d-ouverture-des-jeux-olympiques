@@ -1,5 +1,5 @@
 const pool = require("../database/db");
-
+const {as} = require("pg-promise");
 
 const getAllAreas = (callback) => {
     getAllAreasAsync()
@@ -170,6 +170,75 @@ async function getZoneByIdAsync(id) {
     }
 }
 
+const updateZone = (id, body, callback) => {
+    updateZoneAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateZoneAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;", [body.id_type_zone, body.libelle, body.couleur_hexa, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateZoneAsync:', error);
+        throw error;
+    }
+}
+
+const createZone = (body, callback) => {
+    createZoneAsync(body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function createZoneAsync(body) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("INSERT INTO zone (id_type_zone, libelle, couleur_hexa) VALUES ($1, $2, $3);", [body.id_type_zone, body.libelle, body.couleur_hexa]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in createZoneAsync:', error);
+        throw error;
+    }
+}
+
+const deleteZone = (id, callback) => {
+    deleteZoneAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function deleteZoneAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("DELETE FROM zone WHERE id_zone = $1;", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in deleteZoneAsync:', error);
+        throw error;
+    }
+}
+
 const getAllTypeZones = (callback) => {
     getAllTypeZoneAsync()
         .then(res => {
@@ -200,5 +269,8 @@ module.exports = {
     getZoneById: getZoneById,
     updateArea: updateArea,
     createArea: createArea,
-    deleteArea: deleteArea
+    deleteArea: deleteArea,
+    updateZone: updateZone,
+    createZone: createZone,
+    deleteZone: deleteZone
 }

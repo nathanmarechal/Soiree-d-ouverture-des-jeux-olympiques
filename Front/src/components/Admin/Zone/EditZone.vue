@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
+  <form @submit.prevent="submitForm()" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
       <label for="libelle">Libellé:</label>
       <input v-model="zone.libelle" id="libelle" placeholder="Libellé" class="form-control">
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { getZoneById } from "@/services/map.service";
 import { mapActions } from 'vuex';
+import { getZoneById, updateZone } from "@/services/map.service";
 
 export default {
   props: ["id_zone"],
@@ -29,31 +29,40 @@ export default {
     return {
       zone: {
         id_zone: null,
-        libelle: "",
-        couleur_hexa: "",
+        libelle: null,
+        couleur_hexa: null,
         id_type_zone: null,
-        type_zone_libelle: "",
+        type_zone_libelle: null,
       },
       type_zones: [],
     };
   },
-  async mounted() {
+  async created() {
     try {
       this.type_zones = await this.getTypesZone();
-      const data = await getZoneById(this.id_zone);
-      this.zone = data[0]; // Supposons que vous recevez un tableau avec un seul élément
+      this.zone = await getZoneById(this.id_zone);
+      console.log("Données de la zone dans le created :", this.zone);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   methods: {
     ...mapActions(["getTypesZone"]),
-    submitForm() {
-      // Mettez ici la logique pour soumettre le formulaire
-    },
-    cancel() {
-      // Mettez ici la logique pour annuler ou quitter le formulaire
+    async submitForm() {
+      try {
+        console.log("Données de la zone :", this.zone);
+        await updateZone(this.zone.id_zone, {
+          libelle: this.zone.libelle,
+          couleur_hexa: this.zone.couleur_hexa,
+          id_type_zone: this.zone.id_type_zone,
+        });
+        await this.$router.push('/admin/zones/'); // Redirect to '/admin/zones/' after successful update
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour de la zone :', error);
+        // Handle any errors here, such as displaying a notification to the user
+      }
     }
+
   }
 };
 </script>
