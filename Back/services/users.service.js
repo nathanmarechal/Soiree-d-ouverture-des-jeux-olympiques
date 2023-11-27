@@ -149,9 +149,9 @@ const getAllRoles = (callback) => {
         });
 }
 
-const updateUser = (id, nom, prenom, callback) => {
+const updateUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
     try{
-        updateUserAsync(id, nom, prenom)
+        updateUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
         callback(null, "success");
     } catch (error) {
         console.log(error);
@@ -159,10 +159,13 @@ const updateUser = (id, nom, prenom, callback) => {
     }
 }
 
-async function updateUserAsync(id, nom, prenom) {
+async function updateUserAsync(id, prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
     try {
-        const conn = await pool.getConnection();
-        const result = await conn.query("UPDATE utilisateur SET nom = ?, prenom = ? WHERE id_user = ?", [nom, prenom, id]);
+        const conn = await pool.connect();
+        const result = await conn.query(
+            "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, id_stand = $9, id_role = $10 WHERE id_user = $1",
+            [id, email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]
+        );        
         conn.release();
         return result;
     } catch (error) {
@@ -170,6 +173,7 @@ async function updateUserAsync(id, nom, prenom) {
         throw error;
     }
 }
+
 
 
 const deleteUser = (id, callback) => {
@@ -187,8 +191,83 @@ const deleteUser = (id, callback) => {
 
 async function deleteUserAsync(id) {
     try {
-        const conn = await pool.getConnection();
+        const conn = await pool.connect();
         await conn.query('DELETE FROM USERS WHERE id = ?', [id]);
+        conn.release();
+        console.log('Records deleted successfully');
+    } catch (error) {
+        console.error('Error deleting records:', error);
+        throw error;
+    }
+}
+
+const createRole = (body, callback) => {
+    try{
+        createRoleAsync(body)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function createRoleAsync(body) {
+    try {
+        const id_role = body.id_role;
+        const libelle = body.libelle;
+        const conn = await pool.connect();
+        const result = await conn.query("INSERT INTO role (id_role, libelle) VALUES ($1, $2)", [id_role, libelle]);
+        conn.release();
+        return result;
+    } catch (error) {
+        console.error('Error in createRoleAsync:', error);
+        throw error;
+    }
+}
+
+
+const updateRole = (body, callback) => {
+    try{
+        console.log("updateRole1",body);
+        updateRoleAsync(body)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function updateRoleAsync(body) {
+    try {
+        const id_role = body.id_role;
+        const libelle = body.libelle;
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE role SET libelle = $1 WHERE id_role = $2", [libelle, id_role]);
+        conn.release();
+        return result;
+    } catch (error) {
+        console.error('Error in updateRoleAsync:', error);
+        throw error;
+    }
+}
+
+
+const deleteRole = (body, callback) => {
+    try{
+        deleteRoleAsync(body);
+        callback(null,"Deleted successfully")
+    }
+    catch (error)
+    {
+        console.log(error);
+        callback(error,null)
+    }
+}
+
+async function deleteRoleAsync(id_role) {
+    try {
+        const conn = await pool.connect();
+        await conn.query('DELETE FROM role WHERE id_role = $1', [id_role]);
         conn.release();
         console.log('Records deleted successfully');
     } catch (error) {
@@ -206,4 +285,7 @@ module.exports = {
     , getAllRoles: getAllRoles
     , updateUser: updateUser
     , deleteUser: deleteUser
+    , createRole: createRole
+    , updateRole: updateRole
+    , deleteRole: deleteRole
 }

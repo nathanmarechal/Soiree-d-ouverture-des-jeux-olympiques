@@ -1,27 +1,42 @@
 <template>
-    <div>
-        <form @submit.prevent="editRole">
-            <label for="libelle">Libellé:</label><br>
-            <input type="text" id="libelle" v-model="selectedRole.libelle" required><br>
-            <button type="submit">Edit Role</button>
-            <button type="button" class="btn btn-danger" @click="$emit('close')">Cancel</button>
-        </form>
+  <form @submit.prevent="editRole" class="d-flex gap-3 flex-column justify-content-center">
+    <div class="form-group">
+      <label for="libelle">Libellé:</label>
+      <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
     </div>
+    <button type="submit" class="btn btn-success">Modifier</button>
+    <button type="button" class="btn btn-danger" @click="$emit('close')">Quitter</button>
+  </form>
 </template>
 
 <script>
+// Import the updateRole method from the service
+import { updateRole } from "@/services/utilisateur.service";
+
 export default {
-    props: {
-        role: {
-            type: Object,
-            required: true
-        }
+  props: {
+    selectedRole: {
+      type: Object,
+      required: true,
     },
-    methods: {
-        editRole() {
-            console.log(this.role);
-            this.$emit('edit-role', this.role);
-        }
-    }
+  },
+  data() {
+    return {
+      role: this.selectedRole,
+    };
+  },
+  methods: {
+    async editRole() {
+      try {
+        console.log("Données du rôle :", this.role);
+
+        // Call the updateRole method with this.role instead of this.selectedRole
+        await updateRole(this.role);        
+        this.$emit('edit-role', this.role);
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour du rôle :', error);
+      }
+    },
+  },
 };
 </script>
