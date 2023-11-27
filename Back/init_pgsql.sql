@@ -33,6 +33,7 @@ CREATE TABLE type_prestation(
    id_type_prestation SERIAL PRIMARY KEY,
    libelle VARCHAR(50),
    image varchar(255),
+   page_title varchar(255),
    description_type_prestation TEXT
 );
 
@@ -172,15 +173,16 @@ INSERT INTO type_zone (libelle) VALUES
 ('Fixe'),
 ('Ambulant');
 
-INSERT INTO type_prestation (libelle, image , description_type_prestation) VALUES
-('nourriture','food.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('boisson', 'drink.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('activité','activity.jpeg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('magasin', 'shop.avif','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('fanzone', 'fanzone.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('transport', 'ratp.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('international', 'inter.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long'),
-('billeterie', 'billet.jpg','ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long ceci est une description vraiment c est de l exces comme c est long');
+INSERT INTO type_prestation (libelle, page_title, image , description_type_prestation) VALUES
+('Nourriture', 'Venez découvrir les saveurs disponibles' ,'food.jpg','Envie de goûter à des plats provenant de tous les horizons ? Notre collection de mets délicieux est spécialement conçue pour vous offrir une expérience gastronomique inoubliable. De la cuisine traditionnelle aux innovations culinaires modernes, chaque bouchée est une aventure pour vos papilles.
+Que vous recherchiez des plats réconfortants faits maison ou des spécialités exotiques, notre gamme variée saura satisfaire tous les goûts.'),
+('Boisson', 'Explorez notre sélection de Boissons', 'drink.jpg','À la découverte de saveurs nouvelles ? Notre site regroupe une variété impressionnante de boissons pour tous les goûts. Chaque stand a sa spécialité, offrant un choix riche et diversifié pour satisfaire toutes vos envies de boissons.
+Nous collaborons avec des stands locaux pour vous apporter le meilleur en termes de qualité et d''originalité. Que vous recherchiez une boisson rafraîchissante, une pause détente ou une expérience gustative unique, notre sélection a de quoi ravir tout un chacun.'),
+('Activité','Des activités passionnantes avec nos stands', 'activity.jpeg','À la recherche d''expériences uniques et mémorables ? Saisissez l opportunité de découvrir une multitude d activités variées offertes par nos stands. Que vous soyez à la recherche d''ateliers créatifs, de démonstrations culinaires, de jeux interactifs ou d expériences éducatives, nos stands ont quelque chose à offrir pour tous les âges et tous les intérêts.'),
+('Boutique', 'Partez en Mini-Tour du Monde avec Nos Magasins', 'shop.avif','À la recherche de souvenirs uniques ou d''articles qui capturent l essence des différents pays, y compris la France ? Nos magasins regorgent de trouvailles intéressantes et originales, parfaites pour se remémorer vos voyages ou pour offrir un cadeau spécial. Des objets d ailleurs aux spécialités françaises, il y a quelque chose pour chacun.'),
+('Fanzone', 'Vivez l''Évènement en Grand dans Nos Fanzones !', 'fanzone.jpg','Envie de vivre l''évènement comme si vous y étiez ? Nos fanzones sont l''endroit parfait pour ça ! Imaginez-vous au cœur de l''action, entouré d''autres fans, tous les yeux rivés sur un écran géant qui retransmet chaque instant en direct. C''est l''expérience immersive que nous vous proposons.'),
+('Transport','Profitez de Nos Services de Transport',  'ratp.jpg','Pour que vous profitiez pleinement de votre soirée sur notre grand espace, nous avons pensé à tout, surtout à votre confort ! Découvrez nos services de transport pratiques et fiables, conçus pour faciliter vos déplacements. Que ce soit pour arriver à l''évènement, pour vous déplacer dans celui-ci ou encore pour le retour, vous pouvez compter sur nous pour un trajet sûr et confortable.'),
+('Billeterie', 'Vivez les Jeux Olympiques en Direct !', 'billet.jpg','Les Jeux Olympiques sont à nos portes, et avec eux, l''excitation de vivre des moments historiques. Ne manquez pas cette chance unique de faire partie de l''histoire du sport. Nos billetteries vous proposent des billets pour assister aux différentes épreuves des JO qui se dérouleront dans les jours à venir.');
 
 INSERT INTO zone (libelle, couleur_hexa, id_type_zone) VALUES
 ('champs de mars','#4CE79E',1),
