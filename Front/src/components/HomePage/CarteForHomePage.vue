@@ -1,18 +1,17 @@
 <template>
   <div class="container-fluid h-100 " >
     <div class="row h-100">
-      <h2 class="subtitle subMarge" style="padding-left: 3%">Une cérémonie sur l'eau</h2>
+      <h2 class="subtitle subMarge" style="padding-left: 3%">Comment profiter au maximum ?</h2>
       <div class="col-lg-4 d-flex align-items-center justify-content-center">
         <div class="lead test justi" style="margin-left: 7%">{{ CarteDescription }}
         <ul class="lead test justi" >
-          <li style="margin-top: 1%">De la <b>nourriture</b> française, mais également internationale !</li>
-          <li style="margin-top: 1%">Des <b>boissons</b> pour tous les goûts !</li>
-          <li style="margin-top: 1%">Des possibilités de <b>transport</b> pour suivre l'évènement !</li>
-          <li style="margin-top: 1%">Des <b>activités</b> en tout genre pour ne jamais s'ennuyer !</li>
-          <li style="margin-top: 1%"> De la découverte ainsi que de la promotion <b>internationale</b> !</li>
-          <li style="margin-top: 1%">Différents <b>magasins</b> afin de ne manquer de rien !</li>
-          <li style="margin-top: 1%">De nombreuses <b>fanzones</b> pour ne rien rater de l'évènement </li>
-          <li style="margin-top: 1%">Des <b>billetteries</b> pour ne rien rater des jeux olympiques !</li>
+          <li style="margin-top: 1%">De la <b style="font-weight: bold">nourriture</b> française, mais également internationale !</li>
+          <li style="margin-top: 1%">Des <b style="font-weight: bold">boissons</b> pour tous les goûts !</li>
+          <li style="margin-top: 1%">Des possibilités de <b> style="font-weight: bold"transport</b> pour suivre l'évènement !</li>
+          <li style="margin-top: 1%">Des <b style="font-weight: bold">activités</b> en tout genre pour ne jamais s'ennuyer !</li>
+          <li style="margin-top: 1%"> De la découverte ainsi que de la promotion <b style="font-weight: bold">internationale</b> !</li>
+          <li style="margin-top: 1%">Différents <b style="font-weight: bold">magasins</b> afin de ne manquer de rien !</li>
+          <li style="margin-top: 1%">De nombreuses <b style="font-weight: bold">fanzones</b> pour ne rien rater de l'évènement </li>
         </ul>
         </div>
       </div>
