@@ -35,7 +35,7 @@ body {
 
 h1 {
   font-size: 9vmin;
-  color: #8bf;
+  color: #F9D8B7;
   text-align: left;
   font-family: Lato, sans-serif;
   font-weight: 700;
@@ -135,7 +135,7 @@ body {
   position: absolute;
   top: 35%;
   right: 20%;
-  max-width: 30%; /* Largeur maximale du titre */
+  max-width: 30%;
 }
 
 </style>

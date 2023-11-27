@@ -7,7 +7,7 @@
     <router-link to="/">
       <button @click="playAudio" class="btn-success">Page Principale</button>
     </router-link>
-    <button class="btn btn-danger" @click="playAudio">Arthur the Clown Main Theme</button>
+    <button class="btn btn-danger" @click="playAudio"> The Clown Main Theme</button>
     <audio ref="audioPlayer" src="@/assets/Music/arthur-main-sound.mp3"></audio>
   </div>
 </template>

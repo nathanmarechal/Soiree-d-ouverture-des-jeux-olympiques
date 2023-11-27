@@ -19,7 +19,7 @@
         <div class="col-md-3">
           <ul class="list-unstyled mb-0 ">
             <li><a href="#" class="text-custom">À propos</a></li>
-            <li><a href="#" class="text-custom">Services</a></li>
+            <li><a href="https://www.paris2024.org/fr/" class="text-custom">Site officiel des JO</a></li>
             <li><a href="#" class="text-custom">Projets</a></li>
             <li><a href="#" class="text-custom">Contact</a></li>
           </ul>

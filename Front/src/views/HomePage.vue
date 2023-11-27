@@ -5,6 +5,7 @@
     <PageDescription />
     <SlideshowTitleComponent/>
     <PageSlideshow/>
+    <StandTitle/>
     <StandHomeView/>
     <CardHomeTitleComponent></CardHomeTitleComponent>
     <CarteForHomePage/>
@@ -22,8 +23,10 @@ import SlideshowTitleComponent from "@/components/HomePage/SlideshowTitleCompone
 import CarteForHomePage from "@/components/HomePage/CarteForHomePage.vue";
 import CardHomeTitleComponent from "@/components/HomePage/CardHomeTitleComponent.vue";
 import StandHomeView from "@/components/HomePage/StandHomeView.vue";
+import StandTitle from "@/components/HomePage/StandTitle.vue";
 export default {
   components: {
+    StandTitle,
     StandHomeView,
     SlideshowTitleComponent,
     MainImageAndTitle,
