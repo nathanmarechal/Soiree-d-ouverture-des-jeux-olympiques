@@ -85,6 +85,7 @@ async function createZone(body) {
 }
 
 async function deleteZoneFromAPI(id) {
+    console.log("deleteZoneFromAPI: ", id)
     return deleteRequest('/map/zone/' + id, 'DELETEZONE')
 }
 

@@ -43,7 +43,8 @@ async function deleteUser(id) {
 }
 
 async function deleteUserFromAPI(id) {
-    return deleteRequest('/users/delete/' + id, id, 'DELETEUSER')
+    console.log("deleteUserFromAPI: ", id)
+    return deleteRequest('/users/delete/'+ id, 'DELETEUSER')
 }
 
 async function createRole(body) {

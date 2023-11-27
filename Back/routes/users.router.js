@@ -4,7 +4,7 @@ const usersController = require('../controllers/users.controller');
 const {checkRight} = require("../middlewares/authentication.middleware");
 
 router.get("/roles", usersController.getRoles);
-router.post("/roles/:id", usersController.updateRole);
+router.patch("/roles/:id", usersController.updateRole);
 router.post("/roles", usersController.createRole);
 router.delete("/roles/:id", usersController.deleteRole);
 
@@ -18,8 +18,8 @@ router.get("/getBySessionId",usersController.getUserBySessionId)
 //router.post("/post", usersMiddleware.validateUserInput,usersController.saveUser);
 
 router.get("/getBySessionId", usersController.getUserBySessionId);
-router.post("update/:id", usersController.updateUser);
-router.delete("delete/:id", usersController.deleteUser);
+router.post("/update/:id", usersController.updateUser);
+router.delete("/delete/:id", usersController.deleteUser);
 
 router.post("/", (req, res, next) => {
     checkRight(req, res, next, "create_users");

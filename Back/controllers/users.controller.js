@@ -118,7 +118,7 @@ exports.updateUser = (req, res) => {
 }
 
 exports.deleteUser = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
 
     // Log function name and data
     console.log("deleteUser", { id });
@@ -159,7 +159,7 @@ exports.updateRole = (req, res) => {
     // Log function name and data
     console.log("updateRole", { id, body });
 
-    usersService.updateRole(id, body, (error, data) => {
+    usersService.updateRole(body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

@@ -74,13 +74,11 @@
         const maxId = Math.max(...this.roles.map(role => role.id_role), 0) + 1;
         return maxId;
       },
-      deleteRole(role) {
-        // Update your roles array or perform any other necessary actions
-        this.roles.splice(this.roles.indexOf(role), 1);
+      async deleteRole() {
+        this.roles = await this.getRoles();
       },
-      updateRole(role) {
-        const index = this.roles.findIndex(r => r.id_role === role.id_role);
-        this.roles.splice(index, 1, role);
+      async updateRole() {
+        this.roles = await this.getRoles();
         this.closeEditForm();
       },
     },
