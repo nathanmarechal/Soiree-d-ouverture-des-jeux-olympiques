@@ -37,13 +37,14 @@
 
         </b-navbar-nav>
       </b-collapse>
-      <b-navbar-brand href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
+      <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item href="#" class = "dp">Mes espaces</b-dropdown-item>
         <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="#" class = "dp">se déconnecter</b-dropdown-item>
       </b-nav-item-dropdown>
       <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
+      <img v-if="isUserPrestataire" src="../assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
     </b-navbar>
 
     <b-sidebar id="mobile-nav" title="" width="250px" no-header v-model="isSidebarOpen">
@@ -96,9 +97,12 @@ export default {
     },
     isUserAdmin() {
       const val = this.$store.getters.isUserConnected
-          && this.$store.getters.getCurrentUser!=null
           && this.$store.getters.getCurrentUser.id_role===1;
-      console.log("is user admin ? :"+val);
+      return val;
+    },
+    isUserPrestataire() {
+      const val = this.$store.getters.isUserConnected
+          && this.$store.getters.getCurrentUser.id_role===2;
       return val;
     },
     currentUser() {

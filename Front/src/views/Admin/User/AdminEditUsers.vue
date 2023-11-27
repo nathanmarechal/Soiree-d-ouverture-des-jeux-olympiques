@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <div v-if="isUserAdmin">
     <div class="container" style="margin-top: 70px;">
         <h1 class="title">Liste d'utilisateurs :</h1>
         <button v-if="showAddButton" class="blue-button" @click="showAddForm">Ajouter utilisateurs</button> <br><br>
@@ -6,12 +8,18 @@
         <add-user-form v-if="showAddUserForm" :users="users" :roles="roles" :type-zone="typeZone" @add-user="addUser" @close="closeAddForm"></add-user-form>
         <edit-user-form v-if="showEditUserForm" :user="selectedUser" :roles="roles" :type-zone="typeZone" @update-user="updateUser" @close="closeEditForm"></edit-user-form>
     </div>
+    </div>
+  <div v-else>
+    <Error404Page></Error404Page>
+  </div>
+  </div>
 </template>
 
 <script>
 import UserList from '@/components/Admin/User/UserList.vue';
 import AddUserForm from '@/components/Admin/User/AddUserForm.vue';
 import EditUserForm from '@/components/Admin/User/EditUserForm.vue';
+import Error404Page from "@/views/Error404Page.vue";
 
 
 //import {mapActions, mapState} from 'vuex'
@@ -20,6 +28,7 @@ import {mapActions} from 'vuex'
 
 export default {
     components: {
+        Error404Page,
         UserList,
         AddUserForm,
         EditUserForm
@@ -63,6 +72,14 @@ export default {
 
     computed: {
       //...mapState(['users', 'roles', 'typeZone']),
+      isUserAdmin() {
+        const val = this.$store.getters.isUserConnected
+            && this.$store.getters.getCurrentUser!=null
+            && this.$store.getters.getCurrentUser.id_role===1;
+        console.log("is user admin ? :"+val);
+        return val;
+      },
+
       filteredUsers() {
           if (this.filterRole === '') {
               return this.users;

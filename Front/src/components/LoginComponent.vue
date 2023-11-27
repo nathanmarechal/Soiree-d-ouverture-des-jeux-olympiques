@@ -115,12 +115,14 @@ export default {
                       this.currentUser.id_role = res.id_role;
                       this.$store.commit('SET_CURRENT_USER', this.currentUser)
 
-                      console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
+                      this.email=""
+                      this.password=""
+
+                      this.$store.commit('SET_IS_USER_CONNECTED', true);
+                      this.closeModal();
+//                      console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
                     })
-                //this.$store.commit('SET_EMAIL', this.email);
-                //this.$store.commit('SET_PASSWORD', this.password);
-                this.$store.commit('SET_IS_USER_CONNECTED', true);
-                this.closeModal();
+
               }
               else
               {
