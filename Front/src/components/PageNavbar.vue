@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" class="desktop-navbar">
-      <b-navbar-brand href="/"><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand>
+      <router-link to="/"><b-navbar-brand ><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>

@@ -4,7 +4,7 @@
   <div  class="food-image-container">
     <img :src="getImageSrc(type.image)" alt="Background" class="food-img-fluid w-100 h-100">
     <div class="food-overlay-text">
-      <h3>{{type.libelle}}</h3>
+      <h3>{{type.page_title}}</h3>
       <p>{{ type.description_type_prestation }}</p>
       <button @click="goToStore(type)" class="food-overlay-button" > Réserver </button>
     </div>
