@@ -131,7 +131,7 @@ export default {
         id_role: this.role.id_role,
         //id_stand: this.stand,
         id_stand : null,
-        session_id : this.$store.getters.getCurrentUser.session_id,
+        //session_id : this.$store.getters.getCurrentUser.session_id,
         //stand: this.stand,
         //type_prestation: this.typePrestation,
         //type_zone: this.typeZone,
@@ -149,9 +149,8 @@ export default {
       //this.prestation = '';
       //this.zoneType = '';
       //this.zoneId = '';
-
-      console.log(newUser)
-      createUser(newUser)
+      const session_id = this.$store.getters.getCurrentUser.session_id;
+      createUser(newUser,session_id)
     },
 
     validateStand() {

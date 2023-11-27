@@ -1,6 +1,6 @@
 const pool = require("../database/db");
 exports.checkRight = (req, res, next,right_name) => {
-    const session_id = req.body.session_id;
+    const session_id = req.query.session_id;
     console.log("session_id=",session_id,"right name=",right_name)
     checkRight_by_name(session_id,right_name).then((success)=>
     {

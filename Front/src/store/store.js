@@ -204,9 +204,9 @@ export default new Vuex.Store({
 
     actions: {
 
-        async getUsers() {
+        async getUsers(data,session_id) {
             try {
-                const users = await getAllUsers();
+                const users = await getAllUsers(session_id);
                 return users; // Return the fetched data
             } catch (error) {
                 console.error('Error fetching users:', error);

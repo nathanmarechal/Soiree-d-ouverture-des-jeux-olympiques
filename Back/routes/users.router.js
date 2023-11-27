@@ -6,7 +6,10 @@ const {checkRight} = require("../middlewares/authentication.middleware");
 
 router.get("/roles", usersController.getRoles);
 
-router.get("/get", usersController.getUsers);
+router.get("/get",
+    (req,res,next)=>
+        checkRight(req,res,next,"see_users"),
+    usersController.getUsers);
 
 router.get("/getBySessionId",usersController.getUserBySessionId)
 

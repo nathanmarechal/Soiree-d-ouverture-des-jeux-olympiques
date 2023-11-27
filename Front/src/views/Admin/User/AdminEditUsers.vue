@@ -41,8 +41,10 @@ export default {
 
     async created() {
       try {
-        this.users = await this.getUsers();
+        const session_id = this.$store.getters.getCurrentUser.session_id;
+        this.users = await this.getUsers(session_id);
         this.roles = await this.getRoles();
+
         //this.typeZone = await this.getTypeZone();
       } catch (error) {
         console.error('Error fetching users:', error);
