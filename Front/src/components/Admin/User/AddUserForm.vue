@@ -119,24 +119,17 @@ export default {
     submitForm() {
       console.log("role selectionné " + this.role)
       const newUser = {
-        prenom: this.firstName,
-        nom: this.lastName,
-        email: this.email,
-        password: this.password,
-        //role: this.role,
+  prenom: this.firstName,
+  nom: this.lastName,
+  email: this.email,
+  password: this.password,
+  adresse: this.adresse,
+  code_postal: this.code_postal,
+  commune: this.commune,
+  id_role: this.role ? this.role.id_role : null,
+  id_stand : null,
+};
 
-        adresse: this.adresse,
-        code_postal: this.code_postal,
-        commune: this.commune,
-        id_role: this.role.id_role,
-        //id_stand: this.stand,
-        id_stand : null,
-        //session_id : this.$store.getters.getCurrentUser.session_id,
-        //stand: this.stand,
-        //type_prestation: this.typePrestation,
-        //type_zone: this.typeZone,
-        //zone_id: this.zoneId,
-      };
 
       /*this.$emit('add-user', newUser);
       this.firstName = '';

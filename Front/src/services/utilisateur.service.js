@@ -33,7 +33,7 @@ async function updateUser(id, body) {
 
 async function updateUserFromAPI(id, body) {
     console.log("updateUserFromAPI3: ", body)
-    return patchRequest('/users/' + id, body, 'UPDATEUSER')
+    return patchRequest('/users/update/' + id, body, 'UPDATEUSER')
 }
 
 async function deleteUser(id) {
@@ -43,7 +43,7 @@ async function deleteUser(id) {
 }
 
 async function deleteUserFromAPI(id) {
-    return deleteRequest('/users/' + id, id, 'DELETEUSER')
+    return deleteRequest('/users/delete/' + id, id, 'DELETEUSER')
 }
 
 async function createRole(body) {

@@ -12,6 +12,7 @@ exports.checkRight = (req, res, next,right_name) => {
         else
         {
             console.log("failure!")
+            console.log("l'utilisateur est : "+session_id)
             return res.status(400).send("l'utilisateur courant ne dispose pas de ce droit");
         }
     })

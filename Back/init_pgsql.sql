@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS creneau CASCADE;
 
 
 CREATE TABLE role(
-   id_role SERIAL PRIMARY,
+   id_role SERIAL PRIMARY KEY,
    libelle VARCHAR(50)
 );
 

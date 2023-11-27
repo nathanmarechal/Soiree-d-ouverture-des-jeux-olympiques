@@ -28,6 +28,7 @@
   </template>
   
   <script>
+  import {deleteUser} from "@/services/utilisateur.service";
   export default {
     props: {
       users: {
@@ -44,9 +45,18 @@
       editUser(index) {
         this.$emit('edit-user', index);
       },
-      deleteUser(index) {
-        this.$emit('delete-user', index);
+      async deleteUser(index) {
+        try {
+          console.log("User to delete:", index);
+          // Call the deleteUser method directly
+          const response = await deleteUser(index);
+          this.$emit('delete-user', index);
+          console.log("User deleted successfully:", response);
+        } catch (error) {
+          console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+        }
       },
+
 /*
         DeleteUser(id) {
           return axios.delete(`${API_URL}/utilisateur/${id}`)
