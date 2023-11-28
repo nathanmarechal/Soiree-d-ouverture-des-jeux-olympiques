@@ -100,14 +100,17 @@ export default {
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
         filteredAreas = areas.filter(zone => {
-          return (zone.isfree === false)       });
+          return (zone.isfree === false)});
       }
+
       // Ajoutez à nouveau les polygones filtrés à la carte
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
       this.map.setView(averageCenter)
       const bounds = L.latLngBounds();
+
+      const self = this;
 
       filteredAreas.forEach((zone) => {
         const polygon = L.polygon(zone.coordinates, {
@@ -116,16 +119,31 @@ export default {
           weight: 5,
         }).addTo(this.map);
 
+        polygon.on('mouseover', function (e) {
+          L.popup()
+              .setLatLng(e.latlng)
+              .setContent(zone.nom_stand)
+              .openOn(self.map); // Utilisez 'self.map' ici
+        });
+
+        polygon.on('mouseout', function() {
+          self.map.closePopup(); // Utilisez 'self.map' ici
+        });
+
+        // Ajuster les limites pour chaque coordonnée
         zone.coordinates.forEach((coord) => {
           bounds.extend(coord);
         });
 
+        // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
           this.showZoneInfo(zone);
         });
 
+        // Stockage des polygones
         this.polygons.push(polygon);
       });
+
 
       this.map.fitBounds(bounds);
     },
