@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <router-link to="/prestataire/prestations/add" class="btn btn-success">Ajouter une prestation</router-link>
     <show-prestation-prestataire></show-prestation-prestataire>
   </div>
 </template>
@@ -16,12 +17,13 @@ export default {
 
 <style scoped>
 
+
 .main{
   margin-top: 15vh;
+  width: 100%;
   display: flex;
-  justify-content: center
-;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
-
 </style>
