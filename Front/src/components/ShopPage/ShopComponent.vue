@@ -3,7 +3,7 @@
     <div class="display-card">
       <div class="card-main" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
         <div class="card" style="border-radius: 3vh">
-          <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top">
+          <img :src="getImageSrc(stands[prestation.id_stand].image_stand)" alt="Image de la prestation" class="card-img-top">
           <div class="card-body">
             <h5 class="card-text">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }} €</p>
@@ -74,7 +74,7 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/' + imageName);
+        return require('@/assets/stand/' + imageName);
       } catch {
         return require('@/assets/' + "arthur-clown.png");
       }
