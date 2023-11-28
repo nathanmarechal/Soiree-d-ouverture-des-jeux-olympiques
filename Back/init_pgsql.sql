@@ -490,7 +490,16 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALU
 ('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10),
 ('saut à l''élastique',60,'saut-elastique.png',3,9),
 ('saut en parachute',100,'saut-parachute.png',3,9),
-('parapente',80,'parapente.png',3,9)
+('parapente',80,'parapente.png',3,9),
+('billet de train',5,'billet-train.png',6,5),
+('ceinture de judoka blanche',15,'ceinture-blanche.png',4,6),
+('ceinture de judoka jaune',15,'ceinture-jaune.png',4,6),
+('ceinture de judoka orange',15,'ceinture-orange.png',4,6),
+('ceinture de judoka verte',15,'ceinture-verte.png',4,6),
+('ceinture de judoka bleue',15,'ceinture-bleue.png',4,6),
+('ceinture de judoka marron',15,'ceinture-marron.png',4,6),
+('ceinture de judoka noire',17,'ceinture-noire.png',4,6),
+('ceinture de judoka rouge',20,'ceinture-rouge.png',4,6)
 ;
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
