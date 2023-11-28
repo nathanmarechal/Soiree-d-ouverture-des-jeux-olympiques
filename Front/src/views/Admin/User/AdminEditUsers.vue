@@ -76,7 +76,6 @@ export default {
         const val = this.$store.getters.isUserConnected
             && this.$store.getters.getCurrentUser!=null
             && this.$store.getters.getCurrentUser.id_role===1;
-        console.log("is user admin ? :"+val);
         return val;
       },
 
