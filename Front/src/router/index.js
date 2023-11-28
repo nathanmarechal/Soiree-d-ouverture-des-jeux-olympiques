@@ -15,6 +15,7 @@ import AdminEditZonePage from '@/views/Admin/Zone/AdminEditZonePage.vue'
 import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
 import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
+import PanierPage from "@/views/PanierPage.vue";
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/information',
     name: 'InformationView',
     component: Information
+  },
+  {
+    path: '/panier',
+    name: 'panierView',
+    component: PanierPage
   },
   {
     name: 'shopView',

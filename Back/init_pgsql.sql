@@ -18,11 +18,11 @@ DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS droits CASCADE;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS creneau CASCADE;
-DROP TABLE IF EXISTS etat CASCADE;
+DROP TABLE IF EXISTS etat_inscription CASCADE;
 
 
-CREATE TABLE etat(
-    id_etat SERIAL PRIMARY KEY,
+CREATE TABLE etat_inscription(
+    id_etat_inscription SERIAL PRIMARY KEY,
     libelle VARCHAR(50)
 );
 
@@ -101,7 +101,7 @@ CREATE TABLE utilisateur(
    id_etat INT,
    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
    FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
-   FOREIGN KEY(id_etat) REFERENCES etat(id_etat) ON DELETE CASCADE
+   FOREIGN KEY(id_etat) REFERENCES etat_inscription(id_etat_inscription) ON DELETE CASCADE
 );
 
 
@@ -140,8 +140,9 @@ CREATE TABLE commande
     id_user INT NOT NULL,
     id_etat_commande INT NOT NULL,
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
-    FOREIGN KEY(id_etat_commande) REFERENCES Etat(id_etat) ON DELETE CASCADE
+    FOREIGN KEY(id_etat_commande) REFERENCES etat_commande(id_etat) ON DELETE CASCADE
 );
+
 
 CREATE TABLE ligne_commande
 (
@@ -159,7 +160,7 @@ CREATE TABLE Ligne_panier
     id_user INT,
     id_prestation INT,
     date_ajout DATE,
-    quantite VARCHAR(50),
+    quantite INT,
     PRIMARY KEY(id_user, id_prestation),
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
     FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
@@ -172,30 +173,32 @@ CREATE TABLE Ligne_panier
 
 -- Insert data into tables
 
-INSERT INTO etat(libelle) VALUES
+INSERT INTO etat_inscription(libelle) VALUES
 ('en cours de validation'),
 ('valide'),
 ('invalide');
 
-INSERT INTO droits(id,libelle) VALUES
-(1,'see_users'),
-(2,'create_users'),
-(3,'update_users'),
-(4,'delete_users'),
-(5,'see_zones'),
-(6,'create_zones'),
-(7,'update_zones'),
-(8,'delete_zones'),
-(9,'see_roles'),
-(10,'create_roles'),
-(11,'update_roles'),
-(12,'delete_roles')
+INSERT INTO droits(libelle) VALUES
+('see_users'),
+('create_users'),
+('update_users'),
+('delete_users'),
+('see_zones'),
+('create_zones'),
+('update_zones'),
+('delete_zones'),
+('see_roles'),
+('create_roles'),
+('update_roles'),
+('delete_roles')
 ;
+
 SELECT * FROM droits;
 
 INSERT INTO role (libelle) VALUES
 ('admin'),
-('prestataire');
+('prestataire'),
+('utilisateur');
 
 INSERT INTO role_droits(id_droit, id_role) VALUES
 (1,1),
@@ -503,7 +506,7 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
-('initiation au mma',0,'initiation_au_mma.jpg',3,1),
+('initiation au mma',120,'initiation_au_mma.jpg',3,1),
 ('inscription au club',120,'inscription_au_club.jpg',3,1),
 ('kebab frites',12,'kebab_frites.jpg',1,2),
 ('kebab simple',9,'kebab_simple.jpg',1,2),
@@ -551,11 +554,17 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
 ('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
 
-INSERT INTO etat (libelle) VALUES
+INSERT INTO etat_commande (libelle) VALUES
 ('En attente de paiement'),
 ('En attente de validation'),
 ('Validée'),
 ('Annulée');
+
+INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
+('2022-02-15', 1, 1),
+('2022-02-15', 1, 2),
+('2022-02-15', 1, 3),
+('2022-02-15', 2, 4);
 
 INSERT INTO ligne_commande (id_commande, id_prestation, quantite) VALUES
 (1, 1, 1),
@@ -567,15 +576,12 @@ INSERT INTO ligne_commande (id_commande, id_prestation, quantite) VALUES
 (1, 7, 1),
 (1, 8, 1);
 
-INSERT INTO commande (id_user, date_commande, id_etat_commande) VALUES
-(1, '2023-11-04', 1);
-
-INSERT INTO ligne_panier (id_user, id_prestation, quantite) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(1, 3, 1),
-(1, 4, 1),
-(1, 5, 10);
+INSERT INTO ligne_panier (id_user, id_prestation, quantite, date_ajout) VALUES
+(1, 1, 1, '2022-02-15'),
+(1, 2, 1, '2022-02-15'),
+(1, 3, 1, '2022-02-15'),
+(1, 4, 1, '2022-02-15'),
+(1, 5, 10, '2022-02-15');
 
 /*
 SELECT
@@ -642,5 +648,11 @@ ORDER BY p.id_type_prestation;
 
 */
 
-SELECT * FROM etat;
+SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
+
+SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle,quantite, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
+FROM ligne_panier
+JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
+JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+WHERE id_user = 1;
