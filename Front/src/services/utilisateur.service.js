@@ -12,15 +12,18 @@ async function getAllUsers(session_id) {
     return answer
 }
 
-async function createUserFromAPI(user) {
-    let answer = await postRequest('/users/', user, 'CREATEUSER')
+async function createUserFromAPI(user,session_id) {
+    const url = '/users?session_id='+session_id;
+    console.log("url,usr=",url,user)
+    let answer = await postRequest(url, user, 'CREATEUSER')
     console.log("createUserFromAPI: ", answer)
     return answer
 }
 
-async function createUser(user) {
-    let answer = await createUserFromAPI(user)
-    console.log("createUser: ", answer)
+async function createUser(user,session_id) {
+
+    let answer = await createUserFromAPI(user,session_id)
+//    console.log("createUser: ", answer)
     return answer
 }
 

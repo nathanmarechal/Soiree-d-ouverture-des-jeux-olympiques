@@ -10,12 +10,12 @@ exports.createUser = (req, res) => {
     const commune = req.body.commune;
     const id_role = req.body.id_role;
     const id_stand = req.body.id_stand;
-    const session_id = req.body.session_id;
+    //const session_id = req.body.session_id;
 
     // Log function name and data
-    console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role, id_stand, session_id });
+    console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role, id_stand });
 
-    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, session_id, (error, data) => {
+    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, (error, data) => {
         if (error) {
             return res.status(500).send("error");
         } else {
