@@ -146,13 +146,21 @@ CREATE TABLE role_droits
 
 
 -- Insert data into tables
-INSERT INTO droits(libelle) VALUES
-('create_users'),
-('update_users'),
-('delete_users'),
-('create_zones'),
-('update_zones'),
-('delete_zones');
+INSERT INTO droits(id,libelle) VALUES
+(1,'see_users'),
+(2,'create_users'),
+(3,'update_users'),
+(4,'delete_users'),
+(5,'see_zones'),
+(6,'create_zones'),
+(7,'update_zones'),
+(8,'delete_zones'),
+(9,'see_roles'),
+(10,'create_roles'),
+(11,'update_roles'),
+(12,'delete_roles')
+;
+SELECT * FROM droits;
 
 INSERT INTO role (libelle) VALUES
 ('admin'),
@@ -165,9 +173,16 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (4,1),
 (5,1),
 (6,1),
+(7,1),
+(8,1),
+(9,1),
+(10,1),
+(11,1),
+(12,1),
 (4,2),
 (5,2),
-(6,2);
+(6,2),
+(9,2);
 
 INSERT INTO type_zone (libelle) VALUES
 ('Fixe'),
