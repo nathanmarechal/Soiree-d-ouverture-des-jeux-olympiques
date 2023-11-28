@@ -17,7 +17,13 @@ DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS droits CASCADE;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS creneau CASCADE;
+DROP TABLE IF EXISTS etat CASCADE;
 
+
+CREATE TABLE etat(
+    id_etat SERIAL PRIMARY KEY,
+    libelle VARCHAR(50)
+);
 
 CREATE TABLE role(
    id_role SERIAL PRIMARY KEY,
@@ -91,8 +97,10 @@ CREATE TABLE utilisateur(
    commune VARCHAR(50),
    id_stand INT,
    id_role INT,
+   id_etat INT,
    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
+   FOREIGN KEY(id_etat) REFERENCES etat(id_etat) ON DELETE CASCADE
 );
 
 CREATE TABLE commande(
@@ -144,6 +152,10 @@ CREATE TABLE role_droits
     FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
+INSERT INTO etat(libelle) VALUES
+('en cours de validation'),
+('valide'),
+('invalide');
 
 -- Insert data into tables
 INSERT INTO droits(id,libelle) VALUES
@@ -484,6 +496,8 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
 ('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
 
+
+/*
 SELECT
     e.id_emplacement AS "id_emplacement",
     CONCAT(s.nom_stand, ' ', e.id_emplacement) AS "nom_emplacement",
@@ -545,3 +559,8 @@ LEFT JOIN ligne_commande lc on p.id_prestation = lc.id_prestation
 WHERE u.id_user = 2
 GROUP BY p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle , s.id_stand, s.nom_stand
 ORDER BY p.id_type_prestation;
+
+*/
+
+SELECT * FROM etat;
+SELECT * FROM utilisateur;
