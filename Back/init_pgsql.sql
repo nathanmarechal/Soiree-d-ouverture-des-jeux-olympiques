@@ -192,6 +192,7 @@ INSERT INTO droits(libelle) VALUES
 ('update_roles'),
 ('delete_roles')
 ;
+
 SELECT * FROM droits;
 
 INSERT INTO role (libelle) VALUES
