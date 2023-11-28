@@ -102,8 +102,6 @@ export default {
 
                 getUserFromSessionId(this.sessionId)
                     .then(res=>{
-                      console.log("res : "+JSON.stringify(res))
-
                       this.currentUser.id_user = res.id_user;
                       this.currentUser.email = res.email;
                       this.currentUser.nom = res.nom;
