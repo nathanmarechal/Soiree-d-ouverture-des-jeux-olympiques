@@ -18,24 +18,24 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="item in getPanierUserCourant" :key="item.id">
-            <td>{{ item.nom }}</td>
+          <tr v-for="item in getPanierUserCourant" :key="item">
+            <td>{{ item.libelle }}</td>
             <td>{{ item.prix }} €</td>
             <td>{{ item.quantite }}</td>
             <td>{{ item.prix * item.quantite }} €</td>
             <td>
-              <button class="btn btn-danger" @click="removeItem(item.id)">Supprimer</button>
+              <button class="btn btn-danger" >Supprimer</button>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <h2 class="text-center">Total : {{ total }} €</h2>
-      </div>
-    </div>
+<!--    <div class="row">-->
+<!--      <div class="col-12">-->
+<!--        <h2 class="text-center">Total : {{ total }} €</h2>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="row">
       <div class="col-12">
         <button class="btn btn-success" >Valider le panier</button>

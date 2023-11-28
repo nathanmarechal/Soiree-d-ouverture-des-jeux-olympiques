@@ -505,7 +505,7 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
-('initiation au mma',0,'initiation_au_mma.jpg',3,1),
+('initiation au mma',120,'initiation_au_mma.jpg',3,1),
 ('inscription au club',120,'inscription_au_club.jpg',3,1),
 ('kebab frites',12,'kebab_frites.jpg',1,2),
 ('kebab simple',9,'kebab_simple.jpg',1,2),
@@ -650,4 +650,8 @@ ORDER BY p.id_type_prestation;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
-SELECT * FROM ligne_panier WHERE id_user = 1;
+SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle,quantite, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
+FROM ligne_panier
+JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
+JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+WHERE id_user = 1;

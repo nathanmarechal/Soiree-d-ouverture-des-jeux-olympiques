@@ -39,7 +39,7 @@
       </b-collapse>
       <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
-        <b-dropdown-item href="#" class = "dp">Mes espaces</b-dropdown-item>
+        <b-dropdown-item><router-link to="/panier" class = "dp">Mon panier</router-link></b-dropdown-item>
         <b-dropdown-item href="#" class = "dp">Mes informations</b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="#" class = "dp">se déconnecter</b-dropdown-item>
       </b-nav-item-dropdown>
