@@ -5,7 +5,7 @@ import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
-import {getPanierUserCourant} from "@/services/panier.service";
+import {deletePrestationFromPanierUser, getPanierUserCourant} from "@/services/panier.service";
 
 Vue.use(Vuex)
 
@@ -176,6 +176,10 @@ export default new Vuex.Store({
             state.userCourant.panier = panier;
         },
 
+        DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, id_presta) {
+            state.userCourant.panier = state.userCourant.panier.filter(p => p.id_prestation !== id_presta); //retourne une version du tableau qu a pas l'id qu'on veut enlever
+        },
+
         SET_IS_USER_CONNECTED(state, value) {
             state.isUserConnected = value;
         },
@@ -210,6 +214,17 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+        async deletePrestationFromPanierUserCourantStore({commit},{id_user, id_prestation}){
+            try {
+
+                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation);
+                await deletePrestationFromPanierUser( id_user, id_prestation);
+                commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', id_prestation);
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
 
         async getPanierUserCourantStore({commit},user_id){
             try {

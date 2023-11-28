@@ -24,7 +24,7 @@
             <td>{{ item.quantite }}</td>
             <td>{{ item.prix * item.quantite }} €</td>
             <td>
-              <button class="btn btn-danger" >Supprimer</button>
+              <button class="btn btn-danger" @click="deleteLigne(item.id_prestation)">Supprimer</button>
             </td>
           </tr>
           </tbody>
@@ -46,7 +46,7 @@
 
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   data() {
@@ -58,7 +58,11 @@ export default {
     ...mapGetters(['getPanierUserCourant', "getCurrentUser"]),
   },
   methods: {
-
+    ...mapActions(['deletePrestationFromPanierUserCourantStore']),
+    deleteLigne(id_prestation) {
+      console.log("delete ligne :" + id_prestation);
+      this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation});
+    },
   },
 }
 

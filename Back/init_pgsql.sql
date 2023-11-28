@@ -656,3 +656,5 @@ FROM ligne_panier
 JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
 JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
 WHERE id_user = 1;
+
+-- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 2;

@@ -4,7 +4,6 @@ const pool = require("../database/db");
 async function getPanierByUserIdAsync(id) {
     try {
         const conn = await pool.connect();
-        console.log("id depuis getPanierByIdasync" + id)
         const result = await conn.query("SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle, p.prix,quantite, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_panier JOIN prestation p on p.id_prestation = ligne_panier.id_prestation JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation WHERE id_user = $1;", [id]);
         conn.release();
         return result.rows;
@@ -12,6 +11,30 @@ async function getPanierByUserIdAsync(id) {
         console.error('Error in getPanierByUserIdAsync:', error);
         throw error;
     }
+}
+
+async function deletePrestationFromPanierUserAsync(id_user, id_prestation) {
+    try {
+        console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier.service.js")
+        const conn = await pool.connect();
+        await conn.query("DELETE FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2;", [id_user, id_prestation]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in deletePrestationFromPanierUser:', error);
+        throw error;
+    }
+}
+
+const deletePrestationFromPanierUser = (id_user,id_prestation, callback) => {
+
+    deletePrestationFromPanierUserAsync(id_user,id_prestation)
+        .then(res => {
+            callback(null, "success");
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
 }
 
 const getPanierByUserId = (id, callback) => {
@@ -26,5 +49,6 @@ const getPanierByUserId = (id, callback) => {
 }
 
 module.exports = {
-    getPanierByUserId: getPanierByUserId
+    getPanierByUserId: getPanierByUserId,
+    deletePrestationFromPanierUser : deletePrestationFromPanierUser
 }
