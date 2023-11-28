@@ -468,12 +468,12 @@ INSERT INTO emplacement (coordonnes,surface,id_zone) VALUES
 ('[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4);
 
 INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
-('mma-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
+('mma-besancon','mma-besancon.png','Venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
 ('kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2),
-('le clown','arthur-clown.png','venez assiter au spectacle mélangeant humour et informatique ','2023-11-04',3000,80),
-('Boulangerie de Paris','boulangerie-paris.png','venez les gouter spécialitées les plus populaires de France','2023-11-04',3000,247),
+('le clown','arthur-clown.png','Venez assiter au spectacle mélangeant humour et informatique ','2023-11-04',3000,80),
+('Boulangerie de Paris','boulangerie-paris.png','Venez les gouter spécialitées les plus populaires de France','2023-11-04',3000,247),
 ('SNCF','train-promotion.png','Découvrez Paris et la France par le train','2023-11-04',3000,144),
-('Judo Folie','judo-combat.png','initation au judo','2023-11-04',3000,84),
+('Judo Folie','judo-combat.png','Initation au judo','2023-11-04',3000,84),
 ('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
 ('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107),
 ('Tour Eiffel','tour-eiffel.png','Des frissons assurés!','2023-11-04',10000,33),
