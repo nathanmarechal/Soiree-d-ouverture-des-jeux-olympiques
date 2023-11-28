@@ -5,6 +5,7 @@ import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
+import {getPanierUserCourant} from "@/services/panier.service";
 
 Vue.use(Vuex)
 
@@ -24,7 +25,7 @@ export default new Vuex.Store({
             "code_postal": null,
             "adresse": null,
             "commune": null,
-            "panier": null,
+            "panier":  [],
             "id_role": null,
         },
 
@@ -94,9 +95,11 @@ export default new Vuex.Store({
         //getpassword: state => state.password,
         //getSessionId: state => state.sessionId,
 
+        getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
+        getPanierUserCourant : state => state.userCourant.panier,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -169,6 +172,10 @@ export default new Vuex.Store({
             state.userCourant = users;
         },
 
+        SET_PANIER_USER_COURANT(state, panier) {
+            state.userCourant.panier = panier;
+        },
+
         SET_IS_USER_CONNECTED(state, value) {
             state.isUserConnected = value;
         },
@@ -203,6 +210,16 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+        async getPanierUserCourantStore({commit},user_id){
+            try {
+                const panier = await getPanierUserCourant(user_id);
+                commit('SET_PANIER_USER_COURANT', panier);
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
 
         async getUsers(data,session_id) {
             try {

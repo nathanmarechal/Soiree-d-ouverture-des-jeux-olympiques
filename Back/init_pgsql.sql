@@ -160,7 +160,7 @@ CREATE TABLE Ligne_panier
     id_user INT,
     id_prestation INT,
     date_ajout DATE,
-    quantite VARCHAR(50),
+    quantite INT,
     PRIMARY KEY(id_user, id_prestation),
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
     FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)

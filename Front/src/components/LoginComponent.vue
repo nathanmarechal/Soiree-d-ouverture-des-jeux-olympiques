@@ -1,31 +1,33 @@
 <template>
   <div v-if="isLoginOpen">
-  <div class="d-flex justify-content-center align-items-center overlay">
-    <div class="login-box bg-white p-4 rounded shadow">
+    <div class="d-flex justify-content-center align-items-center overlay">
+      <div class="login-box bg-white p-4 rounded shadow">
 
-      <button class="close-btn" @click="closeModal">X</button>
-      <h2 class="text-center mb-4">Login</h2>
-      <form @submit.prevent="submitForm">
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" v-model="email" id="email" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Mot de passe:</label>
-          <input type="password" v-model="password" id="password" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-      </form>
-       <router-link to="/sign-up" @click="closeModal">s'inscrire</router-link>
+        <button class="close-btn" @click="closeModal">X</button>
+        <h2 class="text-center mb-4">Login</h2>
+        <form @submit.prevent="submitForm">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" v-model="email" id="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input type="password" v-model="password" id="password" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+        <router-link to="/sign-up" @click="closeModal">s'inscrire</router-link>
 
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
+import {mapActions} from "vuex";
+import {getPanierUserCourant} from "@/services/panier.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -78,6 +80,7 @@ export default {
 
    */
   methods: {
+    ...mapActions(['getPanierUserCourantStore']),
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);
     },
@@ -90,6 +93,7 @@ export default {
     isPasswordValid() {
       return this.password.length >= 8
     },
+
     submitForm() {
       if (this.isEmailValid() && this.isPasswordValid()) {
         //alert('Formulaire envoyé !')
@@ -109,9 +113,14 @@ export default {
                       this.currentUser.code_postal = res.code_postal;
                       this.currentUser.adresse = res.adresse;
                       this.currentUser.commune = res.commune;
-                      this.currentUser.panier = res.panier;
                       this.currentUser.id_role = res.id_role;
                       this.$store.commit('SET_CURRENT_USER', this.currentUser)
+                      console.log("id_user : ", this.currentUser.id_user)
+                      getPanierUserCourant(res.id_user)
+                          .then(res=>{
+                            console.log("panier : ", res)
+                            this.$store.commit('SET_PANIER_USER_COURANT', res)
+                          })
 
                       this.email=""
                       this.password=""

@@ -6,6 +6,7 @@ const prestationsRoutes = require('./routes/prestations.router');
 const typePrestationsRoutes = require('./routes/typePrestations.router');
 const standsRoutes = require('./routes/stands.router');
 const loginRoutes = require('./routes/authentication.router');
+const panierRoutes = require('./routes/panier.router');
 dotenv.config();
 const app = express();
 const cors = require('cors');
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use("/api/panier", panierRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/map", mapRoutes);
 app.use("/api/login",loginRoutes);
