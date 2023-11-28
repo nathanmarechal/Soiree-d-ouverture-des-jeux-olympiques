@@ -178,7 +178,7 @@ INSERT INTO etat_inscription(libelle) VALUES
 ('valide'),
 ('invalide');
 
-INSERT INTO droits(id,libelle) VALUES
+INSERT INTO droits(libelle) VALUES
 ('see_users'),
 ('create_users'),
 ('update_users'),
@@ -196,7 +196,8 @@ SELECT * FROM droits;
 
 INSERT INTO role (libelle) VALUES
 ('admin'),
-('prestataire');
+('prestataire'),
+('utilisateur');
 
 INSERT INTO role_droits(id_droit, id_role) VALUES
 (1,1),
