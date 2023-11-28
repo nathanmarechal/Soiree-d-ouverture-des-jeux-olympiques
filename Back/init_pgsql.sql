@@ -551,6 +551,31 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
 ('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
 
+INSERT INTO etat (libelle) VALUES
+('En attente de paiement'),
+('En attente de validation'),
+('Validée'),
+('Annulée');
+
+INSERT INTO ligne_commande (id_commande, id_prestation, quantite) VALUES
+(1, 1, 1),
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 1),
+(1, 5, 1),
+(1, 6, 1),
+(1, 7, 1),
+(1, 8, 1);
+
+INSERT INTO commande (id_user, date_commande, id_etat_commande) VALUES
+(1, '2023-11-04', 1);
+
+INSERT INTO ligne_panier (id_user, id_prestation, quantite) VALUES
+(1, 1, 1),
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 1),
+(1, 5, 10);
 
 /*
 SELECT
