@@ -468,22 +468,30 @@ INSERT INTO emplacement (coordonnes,surface,id_zone) VALUES
 ('[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4);
 
 INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
-('mmm-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
+('mma-besancon','mma-besancon.png','venez découvrir le club de mma  de besançon','2023-11-03',2500,1),
 ('kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2),
 ('le clown','arthur-clown.png','venez assiter au spectacle mélangeant humour et informatique ','2023-11-04',3000,80),
 ('Boulangerie de Paris','boulangerie-paris.png','venez les gouter spécialitées les plus populaires de France','2023-11-04',3000,247),
 ('SNCF','train-promotion.png','Découvrez Paris et la France par le train','2023-11-04',3000,144),
 ('Judo Folie','judo-combat.png','initation au judo','2023-11-04',3000,84),
 ('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
-('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107);
+('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107),
+('Tour Eiffel','tour-eiffel.png','Des frissons assurés!','2023-11-04',10000,33),
+('Traiteur asiatique','traiteur-asiatique.png','les goûts de l''Asie dans votre vie!','2023-11-04',10000,83)
+;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
-('kebab frites',12,'kebab_frites.jpg',2,2),
-('kebab simple',9,'kebab_simple.jpg',2,2),
-('Dorum frites',15,'dorum_frites.jpg',2,2),
-('Coca',3,'coca.jpg',3,2),
-('initiation au mma',0,'initiation_au_mma.jpg',1,1),
-('inscription au club',120,'inscription_au_club.jpg',1,1);
+('kebab frites',12,'kebab_frites.jpg',1,2),
+('kebab simple',9,'kebab_simple.jpg',1,2),
+('Dorum frites',15,'dorum_frites.jpg',1,2),
+('Coca',3,'coca.jpg',2,2),
+('initiation au mma',0,'initiation_au_mma.jpg',3,1),
+('inscription au club',120,'inscription_au_club.jpg',3,1),
+('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10),
+('saut à l''élastique',60,'saut-elastique.png',3,9),
+('saut en parachute',100,'saut-parachute.png',3,9),
+('parapente',80,'parapente.png',3,9)
+;
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
