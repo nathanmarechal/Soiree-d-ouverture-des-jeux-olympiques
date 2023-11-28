@@ -14,7 +14,6 @@
 
 
 <script>
-
 import PageTitle from '../components/HomePage/PageTitle.vue'
 import PageSlideshow from '../components/HomePage/PageSlideshow.vue'
 import PageDescription from '../components/HomePage/PageDescription.vue'

@@ -12,10 +12,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
 
-        //email: '',
-        //password: '',
-        //sessionId: '',
-
         userCourant: {
             "session_id": null,
             "id_user": null,
@@ -55,14 +51,14 @@ export default new Vuex.Store({
             {"id_creneau": 23, "time": "03h00"}
         ],
 
-        //users : [],
-        //roles : [],
-        //typeZone: [],
-        //zones: [],
-        //areas : [],
-        //stands: [],
-        //prestations: [],
-        //typePresations: [],
+        users : [],
+        roles : [],
+        typeZone: [],
+        zones: [],
+        areas : [],
+        stands: [],
+        prestations: [],
+        typePresations: [],
 
 
         areaSelectedForStand: null,
@@ -83,17 +79,14 @@ export default new Vuex.Store({
 
     getters: {
 
-        //getAllZone: state => state.zones,
-        //getAllUser : state => state.users,
-        //getAllRole : state => state.roles,
-        //getAllTypeZone: state => state.typeZone,
-        //getAllAreas: state=> state.areas,
-        //getAllStand: state => state.stands,
-        //getAllTypePrestation: state => state.typePresations,
-        //getAllPrestation: state => state.prestations,
-        //getemail: state => state.email,
-        //getpassword: state => state.password,
-        //getSessionId: state => state.sessionId,
+        getAllZone: state => state.zones,
+        getAllUser : state => state.users,
+        getAllRole : state => state.roles,
+        getAllTypeZone: state => state.typeZone,
+        getAllAreas: state=> state.areas,
+        getAllStand: state => state.stands,
+        getAllTypePrestation: state => state.typePresations,
+        getAllPrestation: state => state.prestations,
 
         getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
@@ -116,52 +109,41 @@ export default new Vuex.Store({
 
     mutations: {
 
-        //SET_USERS(state, users) {
-        //    state.users.splice(0)
-        //    users.forEach(p => state.users.push(p))
-        //},
+        SET_USERS(state, users) {
+            state.users.splice(0)
+            users.forEach(p => state.users.push(p))
+        },
 
-        //SET_ROLES(state, roles) {
-        //  state.roles = roles;
-        //},
+        SET_ROLES(state, roles) {
+          state.roles = roles;
+        },
 
-        //SET_ZONES(state, zones) {
-        //    state.zones.splice(0)
-        //    zones.forEach(p => state.zones.push(p))
-        //},
+        SET_ZONES(state, zones) {
+            state.zones.splice(0)
+            zones.forEach(p => state.zones.push(p))
+        },
 
-        //SET_AREAS(state, areas) {
-        //    state.areas.splice(0)
-        //    areas.forEach(p => state.areas.push(p))
-        //},
+        SET_AREAS(state, areas) {
+            state.areas.splice(0)
+            areas.forEach(p => state.areas.push(p))
+        },
 
-        //SET_TYPE_ZONE(state, typeZone) {
-        //  state.typeZone = typeZone;
-        //},
+        SET_TYPE_ZONE(state, typeZone) {
+          state.typeZone = typeZone;
+        },
 
-        //SET_STANDS(state, stands) {
-        //    state.stands = stands;
-        //},
+        SET_STANDS(state, stands) {
+            state.stands = stands;
+        },
 
-        //SET_TYPE_PRESTATIONS(state, typePresations) {
-        //    state.typePresations = typePresations;
-        //},
+        SET_TYPE_PRESTATIONS(state, typePresations) {
+            state.typePresations = typePresations;
+        },
 
-        //SET_PRESTATIONS(state, prestations) {
-        //    state.prestations = prestations;
-        //},
+        SET_PRESTATIONS(state, prestations) {
+            state.prestations = prestations;
+        },
 
-        //SET_EMAIL(state, value) {
-        //    state.email = value;
-        //},
-
-        //SET_PASSWORD(state, value) {
-        //    state.password = value;
-        //},
-
-        //SET_SESSION_ID(state,sessionId) {
-        //    state.sessionId = sessionId;
-        //},
 
 
         SET_PROVENANCE(state, provenance) {
@@ -219,8 +201,8 @@ export default new Vuex.Store({
                 console.error('Error fetching panier:', error);
             }
         },
-
-
+        
+        /*
         async getUsers(data,session_id) {
             try {
                 const users = await getAllUsers(session_id);
@@ -229,8 +211,8 @@ export default new Vuex.Store({
                 console.error('Error fetching users:', error);
             }
         },
+         */
 
-        /*
         async getUsers({ commit }) {
             try {
                 const result = await getAllUsers();
@@ -243,8 +225,9 @@ export default new Vuex.Store({
                 console.error("Error in getUsers():", err);
             }
         },
-         */
 
+
+        /*
         async getRoles(data,session_id){
             try {
                 //console.log("getting roles..."+session_id)
@@ -254,8 +237,9 @@ export default new Vuex.Store({
                 console.error('Error fetching roles:', error);
             }
         },
+         */
 
-        /*
+
         async getRoles({ commit }) {
           try {
             const roles = await getAllRoles();
@@ -269,8 +253,9 @@ export default new Vuex.Store({
             console.error("Error in getRoles():", err);
           }
         },
-         */
 
+
+        /*
         async getTypesZone(){
             try {
                 const typeZone = await getAllTypeZone();
@@ -280,7 +265,9 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
+
         async getTypeZone({ commit }) {
           try {
             const typeZone = await getAllTypeZone();
@@ -293,8 +280,9 @@ export default new Vuex.Store({
             console.error("Error in getTypeZone():", err);
           }
         },
-         */
 
+
+        /*
         async getZones(){
             try {
                 const zones = await getAllZones();
@@ -304,7 +292,9 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
+
         async getZones({ commit }) {
           try {
               const result = await getAllZones();
@@ -317,8 +307,9 @@ export default new Vuex.Store({
               console.error("Error in getZones():", err);
           }
         },
-         */
 
+
+        /*
         async getAreas(){
             try {
                 const areas = await getAllAreas();
@@ -328,7 +319,9 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
+
         async getAreas({ commit }) {
           try {
               const result = await getAllAreas();
@@ -341,8 +334,9 @@ export default new Vuex.Store({
               console.error("Error in getAreas():", err);
           }
         },
-         */
 
+
+        /*
         async getStands(){
             try {
                 const stands = await getAllStands();
@@ -352,7 +346,8 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
         async getStands({ commit }) {
           try {
               const result = await getAllStands();
@@ -365,8 +360,9 @@ export default new Vuex.Store({
               console.error("Error in getStands():", err);
           }
         },
-         */
 
+
+        /*
         async getTypePrestations(){
             try {
                 const typePresations = await getAllTypePrestations();
@@ -376,7 +372,9 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
+
         async getTypePrestations({ commit }) {
             try {
                 const result = await getAllTypePrestations();
@@ -389,8 +387,9 @@ export default new Vuex.Store({
                 console.error("Error in getTypePrestations():", err);
             }
         },
-         */
 
+
+        /*
         async getPrestations(){
             try {
                 const prestations = await getAllPrestations();
@@ -400,7 +399,9 @@ export default new Vuex.Store({
             }
         },
 
-        /*
+         */
+
+
         async getPrestations({ commit }) {
           try {
               const result = await getAllPrestations();
@@ -413,7 +414,7 @@ export default new Vuex.Store({
               console.error("Error in getPrestations():", err);
           }
         },
-         */
+
     },
     modules: {
       //autres modules si nécessaire

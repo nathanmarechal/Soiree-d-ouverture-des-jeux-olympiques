@@ -103,7 +103,6 @@ export default {
               this.sessionId = res;
               if(this.sessionId!="")
               {
-
                 getUserFromSessionId(this.sessionId)
                     .then(res=>{
                       this.currentUser.id_user = res.id_user;

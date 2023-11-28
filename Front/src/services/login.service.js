@@ -1,7 +1,7 @@
-import {postRequest} from "@/services/axios.service";
+import {getRequest} from "@/services/axios.service";
 
 async function getSessionFromApi(userEmail,password) {
-    return postRequest('/login?email='+userEmail+'&password='+password, 'LOGIN')
+    return getRequest('/login?email='+userEmail+'&password='+password, 'LOGIN')
 }
 
 async function getSession(userEmail, password){
