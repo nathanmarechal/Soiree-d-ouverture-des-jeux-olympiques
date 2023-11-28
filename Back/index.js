@@ -23,5 +23,5 @@ app.use("/api/typePrestations",typePrestationsRoutes);
 app.use("/api/stands",standsRoutes);
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is rxunning on port ${process.env.PORT}`);
+  console.log(`Server is running on port ${process.env.PORT}`);
 }); // npm start
