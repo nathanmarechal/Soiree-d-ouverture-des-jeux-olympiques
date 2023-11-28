@@ -4,8 +4,8 @@ const usersController = require('../controllers/users.controller');
 const {checkRight} = require("../middlewares/authentication.middleware");
 
 router.get("/roles",
-    (req,res,next) =>
-        checkRight(req,res,next,"see_roles") ,
+    //(req,res,next) =>
+    //    checkRight(req,res,next,"see_roles") ,
     usersController.getRoles);
 router.patch("/roles/:id", usersController.updateRole);
 router.post("/roles", usersController.createRole);
