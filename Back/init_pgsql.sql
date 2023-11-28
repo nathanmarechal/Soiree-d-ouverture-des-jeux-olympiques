@@ -213,7 +213,7 @@ Nous collaborons avec des stands locaux pour vous apporter le meilleur en termes
 
 INSERT INTO zone (libelle, couleur_hexa, id_type_zone) VALUES
 ('champs de mars','#4CE79E',1),
-('tuillerie','#75BD31',1),
+('tuileries','#75BD31',1),
 ('zones ambulantes','#BD7531',2),
 ('jardin des plantes','#CF2525',1);
 
@@ -477,7 +477,9 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
 ('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107),
 ('Tour Eiffel','tour-eiffel.png','Des frissons assurés!','2023-11-04',10000,33),
-('Traiteur asiatique','traiteur-asiatique.png','les goûts de l''Asie dans votre vie!','2023-11-04',10000,83)
+('Traiteur asiatique','traiteur-asiatique.png','les goûts de l''Asie dans votre vie!','2023-11-04',10000,83),
+('fanzone des tuileries','fanzone-tuileries.png','la fanzone au coeur de l''action!','2023-11-04',10,68),
+('billeterie des tuileries','billeterie-tuileries.png','la billeterie des jeux olympiques','2023-11-04',10,66)
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
@@ -511,7 +513,11 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALU
 ('saut à l''élastique',60,'saut-elastique.png',3,9),
 ('saut en parachute',100,'saut-parachute.png',3,9),
 ('parapente',80,'parapente.png',3,9),
-('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10)
+('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10),
+('place fanzone tuileries',100,'fanzone-tuileries.png',5,11),
+('billet match de rugby',250,'billet-rugby.png',7,12),
+('billet match de volley',225,'billet-volley.png',7,12),
+('billet match de badminton',260,'billet-badminton.png',7,12)
 ;
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
