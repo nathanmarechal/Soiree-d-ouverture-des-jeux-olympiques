@@ -82,14 +82,14 @@ async function updateRoleFromAPI(body) {
     return patchRequest('/users/roles/' + body.id_role, body, 'UPDATEROLE')
 }
 
-async function getAllRoles() {
-    let answer = await getAllRolesFromAPI()
+async function getAllRoles(session_id) {
+    let answer = await getAllRolesFromAPI(session_id)
     //console.log("getAllRoles: ", answer)
     return answer
 }
 
-async function getAllRolesFromAPI() {
-    let answer = await getRequest('/users/roles', 'GETALLROLES')
+async function getAllRolesFromAPI(session_id) {
+    let answer = await getRequest('/users/roles?session_id='+session_id, 'GETALLROLES')
     //console.log("getAllRolesFromAPI: ", answer)
     return answer
 }

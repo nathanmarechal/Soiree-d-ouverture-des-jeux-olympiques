@@ -228,9 +228,10 @@ export default new Vuex.Store({
         },
          */
 
-        async getRoles(){
+        async getRoles(data,session_id){
             try {
-                const roles = await getAllRoles();
+                //console.log("getting roles..."+session_id)
+                const roles = await getAllRoles(session_id);
                 return roles; // Return the fetched data
             } catch (error) {
                 console.error('Error fetching roles:', error);

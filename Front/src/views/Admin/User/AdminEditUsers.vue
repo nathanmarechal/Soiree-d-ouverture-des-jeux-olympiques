@@ -52,7 +52,7 @@ export default {
       try {
         const session_id = this.$store.getters.getCurrentUser.session_id;
         this.users = await this.getUsers(session_id);
-        this.roles = await this.getRoles();
+        this.roles = await this.getRoles(session_id);
 
         //this.typeZone = await this.getTypeZone();
       } catch (error) {
