@@ -32,8 +32,10 @@
 </template>
 
 <script>
+
+import {uploadImagePresation} from '@/services/prestation.service'
 import { mapActions } from 'vuex';
-import { createPrestation } from "@/services/prestation.service";
+//import { createPrestation } from "@/services/prestation.service";
 import Cropper from 'cropperjs';
 
 
@@ -42,11 +44,11 @@ export default {
     return {
       croppedImage: null,
       isImageInputUpload: false,
+      image_raw:false,
       prestation: {
         libelle: "",
         prix: null,
         imageName: '',
-        image_raw:null,
         id_type_prestation: null,
         id_stand: null,
       },
@@ -99,13 +101,14 @@ export default {
       croppedCanvas.toBlob((blob) => {
         const timestamp = Math.floor(Date.now() / 1000); // Temps en Unix
         const fileName = `prestation_${this.prestation.imageName}_${timestamp}.jpeg`;
+        this.prestation.imageName=fileName;
 
         // Créer un nouveau fichier à partir du blob
         const file = new File([blob], fileName, { type: 'image/jpeg' });
 
         const url = URL.createObjectURL(file);
         this.croppedImage = url;
-        this.prestation.image_raw = file;
+        this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
         console.log(fileName)
@@ -114,12 +117,16 @@ export default {
     ...mapActions(['getTypePrestations']),
     async submitForm() {
       try {
+
         console.log("Données de la prestation :", this.prestation);
         // Appel de la méthode createPrestation avec les données de la prestation
-        const response = await createPrestation(this.prestation);
+        //const response = await createPrestation(this.prestation);
 
-        // Gérer la réponse ici (ex : afficher un message de succès)
-        console.log("Prestation créée avec succès :", response);
+        console.log(this.prestation.imageName)
+
+        await uploadImagePresation(this.image_raw);
+
+        // Gérer la réponse ici (ex : afficher un message de succès
 
         // Redirection vers '/admin/prestations/'
         await this.$router.push('/admin/prestations/');

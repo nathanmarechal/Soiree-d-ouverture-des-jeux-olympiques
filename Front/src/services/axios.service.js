@@ -135,10 +135,29 @@ async function deleteRequest(uri, name) {
     return response.data;
 }
 
+async function postRequestPicture(uri, image, name) {
+  let response = null;
+  try {
+    let formData = new FormData();
+    console.log(image);
+    formData.append('photo', image);
+
+    response = await axiosAgent.post(uri, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  } catch (err) {
+    response = handleError(name, err);
+  }
+  return response.data;
+}
+
 export {
   getRequest,
   postRequest,
   patchRequest,
   deleteRequest,
+  postRequestPicture
 }
 

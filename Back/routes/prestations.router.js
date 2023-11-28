@@ -6,4 +6,6 @@ router.get("/get", prestationController.getPrestations);
 
 router.get("/get/:id", prestationController.getPrestationByUserId);
 
+router.post("/add/picture", prestationController.uploadPicturePresatation);
+
 module.exports = router;
