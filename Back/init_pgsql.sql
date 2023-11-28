@@ -1,8 +1,9 @@
             -- Drop the tables with foreign key constraints
 DROP TABLE IF EXISTS ligne_panier CASCADE;
 DROP TABLE IF EXISTS ligne_commande CASCADE;
-DROP TABLE IF EXISTS prestation CASCADE;
 DROP TABLE IF EXISTS commande CASCADE;
+DROP TABLE IF EXISTS etat_commande CASCADE;
+DROP TABLE IF EXISTS prestation CASCADE;
 DROP TABLE IF EXISTS utilisateur CASCADE;
 DROP TABLE IF EXISTS stand CASCADE;
 DROP TABLE IF EXISTS emplacement CASCADE;
@@ -103,32 +104,6 @@ CREATE TABLE utilisateur(
    FOREIGN KEY(id_etat) REFERENCES etat(id_etat) ON DELETE CASCADE
 );
 
-CREATE TABLE commande(
-   id_commande SERIAL PRIMARY KEY,
-   date_commande DATE,
-   id_user INT NOT NULL,
-   FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
-);
-
-CREATE TABLE ligne_commande(
-   id_prestation INT,
-   id_commande INT,
-   prix INT,
-   quantite INT,
-   PRIMARY KEY(id_prestation, id_commande),
-   FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation),
-   FOREIGN KEY(id_commande) REFERENCES commande(id_commande)
-);
-
-CREATE TABLE ligne_panier(
-   id_user INT,
-   id_prestation INT,
-   prix INT,
-   quantite VARCHAR(50),
-   PRIMARY KEY(id_user, id_prestation),
-   FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
-   FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
-);
 
 CREATE TABLE session(
     session_id VARCHAR(255),
@@ -152,12 +127,56 @@ CREATE TABLE role_droits
     FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
+CREATE TABLE etat_commande
+(
+    id_etat SERIAL PRIMARY KEY,
+    libelle VARCHAR(255)
+);
+
+CREATE TABLE commande
+(
+    id_commande SERIAL PRIMARY KEY,
+    date_commande DATE,
+    id_user INT NOT NULL,
+    id_etat_commande INT NOT NULL,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_etat_commande) REFERENCES Etat(id_etat) ON DELETE CASCADE
+);
+
+CREATE TABLE ligne_commande
+(
+    id_prestation INT,
+    id_commande INT,
+    prix INT,
+    quantite INT,
+    PRIMARY KEY(id_prestation, id_commande),
+    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation),
+    FOREIGN KEY(id_commande) REFERENCES commande(id_commande)
+);
+
+CREATE TABLE Ligne_panier
+(
+    id_user INT,
+    id_prestation INT,
+    date_ajout DATE,
+    quantite VARCHAR(50),
+    PRIMARY KEY(id_user, id_prestation),
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
+    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
+);
+
+
+
+
+
+
+-- Insert data into tables
+
 INSERT INTO etat(libelle) VALUES
 ('en cours de validation'),
 ('valide'),
 ('invalide');
 
--- Insert data into tables
 INSERT INTO droits(id,libelle) VALUES
 (1,'see_users'),
 (2,'create_users'),
@@ -195,6 +214,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (5,2),
 (6,2),
 (9,2);
+
 
 INSERT INTO type_zone (libelle) VALUES
 ('Fixe'),
