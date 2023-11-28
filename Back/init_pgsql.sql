@@ -481,16 +481,37 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand) VALUES
+('initiation au mma',0,'initiation_au_mma.jpg',3,1),
+('inscription au club',120,'inscription_au_club.jpg',3,1),
 ('kebab frites',12,'kebab_frites.jpg',1,2),
 ('kebab simple',9,'kebab_simple.jpg',1,2),
 ('Dorum frites',15,'dorum_frites.jpg',1,2),
 ('Coca',3,'coca.jpg',2,2),
-('initiation au mma',0,'initiation_au_mma.jpg',3,1),
-('inscription au club',120,'inscription_au_club.jpg',3,1),
-('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10),
+('spectacle de clown', 5, 'spectacle_de_clown.jpg', 3, 3),
+('baguette', 2, 'baguette.jpg', 1, 4),
+('croissant', 1.5, 'croissant.jpg', 1, 4),
+('pain au chocolat', 1.5, 'pain_au_chocolat.jpg', 1, 4),
+('billet de train',5,'billet-train.png',6,5),
+('ceinture de judoka blanche',15,'ceinture-blanche.png',4,6),
+('ceinture de judoka jaune',15,'ceinture-jaune.png',4,6),
+('ceinture de judoka orange',15,'ceinture-orange.png',4,6),
+('ceinture de judoka verte',15,'ceinture-verte.png',4,6),
+('ceinture de judoka bleue',15,'ceinture-bleue.png',4,6),
+('ceinture de judoka marron',15,'ceinture-marron.png',4,6),
+('ceinture de judoka noire',17,'ceinture-noire.png',4,6),
+('ceinture de judoka rouge',20,'ceinture-rouge.png',4,6),
+('saucisse de toulouse', 10, 'saucisse_toulouse.png', 1, 7),
+('saucisse de strasbourg', 10, 'saucisse_strasbourg.png', 1, 7),
+('saucisse de morteau', 10, 'saucisse_morteau.png', 1, 7),
+('saucisse de montbeliard', 10, 'saucisse_montbeliard.png', 1, 7),
+('glace à la fraise', 3, 'glace_fraise.jpg', 1, 8),
+('glace à la vanille', 3, 'glace_vanille.jpg', 1, 8),
+('glace au chocolat', 3, 'glace_chocolat.jpg', 1, 8),
+('glace au citron', 3, 'glace_citron.jpg', 1, 8),
 ('saut à l''élastique',60,'saut-elastique.png',3,9),
 ('saut en parachute',100,'saut-parachute.png',3,9),
-('parapente',80,'parapente.png',3,9)
+('parapente',80,'parapente.png',3,9),
+('rouleaux de printemps thaïlandais',4,'rouleaux-printemps',1,10)
 ;
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
