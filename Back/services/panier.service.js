@@ -4,7 +4,7 @@ const pool = require("../database/db");
 async function getPanierByUserIdAsync(id) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("SELECT Ligne_panier.id_user ,p.id_prestation,c.heure_creneau, p.libelle, p.prix,quantite, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_panier JOIN prestation p on p.id_prestation = ligne_panier.id_prestation JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation JOIN creneau c on c.id_creneau = ligne_panier.id_creneau WHERE id_user = $1;", [id]);
+        const result = await conn.query("SELECT Ligne_panier.id_user ,p.id_prestation,c.id_creneau, c.heure_creneau, p.libelle, p.prix,quantite, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_panier JOIN prestation p on p.id_prestation = ligne_panier.id_prestation JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation JOIN creneau c on c.id_creneau = ligne_panier.id_creneau WHERE id_user = $1;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -13,11 +13,11 @@ async function getPanierByUserIdAsync(id) {
     }
 }
 
-async function deletePrestationFromPanierUserAsync(id_user, id_prestation) {
+async function deletePrestationFromPanierUserAsync(id_user, id_prestation, id_creneau) {
     try {
         console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier.service.js")
         const conn = await pool.connect();
-        await conn.query("DELETE FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2;", [id_user, id_prestation]);
+        await conn.query("DELETE FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2 and id_creneau = $3;", [id_user, id_prestation, id_creneau]);
         conn.release();
     } catch (error) {
         console.error('Error in deletePrestationFromPanierUser:', error);
@@ -49,9 +49,9 @@ async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, qu
 
 }
 
-const deletePrestationFromPanierUser = (id_user,id_prestation, callback) => {
+const deletePrestationFromPanierUser = (id_user,id_prestation,id_creneau, callback) => {
 
-    deletePrestationFromPanierUserAsync(id_user,id_prestation)
+    deletePrestationFromPanierUserAsync(id_user,id_prestation, id_creneau)
         .then(res => {
             callback(null, "success");
         })

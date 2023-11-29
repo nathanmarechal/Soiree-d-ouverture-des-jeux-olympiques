@@ -157,8 +157,11 @@ export default new Vuex.Store({
             state.userCourant.panier = panier;
         },
 
-        DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, id_presta) {
-            state.userCourant.panier = state.userCourant.panier.filter(p => p.id_prestation !== id_presta); //retourne une version du tableau qu a pas l'id qu'on veut enlever
+        DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, {id_presta, id_creneau}) {
+            console.log("DELETE_PRESTATION_FROM_PANIER_USER_COURANT " + id_presta + " " + id_creneau);
+            console.log(state.userCourant.panier)
+            state.userCourant.panier = state.userCourant.panier.filter(p => p.id_prestation !== id_presta && p.id_creneau !== id_creneau);
+            console.log(state.userCourant.panier)
         },
 
         ADD_PRESTATION_TO_PANIER_USER_COURANT(state, id_user, id_prestation, quantite, id_creneau) {
@@ -223,12 +226,12 @@ export default new Vuex.Store({
             }
         },
 
-        async deletePrestationFromPanierUserCourantStore({commit},{id_user, id_prestation}){
+        async deletePrestationFromPanierUserCourantStore({commit},{id_user, id_prestation, id_creneau}){
             try {
 
-                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation);
-                await deletePrestationFromPanierUser( id_user, id_prestation);
-                commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', id_prestation);
+                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation + " " + id_creneau);
+                await deletePrestationFromPanierUser( id_user, id_prestation, id_creneau);
+                commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau});
             } catch (error) {
                 console.error('Error fetching panier:', error);
             }

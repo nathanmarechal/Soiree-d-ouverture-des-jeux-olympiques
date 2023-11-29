@@ -704,14 +704,13 @@ ORDER BY p.id_type_prestation;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
-SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
+SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_panier
 JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
 JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
 JOIN creneau c on c.id_creneau = ligne_panier.id_creneau
 WHERE id_user = 1;
 
-
--- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 2;
+DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau = 4;
 
 INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);

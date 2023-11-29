@@ -178,7 +178,6 @@ export default {
   data() {
     return {
       stands : [],
-      selectedStand: [],
       discoverMore : false
     };
   },
@@ -199,7 +198,7 @@ export default {
   methods: {
     ...mapActions(['getStands']),
     updateFilterH(stand) {
-      let newSelection = [...this.selectedStand];
+      let newSelection = [];
 
       const index = newSelection.findIndex(t => t.id_stand === stand.id_stand);
       if (index === -1) {

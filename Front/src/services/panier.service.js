@@ -11,13 +11,13 @@ async function getPanierUserCourant(id_user){
     return answer;
 }
 
-async function deletePrestationFromPanierUser(id_user, id_prestation){
-    let answer = await deletePrestationFromPanierUserFromApi(id_user, id_prestation)
+async function deletePrestationFromPanierUser(id_user, id_prestation, id_creneau){
+    let answer = await deletePrestationFromPanierUserFromApi(id_user, id_prestation, id_creneau)
     return answer;
 }
 
-async function deletePrestationFromPanierUserFromApi(id_user, id_prestation){
-    return deleteRequest('/panier/delete?id=' + id_user + '&presta=' + id_prestation, 'DELETEPRESTATIONFROMPANIERUSER')
+async function deletePrestationFromPanierUserFromApi(id_user, id_prestation, id_creneau){
+    return deleteRequest('/panier/delete?id=' + id_user + '&presta=' + id_prestation + '&creneau=' + id_creneau, 'DELETEPRESTATIONFROMPANIERUSER')
 }
 
 async function addPrestationToPanierUserFromApi({id_user, id_prestation, quantite, id_creneau}){

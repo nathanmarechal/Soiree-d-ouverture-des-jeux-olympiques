@@ -24,7 +24,7 @@
             <td>{{ item.quantite }}</td>
             <td>{{ item.prix * item.quantite }} €</td>
             <td>
-              <button class="btn btn-danger" @click="deleteLigne(item.id_prestation)">Supprimer</button>
+              <button class="btn btn-danger" @click="deleteLigne(item.id_prestation, item.id_creneau)">Supprimer</button>
             </td>
           </tr>
           </tbody>
@@ -59,9 +59,9 @@ export default {
   },
   methods: {
     ...mapActions(['deletePrestationFromPanierUserCourantStore']),
-    deleteLigne(id_prestation) {
-      console.log("delete ligne :" + id_prestation);
-      this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation});
+    deleteLigne(id_prestation, id_creneau) {
+      console.log("delete ligne :" + id_prestation + " " + id_creneau + " dans le vue");
+      this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation, id_creneau: id_creneau});
     },
   },
 }

@@ -17,7 +17,8 @@ exports.deletePrestationFromPanierUser = (req, res) => {
     console.log(req.query.id, req.query.presta, "deletePrestationFromPanierUser dans le controlleur panier.controller.js");
     const id_user = req.query.id;
     const id_prestation = req.query.presta;
-    panierService.deletePrestationFromPanierUser(id_user, id_prestation, (error, data) => {
+    const id_creneau = req.query.creneau;
+    panierService.deletePrestationFromPanierUser(id_user, id_prestation, id_creneau, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
