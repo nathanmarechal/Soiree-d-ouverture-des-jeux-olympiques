@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="display-card">
-      <div class="card-main" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
+      <div class="card-main" ref="cardMains" v-for="prestation in filteredPrestations" :key="prestation.id_prestation">
         <div class="card" style="border-radius: 3vh">
           <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top">
           <div class="card-body">
@@ -27,6 +27,7 @@
   </div>
 </template>
 
+
 <script>
 
 import {mapActions, mapGetters} from 'vuex';
@@ -51,6 +52,8 @@ export default {
     this.prestations = await this.getPrestations();
     this.typePrestations = await this.getTypePrestations();
     this.stands = await this.getStands();
+
+    this.equalizeCardHeights();
   },
   computed: {
     ...mapGetters(["getSelectedStands", "getSelectedTypePrestation"]),
@@ -87,38 +90,51 @@ export default {
     selectPrestation(id) {
       this.selectedPrestationId = id;
     },
+    equalizeCardHeights() {
+      this.$nextTick(() => {
+        let maxCardBodyHeight = 0;
+        this.$refs.cardMains.forEach(cardMain => {
+          const cardBody = cardMain.querySelector('.card-body');
+          if (cardBody.clientHeight > maxCardBodyHeight) {
+            maxCardBodyHeight = cardBody.clientHeight;
+          }
+        });
+        this.$refs.cardMains.forEach(cardMain => {
+          const cardBody = cardMain.querySelector('.card-body');
+          cardBody.style.height = maxCardBodyHeight + 'px';
+        });
+      });
+    },
   },
 }
 </script>
 
 
 <style scoped>
-
-.display-card{
-  width: 100%;
+.display-card {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
   gap: 1vh;
 }
 
-.card-main{
+.card-main {
   width: 20vh;
+  min-height: 300px; /* Hauteur minimale */
 }
+
 .card-img-top {
-  width: 100%;    /* Hauteur maximale de l'image */
-  object-fit: cover;   /* Garde l'aspect ratio tout en remplissant le cadre */
+  width: 100%;
+  object-fit: cover;
   border-radius: 3vh;
 }
 
-
-.card-body{
+.card-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1vh;
 }
+
 .card-text {
   text-align: center;
 }
