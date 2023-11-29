@@ -13,6 +13,7 @@
             <th scope="col">Nom</th>
             <th scope="col">Prix</th>
             <th scope="col">Quantité</th>
+            <th scope="col">Créneau horaire</th>
             <th scope="col">Total</th>
             <th scope="col">Supprimer</th>
           </tr>
@@ -22,6 +23,7 @@
             <td>{{ item.libelle }}</td>
             <td>{{ item.prix }} €</td>
             <td>{{ item.quantite }}</td>
+            <td>{{ item.heure_creneau }}</td>
             <td>{{ item.prix * item.quantite }} €</td>
             <td>
               <button class="btn btn-danger" @click="deleteLigne(item.id_prestation, item.id_creneau)">Supprimer</button>

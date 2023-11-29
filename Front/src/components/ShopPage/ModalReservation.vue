@@ -16,7 +16,7 @@
           <th>Crénau</th>
           <td>
             <div class="options d-flex flex-fill">
-              <select class="custom-select mr-1" v-model="creneau">
+              <select required class="custom-select mr-1" v-model="creneau">
                 <option v-for="(creneaux, index) in getAllCreneau" :value="creneaux.id_creneau" :key="index">{{ creneaux.heure_creneau }}</option>
               </select>
             </div>
@@ -25,7 +25,7 @@
         <tr>
           <th>Quantité</th>
           <td>
-            <input type="number" v-model.number="quantite" min="1">
+            <input required type="number" v-model.number="quantite" min="1">
           </td>
         </tr>
         <tr>
@@ -59,8 +59,6 @@ export default {
   async mounted() {
     if (this.getAllCreneau.length === 0)
       this.creneau = await this.getAllCreneauStore();
-    else
-      this.creneau = this.getAllCreneau;
   },
 
   computed: {
