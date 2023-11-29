@@ -5,6 +5,10 @@ const panierController = require('../controllers/panier.controller');
 
 router.get("/get/:id", panierController.getPanierByUserId);
 
+router.post("/add", panierController.addPrestationToPanierUser);
+
+router.get("/getCreneaux", panierController.getAllCreneaux);
+
 router.delete("/delete", panierController.deletePrestationFromPanierUser);
 
 module.exports = router;

@@ -53,7 +53,7 @@ export default {
     this.stands = await this.getStands();
   },
   computed: {
-    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", 'getAllCreneau']),
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation"]),
     filteredPrestations() {
       return this.prestations.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
@@ -67,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getPrestations', 'getTypePrestations', 'getStands']),
+    ...mapActions(['getPrestations', 'getTypePrestations', 'getStands', 'getAllCreneauStore']),
     getTypePrestationLabel(idType) {
       const type = this.typePrestations.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';

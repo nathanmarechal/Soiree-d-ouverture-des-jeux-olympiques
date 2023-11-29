@@ -16,8 +16,8 @@
           <th>Crénau</th>
           <td>
             <div class="options d-flex flex-fill">
-              <select class="custom-select mr-1">
-                <option v-for="creneau in getAllCreneau" :key="creneau" >{{ creneau.time }}</option>
+              <select class="custom-select mr-1" v-model="creneau">
+                <option v-for="(creneaux, index) in getAllCreneau" :value="creneaux.id_creneau" :key="index">{{ creneaux.heure_creneau }}</option>
               </select>
             </div>
           </td>
@@ -38,7 +38,7 @@
 
 
       <div class="d-flex justify-content-between">
-        <button @click="validerReservation" type="button" class="btn btn-success">Valider</button>
+        <button @click="validerReservation()" type="button" class="btn btn-success">Valider</button>
         <button @click="$emit('close')" type="button" class="btn btn-danger">Quitter</button>
       </div>
     </div>
@@ -46,28 +46,45 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   props: ["isReservationSelected", "prestation"],
   data() {
     return {
+      creneau: null,
       quantite: 1,
     };
   },
+  async mounted() {
+    if (this.getAllCreneau.length === 0)
+      this.creneau = await this.getAllCreneauStore();
+    else
+      this.creneau = this.getAllCreneau;
+  },
+
   computed: {
-    ...mapGetters(['getAllCreneau']),
+    ...mapGetters(['getAllCreneau', "getCurrentUser"]),
     total() {
       return this.prestation.prix * this.quantite;
     },
   },
+
   methods: {
-    validerReservation() {
-      // Logique de validation de la réservation
-      console.log("Réservation validée", { prestation: this.prestation, quantite: this.quantite, total: this.total });
-      // Fermer la modale après validation
-      this.$emit('close');
+    ...mapActions(['getAllCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore' ]),
+    async loadData(){
+      await this.getPanierUserCourantStore(this.getCurrentUser.id_user);
     },
+    async validerReservation() {
+      console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
+      await this.addPrestationToPanierUserCourantStore({
+        id_prestation: this.prestation.id_prestation,
+        id_user: this.getCurrentUser.id_user,
+        quantite: this.quantite,
+        id_creneau: this.creneau,
+      });
+      await this.loadData();
+      this.$emit('close');},
   },
 }
 </script>

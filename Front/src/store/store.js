@@ -5,7 +5,12 @@ import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
-import {deletePrestationFromPanierUser, getPanierUserCourant} from "@/services/panier.service";
+import {
+    addPrestationToPanierUser,
+    deletePrestationFromPanierUser,
+    getAllCreneaux,
+    getPanierUserCourant
+} from "@/services/panier.service";
 
 Vue.use(Vuex)
 
@@ -29,31 +34,7 @@ export default new Vuex.Store({
             "id_role": null,
         },
 
-        creneau: [
-            {"id_creneau": 1, "time": "16h00"},
-            {"id_creneau": 2, "time": "16h30"},
-            {"id_creneau": 3, "time": "17h00"},
-            {"id_creneau": 4, "time": "17h30"},
-            {"id_creneau": 5, "time": "18h00"},
-            {"id_creneau": 6, "time": "18h30"},
-            {"id_creneau": 7, "time": "19h00"},
-            {"id_creneau": 8, "time": "19h30"},
-            {"id_creneau": 9, "time": "20h00"},
-            {"id_creneau": 10, "time": "20h30"},
-            {"id_creneau": 11, "time": "21h00"},
-            {"id_creneau": 12, "time": "21h30"},
-            {"id_creneau": 13, "time": "22h00"},
-            {"id_creneau": 14, "time": "22h30"},
-            {"id_creneau": 15, "time": "23h00"},
-            {"id_creneau": 16, "time": "23h30"},
-            {"id_creneau": 17, "time": "00h00"},
-            {"id_creneau": 18, "time": "00h30"},
-            {"id_creneau": 19, "time": "01h00"},
-            {"id_creneau": 20, "time": "01h30"},
-            {"id_creneau": 21, "time": "02h00"},
-            {"id_creneau": 22, "time": "02h30"},
-            {"id_creneau": 23, "time": "03h00"}
-        ],
+        creneau: [],
 
         //users : [],
         //roles : [],
@@ -180,6 +161,10 @@ export default new Vuex.Store({
             state.userCourant.panier = state.userCourant.panier.filter(p => p.id_prestation !== id_presta); //retourne une version du tableau qu a pas l'id qu'on veut enlever
         },
 
+        ADD_PRESTATION_TO_PANIER_USER_COURANT(state, id_user, id_prestation, quantite, id_creneau) {
+            state.userCourant.panier.push({"id_user" : id_user, "id_prestation" : id_prestation, "quantite" : quantite, "id_creneau": id_creneau});
+        },
+
         SET_IS_USER_CONNECTED(state, value) {
             state.isUserConnected = value;
         },
@@ -209,11 +194,34 @@ export default new Vuex.Store({
         },
         SET_SELECTED_AREA(state, area){
             state.areaSelectedForStand = area;
+        },
+
+        SET_ALL_CRENEAU(state, creneau){
+            state.creneau = creneau;
         }
 
     },
 
     actions: {
+
+        async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
+            try {
+
+                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
+                commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
+        async getAllCreneauStore({commit}){
+            try {
+                const creneau = await getAllCreneaux();
+                commit('SET_ALL_CRENEAU', creneau);
+            } catch (error) {
+                console.error('Error fetching creneau:', error);
+            }
+        },
 
         async deletePrestationFromPanierUserCourantStore({commit},{id_user, id_prestation}){
             try {

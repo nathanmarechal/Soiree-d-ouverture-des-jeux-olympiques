@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS ligne_panier CASCADE;
 DROP TABLE IF EXISTS ligne_commande CASCADE;
 DROP TABLE IF EXISTS commande CASCADE;
 DROP TABLE IF EXISTS etat_commande CASCADE;
+DROP TABLE IF EXISTS creneau CASCADE;
 DROP TABLE IF EXISTS prestation CASCADE;
 DROP TABLE IF EXISTS utilisateur CASCADE;
 DROP TABLE IF EXISTS stand CASCADE;
@@ -70,11 +71,6 @@ CREATE TABLE stand(
    FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
 );
 
-CREATE TABLE creneau(
-    id_creneau SERIAL PRIMARY KEY,
-    heure_creneau timestamp
-);
-
 CREATE TABLE prestation(
     id_prestation SERIAL PRIMARY KEY,
     libelle VARCHAR(50),
@@ -127,6 +123,12 @@ CREATE TABLE role_droits
     FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
+CREATE TABLE creneau(
+    id_creneau SERIAL PRIMARY KEY,
+    heure_creneau varchar(50)
+);
+
+
 CREATE TABLE etat_commande
 (
     id_etat SERIAL PRIMARY KEY,
@@ -159,9 +161,10 @@ CREATE TABLE Ligne_panier
 (
     id_user INT,
     id_prestation INT,
-    date_ajout DATE,
+    id_creneau INT,
     quantite INT,
-    PRIMARY KEY(id_user, id_prestation),
+    PRIMARY KEY(id_user, id_prestation, id_creneau),
+    FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau),
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
     FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
 );
@@ -172,6 +175,56 @@ CREATE TABLE Ligne_panier
 
 
 -- Insert data into tables
+
+INSERT INTO creneau(heure_creneau) VALUES
+('16h-16h15'),
+('16h15-16h30'),
+('16h30-16h45'),
+('16h45-17h'),
+('17h-17h15'),
+('17h15-17h30'),
+('17h30-17h45'),
+('17h45-18h'),
+('18h-18h15'),
+('18h15-18h30'),
+('18h30-18h45'),
+('18h45-19h'),
+('19h-19h15'),
+('19h15-19h30'),
+('19h30-19h45'),
+('19h45-20h'),
+('20h-20h15'),
+('20h15-20h30'),
+('20h30-20h45'),
+('20h45-21h'),
+('21h-21h15'),
+('21h15-21h30'),
+('21h30-21h45'),
+('21h45-22h'),
+('22h-22h15'),
+('22h15-22h30'),
+('22h30-22h45'),
+('22h45-23h'),
+('23h-23h15'),
+('23h15-23h30'),
+('23h30-23h45'),
+('23h45-00h'),
+('00h-00h15'),
+('00h15-00h30'),
+('00h30-00h45'),
+('00h45-01h'),
+('01h-01h15'),
+('01h15-01h30'),
+('01h30-01h45'),
+('01h45-02h'),
+('02h-02h15'),
+('02h15-02h30'),
+('02h30-02h45'),
+('02h45-03h'),
+('03h-03h15'),
+('03h15-03h30'),
+('03h30-03h45'),
+('03h45-04h');
 
 INSERT INTO etat_inscription(libelle) VALUES
 ('en cours de validation'),
@@ -576,12 +629,12 @@ INSERT INTO ligne_commande (id_commande, id_prestation, quantite) VALUES
 (1, 7, 1),
 (1, 8, 1);
 
-INSERT INTO ligne_panier (id_user, id_prestation, quantite, date_ajout) VALUES
-(1, 1, 1, '2022-02-15'),
-(1, 2, 1, '2022-02-15'),
-(1, 3, 1, '2022-02-15'),
-(1, 4, 1, '2022-02-15'),
-(1, 5, 10, '2022-02-15');
+INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
+(1, 1, 1, 5),
+(1, 2, 1, 8),
+(1, 3, 1, 5),
+(1, 4, 1, 6),
+(1, 5, 10, 6);
 
 /*
 SELECT
@@ -651,10 +704,14 @@ ORDER BY p.id_type_prestation;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
-SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle,quantite, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
+SELECT Ligne_panier.id_user ,p.id_prestation, p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_panier
 JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
 JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+JOIN creneau c on c.id_creneau = ligne_panier.id_creneau
 WHERE id_user = 1;
 
+
 -- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 2;
+
+INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);

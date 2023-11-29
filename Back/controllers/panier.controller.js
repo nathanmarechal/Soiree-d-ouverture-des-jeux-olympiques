@@ -27,3 +27,28 @@ exports.deletePrestationFromPanierUser = (req, res) => {
     })
 }
 
+exports.getAllCreneaux = (req, res) => {
+    panierService.getAllCreneaux((error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.addPrestationToPanierUser = (req, res) => {
+    const id_user = req.body.id_user;
+    const id_prestation = req.body.id_prestation;
+    const quantite = req.body.quantite;
+    const id_creneau = req.body.id_creneau;
+    panierService.addPrestationToPanier(id_user, id_prestation, quantite, id_creneau, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}

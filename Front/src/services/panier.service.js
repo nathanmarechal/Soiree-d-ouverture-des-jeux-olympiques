@@ -1,4 +1,4 @@
-import {deleteRequest, getRequest} from "@/services/axios.service";
+import {deleteRequest, getRequest, postRequest} from "@/services/axios.service";
 
 async function getPanierUserCourantFromApi(id_user) {
     return getRequest('/panier/get/' + id_user, 'GETPANIERUSERCOURANT')
@@ -20,7 +20,27 @@ async function deletePrestationFromPanierUserFromApi(id_user, id_prestation){
     return deleteRequest('/panier/delete?id=' + id_user + '&presta=' + id_prestation, 'DELETEPRESTATIONFROMPANIERUSER')
 }
 
+async function addPrestationToPanierUserFromApi({id_user, id_prestation, quantite, id_creneau}){
+    return postRequest('/panier/add', {id_user, id_prestation, quantite, id_creneau}, 'ADDPRESTATIONTOPANIERUSER')
+}
+
+async function addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau}){
+    let answer = await addPrestationToPanierUserFromApi({id_user, id_prestation, quantite, id_creneau})
+    return answer;
+}
+
+async function getAllCreneaux(){
+    let answer = await getAllCreneauxFromApi()
+    return answer;
+}
+
+async function getAllCreneauxFromApi(){
+    return getRequest('/panier/getCreneaux', 'GETCRENEAUX')
+}
+
 export {
     getPanierUserCourant,
-    deletePrestationFromPanierUser
+    deletePrestationFromPanierUser,
+    getAllCreneaux,
+    addPrestationToPanierUser
 }
