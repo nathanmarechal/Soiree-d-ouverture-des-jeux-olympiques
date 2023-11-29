@@ -9,7 +9,7 @@
 
 
       <h4>Zone</h4>
-      <div v-for="(zone, index) in zones" :key="index" class="form-check">
+      <div v-for="(zone, index) in getAllZone" :key="index" class="form-check">
         <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
         <label class="d-flex gap-2 form-check-label" :for="'zoneCheck' + index">
           <span class="color-circle" :style="{ background: zone.couleur_hexa }"></span>{{ zone.libelle }}
@@ -18,7 +18,7 @@
 
 
     <h4>Type de prestation</h4>
-    <div v-for="(type_prestation, index) in typePrestations" :key="index" class="form-check">
+    <div v-for="(type_prestation, index) in getAllTypePrestation" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id_type_prestation" @change="updateFilterTypePrestation">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
     </div>
@@ -32,8 +32,8 @@ import {mapActions, mapGetters, mapMutations} from 'vuex';
 export default {
   data() {
     return {
-      typePrestations : [],
-      zones : [],
+      //typePrestations : [],
+      //zones : [],
 
       selectedTypePrestations:[],
       selectedZones:[],
@@ -43,17 +43,26 @@ export default {
   async mounted() {
     try {
       //await this.$store.dispatch('getTypePrestations');
-      this.typePrestations = await this.getTypePrestations();
-      this.zones = await this.getZones();
+      await this.loadData();
+      //this.typePrestations = await this.getTypePrestations();
+      //this.zones = await this.getZones();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   computed: {
-    ...mapGetters(['getSelectedTypePrestation', 'getSelectedZone']),
+    ...mapGetters(['getSelectedTypePrestation', 'getSelectedZone', 'getAllTypePrestation', 'getAllZone']),
   },
   methods: {
-    ...mapActions(['getTypePrestations', 'getZones']),
+    ...mapActions(['getTypePrestationsStore', 'getZonesStore']),
+    async loadData() {
+      if (this.getAllTypePrestation.length === 0) {
+        await this.getTypePrestationsStore();
+      }
+      if (this.getAllZone.length === 0) {
+        await this.getZonesStore();
+      }
+    },
     updateFilterTypePrestation() {
       this.$store.commit('SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestations);
       console.log(this.selectedTypePrestations)

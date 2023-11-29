@@ -34,13 +34,13 @@ async function getPrestationByUserId(id) {
     return answer
 }
 
+async function uploadImagePresationFromAPI(image){
+    return postRequestPicture('/prestations/add/picture/',image, 'UPLOADPICTUREPRESTATION')
+}
+
 async function uploadImagePresation(image) {
     let answer = await uploadImagePresationFromAPI(image);
     return answer;
-}
-
-async function uploadImagePresationFromAPI(image){
-    return postRequestPicture('/prestations/add/picture/',image, 'UPLOADPICTUREPRESTATION')
 }
 export {
     getAllPrestations,

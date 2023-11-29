@@ -1,7 +1,7 @@
 import {getRequest} from "@/services/axios.service";
 
 async function getAllStandsFromAPI() {
-    let answer = await getRequest('/stands/get', 'GETALLUSERS')
+    let answer = await getRequest('/stands/get', 'GETALLSTANDS')
     //console.log("getAllStandsFromAPI: ", answer)
     return answer
 }

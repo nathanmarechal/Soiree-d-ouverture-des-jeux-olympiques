@@ -2,7 +2,7 @@
   <div>
     <h4>Filtrer par Stand</h4>
     <div class="form-check form-switch"
-         v-for="stand in stands"
+         v-for="stand in getAllStand"
          :key="stand">
       <input class="form-check-input"
              type="checkbox"
@@ -16,23 +16,33 @@
 </template>
 
 <script>
-import {mapActions, mapMutations} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
-  //computed: {
-  //  ...mapGetters(['getAllStand']),
-  //},
   data() {
     return {
-      stands : [],
+      //stands : [],
       selectedStands: []
     };
   },
   async mounted() {
-    this.stands = await this.getStands();
+    try {
+      await this.loadData();
+      //this.stands = await this.getStands();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
+  computed: {
+    ...mapGetters(['getAllStand']),
   },
   methods: {
-    ...mapActions(['getStands']),
+    ...mapActions(['getStandsStore']),
+    async loadData(){
+      if (this.getAllStand.length === 0){
+        await this.getStandsStore()
+      }
+    },
     updateStandFilter() {
       this.$store.commit('SET_SELECTED_STANDS', this.selectedStands);
     },

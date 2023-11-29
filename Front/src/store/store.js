@@ -5,12 +5,7 @@ import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
-import {
-    addPrestationToPanierUser,
-    deletePrestationFromPanierUser,
-    getAllCreneaux,
-    getPanierUserCourant
-} from "@/services/panier.service";
+import {addPrestationToPanierUser, deletePrestationFromPanierUser, getAllCreneaux, getPanierUserCourant} from "@/services/panier.service";
 
 Vue.use(Vuex)
 
@@ -58,7 +53,6 @@ export default new Vuex.Store({
     },
 
     getters: {
-
         getAllZone: state => state.zones,
         getAllUser : state => state.users,
         getAllRole : state => state.roles,
@@ -191,7 +185,6 @@ export default new Vuex.Store({
 
         async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
-
                 await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
@@ -199,7 +192,7 @@ export default new Vuex.Store({
             }
         },
 
-        async getAllCreneauStore({commit}){
+        async getCreneauStore({ commit }){
             try {
                 const creneau = await getAllCreneaux();
                 commit('SET_ALL_CRENEAU', creneau);
@@ -208,9 +201,8 @@ export default new Vuex.Store({
             }
         },
 
-        async deletePrestationFromPanierUserCourantStore({commit},{id_user, id_prestation, id_creneau}){
+        async deletePrestationFromPanierUserCourantStore({ commit },{id_user, id_prestation, id_creneau}){
             try {
-
                 console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation + " " + id_creneau);
                 await deletePrestationFromPanierUser( id_user, id_prestation, id_creneau);
                 commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau,});

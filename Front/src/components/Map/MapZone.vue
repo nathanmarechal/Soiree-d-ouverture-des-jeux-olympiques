@@ -14,7 +14,7 @@
 
 <script>
 import L from 'leaflet';
-import {mapActions, mapGetters, mapMutations} from 'vuex';
+import { mapActions, mapGetters, mapMutations} from 'vuex';
 
 import ModalStand from './ModalStand.vue';
 
@@ -22,8 +22,8 @@ export default {
 
   data() {
     return {
-      areas : [],
-      zones : [],
+      //areas : [],
+      //zones : [],
 
       map: null,
       selectedStand: null,
@@ -35,10 +35,11 @@ export default {
     try {
       this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
       this.$store.commit('SET_SELECTED_STANDS', []);
-      this.areas = await this.getAreas();
-      this.zones = await this.getZones();
+      //this.areas = await this.getAreas();
+      //this.zones = await this.getZones();
       //await this.$store.dispatch('getAreas');
       //await this.$store.dispatch('getZones');
+      await this.loadData();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
@@ -46,25 +47,45 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'getAllAreas',
+      'getAllZone',
       'getSelectedZone',
       'getSelectedTypePrestation',
       'getSearchQuery'
     ]),
     //...mapState(['areas', 'zones']),
   },
-  methods: {
-    ...mapActions(['getAreas', 'getZones']),
+
+methods: {
+    ...mapActions(['getAreasStore', 'getZonesStore']),
+    async loadData() {
+      try {
+        if (this.getAllAreas.length === 0) {
+          await this.getAreasStore();
+        }
+        if (this.getAllZone.length === 0) {
+          await this.getZonesStore();
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
     initializeMap() {
       console.log('initalized')
 
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
 
+
+      
       // Ajoute une couche de tuiles OpenStreetMap à la carte
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
 
+      if (this.map == null) {
+        console.log("MAP NULL 1")
+      }
       this.updateMap()
     },
     showZoneInfo(zone) {
@@ -75,6 +96,11 @@ export default {
     updateMap() {
       console.log('updateMAP');
       // Supprimez les polygones actuels de la carte
+
+      if (this.map == null) {
+        console.log("MAP NULL")
+      }
+      
       this.polygons.forEach(polygon => {
         this.map.removeLayer(polygon);
       });
@@ -82,14 +108,14 @@ export default {
       const selectedZoneIds = this.getSelectedZone;
       const selectedTypePrestationIds = this.getSelectedTypePrestation;
       const searchQuery = this.getSearchQuery;
-      const areas = this.areas;
+      //const areas = this.areas;
 
       const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypePrestationIds.length > 0;
 
       let filteredAreas = [];
 
       if (hasSearchCriteria) {
-        filteredAreas = areas.filter(zone => {
+        filteredAreas = this.getAllAreas.filter(zone => {
           const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
           const matchesType = selectedTypePrestationIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypePrestationIds.includes(id)));
@@ -99,7 +125,7 @@ export default {
       }
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
-        filteredAreas = areas.filter(zone => {
+        filteredAreas = this.getAllAreas.filter(zone => {
           return (zone.isfree === false)});
       }
 
@@ -107,17 +133,29 @@ export default {
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
+      if (this.map == null) {
+        console.log("MAP NULL 2")
+      }
+
       this.map.setView(averageCenter)
       const bounds = L.latLngBounds();
 
       const self = this;
 
+      if (this.map == null) {
+        console.log("MAP NULL 3")
+      }
+      
       filteredAreas.forEach((zone) => {
         const polygon = L.polygon(zone.coordinates, {
           color: zone.couleur_hexa,
           fillOpacity: 0.8,
           weight: 5,
         }).addTo(this.map);
+
+        if (this.map == null) {
+          console.log("MAP NULL 4")
+        }
 
         polygon.on('mouseover', function (e) {
           L.popup()
@@ -126,6 +164,10 @@ export default {
               .openOn(self.map); // Utilisez 'self.map' ici
         });
 
+        if (this.map == null) {
+          console.log("MAP NULL 5")
+        }
+        
         polygon.on('mouseout', function() {
           self.map.closePopup(); // Utilisez 'self.map' ici
         });
@@ -144,6 +186,9 @@ export default {
         this.polygons.push(polygon);
       });
 
+      if (this.map == null) {
+        console.log("MAP NULL 6")
+      }
 
       this.map.fitBounds(bounds);
     },

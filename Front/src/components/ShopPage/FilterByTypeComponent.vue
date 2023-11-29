@@ -2,7 +2,7 @@
   <div>
     <h4>Liste des Types de prestations</h4>
     <div class="form-check form-switch"
-         v-for="typePrestation in typePrestations"
+         v-for="typePrestation in getAllTypePrestation"
          :key="typePrestation">
       <input class="form-check-input"
              type="checkbox"
@@ -16,23 +16,33 @@
 </template>
 
 <script>
-import {mapActions, mapMutations} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
-  //computed: {
-  //  ...mapGetters(['getAllTypePrestation']),
-  //},
   data() {
     return {
-      typePrestations : [],
+      //typePrestations : [],
       selectedTypePrestation: []
     };
   },
   async mounted() {
-    this.typePrestations = await this.getTypePrestations();
+    try {
+      await this.loadData();
+      //this.typePrestations = await this.getTypePrestations();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
+  computed: {
+    ...mapGetters(['getAllTypePrestation']),
   },
   methods: {
-    ...mapActions(['getTypePrestations']),
+    ...mapActions(['getTypePrestationsStore']),
+    async loadData(){
+      if (this.getAllTypePrestation.length === 0){
+        await this.getTypePrestationsStore()
+      }
+    },
     updateFilter() {
       console.log(this.selectedTypePrestation)
       this.$store.commit('SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestation);

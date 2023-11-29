@@ -24,13 +24,13 @@ async function updateArea(id, body) {
 
 async function createAreaFromAPI(body) {
     let answer = await postRequest('/map/area', body, 'CREATEAREA')
-    console.log("createAreaFromAPI: ", answer)
+    //console.log("createAreaFromAPI: ", answer)
     return answer
 }
 
 async function createArea(body) {
     let answer = await createAreaFromAPI(body)
-    console.log("createArea: ", answer)
+    //console.log("createArea: ", answer)
     return answer
 }
 
@@ -40,7 +40,7 @@ async function deleteAreaFromAPI(id) {
 
 async function deleteArea(id) {
     let answer = await deleteAreaFromAPI(id)
-    console.log("deleteArea: ", answer)
+    //console.log("deleteArea: ", answer)
     return answer
 }
 
@@ -85,7 +85,7 @@ async function createZone(body) {
 }
 
 async function deleteZoneFromAPI(id) {
-    console.log("deleteZoneFromAPI: ", id)
+    //console.log("deleteZoneFromAPI: ", id)
     return deleteRequest('/map/zone/' + id, 'DELETEZONE')
 }
 

@@ -12,7 +12,7 @@
     <div class="form-group">
       <label for="type_prestation">Type de prestation:</label>
       <select v-model="prestation.id_type_prestation" id="type_prestation" class="form-control">
-        <option v-for="type in type_prestations" :key="type.id_type_prestation" :value="type.id_type_prestation">{{ type.libelle }}</option>
+        <option v-for="type in getAllTypePrestation" :key="type.id_type_prestation" :value="type.id_type_prestation">{{ type.libelle }}</option>
       </select>
     </div>
     <div class="form">
@@ -33,8 +33,8 @@
 
 <script>
 
-import {uploadImagePresation} from '@/services/prestation.service'
-import { mapActions } from 'vuex';
+import { uploadImagePresation} from '@/services/prestation.service'
+import { mapActions, mapGetters } from 'vuex';
 //import { createPrestation } from "@/services/prestation.service";
 import Cropper from 'cropperjs';
 
@@ -52,20 +52,32 @@ export default {
         id_type_prestation: null,
         id_stand: null,
       },
-      type_prestations: [], // Remplacez par vos données de type de prestation
-      stands: [], // Remplacez par vos données de stand
+      //type_prestations: [], // Remplacez par vos données de type de prestation
+      //stands: [], // Remplacez par vos données de stand
     };
+  },
+  computed: {
+    ...mapGetters(['getAllTypePrestation', 'getAllStand']),
   },
   async mounted() {
     try {
+      await this.loadData()
       // Chargez vos données de type de prestation et de stand ici
-       this.type_prestations = await this.getTypePrestations();
+       //await this.getTypePrestationsStore();
       // this.stands = await fetchStands();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   methods: {
+    ...mapActions(['getTypePrestations', 'getStandsStore']),
+    async loadData(){
+        if (this.getAllTypePrestation.length === 0)
+          await this.getTypePrestationsStore()
+        if (this.getAllStand.length === 0)
+          await this.getStandsStore()
+    },
+
     destroyed() {
       if (this.cropper) {
         this.cropper.destroy();
@@ -114,7 +126,6 @@ export default {
         console.log(fileName)
       });
     },
-    ...mapActions(['getTypePrestations']),
     async submitForm() {
       try {
 

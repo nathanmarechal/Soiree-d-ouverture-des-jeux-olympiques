@@ -29,13 +29,13 @@ async function addPrestationToPanierUser({id_user, id_prestation, quantite, id_c
     return answer;
 }
 
+async function getAllCreneauxFromApi(){
+    return getRequest('/panier/getCreneaux', 'GETCRENEAUX')
+}
+
 async function getAllCreneaux(){
     let answer = await getAllCreneauxFromApi()
     return answer;
-}
-
-async function getAllCreneauxFromApi(){
-    return getRequest('/panier/getCreneaux', 'GETCRENEAUX')
 }
 
 export {

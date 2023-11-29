@@ -17,7 +17,7 @@
                   @close="selectedPrestationId = null"
                   :isReservationSelected="selectedPrestationId === prestation.id_prestation"
                   :prestation="prestation"
-                  v-if="selectedPrestationId === prestation.id_prestation">
+                   v-if="selectedPrestationId === prestation.id_prestation">
               </modal-reservation>
             </div>
           </div>
@@ -39,26 +39,27 @@ export default {
   },
   data() {
     return {
-      prestations : [],
-      typePrestations: [],
-      stands: [],
+      //prestations : [],
+      //typePrestations: [],
+      //stands: [],
       selectedPrestationId: null,
-
-
-    //prestation : [],
     }
   },
   async mounted() {
-    this.prestations = await this.getPrestations();
-    this.typePrestations = await this.getTypePrestations();
-    this.stands = await this.getStands();
-
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+    //this.prestations = await this.getPrestations();
+    //this.typePrestations = await this.getTypePrestations();
+    //this.stands = await this.getStands();
     this.equalizeCardHeights();
   },
   computed: {
-    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation"]),
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau"]),
     filteredPrestations() {
-      return this.prestations.filter(prestation => {
+      return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
         const isStandSelected = this.getSelectedStands.length > 0;
 
@@ -70,9 +71,22 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getPrestations', 'getTypePrestations', 'getStands', 'getAllCreneauStore']),
+    ...mapActions(['getPrestationsStore', 'getTypePrestationsStore', 'getStandsStore', 'getCreneauStore']),
+    async loadData() {
+      if (this.getAllPrestation.length === 0)
+        await this.getPrestationsStore()
+      if (this.getAllTypePrestation.length === 0)
+        await this.getTypePrestationsStore()
+      if (this.getAllStand.length === 0)
+        await this.getStandsStore()
+
+      await this.getCreneauStore()
+      console.log(this.getAllCreneau)
+
+    },
+
     getTypePrestationLabel(idType) {
-      const type = this.typePrestations.find(type => type.id_type_prestation === idType);
+      const type = this.getAllTypePrestation.find(type => type.id_type_prestation === idType);
       return type ? type.libelle : 'Type inconnu';
     },
     getImageSrc(imageName) {
@@ -81,10 +95,9 @@ export default {
       } catch {
         return require('@/assets/' + "arthur-clown.png");
       }
-
     },
     getStandName(idStand) {
-      const stand = this.stands.find(stand => stand.id_stand === idStand);
+      const stand = this.getAllStand.find(stand => stand.id_stand === idStand);
       return stand ? stand.nom_stand : 'Stand inconnu';
     },
     selectPrestation(id) {

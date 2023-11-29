@@ -57,21 +57,29 @@ export default {
     };
   },
   async mounted() {
-    if (this.getAllCreneau.length === 0)
-      this.creneau = await this.getAllCreneauStore();
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+    console.log("all crenaux : " + this.getAllCreneau)
+    //this.creneau = this.getAllCreneau;
   },
 
   computed: {
-    ...mapGetters(['getAllCreneau', "getCurrentUser"]),
+    ...mapGetters(['getAllCreneau', "getCurrentUser", "getPanierUserCourant"]),
     total() {
       return this.prestation.prix * this.quantite;
     },
   },
 
   methods: {
-    ...mapActions(['getAllCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore' ]),
+    ...mapActions(['getCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore' ]),
     async loadData(){
-      await this.getPanierUserCourantStore(this.getCurrentUser.id_user);
+      if (this.getAllCreneau.length === 0)
+        await this.getCreneauStore()
+      if (this.getPanierUserCourant.length === 0)
+        await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
     },
     async validerReservation() {
       console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
@@ -81,7 +89,7 @@ export default {
         quantite: this.quantite,
         id_creneau: this.creneau,
       });
-      await this.loadData();
+      await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
       this.$emit('close');},
   },
 }

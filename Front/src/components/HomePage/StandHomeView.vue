@@ -27,8 +27,6 @@
     <div v-if="!isDiscoverMore()">
 
       <section class="row row-cols-1 row-cols-md-3 g-4">
-
-
       <div v-for="(stand, index) in firstThreeStands" :key="index" >      <!-- Card: City -->
       <section class="card-section">
         <div class="card" style="margin: 5%">
@@ -91,16 +89,15 @@
       </section>
       </div>
     </section>
-      <div class="marginFix">
-    <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreTrue">Découvrir plus</button>
-      </div>
-</div>
-    <div v-else>
-
+    <div class="marginFix">
+      <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreTrue">Découvrir plus</button>
+    </div>
+  </div>
+  <div v-else>
 
     <section class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div v-for="stand in stands" :key="stand">
+      <div v-for="stand in getAllStand" :key="stand">
 
         <!-- Card: City -->
         <section class="card-section">
@@ -172,31 +169,38 @@
 
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   data() {
     return {
-      stands : [],
+      //stands : [],
+      //selectedStand: [],
       discoverMore : false
     };
   },
   async mounted() {
     try {
       //await this.$store.dispatch('getStands');
-      this.stands = await this.getStands();
+      //this.$store.commit('SET_SELECTED_STANDS', []);    // voir si judicieux
+      await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   computed: {
-    //...mapGetters(['getAllStand']),
+    ...mapGetters(['getAllStand']),
     firstThreeStands() {
-      return this.stands.slice(0, 3);
+      return this.getAllStand.slice(0, 3);
     },
   },
   methods: {
-    ...mapActions(['getStands']),
+    ...mapActions(['getStandsStore']),
+    async loadData() {
+      if (this.getAllStand.length === 0) {
+        await this.getStandsStore();
+      }
+    },
     updateFilterH(stand) {
       let newSelection = [];
 
@@ -210,7 +214,6 @@ export default {
       this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
       this.$store.commit('SET_SELECTED_STANDS', []);
       this.$store.commit('SET_SELECTED_STANDS', newSelection);
-
     },
 
     goToStore(stand){
