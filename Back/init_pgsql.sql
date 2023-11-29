@@ -711,6 +711,7 @@ JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
 JOIN creneau c on c.id_creneau = ligne_panier.id_creneau
 WHERE id_user = 1;
 
+select * From Ligne_panier;
 
 -- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 2;
 
