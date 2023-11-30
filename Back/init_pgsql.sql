@@ -153,8 +153,8 @@ CREATE TABLE ligne_commande
     prix INT,
     quantite INT,
     PRIMARY KEY(id_prestation, id_commande),
-    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation),
-    FOREIGN KEY(id_commande) REFERENCES commande(id_commande)
+    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) on delete cascade,
+    FOREIGN KEY(id_commande) REFERENCES commande(id_commande) on delete cascade
 );
 
 CREATE TABLE Ligne_panier
@@ -164,9 +164,9 @@ CREATE TABLE Ligne_panier
     id_creneau INT,
     quantite INT,
     PRIMARY KEY(id_user, id_prestation, id_creneau),
-    FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau),
-    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
-    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation)
+    FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau) ON DELETE CASCADE,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE
 );
 
 
@@ -714,3 +714,5 @@ WHERE id_user = 1;
 DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau = 4;
 
 INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
+
+DELETE FROM zone WHERE id_zone = 1;
