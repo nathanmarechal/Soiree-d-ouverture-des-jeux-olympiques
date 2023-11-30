@@ -11,7 +11,7 @@
     <div class="form-group">
       <label for="type_zone_libelle">Type de zone:</label>
       <select v-model="zone.id_type_zone" id="type_zone_libelle" class="form-control">
-        <option v-for="type in type_zones" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
+        <option v-for="type in getAllTypeZone" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
       </select>
     </div>
     <button type="submit" class="btn btn-success">Ajouter</button>
@@ -20,44 +20,51 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { createZone} from "@/services/map.service";
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   data() {
     return {
       zone: {
+        id_zone: null,  // A REMPLIR JSP COMMENT
         libelle: "",
         couleur_hexa: "",
         id_type_zone: null,
+        type_zone_libelle: "",
       },
-      type_zones: [],
     };
   },
   async mounted() {
     try {
-      this.type_zones = await this.getTypesZone();
+      await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
+  computed: {
+    ...mapGetters(["getAllTypeZone"]),
+  },
   methods: {
-    ...mapActions(["getTypesZone"]),
+    ...mapActions(["getTypeZonesStore", "createZoneStore"]),
+    async loadData(){
+      try {
+        if (this.getAllTypeZone.length === 0)
+          await this.getTypeZonesStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
     async submitForm() {
       try {
+        let typeZone = this.getAllTypeZone.find(type => type.id_type_zone === this.zone.id_type_zone);
+        if (typeZone)
+          this.zone.type_zone_libelle = typeZone.libelle;
+
         console.log("Données de la zone :", this.zone);
-        // Appel de la méthode createZone avec les données de la zone
-        const response = await createZone(this.zone);
-
-        // Gérer la réponse ici (ex : afficher un message de succès)
-        console.log("Zone créée avec succès :", response);
-
-        // Redirection vers '/admin/zones/'
+        await this.createZoneStore(this.zone);
         await this.$router.push('/admin/zones/');
       } catch (error) {
-        // Gestion des erreurs
         console.error("Erreur lors de la création de la zone :", error);
-        // Afficher un message d'erreur à l'utilisateur, si nécessaire
       }
     }
 

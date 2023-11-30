@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <edit-zone :id_zone="this.$route.params.id_zone"></edit-zone>
+    <edit-zone :selected_zone="this.$route.params.selected_zone"></edit-zone>
   </div>
 </template>
 
@@ -8,11 +8,14 @@
 import editZone from '@/components/Admin/Zone/EditZone.vue'
 
 export default {
+  /*
   data() {
     return {
       id_zone: null,
     }
   },
+
+   */
   components: {
     editZone
   }

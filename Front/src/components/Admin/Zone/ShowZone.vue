@@ -11,7 +11,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(zone, index) in zones" :key="index">
+      <tr v-for="(zone, index) in getAllZone" :key="index">
         <td>{{ zone.id_zone }}</td>
         <td>{{ zone.libelle }}</td>
         <td>
@@ -19,7 +19,7 @@
         </td>
         <td>{{ zone.type_zone_libelle }}</td>
         <td>
-          <router-link :to="{ name: 'AdminEditZoneView', params: { id_zone: zone.id_zone } }" class="btn btn-primary">Modifier</router-link>
+          <router-link :to="{ name: 'AdminEditZoneView', params: { selected_zone: zone } }" class="btn btn-primary">Modifier</router-link>
           <button class="btn btn-danger" @click="zoneDelete(index)">Supprimer</button>
         </td>
       </tr>
@@ -29,41 +29,47 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { deleteZone } from '@/services/map.service';
+import { mapActions, mapGetters } from 'vuex';
+//import { deleteZone } from '@/services/map.service';
 
 export default {
+  /*
   data () {
     return {
-      zones: [],
+      //zones: [],
     }
   },
-  async created() {
-    this.zones = await this.getZones();
+
+   */
+  async mounted() {
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+    //this.zones = await this.getZones();
+  },
+  computed: {
+    ...mapGetters(['getAllZone']),
   },
   methods: {
-    ...mapActions(['getZones']),
-
+    ...mapActions(['getZonesStore', 'deleteZoneStore']),
     async loadData() {
-      try {
-        this.zones = await this.getZones();
-      } catch (error) {
-        console.error('Erreur lors du chargement des données :', error);
-      }
+      if (this.getAllZone.length === 0)
+        await this.getZonesStore();
     },
-
     async zoneDelete(index) {
-      const zone = this.zones[index];
+      const zone = this.getAllZone[index];
       const confirmMessage = `Êtes-vous sûr de vouloir supprimer la zone ${zone.libelle} ?`;
       if (window.confirm(confirmMessage)) {
         try {
-          await deleteZone(zone.id_zone);
-          this.zones.splice(index, 1);
+          await this.deleteZoneStore(zone.id_zone);
+          //this.getAllZone.splice(index, 1);
         } catch (error) {
           console.error('Erreur lors de la suppression de la zone :', error);
         }
       }
-      await this.loadData();
+      //await this.loadData();
     }
   },
 }

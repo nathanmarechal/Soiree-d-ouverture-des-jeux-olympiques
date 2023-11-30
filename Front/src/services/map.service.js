@@ -65,6 +65,7 @@ async function getZoneById(id) {
 }
 
 async function updateZoneFromAPI(id, body) {
+    console.log("updateZoneFromAPI: ", id, body)
     return patchRequest('/map/zone/' + id, body, 'UPDATEZONE')
 }
 
@@ -95,12 +96,12 @@ async function deleteZone(id) {
     return answer
 }
 
-async function getAllTypeZoneFromAPI() {
+async function getAllTypeZonesFromAPI() {
     return getRequest('/map/typeZones', 'GETALLTYPEZONE')
 }
 
-async function getAllTypeZone() {
-    let answer = await getAllTypeZoneFromAPI()
+async function getAllTypeZones() {
+    let answer = await getAllTypeZonesFromAPI()
     //console.log("getAllTypeZone: ", answer)
     return answer
 }
@@ -108,7 +109,7 @@ async function getAllTypeZone() {
 export {
     getAllAreas,
     getAllZones,
-    getAllTypeZone,
+    getAllTypeZones,
     updateZone,
     createZone,
     deleteZone,

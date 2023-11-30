@@ -78,7 +78,7 @@ const routes = [
   },
 
   {
-    path: '/admin/zones/edit/:id_zone',
+    path: '/admin/zones/edit/',
     name: 'AdminEditZoneView',
     component: AdminEditZonePage
   },

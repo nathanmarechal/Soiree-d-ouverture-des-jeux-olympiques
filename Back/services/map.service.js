@@ -184,6 +184,8 @@ const updateZone = (id, body, callback) => {
 async function updateZoneAsync(id, body) {
     try {
         const conn = await pool.connect();
+        console.log("id in updateZoneAsync: ", id)
+        console.log("body in updateZoneAsync: ", body)
         const result = await conn.query("UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;", [body.id_type_zone, body.libelle, body.couleur_hexa, id]);
         conn.release();
         return result.rows;

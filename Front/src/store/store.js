@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
-import {getAllAreas, getAllZones, getAllTypeZone} from "@/services/map.service";
+import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
 import {addPrestationToPanierUser, deletePrestationFromPanierUser, getAllCreneaux, getPanierUserCourant} from "@/services/panier.service";
@@ -133,13 +133,30 @@ export default new Vuex.Store({
         },
 
         DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, payload) {
-            console.log("DELETE_PRESTATION_FROM_PANIER_USER_COURANT " + payload.id_prestation + " " + payload.id_creneau);
-            console.log(state.userCourant.panier)
+            //console.log("DELETE_PRESTATION_FROM_PANIER_USER_COURANT " + payload.id_prestation + " " + payload.id_creneau);
+            //console.log(state.userCourant.panier)
             state.userCourant.panier = state.userCourant.panier.filter(item =>
                 !(item.id_prestation === payload.id_prestation && item.id_creneau === payload.id_creneau));
-            console.log(state.userCourant.panier)
-
+            //console.log(state.userCourant.panier)
         },
+
+        DELETE_ZONE(state, id) {
+            state.zones = state.zones.filter(item => item.id_zone !== id);
+        },
+
+        UPDATE_ZONE(state, payload) {
+            state.zones = state.zones.map(item => {
+                if (item.id_zone === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        CREATE_ZONE(state, payload) {
+            state.zones.push(payload);
+        },
+
         ADD_PRESTATION_TO_PANIER_USER_COURANT(state, id_user, id_prestation, quantite, id_creneau) {
             state.userCourant.panier.push({"id_user" : id_user, "id_prestation" : id_prestation, "quantite" : quantite, "id_creneau": id_creneau});
         },
@@ -273,7 +290,7 @@ export default new Vuex.Store({
 
         async getTypesZone(){
             try {
-                const typeZone = await getAllTypeZone();
+                const typeZone = await getAllTypeZones();
                 return typeZone; // Return the fetched data
             } catch (error) {
                 console.error('Error fetching typeZone:', error);
@@ -281,9 +298,9 @@ export default new Vuex.Store({
         },
 
 
-        async getTypeZoneStore({ commit }) {
+        async getTypeZonesStore({ commit }) {
           try {
-            const typeZone = await getAllTypeZone();
+            const typeZone = await getAllTypeZones();
             if (Array.isArray(typeZone)) {
               commit('SET_TYPE_ZONE', typeZone);
             } else {
@@ -318,6 +335,33 @@ export default new Vuex.Store({
           }
         },
 
+        async deleteZoneStore({ commit }, id) {
+            try {
+                await deleteZone(id);
+                commit('DELETE_ZONE', id);
+            } catch (err) {
+                console.error("Error in deleteZoneStore():", err);
+            }
+        },
+
+        async updateZoneStore({ commit }, {id, body}) {
+            try {
+                await updateZone(id, body);
+                commit('UPDATE_ZONE', id, body);
+            } catch (err) {
+                console.error("Error in updateZoneStore():", err);
+            }
+        },
+
+        async createZoneStore({ commit }, body) {
+            try {
+                console.log("createZoneStore: ", body)
+                await createZone(body);
+                commit('CREATE_ZONE', body);
+            } catch (err) {
+                console.error("Error in createZoneStore():", err);
+            }
+        },
 
         async getAreas(){
             try {
@@ -338,7 +382,7 @@ export default new Vuex.Store({
                   console.error("Unexpected response format:", result);
               }
           } catch (err) {
-              console.error("Error in getAreas():", err);
+              console.error("Error in getAreasStore():", err);
           }
         },
 
