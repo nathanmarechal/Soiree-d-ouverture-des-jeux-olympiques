@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-dark text-custom py-2">
+  <footer class="footer bg-dark text-custom py-2">
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -44,6 +44,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .text-custom {
   color: #D8C17B !important;
 }

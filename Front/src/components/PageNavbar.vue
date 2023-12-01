@@ -116,7 +116,9 @@ export default {
   },
   methods: {
     fromNav() {
-      this.$store.commit('SET_PROVENANCE', null);
+      this.$store.commit('SET_PROVENANCE', -1);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
     },
     showLoginModal() {
       this.$store.commit('SET_LOGIN_MODAL', true);

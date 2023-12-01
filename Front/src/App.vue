@@ -24,6 +24,7 @@ export default {
 
 <style scoped>
 #app {
+  font-family: Arial, Helvetica, sans-serif;
   position: relative;
   height: 100%;
   width: 100%;

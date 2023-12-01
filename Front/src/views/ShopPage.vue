@@ -22,6 +22,7 @@ Copy code
 import shopcomponent from '../components/ShopPage/ShopComponent.vue'
 import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.vue";
 import filterByStand from "@/components/ShopPage/FilterByStand.vue";
+import {mapGetters} from "vuex";
 //import {mapGetters, mapMutations} from "vuex";
 export default {
 
@@ -43,13 +44,12 @@ export default {
     shopcomponent,
     filterByStand,
   },
-  /*
+
   computed: {
     ...mapGetters(['getProvenance']),
-    ...mapMutations(['SET_PROVENANCE', "SET_SELECTED_TYPE_PRESTATION", "SET_SELECTED_STANDS"]),
   },
 
-   */
+
 }
 </script>
 
