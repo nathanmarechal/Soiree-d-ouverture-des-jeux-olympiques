@@ -27,11 +27,9 @@
   </div>
 </template>
 
-
 <script>
 
 import {mapActions, mapGetters} from 'vuex';
-
 import ModalReservation from '@/components/ShopPage/ModalReservation.vue'
 export default {
   components: {

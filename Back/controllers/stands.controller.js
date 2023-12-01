@@ -1,5 +1,8 @@
 const standsService = require("../services/stands.service");
 
+const multer = require('multer');
+const path = require('path');
+
 exports.getStands = (req, res) => {
     standsService.getAllStands((error, data) => {
         if (error) {

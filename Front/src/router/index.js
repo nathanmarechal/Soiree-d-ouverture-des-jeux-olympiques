@@ -16,6 +16,7 @@ import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
 import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
 import PanierPage from "@/views/PanierPage.vue";
+import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
 
 Vue.use(VueRouter);
 
@@ -96,6 +97,12 @@ const routes = [
     path: '/prestataire/prestations/add',
     name: 'PrestatairePrestationAddView',
     component: PrestatairePrestationAddPage
+  },
+  
+  {
+    path: '/prestataire/stand',
+    name: 'ShowStandPrestataireView',
+    component: ShowStandPrestatairePage
   },
     //Error 404
   {

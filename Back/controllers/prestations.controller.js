@@ -38,7 +38,9 @@ function sanitizeFileName(fileName) {
 // Configuration de Multer pour le stockage des fichiers
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../'); // Assurez-vous que ce chemin existe et est accessible en écriture
+        const destinationPath = path.join(__dirname, '../assets/prestation');
+
+        cb(null, destinationPath); // Assurez-vous que ce chemin existe et est accessible en écriture
     },
     filename: function (req, file, cb) {
         // Utiliser le nom de fichier original, nettoyé pour éviter les problèmes de sécurité

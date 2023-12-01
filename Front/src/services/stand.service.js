@@ -1,4 +1,4 @@
-import {getRequest} from "@/services/axios.service";
+import {getRequest,postRequestPicture} from "@/services/axios.service";
 
 async function getAllStandsFromAPI() {
     let answer = await getRequest('/stands/get', 'GETALLSTANDS')
@@ -12,6 +12,17 @@ async function getAllStands() {
     return answer
 }
 
+
+async function uploadImageDescriptionStandFromAPI(image){
+    return postRequestPicture('/stands/upload/picture-description/',image, 'UPLOADPICTUREDESCRIPTIONSTAND')
+}
+
+async function uploadImageDescriptionStand(image) {
+    let answer = await uploadImageDescriptionStandFromAPI(image);
+    return answer;
+}
+
 export {
     getAllStands,
+    uploadImageDescriptionStand
 }

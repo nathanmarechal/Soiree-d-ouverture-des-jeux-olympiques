@@ -23,6 +23,8 @@
 
           <b-nav-item-dropdown v-if="isUserPrestataire || isUserAdmin" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
             <router-link to="/prestataire/prestations" class = "dp">Prestations</router-link>
+            <br>
+            <router-link to="/prestataire/stand" class = "dp">Mon Stand</router-link>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">

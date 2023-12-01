@@ -704,6 +704,8 @@ ORDER BY p.id_type_prestation;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
+SELECT *
+
 SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_panier
 JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
