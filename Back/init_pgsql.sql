@@ -138,7 +138,7 @@ CREATE TABLE etat_commande
 CREATE TABLE commande
 (
     id_commande SERIAL PRIMARY KEY,
-    date_commande DATE,
+    date_commande varchar(50),
     id_user INT NOT NULL,
     id_etat_commande INT NOT NULL,
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
@@ -148,13 +148,16 @@ CREATE TABLE commande
 
 CREATE TABLE ligne_commande
 (
-    id_prestation INT,
     id_commande INT,
-    prix INT,
+    id_user INT,
+    id_prestation INT,
+    id_creneau INT,
     quantite INT,
-    PRIMARY KEY(id_prestation, id_commande),
-    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) on delete cascade,
-    FOREIGN KEY(id_commande) REFERENCES commande(id_commande) on delete cascade
+    PRIMARY KEY(id_user, id_prestation, id_creneau),
+    FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau) ON DELETE CASCADE,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE,
+    FOREIGN KEY(id_commande) REFERENCES commande(id_commande) ON DELETE CASCADE
 );
 
 CREATE TABLE Ligne_panier
@@ -619,15 +622,9 @@ INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
 ('2022-02-15', 1, 3),
 ('2022-02-15', 2, 4);
 
-INSERT INTO ligne_commande (id_commande, id_prestation, quantite) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(1, 3, 1),
-(1, 4, 1),
-(1, 5, 1),
-(1, 6, 1),
-(1, 7, 1),
-(1, 8, 1);
+INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite ) VALUES
+(1,1,1,1,5),
+(1,2,2,1,5);
 
 INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
 (1, 1, 1, 5),
@@ -704,7 +701,7 @@ ORDER BY p.id_type_prestation;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
-SELECT *
+SELECT *  FROM prestation;
 
 SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_panier
@@ -717,10 +714,25 @@ DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau 
 
 INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
 
-DELETE FROM zone WHERE id_zone = 1;
+-- DELETE FROM zone WHERE id_zone = 1;
 
-SELECT * FROM ligne_panier WHERE id_user = 1;
+SELECT * FROM ligne_commande WHERE id_user = 1;
 
 UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
 
 UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
+
+INSERT into ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite ) VALUES (1, 1, 12, 5,5);
+
+
+-- vider le panier pour ajouter le tout dans les commandes
+SELECT * FROM ligne_panier WHERE id_user = 1;
+
+INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), 1, 1);
+SELECT * FROM commande;
+
+DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=1 AND id_creneau=5;
+
+INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite ) VALUES (1, 1, 12, 12,5);
+
+--pas touchewwww les bebewwww
