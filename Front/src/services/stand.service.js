@@ -22,7 +22,18 @@ async function uploadImageDescriptionStand(image) {
     return answer;
 }
 
+async function getStandByUserIdFromAPI(id) {
+    return getRequest('/stands/get/' + id, 'GETPRESTATIONBYUSERID')
+}
+
+async function getStandByUserId(id) {
+    let answer = await getStandByUserIdFromAPI(id)
+    console.log("getPrestationByUserId: ", answer)
+    return answer
+}
+
 export {
     getAllStands,
-    uploadImageDescriptionStand
+    uploadImageDescriptionStand,
+    getStandByUserId
 }

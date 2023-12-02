@@ -18,7 +18,8 @@
       'removeformat | help | image',
       images_upload_handler: handleImageUpload
       }"
-      initial-value="Welcome to TinyMCE!"
+          :initial-value="standDescription"
+
       />
     </main>
     <button @click="saveContent">Save Content</button>
@@ -26,9 +27,10 @@
 
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 import Editor from '@tinymce/tinymce-vue';
-import {uploadImageDescriptionStand} from '@/services/stand.service'
+import {uploadImageDescriptionStand,getStandByUserId} from '@/services/stand.service'
 
 export default {
   components: {
@@ -37,11 +39,28 @@ export default {
   data() {
     return {
       myEditor: null,
+      stand: null,
+      standDescription: '',
       editorConfig: {
         plugins: 'image',
         toolbar: 'image'
       },
     };
+  },
+  computed: {
+    ...mapGetters(['getCurrentUser']),
+  },
+  async created() {
+    try {
+      const userId = this.getCurrentUser.id_user;
+      const standData = await getStandByUserId(userId);
+      if (standData && standData.length > 0) {
+        this.stand = standData[0];
+        this.standDescription = this.stand.description_stand; // Initialiser la description
+      }
+    } catch (err) {
+      console.error(err);
+    }
   },
   mounted() {
     this.myEditor = this.$refs.myEditor;
