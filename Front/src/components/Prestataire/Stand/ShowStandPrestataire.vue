@@ -22,7 +22,8 @@
 
       />
     </main>
-    <button @click="saveContent">Save Content</button>
+    <button type="button" @click="saveContent" class="btn btn-success">Enregistrer les modifications</button>
+
   </div>
 
 </template>
@@ -30,7 +31,7 @@
 import { mapGetters } from 'vuex';
 
 import Editor from '@tinymce/tinymce-vue';
-import {uploadImageDescriptionStand,getStandByUserId} from '@/services/stand.service'
+import {uploadImageDescriptionStand,getStandByUserId,updateDescriptionStand} from '@/services/stand.service'
 
 export default {
   components: {
@@ -95,6 +96,7 @@ export default {
     async saveContent() {
       if (this.myEditor && this.myEditor.editor) {
         const content = this.myEditor.editor.getContent();
+        await updateDescriptionStand(this.stand.id_stand, { description_stand: content });
         console.log('Contenu à enregistrer:', content);
         // Add here the logic to save the content to your server or handle it as needed
       } else {
@@ -104,6 +106,8 @@ export default {
   }
 }
 </script>
+
+
 
 <style scoped>
 

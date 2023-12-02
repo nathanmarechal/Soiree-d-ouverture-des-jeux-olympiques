@@ -1,4 +1,4 @@
-import {getRequest,postRequestPicture} from "@/services/axios.service";
+import {getRequest,postRequestPicture,patchRequest} from "@/services/axios.service";
 
 async function getAllStandsFromAPI() {
     let answer = await getRequest('/stands/get', 'GETALLSTANDS')
@@ -32,8 +32,19 @@ async function getStandByUserId(id) {
     return answer
 }
 
+async function updateDescriptionStandFromAPI(id, body) {
+    return patchRequest('/stands/description/' + id, body, 'UPDATEDESCRIPTIONSTAND')
+}
+
+async function updateDescriptionStand(id, body) {
+    let answer = await updateDescriptionStandFromAPI(id, body)
+    return answer
+}
+
+
 export {
     getAllStands,
     uploadImageDescriptionStand,
-    getStandByUserId
+    getStandByUserId,
+    updateDescriptionStand
 }

@@ -8,7 +8,7 @@
             <img :src="imagePath" alt="Image du stand" />
             <div class="modal-content">
               <h1>{{ stand.nom_stand }}</h1>
-              <p>{{ stand.description_stand }}</p>
+              <div v-html="stand.description_stand"></div>
             </div>
             <button type="button" class="btn btn-success" @click="goToStore(stand)">Prestations</button>
           </div>

@@ -100,8 +100,36 @@ const uploadingPictureDescription = (req, callback) => {
         });
 }
 
+
+const updateStandDescription = (id, body, callback) => {
+    updateStandDescriptionAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateStandDescriptionAsync(id, body) {
+    try {
+        console.log(id)
+        console.log(body)
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE stand SET description_stand = $1 WHERE id_stand = $2;", [body.description_stand, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateStandDescriptionAsync:', error);
+        throw error;
+    }
+}
+
+
 module.exports = {
     getAllStands: getAllStands,
     uploadingPictureDescription:uploadingPictureDescription,
-    getStandById:getStandById
+    getStandById:getStandById,
+    updateStandDescription:updateStandDescription
 }

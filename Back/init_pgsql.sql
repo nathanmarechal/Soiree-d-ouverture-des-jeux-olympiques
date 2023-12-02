@@ -743,3 +743,8 @@ DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=1 AND id_creneau=5;
 INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite ) VALUES (1, 1, 12, 12,5);
 
 --pas touchewwww les bebewwww
+
+
+UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
+
+UPDATE stand SET description_stand = 'CACA' WHERE id_stand = 2;
