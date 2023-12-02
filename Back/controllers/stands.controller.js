@@ -13,3 +13,13 @@ exports.getStands = (req, res) => {
         }
     })
 }
+
+exports.uploadingPictureDescription = (req, res) => {
+    standsService.uploadingPictureDescription(req, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+};
