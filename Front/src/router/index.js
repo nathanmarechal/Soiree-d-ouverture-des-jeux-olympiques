@@ -1,24 +1,25 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/HomePage.vue';
-import Information from '../views/InformationPage.vue';
-import Shop from '../views/ShopPage.vue';
+import Home from '@/views/HomePage.vue';
+import Information from '@/views/InformationPage.vue';
+import Shop from '@/views/ShopPage.vue';
 import MapPage from "@/views/mapPage.vue";
-import StandPage from "../views/standPage.vue";
-import SignUpPage from "../views/SignUpPage.vue";
-import NotFound from "../views/Error404Page.vue";
-import AdminEditUsers from '../views/Admin/User/AdminEditUsers.vue';
-import AdminRoles from '../views/Admin/Role/AdminRoles.vue';
-import AdminAddRoles from '../views/Admin/Role/AdminAddRoles.vue';
-import AdminEditRoles from '../views/Admin/Role/AdminEditRoles.vue';
-import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue';
-import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue';
+import StandPage from "@/views/standPage.vue";
+import SignUpPage from "@/views/SignUpPage.vue";
+import NotFound from "@/views/Error404Page.vue";
+import AdminEditUsers from '@/views/Admin/User/AdminEditUsers.vue';
+import AdminRoles from '@/views/Admin/Role/AdminRoles.vue';
+import AdminAddRoles from '@/views/Admin/Role/AdminAddRoles.vue';
+import AdminEditRoles from '@/views/Admin/Role/AdminEditRoles.vue';
+import AdminMapPage from '@/views/Admin/Emplacement/AdminMapPage.vue';
+import AdminZonePage from '@/views/Admin/Zone/AdminZonePage.vue';
 import AdminEditZonePage from '@/views/Admin/Zone/AdminEditZonePage.vue'
 import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
 import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
 import PanierPage from "@/views/PanierPage.vue";
 import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
+import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
 
 Vue.use(VueRouter);
 
@@ -99,6 +100,11 @@ const routes = [
     path: '/admin/zones/add',
     name: 'AdminAddZoneView',
     component: AdminAddZonePage
+  },
+  {
+    path: '/admin/statistiques',
+    name: 'AdminStatistiqueView',
+    component: AdminStatistiquePage
   },
   {
     path: '/prestataire/prestations',

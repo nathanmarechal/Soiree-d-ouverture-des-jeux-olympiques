@@ -730,7 +730,7 @@ UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 A
 
 UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
 
-INSERT into ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite ) VALUES (1, 1, 12, 5,5);
+INSERT into ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite) VALUES (1, 1, 12, 5,5);
 
 
 -- vider le panier pour ajouter le tout dans les commandes
@@ -749,3 +749,11 @@ INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,
 UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
 
 UPDATE stand SET description_stand = 'CACA' WHERE id_stand = 2;
+
+SELECT * FROM commande;
+
+SELECT SUM(p.prix*lc.quantite) AS "prix_total", p.libelle FROM ligne_commande lc
+JOIN prestation p on p.id_prestation = lc.id_prestation
+GROUP BY p.id_prestation
+ORDER BY SUM(p.prix*lc.quantite) DESC;
+

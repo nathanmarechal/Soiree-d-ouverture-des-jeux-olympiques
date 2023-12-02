@@ -35,6 +35,8 @@
             <router-link to="/admin/zones" class = "dp">Zones</router-link>
             <br>
             <router-link to="/admin/roles" class = "dp">Rôles</router-link>
+            <br>
+            <router-link to="/admin/statistiques" class = "dp">Statistiques</router-link>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>

@@ -7,6 +7,7 @@ const typePrestationsRoutes = require('./routes/typePrestations.router');
 const standsRoutes = require('./routes/stands.router');
 const loginRoutes = require('./routes/authentication.router');
 const panierRoutes = require('./routes/panier.router');
+const statistiquesRoutes = require('./routes/statistiques.router');
 dotenv.config();
 const app = express();
 const cors = require('cors');
@@ -23,6 +24,7 @@ app.use("/api/login",loginRoutes);
 app.use("/api/prestations",prestationsRoutes);
 app.use("/api/typePrestations",typePrestationsRoutes);
 app.use("/api/stands",standsRoutes);
+app.use("/api/statistiques",statistiquesRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
