@@ -1,38 +1,50 @@
 <template>
-  <form @submit.prevent="editRole" class="d-flex gap-3 flex-column justify-content-center">
+  <form @submit.prevent="submitForm()" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
       <label for="libelle">Libellé:</label>
       <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-success">Modifier</button>
-    <button type="button" class="btn btn-danger" @click="$emit('close')">Quitter</button>
+    <router-link to="/admin/roles/" class="btn btn-danger">Quitter</router-link>
   </form>
 </template>
 
 <script>
 // Import the updateRole method from the service
-import { updateRole } from "@/services/utilisateur.service";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  props: {
-    selectedRole: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: ["selected_role"],
   data() {
     return {
-      role: this.selectedRole,
+      role: {},
     };
   },
+  async mounted() {
+    try {
+      this.role = this.selected_role;
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  },
+  computed: {
+    ...mapGetters(["getAllRole"]),
+  },
   methods: {
-    async editRole() {
+    ...mapActions(["getRolesStore", "updateRoleStore"]),
+    async loadData(){
       try {
-        console.log("Données du rôle :", this.role);
-
-        // Call the updateRole method with this.role instead of this.selectedRole
-        await updateRole(this.role);        
-        this.$emit('edit-role', this.role);
+        if (this.getAllRole.length === 0)
+            await this.getRolesStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
+    async submitForm() {
+      try {
+        await this.updateRoleStore(this.role);
+        this.$router.push({ name: "AdminRoleListView" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);
       }

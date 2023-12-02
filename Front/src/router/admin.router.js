@@ -1,5 +1,5 @@
 import AdminEditUsers from '../views/Admin/User/AdminEditUsers.vue'
-import AdminEditRoles from '../views/Admin/Role/AdminEditRoles.vue'
+import AdminRoles from '../views/Admin/Role/AdminRoles.vue'
 
 import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue'
 import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue'
@@ -12,8 +12,8 @@ const adminRoutes = [
     },
     {
         path: '/roles', 
-        name: 'AdminEditRoles',
-        component: AdminEditRoles
+        name: 'AdminRoles',
+        component: AdminRoles
     },
 
 

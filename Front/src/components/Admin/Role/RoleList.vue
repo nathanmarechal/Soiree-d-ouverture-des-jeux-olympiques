@@ -12,11 +12,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(role, index) in roles" :key="index">
+                <tr v-for="(role, index) in getAllRoles" :key="index">
                   <td>{{ role.id_role }}</td>
                   <td>{{ role.libelle }}</td>
                   <td>
-                    <button class="btn btn-info" @edit-role="editRole" @click="editRole(role)">Modifier</button>
+                    <router-link :to="{ name: 'AdminEditRoleView', params: { selected_role: role } }" class="btn btn-primary">Modifier</router-link>
                     <button class="btn btn-danger" @click="removeRole(role)">Supprimer</button>
                   </td>
                 </tr>
@@ -29,32 +29,38 @@
   </template>
   
   <script>
-  import { deleteRole } from "@/services/utilisateur.service";
+  import { mapActions, mapGetters } from "vuex";
 
   export default {
-    props: {
-      roles: {
-        type: Array,
-        required: true,
-      },
+    async mounted() {
+      try {
+        await this.loadData();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
     },
-  
+    computed: {
+      ...mapGetters(['getAllRoles']),
+    },
     methods: {
-      async removeRole(role) {
-        try {
-          console.log("Role to delete:", role.id_role);
-          // Call the deleteRole method directly
-          const response = await deleteRole(role.id_role);
-          this.$emit('delete-role', role);
-          console.log("Role deleted successfully:", response);
-        } catch (error) {
-          console.error('Erreur lors de la suppression du rôle:', error);
-        }
+      ...mapActions(['getRolesStore', 'deleteRoleStore']),
+      async loadData() {
+        if (this.getAllRole.length === 0)
+          await this.getRolesStore();
       },
-      editRole(role) {
-            this.$emit('edit-role', role);
-        },
     },
+    async removeRole(id) {
+      const role = this.getAllRole.find(role => role.id_role === id);
+      const confirmMessage = `Êtes-vous sûr de vouloir supprimer le rôle ${role.libelle} ?`;
+      if (window.confirm(confirmMessage)) {
+        try {
+          await this.deleteRoleStore(role.id_role);
+          //this.getAllRole.splice(index, 1);
+        } catch (error) {
+          console.error('Erreur lors de la suppression du rôle :', error);
+        }
+      }
+    }
   };
   </script>
   

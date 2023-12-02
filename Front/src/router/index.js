@@ -8,6 +8,8 @@ import StandPage from "../views/standPage.vue";
 import SignUpPage from "../views/SignUpPage.vue";
 import NotFound from "../views/Error404Page.vue";
 import AdminEditUsers from '../views/Admin/User/AdminEditUsers.vue';
+import AdminRoles from '../views/Admin/Role/AdminRoles.vue';
+import AdminAddRoles from '../views/Admin/Role/AdminAddRoles.vue';
 import AdminEditRoles from '../views/Admin/Role/AdminEditRoles.vue';
 import AdminMapPage from '../views/Admin/Emplacement/AdminMapPage.vue';
 import AdminZonePage from '../views/Admin/Zone/AdminZonePage.vue';
@@ -64,6 +66,16 @@ const routes = [
   },
   {
     path: '/admin/roles',
+    name: 'AdminRoles',
+    component: AdminRoles
+  },
+  {
+    path: '/admin/roles/add',
+    name: 'AdminAddRoles',
+    component: AdminAddRoles
+  },
+  {
+    path: '/admin/roles/edit',
     name: 'AdminEditRoles',
     component: AdminEditRoles
   },
