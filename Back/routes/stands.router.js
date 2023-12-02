@@ -4,6 +4,7 @@ const standsController = require('../controllers/stands.controller');
 const path = require('path');
 
 router.get("/get", standsController.getStands);
+router.get("/get/:id", standsController.getStandById);
 router.post("/uploading/picture-description", standsController.uploadingPictureDescription)
 router.use('/picture-description', express.static(path.join(__dirname,  '../assets/stand/description')))
 

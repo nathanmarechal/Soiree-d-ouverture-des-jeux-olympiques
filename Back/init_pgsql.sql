@@ -698,6 +698,13 @@ ORDER BY p.id_type_prestation;
 
 */
 
+
+SELECT s.id_stand, s.nom_stand, s.image_stand, s.description_stand, s.date_achat, s.prix, e.coordonnes FROM stand s
+JOIN utilisateur u on s.id_stand = u.id_stand
+JOIN emplacement e on s.id_emplacement = e.id_emplacement
+WHERE u.id_user = 2;
+
+
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 

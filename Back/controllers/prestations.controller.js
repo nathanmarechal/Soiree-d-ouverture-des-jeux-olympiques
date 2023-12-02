@@ -61,7 +61,6 @@ exports.uploadPicturePresatation = (req, res) => {
             // Gérer les autres erreurs
             return res.status(500).json({ error: err.message });
         }
-
         // Ici, vous pouvez accéder à req.file et req.body
         const fileDetails = req.file;
 

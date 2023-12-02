@@ -27,6 +27,33 @@ const getAllStands = (callback) => {
         });
 }
 
+async function getStandByIdAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT s.id_stand, s.nom_stand, s.image_stand, s.description_stand, s.date_achat, s.prix, e.coordonnes FROM stand s\n" +
+            "JOIN utilisateur u on s.id_stand = u.id_stand\n" +
+            "JOIN emplacement e on s.id_emplacement = e.id_emplacement\n" +
+            "WHERE u.id_user = $1;",[id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getStandByIdAsync:', error);
+        throw error;
+    }
+
+}
+
+const getStandById = (id, callback) => {
+    getStandByIdAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 
 // Multer Disk Storage Configuration
 const storage = multer.diskStorage({
@@ -39,15 +66,15 @@ const storage = multer.diskStorage({
     }
 });
 
-// Multer Upload Middleware
+
 const upload = multer({ storage: storage });
 
-// Function to handle the picture upload
+
 async function uploadingPictureDescriptionAsync(req) {
     try {
         // Note: 'upload.single('file')' returns a middleware function that needs to be called with req, res, and next
         await new Promise((resolve, reject) => {
-            upload.single('file')(req, {}, (err) => {
+            upload.single('photo')(req, {}, (err) => {
                 if (err) reject(err);
                 else resolve();
             });
@@ -62,7 +89,6 @@ async function uploadingPictureDescriptionAsync(req) {
     }
 }
 
-// Wrapper function for callback style
 const uploadingPictureDescription = (req, callback) => {
     uploadingPictureDescriptionAsync(req)
         .then(res => {
@@ -76,5 +102,6 @@ const uploadingPictureDescription = (req, callback) => {
 
 module.exports = {
     getAllStands: getAllStands,
-    uploadingPictureDescription:uploadingPictureDescription
+    uploadingPictureDescription:uploadingPictureDescription,
+    getStandById:getStandById
 }

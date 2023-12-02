@@ -14,11 +14,24 @@ exports.getStands = (req, res) => {
     })
 }
 
+exports.getStandById = (req, res) => {
+    const id = req.params.id;
+    standsService.getStandById(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.uploadingPictureDescription = (req, res) => {
     standsService.uploadingPictureDescription(req, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
+            console.log(data)
             return res.status(200).send(data);
         }
     });

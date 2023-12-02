@@ -26,8 +26,9 @@
 
 </template>
 <script>
-import axios from 'axios';
+
 import Editor from '@tinymce/tinymce-vue';
+import {uploadImageDescriptionStand} from '@/services/stand.service'
 
 export default {
   components: {
@@ -46,21 +47,31 @@ export default {
     this.myEditor = this.$refs.myEditor;
   },
   methods: {
-    handleImageUpload(blobInfo, success, failure) {
-      const formData = new FormData();
-      formData.append('file', blobInfo.blob(), blobInfo.filename());
+    async handleImageUpload(blobInfo, success, failure) {
+      // Générer un timestamp unique
+      const timestamp = Math.floor(Date.now() / 1000);
 
-      axios.post('http://localhost:3000/api/stands/uploading/picture-description', formData)
-          .then(response => {
-            if (response.data.location) {
-              success(response.data.location);
-            } else {
-              failure('Invalid JSON: ' + response.data);
-            }
-          })
-          .catch(error => {
-            failure('HTTP Error: ' + error.message);
-          });
+      // Construire le nouveau nom de fichier
+      const fileName = `description_id_${timestamp}.jpeg`;
+      // Créer une nouvelle instance de File avec le nouveau nom
+      const fileInstance = new File([blobInfo.blob()], fileName, {
+        type: 'image/jpeg'
+      });
+      try {
+        // Appeler votre fonction d'upload
+        const response = await uploadImageDescriptionStand(fileInstance);
+
+        console.log('réponse front')
+        console.log(response.location)
+        // Vérifier si la réponse contient l'emplacement du fichier uploadé
+        if (response.location) {
+          success(response.location);
+        } else {
+          failure('Invalid response');
+        }
+      } catch (error) {
+        failure('Upload failed: ' + error.message);
+      }
     },
     async saveContent() {
       if (this.myEditor && this.myEditor.editor) {

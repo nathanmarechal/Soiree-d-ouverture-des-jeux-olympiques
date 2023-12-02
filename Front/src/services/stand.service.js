@@ -14,7 +14,7 @@ async function getAllStands() {
 
 
 async function uploadImageDescriptionStandFromAPI(image){
-    return postRequestPicture('/stands/upload/picture-description/',image, 'UPLOADPICTUREDESCRIPTIONSTAND')
+    return postRequestPicture('stands/uploading/picture-description/',image, 'UPLOADPICTUREDESCRIPTIONSTAND')
 }
 
 async function uploadImageDescriptionStand(image) {
