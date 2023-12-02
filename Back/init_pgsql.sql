@@ -718,3 +718,9 @@ DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau 
 INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
 
 DELETE FROM zone WHERE id_zone = 1;
+
+SELECT * FROM ligne_panier WHERE id_user = 1;
+
+UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
+
+UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;

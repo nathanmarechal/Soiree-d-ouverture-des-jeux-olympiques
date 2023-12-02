@@ -77,9 +77,8 @@ export default {
         await this.getTypePrestationsStore()
       if (this.getAllStand.length === 0)
         await this.getStandsStore()
-
-      await this.getCreneauStore()
-      console.log(this.getAllCreneau)
+      if(this.getAllCreneau.length === 0)
+        await this.getCreneauStore()
 
     },
 

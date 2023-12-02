@@ -49,6 +49,30 @@ async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, qu
 
 }
 
+const updateQuantityInPanier = (id_user, id_prestation,  quantite, id_creneau, callback) => {
+
+    updateQuantityInPanierAsync(id_user, id_prestation, quantite , id_creneau)
+        .then(res => {
+            callback(null, "success");
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateQuantityInPanierAsync(id_user, id_prestation, quantite, id_creneau) {
+    try {
+        const conn = await pool.connect();
+        console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier.service.js" + ", quantite:" + quantite + ", id_creneau:" + id_creneau)
+        await conn.query("UPDATE ligne_panier SET quantite = $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4;", [quantite, id_user, id_prestation, id_creneau]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in updateQuantityInPanierAsync:', error);
+        throw error;
+    }
+}
+
 const deletePrestationFromPanierUser = (id_user,id_prestation,id_creneau, callback) => {
 
     deletePrestationFromPanierUserAsync(id_user,id_prestation, id_creneau)
@@ -98,5 +122,6 @@ module.exports = {
     getPanierByUserId: getPanierByUserId,
     deletePrestationFromPanierUser : deletePrestationFromPanierUser,
     getAllCreneaux : getAllCreneaux,
-    addPrestationToPanier : addPrestationToPanier
+    addPrestationToPanier : addPrestationToPanier,
+    updateQuantityInPanier : updateQuantityInPanier
 }

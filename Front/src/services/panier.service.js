@@ -1,4 +1,17 @@
-import {deleteRequest, getRequest, postRequest} from "@/services/axios.service";
+import {deleteRequest, getRequest, patchRequest, postRequest} from "@/services/axios.service";
+
+
+async function updateQuantityInPanierFromAPI({id_user, id_prestation, id_creneau, quantite}){
+    console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier.service.js" + ", quantite:" + quantite + ", id_creneau:" + id_creneau)
+    return patchRequest('/panier/update', {id_user, id_prestation, id_creneau, quantite}, 'UPDATEQUANTITYPRESTATIONFROMPANIERUSER')
+}
+
+async function updateQuantityInPanier({id_user, id_prestation, id_creneau, quantite}){
+    console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier async.service.js" + ", quantite:" + quantite + ", id_creneau:" + id_creneau)
+    let answer = await updateQuantityInPanierFromAPI({id_user, id_prestation, id_creneau, quantite})
+    return answer;
+
+}
 
 async function getPanierUserCourantFromApi(id_user) {
     return getRequest('/panier/get/' + id_user, 'GETPANIERUSERCOURANT')
@@ -42,5 +55,6 @@ export {
     getPanierUserCourant,
     deletePrestationFromPanierUser,
     getAllCreneaux,
-    addPrestationToPanierUser
+    addPrestationToPanierUser,
+    updateQuantityInPanier
 }

@@ -5,7 +5,13 @@ import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
-import {addPrestationToPanierUser, deletePrestationFromPanierUser, getAllCreneaux, getPanierUserCourant} from "@/services/panier.service";
+import {
+    addPrestationToPanierUser,
+    deletePrestationFromPanierUser,
+    getAllCreneaux,
+    getPanierUserCourant,
+    updateQuantityInPanier
+} from "@/services/panier.service";
 
 Vue.use(Vuex)
 
@@ -153,6 +159,19 @@ export default new Vuex.Store({
             });
         },
 
+        UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
+            console.log("nouvelleQuantite " + quantite);
+            state.userCourant.panier = state.userCourant.panier.map(item => {
+                if (item.id_user === id_user && item.id_prestation === Number(id_prestation) && item.id_creneau === id_creneau) {
+                    console.log("quantite " + item.quantite);
+                    console.log("nouvelleQuantite " + quantite);
+                    return { ...item, quantite: quantite };
+                }
+                console.log("UPDATE_PRESTATION_QUANTITY_IN_PANIER " + item.id_user + " presta " + item.id_prestation + " creneau " + item.id_creneau + " quantité " + item.quantite);
+                return item;
+            });
+        },
+
         CREATE_ZONE(state, payload) {
             state.zones.push(payload);
         },
@@ -199,6 +218,17 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+
+        async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
+            try {
+                await updateQuantityInPanier({id_user, id_prestation, id_creneau , quantite});
+                commit('UPDATE_PRESTATION_QUANTITY_IN_PANIER', {id_user, id_prestation, id_creneau , quantite});
+            }
+            catch (error) {
+                console.error('Error updating panier:', error);
+            }
+        },
 
         async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
