@@ -9,6 +9,11 @@
             <h5 class="card-text">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }} €</p>
             <p class="card-text">{{ prestation.type_prestation_libelle }}</p>
+            <!-- Indicateur de disponibilité -->
+            <p class="card-text">Disponible:
+              <span v-if="prestation.is_available">Oui</span>
+              <span v-else>Non</span>
+            </p>
             <div class="d-flex justify-content-center">
               <router-link :to="{ name: 'AdminEditPrestationView', params: { id_prestation: prestation.id_prestation } }" class="btn btn-primary">Modifier</router-link>
               <button class="btn btn-danger" @click="prestationDelete(prestation.id_prestation)">Supprimer</button>
@@ -19,8 +24,6 @@
     </div>
   </div>
 </template>
-
-
 
 <script>
 import { mapGetters } from 'vuex';
