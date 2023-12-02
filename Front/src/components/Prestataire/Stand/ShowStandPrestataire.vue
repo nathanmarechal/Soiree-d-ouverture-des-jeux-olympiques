@@ -70,9 +70,8 @@ export default {
     async handleImageUpload(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
-
       // Construire le nouveau nom de fichier
-      const fileName = `description_id_${timestamp}.jpeg`;
+      const fileName = `description_id_stand_${this.stand.id_stand}_${timestamp}.jpeg`;
       // Créer une nouvelle instance de File avec le nouveau nom
       const fileInstance = new File([blobInfo.blob()], fileName, {
         type: 'image/jpeg'
@@ -81,7 +80,6 @@ export default {
         // Appeler votre fonction d'upload
         const response = await uploadImageDescriptionStand(fileInstance);
 
-        console.log('réponse front')
         console.log(response.location)
         // Vérifier si la réponse contient l'emplacement du fichier uploadé
         if (response.location) {

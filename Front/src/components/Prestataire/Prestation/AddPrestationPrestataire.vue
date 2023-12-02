@@ -112,7 +112,7 @@ export default {
       const croppedCanvas = this.cropper.getCroppedCanvas();
       croppedCanvas.toBlob((blob) => {
         const timestamp = Math.floor(Date.now() / 1000); // Temps en Unix
-        const fileName = `prestation_${this.prestation.imageName}_${timestamp}.jpeg`;
+        const fileName = `prestation_${timestamp}.jpeg`;
         this.prestation.imageName=fileName;
 
         // Créer un nouveau fichier à partir du blob
@@ -153,6 +153,7 @@ export default {
 
 
 <style scoped>
+
 @import 'cropperjs/dist/cropper.css';
 
 </style>
