@@ -29,8 +29,6 @@ import {getUserFromSessionId} from "@/services/utilisateur.service";
 import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant} from "@/services/commande.service";
-// import {getPanierUserCourant} from "@/services/panier.service";
-// import {getCommandeUserCourant} from "@/services/commande.service";
 
 export default {
   props : ['isLoginOpen'],

@@ -75,7 +75,10 @@ export default new Vuex.Store({
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
         getPanierUserCourant : state => state.userCourant.panier,
-        getCommandesUserCourant : state => state.userCourant.commandes,
+        getCommandeUserCourant: state => {
+            console.log("getCommandeUserCourant:", state.userCourant.commandes);
+            return state.userCourant.commandes;
+        },
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -176,7 +179,7 @@ export default new Vuex.Store({
             });
         },
 
-        UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
+         UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
             console.log("nouvelleQuantite " + quantite);
             state.userCourant.panier = state.userCourant.panier.map(item => {
                 if (item.id_user === id_user && item.id_prestation === Number(id_prestation) && item.id_creneau === id_creneau) {
@@ -198,8 +201,10 @@ export default new Vuex.Store({
         },
 
         SET_COMMANDES_USER_COURANT(state, commandes) {
-            console.log("commande reçue dans le set" + commandes)
+            console.log("commande reçue dans le set bah oui" + commandes)
+            console.log("la state : " + this.state.userCourant.commandes)
             state.userCourant.commandes = commandes;
+            console.log("la state : " + this.state.userCourant.commandes)
         },
 
         SET_IS_USER_CONNECTED(state, value) {
@@ -279,7 +284,7 @@ export default new Vuex.Store({
             try {
                 const commandes = await getCommandeUserCourant(user_id);
                 commit('SET_COMMANDES_USER_COURANT', commandes);
-                console.log("commande envoyée au store" + commandes)
+                console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }

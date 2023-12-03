@@ -10,7 +10,7 @@
      </tr>
      </thead>
      <tbody>
-     <tr v-for="item in getCommandesUserCourant" :key="item.id_commande">
+     <tr v-for="item in getCommandeUserCourant" :key="item.id_commande">
        <td>{{ item.date_commande }}</td>
        <td>{{ item.prix_total }} €</td>
        <td>{{item.libelle}}</td>
@@ -25,14 +25,15 @@
 
 <script>
 
+
 import {mapGetters} from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(['getCommandesUserCourant']),
+    ...mapGetters(['getCommandeUserCourant']),
   },
   created() {
-    console.log("getCommandesUserCourant",this.getCommandesUserCourant)
+    console.log(this.getCommandeUserCourant)
   }
 
 }

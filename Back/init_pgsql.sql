@@ -603,7 +603,6 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_av
 
 INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
-('email20@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 1, 2),
 ('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 2, 2),
 ('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 3, 2),
 ('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 4, 2),
@@ -621,12 +620,13 @@ INSERT INTO etat_commande (libelle) VALUES
 INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
 ('2022-02-15', 1, 1),
 ('2022-02-15', 1, 2),
-('2022-02-15', 1, 3),
-('2022-02-15', 2, 4);
+('2022-02-15', 2, 1);
 
 INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix ) VALUES
+(1,1,5,1,5, 50),
 (1,1,1,1,5, 50),
-(1,2,2,1,5, 20);
+(2,2,2,1,10, 20);
+
 
 INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
 (1, 1, 1, 5),
@@ -731,33 +731,38 @@ UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 A
 
 UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
 
-INSERT into ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite) VALUES (1, 1, 12, 5,5);
 
 
 -- vider le panier pour ajouter le tout dans les commandes
 SELECT * FROM ligne_panier WHERE id_user = 1;
 
+SELECT * FROM ligne_panier
+    LEFT JOIN prestation p on ligne_panier.id_prestation = p.id_prestation
+    WHERE id_user=1;
+
 INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), 1, 1);
+
 SELECT * FROM commande;
 
-DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=1 AND id_creneau=5;
+DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=2 AND id_creneau=5;
 
 INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite, prix ) VALUES (1, 1, 12, 12,5, 50);
 
-SELECT c.id_commande, date_commande, c.id_etat_commande, id_prestation, sum( ligne_commande.prix * quantite) as prix_total, sum(quantite) as nbr_presta,
-       e.libelle, prix
-    FROM ligne_commande
-    JOIN commande c on c.id_commande=ligne_commande.id_commande
+
+
+SELECT c.id_commande, date_commande, c.id_etat_commande, sum( ligne_commande.prix * quantite) as prix_total, sum(quantite) as nbr_presta, e.libelle
+    FROM commande c
+    LEFT JOIN ligne_commande on c.id_commande = ligne_commande.id_commande
     JOIN etat_commande e on e.id_etat=c.id_etat_commande
-    WHERE c.id_user=1
-    GROUP BY  c.date_commande, c.id_commande, c.id_user, e.id_etat, id_prestation, libelle, prix
-    ORDER BY id_etat, date_commande desc
+    WHERE c.id_user=2
+    GROUP BY c.date_commande, c.id_commande, c.id_user, e.libelle
+    ORDER BY date_commande desc;
 
-
+select * from ligne_commande where id_user=1;
 --pas touchewwww les bebewwww
 
 
-UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
+-- UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
 
 SELECT * FROM commande;
 
