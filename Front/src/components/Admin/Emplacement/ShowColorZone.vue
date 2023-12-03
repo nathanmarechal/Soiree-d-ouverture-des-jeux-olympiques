@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column gap-4">
     <h2>Légende des zones</h2>
-    <div v-for="(zone, index) in zones" :key="index" class="d-flex align-content-center">
+    <div v-for="(zone, index) in getAllZone" :key="index" class="d-flex align-content-center">
       <div class="cercle" :style="{ background: zone.couleur_hexa }"></div>
       <span>{{ zone.libelle }} ({{zone.type_zone_libelle}})</span>
     </div>
@@ -9,20 +9,33 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
+  /*
   data() {
     return {
-      zones: [], // Initialisation du tableau des zones
+      zones: [],
     };
   },
-  async created() {
-    // Appel de la méthode getZone pour obtenir les données des zones depuis le store Vuex
-    this.zones = await this.getZones();
+   */
+  async mounted() {
+    await this.loadData();
+    //this.zones = await this.getZones();
+  },
+  computed: {
+    ...mapGetters(['getAllZone']),
   },
   methods: {
-    ...mapActions(['getZones']),
+    ...mapActions(['getZonesStore']),
+    async loadData() {
+      try {
+        if (this.getAllZone.length === 0)
+          await this.getZonesStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
   },
 };
 </script>

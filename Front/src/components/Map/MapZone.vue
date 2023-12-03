@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getAllAreas',
+      'getAllArea',
       'getAllZone',
       'getSelectedZone',
       'getSelectedTypePrestation',
@@ -60,7 +60,7 @@ methods: {
     ...mapActions(['getAreasStore', 'getZonesStore']),
     async loadData() {
       try {
-        if (this.getAllAreas.length === 0) {
+        if (this.getAllArea.length === 0) {
           await this.getAreasStore();
         }
         if (this.getAllZone.length === 0) {
@@ -115,7 +115,7 @@ methods: {
       let filteredAreas = [];
 
       if (hasSearchCriteria) {
-        filteredAreas = this.getAllAreas.filter(zone => {
+        filteredAreas = this.getAllArea.filter(zone => {
           const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
           const matchesType = selectedTypePrestationIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypePrestationIds.includes(id)));
@@ -125,7 +125,7 @@ methods: {
       }
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
-        filteredAreas = this.getAllAreas.filter(zone => {
+        filteredAreas = this.getAllArea.filter(zone => {
           return (zone.isfree === false)});
       }
 

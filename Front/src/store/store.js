@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import {getAllUsers, getAllRoles, deleteRole, updateRole, createRole, createUser, updateUser, deleteUser} from "@/services/utilisateur.service";
-import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone} from "@/services/map.service";
+import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
 import {
@@ -64,7 +64,7 @@ export default new Vuex.Store({
         getAllUser : state => state.users,
         getAllRole : state => state.roles,
         getAllTypeZone: state => state.typeZone,
-        getAllAreas: state=> state.areas,
+        getAllArea: state=> state.areas,
         getAllStand: state => state.stands,
         getAllTypePrestation: state => state.typePresations,
         getAllPrestation: state => state.prestations,
@@ -109,6 +109,21 @@ export default new Vuex.Store({
         SET_AREAS(state, areas) {
             state.areas.splice(0)
             areas.forEach(p => state.areas.push(p))
+        },
+
+        UPDATE_AREA(state, data) {
+            const area = state.areas.find(area => area.id_emplacement === data.id);
+            if (area) {
+                area.id_zone = data.body.id_zone;
+            }
+        },
+
+        DELETE_AREA(state, id) {
+            state.areas = state.areas.filter(item => item.id_emplacement !== id);
+        },
+
+        CREATE_AREA(state, payload) {
+            state.areas.push(payload);
         },
 
         SET_TYPE_ZONE(state, typeZone) {
@@ -483,7 +498,7 @@ export default new Vuex.Store({
             }
         },
 
-        async updateZoneStore({ commit }, {id, body}) {
+        async updateZoneStore({ commit }, {id, body}) {  // A REVOIR
             try {
                 await updateZone(id, body);
                 commit('UPDATE_ZONE', id, body);
@@ -523,6 +538,34 @@ export default new Vuex.Store({
           } catch (err) {
               console.error("Error in getAreasStore():", err);
           }
+        },
+
+        async updateAreasStore({ commit },{id, body}) {
+            try {
+                await updateArea(id, body);
+                console.log("updateAreasStore: ", id, body)
+                commit('UPDATE_AREA', {id, body});
+            } catch (err) {
+                console.error("Error in updateZoneStore():", err);
+            }
+        },
+
+        async deleteAreasStore({ commit }, id) {
+            try {
+                await deleteArea(id);
+                commit('DELETE_AREA', id);
+            } catch (err) {
+                console.error("Error in deleteZoneStore():", err);
+            }
+        },
+
+        async createAreasStore({ commit }, body) {
+            try {
+                await createArea(body);
+                commit('CREATE_AREA', body);
+            } catch (err) {
+                console.error("Error in createZoneStore():", err);
+            }
         },
 
 

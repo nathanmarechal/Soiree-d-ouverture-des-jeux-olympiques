@@ -11,7 +11,7 @@
           <th>Zone</th>
           <td>
             <select v-model="zone">
-              <option v-for="(zoneList, index) in zones" :key="index" :value="zoneList.id_zone">
+              <option v-for="(zoneList, index) in getAllZone" :key="index" :value="zoneList.id_zone">
                 {{ zoneList.libelle }}
               </option>
             </select>
@@ -27,30 +27,35 @@
 
 <script>
 
-import { createArea } from "@/services/map.service";
+//import { createArea } from "@/services/map.service";
+
+import {mapGetters, mapActions} from "vuex";
 
 export default {
-  props: ['modalActiveAdd','newArea', 'zones'],
+  props: ['modalActiveAdd','newArea'],
   data() {
     return {
       zone: null,
     };
   },
+  computed: {
+    ...mapGetters(['getAllZone']),
+  },
   methods: {
+    ...mapActions(['createAreasStore']),
     initializeZone() {
       this.zone = this.selectedZone.id_zone;
     },
-
     async areaCreated() {
       if (this.zone) {
         const areaData = {
-          coordonnes: this.newArea.coordinates,
+          coordinates: this.newArea.coordinates,
           surface: this.newArea.surface,
           id_zone: this.zone,
         };
 
         try {
-          await createArea(areaData);
+          await this.createAreasStore(areaData);
           console.log('Area created:', areaData);
           this.$emit('close');
         } catch (error) {

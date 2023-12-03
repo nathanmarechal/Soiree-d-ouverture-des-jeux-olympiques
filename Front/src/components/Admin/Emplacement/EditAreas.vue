@@ -3,8 +3,8 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <modal-edit :modalActiveEdit="modalActiveEdit" :selectedZone="zone" :zones="zones" @close="toggleModalEdit"></modal-edit>
-    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" :zones="zones" @close="toggleModalAdd"></modal-add>
+    <modal-edit :modalActiveEdit="modalActiveEdit" :selectedArea="selectedArea" @close="toggleModalEdit"></modal-edit>
+    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" @close="toggleModalAdd"></modal-add>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import 'leaflet-draw';
 import ModalEdit from '../Emplacement/ModalEdit.vue'
 import ModalAdd from '../Emplacement/ModalAdd.vue'
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -25,11 +25,9 @@ export default {
   },
   data() {
     return {
-      areas : [],
-      zones : [],
 
       map: null,
-      zone: null,
+      selectedArea: null,
       polygons: [],
       newArea: null,
       modalActiveEdit: false,
@@ -38,17 +36,30 @@ export default {
   },
   async mounted() {
     try {
-      this.areas = await this.getAreas();
-      this.zones = await this.getZones();
+      await this.loadData();
+      //this.areas = await this.getAreas();
+      //this.zones = await this.getZones();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
+  computed: {
+    ...mapGetters(['getAllArea', 'getAllZone']),
+  },
   methods: {
-    ...mapActions(['getAreas', 'getZones']),
+    ...mapActions(['getAreasStore', 'getZonesStore']),
+    async loadData() {
+      try {
+        if (this.getAllArea.length === 0)
+          await this.getAreasStore();
+        if (this.getAllZone.length === 0)
+          await this.getZonesStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
     initializeMap() {
-      console.log('initialized');
       // Initialize the Leaflet map with a default view
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
 
@@ -79,37 +90,35 @@ export default {
           coordinates: [],
           surface: 0,
         };
-        this.addZone(layer.getLatLngs());
+        this.addArea(layer.getLatLngs());
       });
 
       this.updateMap();
     },
 
     updateMap() {
-      console.log('updateMAP');
+      console.log('updateMAP')
       // Supprimez les polygones actuels de la carte
       this.polygons.forEach((polygon) => {
         this.map.removeLayer(polygon);
       });
 
-      const areas = this.areas;
+      //const areas = this.areas;
       // Ajoutez à nouveau les polygones filtrés à la carte
-      areas.forEach((zone) => {
-        const polygon = L.polygon(zone.coordinates, {
-          color: zone.couleur_hexa,
+        this.getAllArea.forEach((area) => {
+        const polygon = L.polygon(area.coordinates, {
+          //color: area.couleur_hexa,
+          color: this.getAllZone.find(zone => zone.id_zone === area.id_zone).couleur_hexa,
           fillOpacity: 0.9,
         }).addTo(this.map);
-
         polygon.on('click', () => {
-          this.showZoneInfo(zone);
+          this.showAreaInfo(area);
         });
-
         this.polygons.push(polygon);
       });
     },
 
-    addZone(coordinates) {
-      console.log('add coordinate');
+    addArea(coordinates) {
       this.toggleModalAdd();
 
       // Initialisez l'objet newArea avec des propriétés vides
@@ -126,11 +135,11 @@ export default {
       // Assigner les coordonnées et calculer la surface
       this.newArea.coordinates = formattedCoordinates;
       this.newArea.surface = this.calculateEarthSurfaceArea(formattedCoordinates);
-      console.log(this.newArea);
     },
-    showZoneInfo(zone){
+
+    showAreaInfo(area){
       this.toggleModalEdit();
-      this.zone =zone
+      this.selectedArea = area
     },
 
     async toggleModalEdit() {
@@ -139,8 +148,9 @@ export default {
       // Check if the modal was just closed
       if (!this.modalActiveEdit) {
         // Refresh data if necessary
-        this.areas = await this.getAreas(); // Refresh areas data
-        this.zones = await this.getZones(); // Refresh zones data
+        //this.areas = await this.getAreas(); // Refresh areas data
+        //this.zones = await this.getZones(); // Refresh zones data
+
 
         // Update the map
         this.updateMap();
@@ -151,14 +161,20 @@ export default {
       this.modalActiveAdd = !this.modalActiveAdd;
 
       // Check if the modal was just closed
+
       if (!this.modalActiveAdd) {
         // Refresh data if necessary
-        this.areas = await this.getAreas(); // Refresh areas data
-        this.zones = await this.getZones(); // Refresh zones data
+        //this.areas = await this.getAreas(); // Refresh areas data
+        //this.zones = await this.getZones(); // Refresh zones data
+
+        //await this.getAreasStore()
+        //await this.getZonesStore()
 
         // Update the map
         this.updateMap();
       }
+
+
     },
 
     calculateEarthSurfaceArea(coords) {

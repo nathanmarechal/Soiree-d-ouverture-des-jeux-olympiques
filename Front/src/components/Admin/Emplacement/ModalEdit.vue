@@ -3,18 +3,18 @@
     <div class="modal-inner">
       <h3>Edit Area</h3>
 
-      <!-- Tableau pour afficher les détails de la zone verticalement -->
+      <!-- Tableau pour afficher les détails de l'emplacement verticalement -->
       <table>
         <tr>
           <th>ID </th>
-          <td>{{ selectedZone.id_emplacement }}</td>
+          <td>{{ selectedArea.id_emplacement }}</td>
         </tr>
         <tr>
           <th>Zone</th>
-          <td v-if="!isEditZoneActive">{{ selectedZone.zone }}</td>
-          <td v-if="isEditZoneActive">
+          <td v-if="!isEditAreaActive">{{ selectedArea.zone }}</td>
+          <td v-if="isEditAreaActive">
             <select v-model="zone">
-              <option v-for="(zoneList, index) in zones" :key="index" :value="zoneList.id_zone">
+              <option v-for="(zoneList, index) in getAllZone" :key="index" :value="zoneList.id_zone">
                 {{ zoneList.libelle }}
               </option>
             </select>
@@ -22,17 +22,17 @@
         </tr>
         <tr>
           <th>Surface</th>
-          <td>{{ selectedZone.surface_area }}</td>
+          <td>{{ selectedArea.surface_area }}</td>
         </tr>
         <tr>
           <th>Libre</th>
-          <td>{{ selectedZone.isfree ? 'Oui' : 'Non' }}</td>
+          <td>{{ selectedArea.isfree ? 'Oui' : 'Non' }}</td>
         </tr>
       </table>
 
-      <button @click="$emit('close'); isEditZoneActive = false" type="button" class="btn btn-success">Fermer</button>
-      <button v-if="!isEditZoneActive" @click="isEditZoneActive = true; initializeZone()" type="button" class="btn btn-warning">Modifier zone</button>
-      <button v-if="isEditZoneActive" @click=" areaUpdate(); isEditZoneActive = false" type="button" class="btn btn-warning">Confirmer modification zone</button>
+      <button @click="$emit('close'); isEditAreaActive = false" type="button" class="btn btn-success">Fermer</button>
+      <button v-if="!isEditAreaActive" @click="isEditAreaActive = true; initializeArea()" type="button" class="btn btn-warning">Modifier emplacement</button>
+      <button v-if="isEditAreaActive" @click=" areaUpdate(); isEditAreaActive = false" type="button" class="btn btn-warning">Confirmer modification emplacement</button>
       <button @click="areaDelete()" type="button" class="btn btn-danger">Supprimer</button>
     </div>
   </div>
@@ -40,56 +40,57 @@
 
 <script>
 
-import { updateArea, deleteArea } from "@/services/map.service";
-
+import {mapActions, mapGetters} from "vuex";
 
 export default {
-  props: ['modalActiveEdit','selectedZone', 'zones'],
+  props: ['modalActiveEdit','selectedArea'],
   data() {
     return {
       zone: null,
-      isEditZoneActive:false,
+      isEditAreaActive:false,
     };
   },
+  computed: {
+    ...mapGetters(['getAllZone']),
+  },
   methods: {
-    initializeZone() {
-      this.zone = this.selectedZone.id_zone;
+    ...mapActions(['updateAreasStore', 'deleteAreasStore']),
+    initializeArea() {
+      this.zone = this.selectedArea.id_zone;
     },
     toggleIsEditZoneActive(){
-      this.isEditZoneActive = !this.isEditZoneActive;
+      this.isEditAreaActive = !this.isEditAreaActive;
     },
     async areaUpdate() {
-      console.log("selectedZone: " + JSON.stringify(this.selectedZone, null, 2));
-      console.log("zone: " + JSON.stringify(this.zone, null, 2));
-      if (this.selectedZone) {
+      if (this.selectedArea) {
         try {
           const updatedData = {
             id_zone: this.zone,
           };
-          const response = await updateArea(this.selectedZone.id_emplacement, updatedData);
+          const response = await this.updateAreasStore({id: this.selectedArea.id_emplacement, body: updatedData});
           console.log("response: " + JSON.stringify(response, null, 2));
           //alert('Zone updated successfully');
           this.$emit('close'); // close the modal
         } catch (error) {
-          console.error('Error updating zone:', error);
-          alert('Error updating zone');
+          console.error('Error updating area:', error);
+          alert('Error updating area');
         }
       } else {
-        alert('Please select a zone');
+        alert('Please select an area');
       }
     },
     async areaDelete() {
-      if (this.selectedZone) {
+      if (this.selectedArea) {
         try {
-          await deleteArea(this.selectedZone.id_emplacement);
+          await this.deleteAreasStore(this.selectedArea.id_emplacement);
           //alert('Zone deleted successfully');
           this.$emit('close'); // close the modal
         } catch (error) {
-          console.error('Error deleting zone:', error);
-          alert('Error deleting zone');
+          console.error('Error deleting area:', error);
+          alert('Error deleting area');
         }
       } else {
-        alert('Please select a zone');
+        alert('Please select an area');
       }
     },
   },
