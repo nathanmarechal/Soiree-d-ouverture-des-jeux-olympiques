@@ -34,7 +34,7 @@ async function getAllAreasAsync() {
             "        WHERE p.id_stand = s.id_stand\n" +
             "    ) AS \"id_type_prestation\",\n" +
             "    e.coordonnes AS \"coordinates\",\n" +
-            "    e.surface AS \"surface_area\"\n" +
+            "    e.surface AS \"surface\"\n" +
             "FROM\n" +
             "    emplacement e\n" +
             "LEFT JOIN\n" +

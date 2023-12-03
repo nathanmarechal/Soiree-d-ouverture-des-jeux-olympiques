@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <th>Surface</th>
-          <td>{{ selectedArea.surface_area }}</td>
+          <td>{{ selectedArea.surface }}</td>
         </tr>
         <tr>
           <th>Libre</th>
