@@ -18,9 +18,7 @@ async function getPanierUserCourantFromApi(id_user) {
 }
 
 async function getPanierUserCourant(id_user){
-    //console.log("getting a token for "+userEmail+", "+password);
     let answer = await getPanierUserCourantFromApi(id_user)
-    //console.log("token : "+answer);
     return answer;
 }
 

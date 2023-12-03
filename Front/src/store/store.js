@@ -12,6 +12,8 @@ import {
     getPanierUserCourant,
     updateQuantityInPanier
 } from "@/services/panier.service";
+import {getCommandeUserCourant} from "@/services/commande.service";
+// import {stat} from "@babel/core/lib/gensync-utils/fs";
 
 Vue.use(Vuex)
 
@@ -28,6 +30,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier":  [],
+            "commandes" : [],
             "id_role": null,
         },
 
@@ -54,8 +57,6 @@ export default new Vuex.Store({
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,
-
-
     },
 
     getters: {
@@ -74,6 +75,7 @@ export default new Vuex.Store({
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
         getPanierUserCourant : state => state.userCourant.panier,
+        getCommandesUserCourant : state => state.userCourant.commandes,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -180,6 +182,11 @@ export default new Vuex.Store({
             state.userCourant.panier.push({"id_user" : id_user, "id_prestation" : id_prestation, "quantite" : quantite, "id_creneau": id_creneau});
         },
 
+        SET_COMMANDES_USER_COURANT(state, commandes) {
+            console.log("commande reçue dans le set" + commandes)
+            state.userCourant.commandes = commandes;
+        },
+
         SET_IS_USER_CONNECTED(state, value) {
             state.isUserConnected = value;
         },
@@ -253,6 +260,26 @@ export default new Vuex.Store({
 
     actions: {
 
+        async getCommandeUserCourantStore({commit},user_id){
+            try {
+                const commandes = await getCommandeUserCourant(user_id);
+                commit('SET_COMMANDES_USER_COURANT', commandes);
+                console.log("commande envoyée au store" + commandes)
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+        async getPanierUserCourantStore({commit},user_id){
+            try {
+                const panier = await getPanierUserCourant(user_id);
+                commit('SET_PANIER_USER_COURANT', panier);
+                console.log("le panier dans le store : " + panier)
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
 
         async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
             try {
@@ -292,14 +319,7 @@ export default new Vuex.Store({
             }
         },
 
-        async getPanierUserCourantStore({commit},user_id){
-            try {
-                const panier = await getPanierUserCourant(user_id);
-                commit('SET_PANIER_USER_COURANT', panier);
-            } catch (error) {
-                console.error('Error fetching panier:', error);
-            }
-        },
+
 
 
         async getUsers(data,session_id) {
