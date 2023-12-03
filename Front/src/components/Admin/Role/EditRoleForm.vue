@@ -23,6 +23,7 @@ export default {
   async mounted() {
     try {
       this.role = this.selected_role;
+      console.log(this.role);
       await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
@@ -43,7 +44,11 @@ export default {
     },
     async submitForm() {
       try {
-        await this.updateRoleStore(this.role);
+        console.log("eee",this.role.id_role, this.role.libelle);
+        await this.updateRoleStore({
+          id_role: this.role.id_role,
+          libelle: this.role.libelle,
+        });
         this.$router.push({ name: "AdminRoles" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);

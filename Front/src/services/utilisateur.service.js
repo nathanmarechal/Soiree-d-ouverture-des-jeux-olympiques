@@ -79,7 +79,9 @@ async function updateRole(body) {
 }
 
 async function updateRoleFromAPI(body) {
-    return patchRequest('/users/roles/', body, 'UPDATEROLE')
+    let id = body.id_role
+    console.log("updateRoleFromAPI: ", id,body)
+    return patchRequest('/users/roles/' + id, body, 'UPDATEROLE')
 }
 
 async function getAllRoles(session_id) {

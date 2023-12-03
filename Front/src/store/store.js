@@ -365,7 +365,7 @@ export default new Vuex.Store({
             }
         },
 
-        async updateRoleStore({ commit }, {id, body}) {
+        async updateRoleStore({ commit }, id, body) {
             try {
                 await updateRole(id, body);
                 commit('UPDATE_ROLE', id, body);
@@ -373,6 +373,7 @@ export default new Vuex.Store({
                 console.error("Error in updateRoleStore():", err);
             }
         },
+        
 
         async createRoleStore({ commit }, body) {
             try {
