@@ -11,7 +11,7 @@ async function getBestSellerPrestationAsync() {
         console.log("result : " + result.rows)
         return result.rows;
     } catch (error) {
-        console.error('Error in getAllTypePrestationsAsync:', error);
+        console.error('Error in getBestSellerPrestationAsync:', error);
         throw error;
     }
 }
@@ -27,6 +27,39 @@ const getBestSellerPrestation = (callback) => {
         });
 }
 
+async function getNewStandByMounthAsync() {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT\n" +
+            "  TO_CHAR(DATE_TRUNC('month', date_achat), 'YYYY-MM') AS mois,\n" +
+            "  COUNT(id_stand) AS nombre_stands\n" +
+            "FROM\n" +
+            "  stand\n" +
+            "GROUP BY\n" +
+            "  DATE_TRUNC('month', date_achat)\n" +
+            "ORDER BY\n" +
+            "  DATE_TRUNC('month', date_achat);");
+        conn.release();
+        console.log("result : " + result.rows)
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getNewStandByMounthAsync:', error);
+        throw error;
+    }
+}
+
+const getNewStandByMounth = (callback) => {
+    getNewStandByMounthAsync()
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 module.exports = {
-    getBestSellerPrestation: getBestSellerPrestation
+    getBestSellerPrestation: getBestSellerPrestation,
+    getNewStandByMounth:getNewStandByMounth
 }
