@@ -44,7 +44,7 @@ export default {
     async submitForm() {
       try {
         await this.updateRoleStore(this.role);
-        this.$router.push({ name: "AdminRoleListView" });
+        this.$router.push({ name: "AdminRoles" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);
       }

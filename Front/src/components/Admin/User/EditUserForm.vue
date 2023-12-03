@@ -45,44 +45,64 @@
                     <p>Prix: {{ localUser.stand.prix }}</p>
                 </div>
             </div>
-            <button class="blue-button" type="submit">Sauvegarder</button>
-            <button class="red-button" type="button" @click="$emit('close')">Annuler</button>
+            <button class="blue-button" type="btn btn-success">Sauvegarder</button>
+            <router-link to="/admin/users/" class="btn btn-danger">Quitter</router-link>
         </form>
     </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-    props: {
-        user: {
-            type: Object,
-            required: true,
-        },
-        roles: {
-            type: Array,
-            required: true,
-        },
-        typePresentation: {
-            type: String,
-            required: true,
-        },
-        typeZone: {
-            type: String,
-            required: true,
-        },
-    },
+    props: ['selected_user'],
     data() {
         return {
-            localUser: JSON.parse(JSON.stringify(this.user)), // Deep copy of user
+            user : {},
         };
     },
-    methods: {
-        submitForm() {
-            this.$emit('update-user', this.localUser);
-        },
+    async mounted() {
+        try {
+            this.user = this.selected_user;
+            await this.loadData();
+        } catch (error) {
+            console.error('Erreur lors du chargement des données :', error);
+        }
     },
-};
+    computed:{
+        ...mapGetters(['getAllRoles']),
+    },
+    methods: {
+        ...mapActions(['getRolesStore', 'updateUserStore']),
+        async loadData() {
+            try {
+                if (this.getAllRoles.length === 0)
+                    await this.getRolesStore();
+            } catch (error) {
+                console.error('Erreur lors du chargement des données :', error);
+            }
+        },
+        async submitForm() {
+            try {
+                console.log("Données de l'utilisateur :", this.user);
+                await this.updateUserStore({id : this.user.id, body : {
+                    prenom: this.user.prenom,
+                    nom: this.user.nom,
+                    email: this.user.email,
+                    adresse: this.user.adresse,
+                    code_postal: this.user.code_postal,
+                    password: this.user.password,
+                    role: this.user.role
+                }});
+                await this.$router.push('/admin/users/');
+            } catch (error) {
+                console.error("Erreur lors de la modification de l'utilisateur :", error);
+            }
+        }
+    },
+}
 </script>
+
 
 <style scoped>
 .edit-user-form {
@@ -116,33 +136,4 @@ select {
     width: 100%;
 }
 
-button[type='submit'] {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #4d79ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-button[type='submit']:hover {
-    background-color: #1a53ff;
-}
-
-.red-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.red-button:hover {
-    background-color: #e60000;
-}
 </style>

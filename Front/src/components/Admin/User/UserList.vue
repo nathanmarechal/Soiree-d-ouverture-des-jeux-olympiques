@@ -18,7 +18,7 @@
             <td>{{ getRoleName(user.id_role) }}</td>
             <td>{{ user.stand ? user.stand.nom_stand : '-' }}</td>
             <td>
-              <button class="blue-button" @click="editUser(index)">Modifier</button>
+              <router-link :to="{ name: 'AdminEditUserView', params: { selected_user: user } }" class="blue-button">Modifier</router-link>
               <button class="red-button" @click="deleteUser(index)">Supprimer</button>
             </td>
           </tr>
@@ -28,53 +28,39 @@
   </template>
   
   <script>
-  import {deleteUser} from "@/services/utilisateur.service";
-  export default {
-    props: {
-      users: {
-        type: Array,
-        required: true,
-      },
-      filteredUsers: {
-        type: Array,
-        required: true,
-      },
-    },
+  import {mapActions, mapGetters} from 'vuex';
 
+  export default{
+    async mounted() {
+      try {
+        await this.loadData();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
+    computed: {
+      ...mapGetters(['getAllUsers', 'getFilteredUsers']),
     methods: {
-      editUser(index) {
-        this.$emit('edit-user', index);
+      ...mapActions(['getUsersStore', 'deleteUserStore']),
+      async loadData() {
+        if (this.getAllUsers.length === 0)
+          await this.getUsersStore();
       },
       async deleteUser(index) {
-        try {
-          console.log("User to delete:", index);
-          // Call the deleteUser method directly
-          const response = await deleteUser(index);
-          this.$emit('delete-user', index);
-          console.log("User deleted successfully:", response);
-        } catch (error) {
-          console.error('Erreur lors de la suppression de l\'utilisateur:', error);
-        }
-      },
-
-/*
-        DeleteUser(id) {
-          return axios.delete(`${API_URL}/utilisateur/${id}`)
-        }
-
- */
-        getRoleName(id_role) {
-          switch (id_role) {
-            case 1:
-              return 'Administrateur';
-            case 2:
-              return 'Prestataire';
-            default:
-              return 'Unknown Role';
+        const user = this.filteredUsers[index];
+        const confirmMessage = `Êtes-vous sûr de vouloir supprimer l'utilisateur ${user.prenom} ${user.nom} ?`;
+        if (confirm(confirmMessage)) {
+          try {
+            await this.deleteUserStore(user.id_utilisateur);
+            //this.getAllUsers.splice(index, 1);
+          } catch (error) {
+            console.error('Erreur lors de la suppression de l\'utilisateur :', error);
+            }
           }
         }
+      }
     },
-  };
+  }
   </script>
   
   <style scoped>

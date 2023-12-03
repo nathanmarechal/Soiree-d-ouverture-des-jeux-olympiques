@@ -12,11 +12,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(role, index) in getAllRoles" :key="index">
+                <tr v-for="(role, index) in getAllRole" :key="index">
                   <td>{{ role.id_role }}</td>
                   <td>{{ role.libelle }}</td>
                   <td>
-                    <router-link :to="{ name: 'AdminEditRoleView', params: { selected_role: role } }" class="btn btn-primary">Modifier</router-link>
+                    <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">Modifier</router-link>
                     <button class="btn btn-danger" @click="removeRole(role)">Supprimer</button>
                   </td>
                 </tr>
@@ -40,7 +40,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllRoles']),
+      ...mapGetters(['getAllRole']),
     },
     methods: {
       ...mapActions(['getRolesStore', 'deleteRoleStore']),

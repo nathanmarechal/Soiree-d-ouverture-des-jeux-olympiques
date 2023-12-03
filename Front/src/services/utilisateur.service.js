@@ -79,7 +79,7 @@ async function updateRole(body) {
 }
 
 async function updateRoleFromAPI(body) {
-    return patchRequest('/users/roles/' + body.id_role, body, 'UPDATEROLE')
+    return patchRequest('/users/roles/', body, 'UPDATEROLE')
 }
 
 async function getAllRoles(session_id) {

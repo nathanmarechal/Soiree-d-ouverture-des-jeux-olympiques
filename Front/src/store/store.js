@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {getAllUsers, getAllRoles} from "@/services/utilisateur.service";
+import {getAllUsers, getAllRoles, deleteRole, updateRole, createRole, createUser, updateUser, deleteUser} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
@@ -213,7 +213,41 @@ export default new Vuex.Store({
 
         SET_ALL_CRENEAU(state, creneau){
             state.creneau = creneau;
-        }
+        },
+
+        CREATE_USER(state, payload) {
+            state.users.push(payload);
+        },
+
+        CREATE_ROLE(state, payload) {
+            state.roles.push(payload);
+        },
+
+        DELETE_USER(state, id) {
+            state.users = state.users.filter(item => item.id_user !== id);
+        },
+
+        DELETE_ROLE(state, id) {
+            state.roles = state.roles.filter(item => item.id_role !== id);
+        },
+
+        UPDATE_USER(state, payload) {
+            state.users = state.users.map(item => {
+                if (item.id_user === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        UPDATE_ROLE(state, payload) {
+            state.roles = state.roles.map(item => {
+                if (item.id_role === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
 
     },
 
@@ -302,6 +336,60 @@ export default new Vuex.Store({
             }
         },
 
+        async deleteRoleStore({ commit }, id) {
+            try {
+                await deleteRole(id);
+                commit('DELETE_ROLE', id);
+            } catch (err) {
+                console.error("Error in deleteRoleStore():", err);
+            }
+        },
+
+        async updateRoleStore({ commit }, {id, body}) {
+            try {
+                await updateRole(id, body);
+                commit('UPDATE_ROLE', id, body);
+            } catch (err) {
+                console.error("Error in updateRoleStore():", err);
+            }
+        },
+
+        async createRoleStore({ commit }, body) {
+            try {
+                console.log("createRoleStore: ", body)
+                await createRole(body);
+                commit('CREATE_ROLE', body);
+            } catch (err) {
+                console.error("Error in createRoleStore():", err);
+            }
+        },
+
+        async createUserStore({ commit }, body) {
+            try {
+                await createUser(body);
+                commit('CREATE_USER', body);
+            } catch (err) {
+                console.error("Error in createUserStore():", err);
+            }
+        },
+
+        async updateUserStore({ commit }, {id, body}) {
+            try {
+                await updateUser(id, body);
+                commit('UPDATE_USER', id, body);
+            } catch (err) {
+                console.error("Error in updateUserStore():", err);
+            }
+        },
+
+        async deleteUserStore({ commit }, id) {
+            try {
+                await deleteUser(id);
+                commit('DELETE_USER', id);
+            } catch (err) {
+                console.error("Error in deleteUserStore():", err);
+            }
+        },
 
         async getRolesStore({ commit }) {
           try {

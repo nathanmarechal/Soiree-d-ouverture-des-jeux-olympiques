@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
-    <!-- Removed the input field for maxId -->
     <div class="form-group">
       <label for="libelle">Libellé:</label>
       <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
@@ -12,18 +11,10 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
 export default {
-  props: {
-    maxId: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
     return {
       role: {
-        id_role: this.maxId,
         libelle: ''
       }
     };
@@ -51,7 +42,7 @@ export default {
     async submitForm() {
       try {
         await this.createRoleStore(this.role);
-        this.$router.push({ name: "AdminRoleListView" });
+        this.$router.push({ name: "AdminRoles" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);
       }

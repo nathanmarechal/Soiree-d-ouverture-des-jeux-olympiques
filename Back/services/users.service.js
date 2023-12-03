@@ -214,10 +214,9 @@ const createRole = (body, callback) => {
 
 async function createRoleAsync(body) {
     try {
-        const id_role = body.id_role;
         const libelle = body.libelle;
         const conn = await pool.connect();
-        const result = await conn.query("INSERT INTO role (id_role, libelle) VALUES ($1, $2)", [id_role, libelle]);
+        const result = await conn.query("INSERT INTO role (libelle) VALUES ($1)", [libelle]);
         conn.release();
         return result;
     } catch (error) {
