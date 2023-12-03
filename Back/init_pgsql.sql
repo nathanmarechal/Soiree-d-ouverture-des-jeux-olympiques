@@ -154,6 +154,7 @@ CREATE TABLE ligne_commande
     id_prestation INT,
     id_creneau INT,
     quantite INT,
+    prix FLOAT,
     PRIMARY KEY(id_user, id_prestation, id_creneau),
     FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau) ON DELETE CASCADE,
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
@@ -623,9 +624,9 @@ INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
 ('2022-02-15', 1, 3),
 ('2022-02-15', 2, 4);
 
-INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite ) VALUES
-(1,1,1,1,5),
-(1,2,2,1,5);
+INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix ) VALUES
+(1,1,1,1,5, 50),
+(1,2,2,1,5, 20);
 
 INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
 (1, 1, 1, 5),
@@ -741,7 +742,17 @@ SELECT * FROM commande;
 
 DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=1 AND id_creneau=5;
 
-INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite ) VALUES (1, 1, 12, 12,5);
+INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite, prix ) VALUES (1, 1, 12, 12,5, 50);
+
+SELECT c.id_commande, date_commande, c.id_etat_commande, id_prestation, sum( ligne_commande.prix * quantite) as prix_total, sum(quantite) as nbr_presta,
+       e.libelle, prix
+    FROM ligne_commande
+    JOIN commande c on c.id_commande=ligne_commande.id_commande
+    JOIN etat_commande e on e.id_etat=c.id_etat_commande
+    WHERE c.id_user=1
+    GROUP BY  c.date_commande, c.id_commande, c.id_user, e.id_etat, id_prestation, libelle, prix
+    ORDER BY id_etat, date_commande desc
+
 
 --pas touchewwww les bebewwww
 

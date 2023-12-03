@@ -19,6 +19,7 @@ import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPr
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
 import PanierPage from "@/views/PanierPage.vue";
 import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
+import CommandePage from "@/views/CommandePage.vue";
 import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
 
 Vue.use(VueRouter);
@@ -38,6 +39,11 @@ const routes = [
     path: '/panier',
     name: 'panierView',
     component: PanierPage
+  },
+  {
+    path: '/commande',
+    name: 'CommandeView',
+    component: CommandePage
   },
   {
     name: 'shopView',

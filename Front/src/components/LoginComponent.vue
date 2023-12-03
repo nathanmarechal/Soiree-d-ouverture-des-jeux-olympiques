@@ -28,6 +28,9 @@ import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
 import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
+import {getCommandeUserCourant} from "@/services/commande.service";
+// import {getPanierUserCourant} from "@/services/panier.service";
+// import {getCommandeUserCourant} from "@/services/commande.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -80,7 +83,7 @@ export default {
 
    */
   methods: {
-    ...mapActions(['getPanierUserCourantStore']),
+    ...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);
     },
@@ -119,6 +122,11 @@ export default {
                           .then(res=>{
                             console.log("panier : ", res)
                             this.$store.commit('SET_PANIER_USER_COURANT', res)
+                          })
+                      getCommandeUserCourant(res.id_user)
+                          .then(res=>{
+                            console.log("commande : ", res)
+                            this.$store.commit('SET_COMMANDES_USER_COURANT', res)
                           })
 
                       this.email=""
