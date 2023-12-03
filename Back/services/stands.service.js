@@ -1,7 +1,16 @@
 const pool = require("../database/db");
 const multer = require("multer");
 const path = require("path");
-
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const destinationPath = path.join(__dirname, '../assets/stand/description');
+        cb(null, destinationPath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
 
 async function getAllStandsAsync() {
     try {
@@ -13,7 +22,6 @@ async function getAllStandsAsync() {
         console.error('Error in getAllStandsAsync:', error);
         throw error;
     }
-
 }
 
 const getAllStands = (callback) => {
@@ -40,7 +48,6 @@ async function getStandByIdAsync(id) {
         console.error('Error in getStandByIdAsync:', error);
         throw error;
     }
-
 }
 
 const getStandById = (id, callback) => {
@@ -54,25 +61,8 @@ const getStandById = (id, callback) => {
         });
 }
 
-
-// Multer Disk Storage Configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const destinationPath = path.join(__dirname, '../assets/stand/description');
-        cb(null, destinationPath);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-
-
-const upload = multer({ storage: storage });
-
-
 async function uploadingPictureDescriptionAsync(req) {
     try {
-        // Note: 'upload.single('file')' returns a middleware function that needs to be called with req, res, and next
         await new Promise((resolve, reject) => {
             upload.single('photo')(req, {}, (err) => {
                 if (err) reject(err);
@@ -100,6 +90,17 @@ const uploadingPictureDescription = (req, callback) => {
         });
 }
 
+async function updateStandDescriptionAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE stand SET description_stand = $1 WHERE id_stand = $2;", [body.description_stand, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateStandDescriptionAsync:', error);
+        throw error;
+    }
+}
 
 const updateStandDescription = (id, body, callback) => {
     updateStandDescriptionAsync(id, body)
@@ -110,20 +111,6 @@ const updateStandDescription = (id, body, callback) => {
             console.log(error);
             callback(error, null);
         });
-}
-
-async function updateStandDescriptionAsync(id, body) {
-    try {
-        console.log(id)
-        console.log(body)
-        const conn = await pool.connect();
-        const result = await conn.query("UPDATE stand SET description_stand = $1 WHERE id_stand = $2;", [body.description_stand, id]);
-        conn.release();
-        return result.rows;
-    } catch (error) {
-        console.error('Error in updateStandDescriptionAsync:', error);
-        throw error;
-    }
 }
 
 

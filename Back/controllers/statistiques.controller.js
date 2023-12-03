@@ -11,8 +11,8 @@ exports.getBestSellerPrestation = (req, res) => {
     })
 }
 
-exports.getNewStandByMounth = (req, res) => {
-    statistiquesService.getNewStandByMounth((error, data) => {
+exports.getNewStandByMonth = (req, res) => {
+    statistiquesService.getNewStandByMonth((error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

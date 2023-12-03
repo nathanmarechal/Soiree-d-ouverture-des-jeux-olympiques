@@ -10,18 +10,18 @@ async function getBestSellerPrestation() {
     return answer
 }
 
-async function getNewStandByMounthFromAPI() {
-    let answer = await getRequest('/statistiques/new-stand-by-mounth', 'GETNEWSTANDBYMOUNTH')
+async function getNewStandByMonthFromAPI() {
+    let answer = await getRequest('/statistiques/new-stand-by-month', 'GETNEWSTANDBYMONTH')
     return answer
 }
 
-async function getNewStandByMounth() {
-    let answer = await getNewStandByMounthFromAPI()
+async function getNewStandByMonth() {
+    let answer = await getNewStandByMonthFromAPI()
     return answer
 }
 
 
 export {
     getBestSellerPrestation,
-    getNewStandByMounth
+    getNewStandByMonth
 }

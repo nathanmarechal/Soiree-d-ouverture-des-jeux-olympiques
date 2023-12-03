@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h4>Évolution du nombre de de stand</h4>
+    <h4>Évolution du nombre de stand</h4>
     <svg ref="svg" :width="width" :height="height"></svg>
   </div>
 </template>
 
 <script>
 import * as d3 from 'd3';
-import { getNewStandByMounth } from '@/services/statistiques.service';
+import { getNewStandByMonth } from '@/services/statistiques.service';
 
 export default {
   name: 'CumulativeLineChart',
@@ -20,7 +20,7 @@ export default {
   },
   async mounted() {
     try {
-      const dataFromService = await getNewStandByMounth();
+      const dataFromService = await getNewStandByMonth();
       this.chartData = dataFromService.map(d => ({
         mois: d.mois,
         nombre_stands: parseInt(d.nombre_stands)

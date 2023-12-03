@@ -8,7 +8,6 @@ async function getBestSellerPrestationAsync() {
             "GROUP BY p.id_prestation\n" +
             "ORDER BY SUM(p.prix*lc.quantite) DESC;");
         conn.release();
-        console.log("result : " + result.rows)
         return result.rows;
     } catch (error) {
         console.error('Error in getBestSellerPrestationAsync:', error);
@@ -27,7 +26,7 @@ const getBestSellerPrestation = (callback) => {
         });
 }
 
-async function getNewStandByMounthAsync() {
+async function getNewStandByMonthAsync() {
     try {
         const conn = await pool.connect();
         const result = await conn.query("SELECT\n" +
@@ -40,7 +39,6 @@ async function getNewStandByMounthAsync() {
             "ORDER BY\n" +
             "  DATE_TRUNC('month', date_achat);");
         conn.release();
-        console.log("result : " + result.rows)
         return result.rows;
     } catch (error) {
         console.error('Error in getNewStandByMounthAsync:', error);
@@ -48,8 +46,8 @@ async function getNewStandByMounthAsync() {
     }
 }
 
-const getNewStandByMounth = (callback) => {
-    getNewStandByMounthAsync()
+const getNewStandByMonth = (callback) => {
+    getNewStandByMonthAsync()
         .then(res => {
             callback(null, res);
         })
@@ -60,6 +58,6 @@ const getNewStandByMounth = (callback) => {
 }
 
 module.exports = {
-    getBestSellerPrestation: getBestSellerPrestation,
-    getNewStandByMounth:getNewStandByMounth
+    getBestSellerPrestation : getBestSellerPrestation,
+    getNewStandByMonth : getNewStandByMonth
 }
