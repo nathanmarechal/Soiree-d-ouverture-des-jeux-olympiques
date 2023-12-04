@@ -754,11 +754,13 @@ SELECT c.id_commande, date_commande, c.id_etat_commande, sum( ligne_commande.pri
     FROM commande c
     LEFT JOIN ligne_commande on c.id_commande = ligne_commande.id_commande
     JOIN etat_commande e on e.id_etat=c.id_etat_commande
-    WHERE c.id_user=2
+    WHERE c.id_user=1
     GROUP BY c.date_commande, c.id_commande, c.id_user, e.libelle
     ORDER BY date_commande desc;
 
 select * from ligne_commande where id_user=1;
+
+select * from ligne_panier where id_user=1;
 --pas touchewwww les bebewwww
 
 

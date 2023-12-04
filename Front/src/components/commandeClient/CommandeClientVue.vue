@@ -10,7 +10,7 @@
      </tr>
      </thead>
      <tbody>
-     <tr v-for="item in getCommandeUserCourant" :key="item.id_commande">
+     <tr v-for="item in commande" :key="item.id_commande">
        <td>{{ item.date_commande }}</td>
        <td>{{ item.prix_total }} €</td>
        <td>{{item.libelle}}</td>
@@ -26,14 +26,24 @@
 <script>
 
 
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
-  computed: {
-    ...mapGetters(['getCommandeUserCourant']),
+  data() {
+    return {
+      commande : this.$store.state.userCourant.commandes,
+    }
   },
-  created() {
-    console.log(this.getCommandeUserCourant)
+  computed: {
+    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser"]),
+  },
+      // this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
+      //     .then(res=>{
+      //       console.log("commande : ", res)
+      //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
+      //     })
+  methods: {
+    ...mapActions(['getCommandeUserCourantStore']),
   }
 
 }

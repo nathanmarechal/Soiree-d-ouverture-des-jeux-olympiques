@@ -69,7 +69,6 @@ async function addCommandeAsync(id_user) {
                         });
                     }
                 });
-
             }
         });
         conn.release();
