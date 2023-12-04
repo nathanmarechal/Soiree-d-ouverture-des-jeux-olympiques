@@ -1,6 +1,5 @@
-Copy code
 <template>
-  <div class="main">
+  <div class="main" style="margin-top: 8%">
     <div class="search">
       <div v-if="getProvenance !== 0">
         <filterByTypeComponent></filterByTypeComponent>
@@ -55,7 +54,7 @@ export default {
 
 <style scoped>
 .main {
-  margin-top: 10vh;
+  //margin-top: 10vh;
   margin-bottom: 5vh;
   display: flex;
   flex-direction: row;
