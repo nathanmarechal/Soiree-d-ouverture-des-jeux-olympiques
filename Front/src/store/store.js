@@ -75,7 +75,12 @@ export default new Vuex.Store({
         getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
-        getCurrentUser: state => state.userCourant,
+        // getCurrentUser: state => state.userCourant,
+        getCurrentUser: state => {
+            console.log("getCommandeUserCourant:", state.userCourant);
+            return state.userCourant;
+        },
+
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourant: state => {
             console.log("getCommandeUserCourant:", state.userCourant.commandes);

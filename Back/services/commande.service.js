@@ -45,11 +45,13 @@ async function addCommandeAsync(id_user) {
                 console.log(err)
             } else {
                 console.log(items_ligne_panier.rows)
-                conn.query("INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), $1, 1);", [id_user], (err, result) => {
+                conn.query("INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), $1, 1) RETURNING id_commande;", [id_user], (err, result) => {
                     if (err) {
                         console.log(err)
                     } else {
-                        let last_insert_id = result.insertId;
+                        console.log(result)
+                            let last_insert_id = result.rows[0].id_commande;
+                        console.log("last_insert_id : " + last_insert_id)
                         items_ligne_panier.rows.forEach(item => {
                             conn.query('DELETE FROM ligne_panier WHERE id_user=$1 AND id_prestation=$2 AND id_creneau=$3;', [id_user, item.id_prestation, item.id_creneau], (err, result) => {
                                 if (err) {

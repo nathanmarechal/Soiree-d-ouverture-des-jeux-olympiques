@@ -719,17 +719,17 @@ JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
 JOIN creneau c on c.id_creneau = ligne_panier.id_creneau
 WHERE id_user = 1;
 
-DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau = 4;
-
-INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
+-- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau = 4;
+--
+-- INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
 
 -- DELETE FROM zone WHERE id_zone = 1;
 
 SELECT * FROM ligne_commande WHERE id_user = 1;
 
-UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
-
-UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
+-- UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
+--
+-- UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
 
 
 
@@ -740,13 +740,13 @@ SELECT * FROM ligne_panier
     LEFT JOIN prestation p on ligne_panier.id_prestation = p.id_prestation
     WHERE id_user=1;
 
-INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), 1, 1);
-
-SELECT * FROM commande;
-
-DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=2 AND id_creneau=5;
-
-INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite, prix ) VALUES (1, 1, 12, 12,5, 50);
+-- INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), 1, 1);
+--
+-- SELECT * FROM commande;
+--
+-- DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=2 AND id_creneau=5;
+--
+-- INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite, prix ) VALUES (1, 1, 12, 12,5, 50);
 
 
 
@@ -764,7 +764,7 @@ select * from ligne_commande where id_user=1;
 
 -- UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
 
-SELECT * FROM commande;
+SELECT * FROM commande where id_user = 1;
 
 SELECT SUM(p.prix*lc.quantite) AS "prix_total", p.libelle FROM ligne_commande lc
 JOIN prestation p on p.id_prestation = lc.id_prestation
