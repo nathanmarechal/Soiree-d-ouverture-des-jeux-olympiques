@@ -1,0 +1,23 @@
+{
+  "nourriture": "Nourriture",
+  "boisson": "Boisson",
+  "fanzone": "Fanzone",
+  "billetterie": "Billetterie",
+  "magasin": "Magasin",
+  "activites": "Activités",
+  "decouverteInternationale" : "Découverte internationale",
+  "RATP": "RATP",
+  "informations": "Informations",
+  "carte": "Carte",
+  "magasin": "Magasin",
+  "comptes": "Comptes",
+  "emplacements": "Emplacements",
+  "zones": "Zones",
+  "roles": "Rôles",
+  "statistiques": "Statistiques",
+  "monStand": "Mon stand",
+  "prestations": "Prestations",
+  "monPanier": "Mon panier,",
+  "mesCommandes":"Mes commandes",
+  "seDeconnecter": "Se déconnecter"
+}

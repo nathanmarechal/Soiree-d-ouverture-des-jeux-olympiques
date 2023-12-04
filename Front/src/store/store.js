@@ -57,6 +57,8 @@ export default new Vuex.Store({
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,
+
+        lang:"fr"
     },
 
     getters: {
@@ -91,6 +93,7 @@ export default new Vuex.Store({
 
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
+        getLang: state=> state.lang
     },
 
     mutations: {
@@ -275,7 +278,10 @@ export default new Vuex.Store({
                 return item;
             });
         },
-
+        SET_LANG(state,lang)
+        {
+            state.lang = lang;
+        }
     },
 
     actions: {
