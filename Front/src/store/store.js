@@ -363,8 +363,6 @@ export default new Vuex.Store({
         },
 
 
-
-
         async getUsers(data,session_id) {
             try {
                 const users = await getAllUsers(session_id);
@@ -431,8 +429,14 @@ export default new Vuex.Store({
         async createPrestationStore({ commit }, body) {
             try {
                 console.log("createPrestation: ", body)
-                await createPrestation(body);
-                commit('CREATE_PRESTATION', body);
+                let response = await createPrestation(body);
+
+                console.log(response)
+
+                let combinedData = { ...body, ...response };
+
+
+                commit('CREATE_PRESTATION', combinedData);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);
             }

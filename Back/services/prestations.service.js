@@ -117,17 +117,19 @@ const uploadPicturePresatation = (req, callback) => {
 }
 
 
-const addPrestation = (libelle, prix, imageName, id_type_prestation, id_stand,is_available, callback) => {
-    try{
-        addPrestationAsync(libelle, prix, imageName, id_type_prestation, id_stand,is_available)
-        callback(null, "success");
-    } catch (error) {
-        console.log(error);
-        callback(error, null);
-    }
+const addPrestation = (libelle, prix, image, id_type_prestation, id_stand,is_available, callback) => {
+        addPrestationAsync(libelle, prix, image, id_type_prestation, id_stand,is_available)
+            .then(res => {
+                callback(null, res);
+            })
+            .catch(error => {
+                console.log(error);
+                callback(error, null);
+            });
 }
 
-async function addPrestationAsync(libelle, prix, imageName, id_type_prestation, id_stand, is_available) {
+
+async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_stand, is_available) {
     try {
         const conn = await pool.connect();
         const date = new Date().toISOString(); // Get the current timestamp in ISO format
@@ -135,26 +137,17 @@ async function addPrestationAsync(libelle, prix, imageName, id_type_prestation, 
         const query = `
             INSERT INTO prestation (libelle, prix, date, image, id_type_prestation, id_stand, is_available)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id_prestation
+            RETURNING id_prestation,date
         `;
-
-        const result = await conn.query(query, [
-            libelle,
-            prix,
-            date,
-            imageName,
-            id_type_prestation,
-            id_stand,
-            is_available,
-        ]);
+        const result = await conn.query(query, [libelle, prix, date, image, id_type_prestation, id_stand, is_available]);
         conn.release();
-        return result;
+
+        return result.rows[0];
     } catch (error) {
         console.error('Error in addPrestationAsync:', error);
         throw error;
     }
 }
-
 
 module.exports = {
     getAllPrestations: getAllPrestations,

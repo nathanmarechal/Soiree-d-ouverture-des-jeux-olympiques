@@ -55,7 +55,7 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/' + imageName);
+        return require('./../../../../../Back/assets/prestation/' + imageName)
       } catch {
         return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }

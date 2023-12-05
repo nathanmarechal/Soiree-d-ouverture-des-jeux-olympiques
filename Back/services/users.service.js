@@ -218,6 +218,7 @@ async function createRoleAsync(body) {
         const conn = await pool.connect();
         const result = await conn.query("INSERT INTO role (libelle) VALUES ($1)", [libelle]);
         conn.release();
+
         return result;
     } catch (error) {
         console.error('Error in createRoleAsync:', error);

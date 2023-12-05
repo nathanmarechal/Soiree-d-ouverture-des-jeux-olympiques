@@ -52,7 +52,7 @@ async function createPrestation(body) {
 
 async function createPrestationFromAPI(body) {
     console.log("createPrestationFromAPI: ", body)
-    let answer = await postRequest('/users/roles', body, 'CREATEPRESTATION')
+    let answer = await postRequest('/prestations/add', body, 'CREATEPRESTATION')
     return answer
 }
 
