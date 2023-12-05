@@ -19,5 +19,39 @@
   "prestations": "Performances",
   "monPanier": "My kart",
   "mesCommandes":"My commands",
-  "seDeconnecter": "Log off"
+  "seDeconnecter": "Log off",
+  "desc_1": " An unforgettable experience along the docks of Paris",
+  "desc_2": "A journey through history and culture : ",
+  "desc_3": "From the city hall to the jardins des Tuileries, each chosen site offers an outlook of the history and beauty of Paris. These places are not just backdrops, but actively take part in the celebrations.",
+  "desc_4":"Unforgettable moments : ",
+  "desc_5": "The parade of athletes and the presentation of the Olympic flame intertwine with vibrant cultural performances, offering a total immersion in the spirit of the Games.",
+  "desc_6": "Fireworks and Concerts: ",
+  "desc_7": "The climax of the evening is near the Eiffel Tower with concerts and a spectacular fireworks display. Constituting the true start of the Games.",
+  "desc_8": "Facilitated Navigation: ",
+  "desc_9": "Our interactive map (found at the bottom of the page) is designed to guide you through these sites and provides you with all the keys to have a fantastic evening.",
+  "desc_10": "These Olympic Games in Paris are not just a sporting event but also a cultural celebration.",
+
+  "desc_horaire": "schedule",
+  "desc_prestation": "performance",
+  "desc_lieuObservation": "observation location",
+
+  "desc_19h": "7:00 PM",
+  "desc_19h_1": "Parade of athletes / presentation of the Olympic flame",
+  "desc_19h_2": "Quays Notre-Dame / City Hall",
+
+  "desc_20h30": "8:30 PM",
+  "desc_20h30_1": "Olympic fashion show",
+  "desc_20h30_2": "Quays Louvre",
+
+  "desc_21h": "9:00 PM",
+  "desc_21h_1": "International cultural performances",
+  "desc_21h_2": "Quays Tuileries",
+
+  "desc_22h30": "10:30 PM",
+  "desc_22h30_1": "French cultural performances",
+  "desc_22h30_2": "Quays Grand Palais / Invalides",
+
+  "desc_00h": "12:00 AM",
+  "desc_00h_1": "Concerts and fireworks",
+  "desc_00h_2": "Quays Eiffel Tower / Trocadéro / Iena"
 }

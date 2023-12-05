@@ -19,5 +19,39 @@
   "prestations": "Prestations",
   "monPanier": "Mon panier,",
   "mesCommandes":"Mes commandes",
-  "seDeconnecter": "Se déconnecter"
+  "seDeconnecter": "Se déconnecter",
+  "desc_1": " Une expérience inoubliable le long des quais de Paris",
+  "desc_2": "Un Voyage à Travers l'Histoire et la Culture : ",
+  "desc_3": "De l'Hôtel de Ville aux jardins des Tuileries, chaque site choisi offre un aperçu de l'histoire et de la beauté de Paris. Ces lieux ne sont pas seulement des fonds scéniques, mais des participants actifs à la célébration.",
+  "desc_4":"Des Moments Inoubliables : ",
+  "desc_5":" La parade des athlètes et la présentation de la flamme olympique s'entremêlent avec des spectacles culturels vibrants, offrant une immersion totale dans l'esprit des Jeux.",
+  "desc_6":"Feu d'Artifice et Concerts :  ",
+  "desc_7": "L'apogée de la soirée se trouve près de la Tour Eiffel avec des concerts et un feu d'artifice spectaculaire. Constituant le véritable départ des Jeux.",
+  "desc_8": "Navigation Facilitée : ",
+  "desc_9": "Notre carte interactive (trouvable en bas de la page) est conçue pour vous guider à travers ces site, et vous fournit toutes les clés pour passer une formidable soirée.",
+  "desc_10": "Ces Jeux Olympiques à Paris ne sont pas seulement un événement sportif, mais également une célébration culturelle.",
+
+  "desc_horaire": "horaire",
+  "desc_prestation": "prestation",
+  "desc_lieuObservation": "lieu d'observation",
+
+  "desc_19h": "19h",
+  "desc_19h_1": "Parade des athlètes / présentation de la flamme olympique",
+  "desc_19h_2":"Quais Notre-Dame / Hôtel de ville",
+
+  "desc_20h30":"20h30",
+  "desc_20h30_1":"Défilé de mode olympique",
+  "desc_20h30_2":"Quais Louvre",
+
+  "desc_21h": "21h",
+  "desc_21h_1": "Spectacles culturels internationaux",
+  "desc_21h_2": "Quais Tuileries",
+
+  "desc_22h30": "22h30",
+  "desc_22h30_1": "Spectacles culturels français",
+  "desc_22h30_2": "Quais grand palais / Invalides",
+
+  "desc_00h": "00h",
+  "desc_00h_1": "Concerts et feux d'artifice",
+  "desc_00h_2": "Quais Tour Eiffel / Trocadéro / Iena"
 }
