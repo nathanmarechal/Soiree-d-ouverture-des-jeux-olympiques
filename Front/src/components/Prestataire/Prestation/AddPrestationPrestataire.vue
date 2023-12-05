@@ -15,6 +15,10 @@
         <option v-for="type in getAllTypePrestation" :key="type.id_type_prestation" :value="type.id_type_prestation">{{ type.libelle }}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="isAvailable">est disponible:</label>
+      <input v-model="prestation.isAvailable" id="isAvailable" type="checkbox" class="form-check-input">
+    </div>
     <div class="form">
       <label for="image_stand">Image :</label><br>
       <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
@@ -33,7 +37,7 @@
 
 <script>
 
-import { uploadImagePresation} from '@/services/prestation.service'
+import {getAllTypePrestations, uploadImagePresation} from '@/services/prestation.service'
 import { mapActions, mapGetters } from 'vuex';
 //import { createPrestation } from "@/services/prestation.service";
 import Cropper from 'cropperjs';
@@ -51,31 +55,31 @@ export default {
         imageName: '',
         id_type_prestation: null,
         id_stand: null,
+        isAvailable: false
       },
       //type_prestations: [], // Remplacez par vos données de type de prestation
       //stands: [], // Remplacez par vos données de stand
     };
   },
   computed: {
-    ...mapGetters(['getAllTypePrestation', 'getAllStand']),
+    ...mapGetters(['getAllTypePrestation', 'getCurrentUser',]),
   },
   async mounted() {
     try {
       await this.loadData()
-      // Chargez vos données de type de prestation et de stand ici
-       //await this.getTypePrestationsStore();
-      // this.stands = await fetchStands();
+
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   methods: {
-    ...mapActions(['getTypePrestations', 'getStandsStore']),
+    ...mapActions(['getTypePrestations','createPrestationStore']),
     async loadData(){
         if (this.getAllTypePrestation.length === 0)
           await this.getTypePrestationsStore()
-        if (this.getAllStand.length === 0)
-          await this.getStandsStore()
+      this.prestation.id_stand = this.getCurrentUser.id_stand
+      console.log('crampté')
+      console.log(getAllTypePrestations)
     },
 
     destroyed() {
@@ -128,19 +132,12 @@ export default {
     },
     async submitForm() {
       try {
-
         console.log("Données de la prestation :", this.prestation);
-        // Appel de la méthode createPrestation avec les données de la prestation
-        //const response = await createPrestation(this.prestation);
 
-        console.log(this.prestation.imageName)
-
+        await this.createPrestationStore(this.prestation);
         await uploadImagePresation(this.image_raw);
 
-        // Gérer la réponse ici (ex : afficher un message de succès
-
-        // Redirection vers '/admin/prestations/'
-        await this.$router.push('/admin/prestations/');
+        await this.$router.push('/prestataire/prestations/');
       } catch (error) {
         // Gestion des erreurs
         console.error("Erreur lors de la création de la prestation :", error);

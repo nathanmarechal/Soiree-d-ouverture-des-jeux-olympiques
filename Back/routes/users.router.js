@@ -20,7 +20,7 @@ router.get("/getBySessionId",usersController.getUserBySessionId)
 
 //router.post("/post", usersMiddleware.validateUserInput,usersController.saveUser);
 
-router.get("/getBySessionId", usersController.getUserBySessionId);
+//router.get("/getBySessionId", usersController.getUserBySessionId);
 router.post("/update/:id", usersController.updateUser);
 router.delete("/delete/:id", usersController.deleteUser);
 

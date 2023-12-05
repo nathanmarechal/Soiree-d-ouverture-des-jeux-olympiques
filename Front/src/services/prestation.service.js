@@ -1,4 +1,4 @@
-import {getRequest,postRequestPicture} from "@/services/axios.service";
+import {getRequest, postRequest, postRequestPicture} from "@/services/axios.service";
 
 async function getAllPrestationsFromAPI() {
     let answer = await getRequest('/prestations/get', 'GETALLPRESTATIONS')
@@ -42,9 +42,25 @@ async function uploadImagePresation(image) {
     let answer = await uploadImagePresationFromAPI(image);
     return answer;
 }
+
+
+async function createPrestation(body) {
+    let answer = await createPrestationFromAPI(body)
+    //console.log("createZone: ", answer)
+    return answer
+}
+
+async function createPrestationFromAPI(body) {
+    console.log("createPrestationFromAPI: ", body)
+    let answer = await postRequest('/users/roles', body, 'CREATEPRESTATION')
+    return answer
+}
+
+
 export {
     getAllPrestations,
     getAllTypePrestations,
     getPrestationByUserId,
-    uploadImagePresation
+    uploadImagePresation,
+    createPrestation
 }

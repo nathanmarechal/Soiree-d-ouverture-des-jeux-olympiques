@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import {getAllUsers, getAllRoles, deleteRole, updateRole, createRole, createUser, updateUser, deleteUser} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
-import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
+import {getAllPrestations, getAllTypePrestations,createPrestation} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
@@ -32,6 +32,7 @@ export default new Vuex.Store({
             "panier":  [],
             "commandes" : [],
             "id_role": null,
+            "id_stand" : null
         },
 
         creneau: [],
@@ -129,6 +130,10 @@ export default new Vuex.Store({
 
         CREATE_AREA(state, payload) {
             state.areas.push(payload);
+        },
+
+        CREATE_PRESTATION(state, payload) {
+            state.prestations.push(payload);
         },
 
         SET_TYPE_ZONE(state, typeZone) {
@@ -420,6 +425,16 @@ export default new Vuex.Store({
                 commit('CREATE_ROLE', body);
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
+            }
+        },
+
+        async createPrestationStore({ commit }, body) {
+            try {
+                console.log("createPrestation: ", body)
+                await createPrestation(body);
+                commit('CREATE_PRESTATION', body);
+            } catch (err) {
+                console.error("Error in createPrestationStore():", err);
             }
         },
 

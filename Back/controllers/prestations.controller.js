@@ -1,5 +1,4 @@
 const path = require('path');
-
 const prestationsService = require("../services/prestations.service");
 
 exports.getPrestations = (req, res) => {
@@ -37,3 +36,20 @@ exports.uploadPicturePresatation = (req, res) => {
         }
     });
 };
+
+exports.addPrestation = (req, res) => {
+    const libelle = req.body.libelle;
+    const prix = req.body.prix;
+    const imageName = req.body.imageName;
+    const id_type_prestation = req.body.id_type_prestation;
+    const id_stand = req.body.id_stand;
+    const is_available = req.body.is_available;
+    prestationsService.addPrestation(libelle, prix, imageName, id_type_prestation, id_stand,is_available, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}

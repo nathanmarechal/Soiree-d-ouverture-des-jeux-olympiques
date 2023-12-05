@@ -116,8 +116,49 @@ const uploadPicturePresatation = (req, callback) => {
         });
 }
 
+
+const addPrestation = (libelle, prix, imageName, id_type_prestation, id_stand,is_available, callback) => {
+    try{
+        addPrestationAsync(libelle, prix, imageName, id_type_prestation, id_stand,is_available)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function addPrestationAsync(libelle, prix, imageName, id_type_prestation, id_stand, is_available) {
+    try {
+        const conn = await pool.connect();
+        const date = new Date().toISOString(); // Get the current timestamp in ISO format
+
+        const query = `
+            INSERT INTO prestation (libelle, prix, date, image, id_type_prestation, id_stand, is_available)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id_prestation
+        `;
+
+        const result = await conn.query(query, [
+            libelle,
+            prix,
+            date,
+            imageName,
+            id_type_prestation,
+            id_stand,
+            is_available,
+        ]);
+        conn.release();
+        return result;
+    } catch (error) {
+        console.error('Error in addPrestationAsync:', error);
+        throw error;
+    }
+}
+
+
 module.exports = {
     getAllPrestations: getAllPrestations,
     getPrestationByUserId: getPrestationByUserId,
-    uploadPicturePresatation:uploadPicturePresatation
+    uploadPicturePresatation:uploadPicturePresatation,
+    addPrestation:addPrestation
 }

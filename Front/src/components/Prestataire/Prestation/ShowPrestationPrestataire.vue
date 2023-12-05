@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { getPrestationByUserId } from '@/services/prestation.service';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   data () {
@@ -36,16 +35,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentUser']),
+    ...mapGetters(['getCurrentUser', 'getAllPrestation']),
   },
   async created() {
     await this.loadData()
+    this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
+    ...mapActions(['getPrestationsStore']),
     async loadData() {
       try {
-        const userId = this.getCurrentUser.id_user; // ou toute autre propriété pertinente
-        this.prestations = await getPrestationByUserId(userId);
+        console.log(this.getCurrentUser.id_stand)
+        if (this.getAllPrestation.length === 0){
+          await this.getPrestationsStore()
+        }
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -57,6 +60,10 @@ export default {
         return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }
     },
+    getPrestationByUserId(id){
+      console.log('chef')
+      this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
+    }
   },
 }
 </script>
