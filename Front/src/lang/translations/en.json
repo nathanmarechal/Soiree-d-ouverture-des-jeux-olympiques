@@ -1,0 +1,23 @@
+{
+  "nourriture": "Food",
+  "boisson": "Drinks",
+  "fanzone": "Fanzone",
+  "billetterie": "Tickets",
+  "magasin": "Shop",
+  "activites": "Activities",
+  "decouverteInternationale" : "International Discovery",
+  "RATP": "RATP",
+  "informations": "Information",
+  "carte": "Map",
+  "magasin": "Shop",
+  "comptes": "Accounts",
+  "emplacements": "Emplacements",
+  "zones": "Zones",
+  "roles": "Roles",
+  "statistiques": "Statistics",
+  "monStand": "My stand",
+  "prestations": "Performances",
+  "monPanier": "My kart",
+  "mesCommandes":"My commands",
+  "seDeconnecter": "Log off"
+}

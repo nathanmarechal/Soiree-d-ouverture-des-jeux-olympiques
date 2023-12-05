@@ -79,9 +79,6 @@
               <h3 class="inside-page__heading inside-page__heading--city">
                 {{ stand.nom_stand}}
               </h3>
-              <p class="inside-page__text">
-                {{ stand.description_stand }}
-              </p>
               <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">Prestations</a>
             </div>
           </div>
@@ -150,9 +147,6 @@
                 <h3 class="inside-page__heading inside-page__heading--city">
                   {{stand.nom_stand}}
                 </h3>
-                <p class="inside-page__text">
-                  {{stand.description_stand}}
-                </p>
                 <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">Prestations</a>
               </div>
             </div>

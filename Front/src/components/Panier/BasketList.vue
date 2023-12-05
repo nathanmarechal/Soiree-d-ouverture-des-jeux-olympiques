@@ -42,7 +42,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-success" >Valider le panier</button>
+        <button class="btn btn-success" @click="validerPanier()" >Valider le panier</button>
           <button  v-if="!isEditModeActive" class="btn btn-info" style="margin-left: 2%" @click="modifierPanier()" >modifier le panier</button>
           <button v-if="isEditModeActive" class="btn btn-info" style="margin-left: 2%" @click="confirmerModifPanier()" >confirmer les modifications</button>
 
@@ -87,7 +87,7 @@ export default {
     },
 
 
-    ...mapActions(['getCreneauStore', "updateQuantityInPanierStore"]),
+    ...mapActions(['getCreneauStore', "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore"]),
 
 
 
@@ -96,6 +96,19 @@ export default {
         this.nouvellesQuantites[item.id_prestation] = item.quantite;
       });
       this.modifOn = true;
+    },
+
+    async validerPanier(){
+      console.log("valider panier" + this.getCurrentUser.id_user)
+      if(this.getPanierUserCourant.length === 0){
+        console.log(this.getPanierUserCourant.length)
+        alert("Votre panier est vide")
+        return;
+      }
+      this.$store.commit('SET_PANIER_USER_COURANT', [])
+      await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
+      await this.getCommandeUserCourantStore(this.getCurrentUser.id_user);
+      await this.getPanierUserCourantStore(this.getCurrentUser.id_user);
     },
 
     confirmerModifPanier() {

@@ -5,7 +5,7 @@
         <img class="img" :src="image" alt="image du parcours">
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center" style="font-family: Arial, sans-serif">
-        <h2 class="subtitle subMarge">Une expérience inoubliable le long des quais de Paris</h2>
+        <h2 class="subtitle subMarge">26 juillet 2024 : Une expérience inoubliable le long des quais de Paris</h2>
         <div style="text-align: justify; margin-left: 7%; margin-right: 7%;">
           <ul >
         <li style="margin-bottom: 5px;"><b>Un Voyage à Travers l'Histoire et la Culture : </b>De l'Hôtel de Ville aux jardins des Tuileries, chaque site choisi offre un aperçu de l'histoire et de la beauté de Paris. Ces lieux ne sont pas seulement des fonds scéniques, mais des participants actifs à la célébration.</li>

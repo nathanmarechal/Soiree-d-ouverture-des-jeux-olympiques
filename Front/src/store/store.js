@@ -12,7 +12,7 @@ import {
     getPanierUserCourant,
     updateQuantityInPanier
 } from "@/services/panier.service";
-import {getCommandeUserCourant} from "@/services/commande.service";
+import {addCommande, getCommandeUserCourant} from "@/services/commande.service";
 // import {stat} from "@babel/core/lib/gensync-utils/fs";
 
 Vue.use(Vuex)
@@ -57,6 +57,8 @@ export default new Vuex.Store({
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,
+
+        lang:"fr"
     },
 
     getters: {
@@ -74,11 +76,10 @@ export default new Vuex.Store({
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
+
+
         getPanierUserCourant : state => state.userCourant.panier,
-        getCommandeUserCourant: state => {
-            console.log("getCommandeUserCourant:", state.userCourant.commandes);
-            return state.userCourant.commandes;
-        },
+        getCommandeUserCourantGetters : state => state.userCourant.commandes,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -91,6 +92,7 @@ export default new Vuex.Store({
 
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
+        getLang: state=> state.lang
     },
 
     mutations: {
@@ -158,6 +160,10 @@ export default new Vuex.Store({
             state.userCourant.panier = panier;
         },
 
+        ADD_COMMANDES_USER_COURANT(state, id_user) {
+            console.log("dans le store" + id_user)
+        },
+
         DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, payload) {
             //console.log("DELETE_PRESTATION_FROM_PANIER_USER_COURANT " + payload.id_prestation + " " + payload.id_creneau);
             //console.log(state.userCourant.panier)
@@ -202,9 +208,8 @@ export default new Vuex.Store({
 
         SET_COMMANDES_USER_COURANT(state, commandes) {
             console.log("commande reçue dans le set bah oui" + commandes)
-            console.log("la state : " + this.state.userCourant.commandes)
             state.userCourant.commandes = commandes;
-            console.log("la state : " + this.state.userCourant.commandes)
+            console.log("la state : " + JSON.stringify(this.state.userCourant.commandes))
         },
 
         SET_IS_USER_CONNECTED(state, value) {
@@ -275,7 +280,10 @@ export default new Vuex.Store({
                 return item;
             });
         },
-
+        SET_LANG(state,lang)
+        {
+            state.lang = lang;
+        }
     },
 
     actions: {
@@ -285,6 +293,16 @@ export default new Vuex.Store({
                 const commandes = await getCommandeUserCourant(user_id);
                 commit('SET_COMMANDES_USER_COURANT', commandes);
                 console.log("commande envoyée au store" + JSON.stringify(commandes))
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+        async addCommandeFromPanierStore({commit},id_user){
+            try {
+                console.log("dans le store" + id_user)
+                await addCommande(id_user);
+                commit('ADD_COMMANDES_USER_COURANT', id_user);
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
