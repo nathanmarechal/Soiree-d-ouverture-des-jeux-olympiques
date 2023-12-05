@@ -61,8 +61,8 @@ export default new Vuex.Store({
 
     getters: {
         getAllZone: state => state.zones,
-        getAllUser : state => state.users,
-        getAllRole : state => state.roles,
+        getAllUsers : state => state.users,
+        getAllRoles : state => state.roles,
         getAllTypeZone: state => state.typeZone,
         getAllArea: state=> state.areas,
         getAllStand: state => state.stands,
@@ -407,7 +407,9 @@ export default new Vuex.Store({
 
         async createUserStore({ commit }, body) {
             try {
-                await createUser(body);
+                const user = body.user;
+                const session_id = body.session_id;
+                await createUser(user,session_id);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);

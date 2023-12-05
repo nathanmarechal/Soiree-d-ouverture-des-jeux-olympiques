@@ -1,6 +1,7 @@
 <template>
     <div>
       <div v-if="true" class="main">
+          <router-link to="/admin/users/add" class="btn btn-success">Ajouter un utilisateur</router-link>
           <user-list></user-list>
       </div>
     <div v-else>

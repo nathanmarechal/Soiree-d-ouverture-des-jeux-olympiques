@@ -3,49 +3,44 @@
     <form @submit.prevent="submitForm" class="" style="width: 40vh">
       <div class="form">
         <label for="first-name">prénom</label>
-        <input type="text" id="first-name" v-model="firstName" required>
+        <input type="text" id="first-name" v-model="utilisateur.firstName" required>
 
       </div>
       <div class="form">
         <label for="last-name">nom</label>
-        <input type="text" id="last-name" v-model="lastName" required>
+        <input type="text" id="last-name" v-model="utilisateur.lastName" required>
       </div>
       <div class="form">
         <label for="email">e-mail</label>
-        <input type="email" id="email" v-model="email" required>
+        <input type="email" id="email" v-model="utilisateur.email" required>
       </div>
 
       <div  class="form">
         <label for="password">mot de passe</label>
-        <input type="password" id="password" v-model="password" required>
+        <input type="password" id="password" v-model="utilisateur.password" required>
       </div>
 
       <div class="form">
         <label for="code_postal">code postal</label>
-        <input type="number" id="code_postal" v-model="code_postal" required>
+        <input type="number" id="code_postal" v-model="utilisateur.code_postal" required>
       </div>
 
       <div class="form">
         <label for="adresse">adresse</label>
-        <input type="text" id="adresse" v-model="adresse" required>
+        <input type="text" id="adresse" v-model="utilisateur.adresse" required>
       </div>
 
       <div class="form">
         <label for="commune">commune</label>
-        <input type="text" id="commune" v-model="commune" required>
+        <input type="text" id="commune" v-model="utilisateur.commune" required>
       </div>
 
       <div class="form" >
         <label for="role ">Role</label>
-        <select id="role" v-model="role" required>
+        <select id="role" v-model="utilisateur.id_role" required>
           <option value="">Sélectionner un rôle</option>
-          <option v-for="role in roles" :key="role.id_role" :value="role">{{ role.libelle }}</option>
+          <option v-for="role in getAllRoles" :key="role.id_role" :value="role">{{ role.libelle }}</option>
         </select>
-      </div>
-
-      <div v-if="role.libelle === 'prestataire'" style="width: 100%">
-        <button v-if="showStandForm" class="red-button" type="button" @click="showStandForm = false">Remove Stand</button>
-          <AddStandForm :users="users" :roles="roles" :type-Prestation="typePrestation" :type-zone="typeZone" ></AddStandForm>
       </div>
       <div class="form">
         <button class="blue-button" type="submit" @click="$emit('add-user')">Add User</button>
@@ -56,108 +51,61 @@
 </template>
 
 <script>
-import AddStandForm from '../User/AddStandForm.vue';
-import {createUser} from "@/services/utilisateur.service";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 
 export default {
-  components: {
-    AddStandForm,
-  },
-  /*
-  props: {
-    users: {
-      type: Array,
-      required: true,
-    },
-    roles: {
-      type: Array,
-      required: true,
-    },
-    typePrestation: {
-      type: Array,
-      required: true,
-    },
-    typeZone: {
-      type: Array,
-      required: true,
-    }
-  },
-     */
-
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '',
-      password: '',
-      adresse: '',
-      code_postal: '',
-      commune: '',
-      roles : [],
-      showStandForm: false,
-      //stand: '',
-      //list_roles: '',
-      //list_types: '',
+      utilisateur: {
+        prenom: "",
+        nom: "",
+        email: "",
+        password: "",
+        adresse: "",
+        code_postal: "",
+        commune: "",
+        id_role: null,
+      },
     };
   },
-  async created() {
-    //this.$store.dispatch('getRoles');
-    this.roles = await this.getRoles();
-  },
-  /*
-  computed: {
-    roles() {
-      return this.$store.state.roles;
+  async mounted() {
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
     }
   },
-   */
+  computed: {
+    ...mapGetters(['getAllRoles', 'getCurrentUser'])
+  },
   methods: {
-    ...mapActions(['getRoles']),
-    submitForm() {
-      console.log("role selectionné " + this.role)
-      const newUser = {
-  prenom: this.firstName,
-  nom: this.lastName,
-  email: this.email,
-  password: this.password,
-  adresse: this.adresse,
-  code_postal: this.code_postal,
-  commune: this.commune,
-  id_role: this.role ? this.role.id_role : null,
-  id_stand : null,
-};
-
-
-      /*this.$emit('add-user', newUser);
-      this.firstName = '';
-      this.lastName = '';
-      this.email = '';
-      this.role = '';
-      this.stand = '';*/
-
-
-      //this.prestation = '';
-      //this.zoneType = '';
-      //this.zoneId = '';
-      const session_id = this.$store.getters.getCurrentUser.session_id;
-      createUser(newUser,session_id)
-    },
-
-    validateStand() {
-      // Add your validation logic here
-      if (this.stand === '') {
-        alert('Please enter a valid stand');
-      } else {
-        // Stand is valid, perform any additional logic here
-        console.log('Stand is valid');
+    ...mapActions(['getRolesStore', 'createUserStore']),
+    async loadData(){
+      try {
+        if (this.getAllRoles.length === 0)
+          await this.getRolesStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
       }
     },
+    async submitForm() {
+      try {
+        let role = this.getAllRoles.find(role => role.id_role === this.utilisateur.id_role);
+        if (role)
+          this.utilisateur.role = role.libelle;
 
-  },
-};
+        await this.createUserStore({
+          user: this.utilisateur,
+          session_id: this.getCurrentUser.session_id
+        });
+        this.$emit('close');
+      } catch (error) {
+        console.error('Erreur lors de la création de l\'utilisateur :', error);
+      }
+    },
+  }
+}
 </script>
 
 <style scoped>

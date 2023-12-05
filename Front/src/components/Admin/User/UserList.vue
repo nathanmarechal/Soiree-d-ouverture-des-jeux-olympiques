@@ -7,18 +7,16 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Nom du stand</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in filteredUsers" :key="index">
+          <tr v-for="(user, index) in getAllUsers" :key="index">
             <td>{{ user.prenom }}</td>
             <td>{{ user.nom }}</td>
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
-            <td>{{ user.stand ? user.stand.nom_stand : '-' }}</td>
             <td>
-              <router-link :to="{ name: 'AdminEditUserView', params: { selected_user: user } }" class="blue-button">Modifier</router-link>
+              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="blue-button">Modifier</router-link>
               <button class="red-button" @click="deleteUser(index)">Supprimer</button>
             </td>
           </tr>
@@ -39,7 +37,8 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllUsers', 'getFilteredUsers']),
+      ...mapGetters(['getAllUsers', 'getFilteredUsers', 'getAllRoles']),
+    },
     methods: {
       ...mapActions(['getUsersStore', 'deleteUserStore']),
       async loadData() {
@@ -52,15 +51,17 @@
         if (confirm(confirmMessage)) {
           try {
             await this.deleteUserStore(user.id_utilisateur);
-            //this.getAllUsers.splice(index, 1);
           } catch (error) {
             console.error('Erreur lors de la suppression de l\'utilisateur :', error);
             }
           }
+        },
+        getRoleName(roleId) {
+          const role = this.getAllRoles.find(role => role.id_role === roleId);
+          return role ? role.libelle : '';
         }
       }
-    },
-  }
+    }
   </script>
   
   <style scoped>
