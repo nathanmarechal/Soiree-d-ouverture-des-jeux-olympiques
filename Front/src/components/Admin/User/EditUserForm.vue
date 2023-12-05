@@ -3,47 +3,39 @@
         <h2>Modifier Utilisateur</h2>
         <form @submit.prevent="submitForm">
             <div>
-                <input type="hidden" id="id" v-model="localUser.id" required>
+                <input type="hidden" id="id" v-model="user.id_user" required>
             </div>
             <div>
                 <label for="first-name">Prénom:</label>
-                <input type="text" id="first-name" v-model="localUser.prenom" required>
+                <input type="text" id="first-name" v-model="user.prenom" required>
             </div>
             <div>
                 <label for="last-name">Nom:</label>
-                <input type="text" id="last-name" v-model="localUser.nom" required>
+                <input type="text" id="last-name" v-model="user.nom" required>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" v-model="localUser.email" required>
+                <input type="email" id="email" v-model="user.email" required>
             </div>
             <div>
                 <label for="adresse">Adresse :</label>
-                <input type="text" id="adresse" v-model="localUser.adresse" required>
+                <input type="text" id="adresse" v-model="user.adresse" required>
             </div>
             <div>
                 <label for="code_postal">Code Postal :</label>
-                <input type="text" id="code_postal" v-model="localUser.code_postal" required>
+                <input type="text" id="code_postal" v-model="user.code_postal" required>
             </div>
             <div>
                 <label for="password">Password :</label>
-                <input type="text" id="password" v-model="localUser.password" required>
+                <input type="text" id="password" v-model="user.password" required>
             </div>
             <div>
                 <label for="role">Role:</label>
-                <select id="role" v-model="localUser.role" required>
+                <select id="role" v-model="user.role" required>
                     <option value="">Sélectionner un role</option>
                     <option value="admin">Admin</option>
                     <option value="prestataire">Prestataire</option>
                 </select>
-            </div>
-            <div v-if="localUser.stand">
-                <label for="stand">Stand :</label>
-                <div>
-                    <p>Nom du stand: {{ localUser.stand.nom_stand }}</p>
-                    <p>Date d'achat: {{ localUser.stand.date_achat }}</p>
-                    <p>Prix: {{ localUser.stand.prix }}</p>
-                </div>
             </div>
             <button class="blue-button" type="btn btn-success">Sauvegarder</button>
             <router-link to="/admin/users/" class="btn btn-danger">Quitter</router-link>

@@ -7,6 +7,8 @@ import MapPage from "@/views/mapPage.vue";
 import StandPage from "@/views/standPage.vue";
 import SignUpPage from "@/views/SignUpPage.vue";
 import NotFound from "@/views/Error404Page.vue";
+import AdminUsers from '@/views/Admin/User/AdminUsers.vue'
+import AdminAddUser from '@/views/Admin/User/AdminAddUser.vue'
 import AdminEditUsers from '@/views/Admin/User/AdminEditUsers.vue';
 import AdminRoles from '@/views/Admin/Role/AdminRoles.vue';
 import AdminAddRoles from '@/views/Admin/Role/AdminAddRoles.vue';
@@ -41,7 +43,7 @@ const routes = [
     component: PanierPage
   },
   {
-    path: '/commande',
+    path: '/commande', 
     name: 'CommandeView',
     component: CommandePage
   },
@@ -68,6 +70,16 @@ const routes = [
   // Routes d'administration
   {
     path: '/admin/users',
+    name: 'AdminUsers',
+    component: AdminUsers
+  },
+  {
+    path: '/admin/users/add',
+    name: 'AdminAddUser',
+    component: AdminAddUser
+  },
+  {
+    path: '/admin/users/edit',
     name: 'AdminEditUsers',
     component: AdminEditUsers
   },
@@ -143,3 +155,4 @@ const router = new VueRouter({
 });
 
 export default router;
+

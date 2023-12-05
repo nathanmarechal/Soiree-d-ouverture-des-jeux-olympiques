@@ -6,6 +6,7 @@
       </div>
       <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center" style="font-family: Arial, sans-serif">
         <h2 class="subtitle subMarge">{{translate("desc_1")}}</h2>
+        <h2 class="subtitle subMarge">26 juillet 2024 : Une expérience inoubliable le long des quais de Paris</h2>
         <div style="text-align: justify; margin-left: 7%; margin-right: 7%;">
           <ul >
         <li style="margin-bottom: 5px;"><b>{{translate("desc_2")}}

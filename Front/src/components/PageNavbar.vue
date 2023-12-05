@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" class="desktop-navbar">
-      <router-link to="/"><b-navbar-brand ><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
+      <router-link to="/"><b-navbar-brand ><img :src="require('@/assets/paris_2024_logo.svg')" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
@@ -41,7 +41,7 @@
 
         </b-navbar-nav>
       </b-collapse>
-      <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
+      <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login-18.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/commande" class = "dp">{{translate("mesCommandes")}}</router-link></b-dropdown-item>
@@ -128,6 +128,8 @@ export default {
   methods: {
     translate,
     changeLanguage,
+
+
     fromNav() {
       this.$store.commit('SET_PROVENANCE', -1);
       this.$store.commit('SET_SELECTED_STANDS', []);
