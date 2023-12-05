@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" class="desktop-navbar">
-      <router-link to="/"><b-navbar-brand ><img src="https://www.paris2024.org/app/themes/2024-reveal/dist/svgs/emblem/emblem-color_6eaa96d6.svg" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
+      <router-link to="/"><b-navbar-brand ><img :src="require('@/assets/paris_2024_logo.svg')" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
@@ -128,6 +128,8 @@ export default {
   methods: {
     translate,
     changeLanguage,
+
+
     fromNav() {
       this.$store.commit('SET_PROVENANCE', -1);
       this.$store.commit('SET_SELECTED_STANDS', []);

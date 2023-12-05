@@ -782,4 +782,3 @@ GROUP BY
   DATE_TRUNC('month', date_achat)
 ORDER BY
   DATE_TRUNC('month', date_achat);
-
