@@ -1,5 +1,6 @@
 const path = require('path');
 const prestationsService = require("../services/prestations.service");
+const mapService = require("../services/map.service");
 
 exports.getPrestations = (req, res) => {
     prestationsService.getAllPrestations((error, data) => {
@@ -50,6 +51,22 @@ exports.addPrestation = (req, res) => {
         }
         else {
             console.log(data)
+            return res.status(200).send(data);
+        }
+    })
+}
+
+
+
+exports.updateIsAvailablePrestation = (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    console.log("updateIsAvailablePrestation: ", id, body)
+    prestationsService.updateIsAvailablePrestation(id, body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
             return res.status(200).send(data);
         }
     })

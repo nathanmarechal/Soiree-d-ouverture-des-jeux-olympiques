@@ -176,9 +176,6 @@ CREATE TABLE Ligne_panier
 
 
 
-
-
-
 -- Insert data into tables
 
 INSERT INTO creneau(heure_creneau) VALUES
@@ -783,3 +780,5 @@ GROUP BY
   DATE_TRUNC('month', date_achat)
 ORDER BY
   DATE_TRUNC('month', date_achat);
+
+UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;

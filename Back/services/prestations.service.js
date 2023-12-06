@@ -149,9 +149,40 @@ async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_s
     }
 }
 
+
+const updateIsAvailablePrestation = (id, body, callback) => {
+    updateIsAvailablePrestationAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateIsAvailablePrestationAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        console.log("foufou")
+
+        console.log("id in updateIsAvailablePrestationAsync: ", id)
+        console.log("body in updateIsAvailablePrestationAsync: ", body)
+        const result = await conn.query("UPDATE prestation SET is_available = $1 WHERE id_prestation = $2;\n;", [body.is_available, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateIsAvailablePrestationAsync:', error);
+        throw error;
+    }
+}
+
+
+
 module.exports = {
     getAllPrestations: getAllPrestations,
     getPrestationByUserId: getPrestationByUserId,
     uploadPicturePresatation:uploadPicturePresatation,
-    addPrestation:addPrestation
+    addPrestation:addPrestation,
+    updateIsAvailablePrestation:updateIsAvailablePrestation
 }
