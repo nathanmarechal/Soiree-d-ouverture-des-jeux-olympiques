@@ -21,11 +21,21 @@
             <b-dropdown-item href="#" class = "dp">{{translate("RATP")}}</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown v-if="isUserPrestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
-            <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
-            <br>
-            <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
-          </b-nav-item-dropdown>
+          <div v-if="isUserPrestataire & $store.getters.getLang==='fr'">
+            <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
+              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
+              <br>
+              <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+            </b-nav-item-dropdown>
+          </div>
+
+          <div v-if="isUserPrestataire & $store.getters.getLang==='en'">
+            <b-nav-item-dropdown name="prestataire" right text="Performer" @mouseover="underline = 'Performer'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Performer' }">
+              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
+              <br>
+              <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+            </b-nav-item-dropdown>
+          </div>
 
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>

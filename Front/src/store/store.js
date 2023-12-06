@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import {getAllUsers, getAllRoles, deleteRole, updateRole, createRole, createUser, updateUser, deleteUser} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
-import {getAllPrestations, getAllTypePrestations} from "@/services/prestation.service";
+import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
@@ -32,6 +32,7 @@ export default new Vuex.Store({
             "panier":  [],
             "commandes" : [],
             "id_role": null,
+            "id_stand" : null
         },
 
         creneau: [],
@@ -129,6 +130,10 @@ export default new Vuex.Store({
 
         CREATE_AREA(state, payload) {
             state.areas.push(payload);
+        },
+
+        CREATE_PRESTATION(state, payload) {
+            state.prestations.push(payload);
         },
 
         SET_TYPE_ZONE(state, typeZone) {
@@ -272,6 +277,15 @@ export default new Vuex.Store({
             });
         },
 
+        UPDATE_PRESTATION(state, payload) {
+            state.prestations = state.prestations.map(item => {
+                if (item.id_prestation === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
         UPDATE_ROLE(state, payload) {
             state.roles = state.roles.map(item => {
                 if (item.id_role === payload.id) {
@@ -358,8 +372,6 @@ export default new Vuex.Store({
         },
 
 
-
-
         async getUsers(data,session_id) {
             try {
                 const users = await getAllUsers(session_id);
@@ -411,7 +423,21 @@ export default new Vuex.Store({
                 console.error("Error in updateRoleStore():", err);
             }
         },
-        
+
+        async updateIsAvailablePrestationStore({ commit }, body) {
+            try {
+                console.log("id : " + body.id)
+                console.log("body : " + body.is_available)
+                console.log("body : " + JSON.stringify(body, null, 2))
+                await updateIsAvailablePrestation(body.id, body.is_available);
+                commit('UPDATE_PRESTATION', body.id, body);
+            } catch (err) {
+                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
+            }
+        },
+
+
+
 
         async createRoleStore({ commit }, body) {
             try {
@@ -420,6 +446,16 @@ export default new Vuex.Store({
                 commit('CREATE_ROLE', body);
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
+            }
+        },
+
+        async createPrestationStore({ commit }, body) {
+            try {
+                console.log("createPrestation: ", body)
+                let response = await createPrestation(body);
+                commit('CREATE_PRESTATION', response[0]);
+            } catch (err) {
+                console.error("Error in createPrestationStore():", err);
             }
         },
 

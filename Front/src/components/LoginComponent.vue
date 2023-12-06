@@ -54,6 +54,7 @@ export default {
         commune : null,
         panier : null,
         id_role : null,
+        id_stand : null
       };
     },
   },
@@ -114,6 +115,7 @@ export default {
                       this.currentUser.adresse = res.adresse;
                       this.currentUser.commune = res.commune;
                       this.currentUser.id_role = res.id_role;
+                      this.currentUser.id_stand = res.id_stand;
                       this.$store.commit('SET_CURRENT_USER', this.currentUser)
                       console.log("id_user : ", this.currentUser.id_user)
                       getPanierUserCourant(res.id_user)

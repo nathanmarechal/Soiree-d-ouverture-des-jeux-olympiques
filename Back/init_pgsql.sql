@@ -176,9 +176,6 @@ CREATE TABLE Ligne_panier
 
 
 
-
-
-
 -- Insert data into tables
 
 INSERT INTO creneau(heure_creneau) VALUES
@@ -710,6 +707,7 @@ WHERE u.id_user = 2;
 SELECT * FROM etat_inscription;
 SELECT * FROM utilisateur;
 
+
 SELECT *  FROM prestation;
 
 SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
@@ -782,6 +780,8 @@ GROUP BY
   DATE_TRUNC('month', date_achat)
 ORDER BY
   DATE_TRUNC('month', date_achat);
+
+UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
 
 
 SELECT * FROM ligne_commande WHERE id_commande = 2;

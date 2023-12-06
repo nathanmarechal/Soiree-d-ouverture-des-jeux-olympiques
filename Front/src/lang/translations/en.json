@@ -54,5 +54,45 @@
 
   "desc_00h": "12:00 AM",
   "desc_00h_1": "Concerts and fireworks",
-  "desc_00h_2": "Quays Eiffel Tower / Trocadéro / Iena"
+  "desc_00h_2": "Quays Eiffel Tower / Trocadéro / Iena",
+
+  "erro_1": "You are lost!",
+  "erro_2": "Error 404",
+  "erro_3": "You can return to the main page",
+  "erro_4": "Main Page",
+  "erro_5": "The Clown Main Theme",
+
+  "home_title": "Progression and plan for the opening night of the Paris 2024 Olympic Games",
+
+  "slide_title": "The monuments of Paris honored",
+
+  "stand_title": "Discover the available stands",
+  "stand_1": "Discover",
+  "stand_2": "Performances",
+  "stand_3": "Learn more",
+
+  "card_title": "How to enjoy the evening?",
+
+  "map_1": "Don't miss anything",
+  "map_2": "Welcome to the opening ceremony of the Olympic Games! This iconic moment marks the beginning of a global event celebrated, bringing together athletes and fans from all walks of life. To ensure an unforgettable experience, we have prepared a comprehensive guide to the services available on-site. Check the interactive map on the right to locate each stand and access their specific offerings such as: ",
+  "map_3": " ",
+  "map_4": "Food",
+  "map_4.5": " both French and international!",
+  "map_5": "A variety of ",
+  "map_6": "drinks",
+  "map_7": " for every taste!",
+  "map_8": "Transportation ",
+  "map_9": "options to follow the event!",
+  "map_10": "Various ",
+  "map_11": "Activities",
+  "map_12": " of all kinds to never get bored!",
+  "map_13": " Discovery and promotion ",
+  "map_14": "Dicovery and promotion from ",
+  "map_15": "abroad ",
+  "map_16": "Multiple ",
+  "map_17": "shops",
+  "map_18": " to ensure you have everything you need!",
+  "map_19": "Numerous ",
+  "map_20": "fan zones",
+  "map_21": " to not miss any part of the event"
 }
