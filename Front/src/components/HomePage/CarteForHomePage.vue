@@ -1,17 +1,17 @@
 <template>
   <div class="container-fluid h-100" style="font-family: Arial, sans-serif" >
     <div class="row h-100">
-      <h2 class="subtitle subMarge" style="padding-left: 3%">{{translate("map_1")}}</h2>
+      <h2 class="subtitle subMarge" style="padding-left: 3%">Ne manquez de rien.</h2>
       <div class="col-lg-4 d-flex align-items-center justify-content-center">
-        <div class="lead test justi" style="margin-left: 7%">{{ translate("map_2") }}
+        <div class="lead test justi" style="margin-left: 7%">{{ CarteDescription }}
         <ul class="lead test justi" >
-          <li style="margin-top: 1%">{{translate("map_3")}}<b style="font-weight: bold">{{translate("map_4")}}</b>{{translate("map_4.5")}}</li>
-          <li style="margin-top: 1%">{{translate("map_5")}}<b style="font-weight: bold">{{translate("map_6")}}</b>{{translate("map_7")}}</li>
-          <li style="margin-top: 1%">{{translate("map_8")}}<b style="font-weight: bold">{{translate("map_9")}}</b>{{translate("map_10")}}</li>
-          <li style="margin-top: 1%">{{translate("map_11")}}<b style="font-weight: bold">{{translate("map_12")}}</b>{{translate("map_13")}}</li>
-          <li style="margin-top: 1%">{{translate("map_14")}}<b style="font-weight: bold">{{translate("map_15")}}</b> !</li>
-          <li style="margin-top: 1%">{{translate("map_16")}}<b style="font-weight: bold">{{translate("map_17")}}</b>{{translate("map_18")}}</li>
-          <li style="margin-top: 1%">{{translate("map_19")}}<b style="font-weight: bold">{{translate("map_20")}}</b>{{translate("map_21")}}</li>
+          <li style="margin-top: 1%">De la <b style="font-weight: bold">nourriture</b> française, mais également internationale !</li>
+          <li style="margin-top: 1%">Des <b style="font-weight: bold">boissons</b> pour tous les goûts !</li>
+          <li style="margin-top: 1%">Des possibilités de <b style="font-weight: bold">transport</b> pour suivre l'évènement !</li>
+          <li style="margin-top: 1%">Des <b style="font-weight: bold">activités</b> en tout genre pour ne jamais s'ennuyer !</li>
+          <li style="margin-top: 1%"> De la découverte ainsi que de la promotion <b style="font-weight: bold">internationale</b> !</li>
+          <li style="margin-top: 1%">Différents <b style="font-weight: bold">magasins</b> afin de ne manquer de rien !</li>
+          <li style="margin-top: 1%">De nombreuses <b style="font-weight: bold">fanzones</b> pour ne rien rater de l'évènement </li>
         </ul>
         </div>
       </div>
@@ -25,11 +25,12 @@
 
 <script>
 import MapZone from '../Map/MapZone.vue'
-import {translate} from "../../lang/translationService";
 
 export default {
-  methods: {translate},
   data() {
+    return {
+      CarteDescription: "Bienvenue à la cérémonie d'ouverture des Jeux Olympiques ! Ce moment emblématique marque le début d'un événement mondial célébré, rassemblant des athlètes et des fans de tous les horizons. Pour vous assurer une expérience inoubliable, nous avons préparé un guide complet des services disponibles sur le site. Consultez la carte interactive à droite pour localiser chaque stand et accéder directement à leurs offres spécifiques comme : "
+    };
   },
   components: {
     MapZone
