@@ -78,7 +78,31 @@ async function addCommandeAsync(id_user) {
     }
 }
 
+const getLigneCommandeBycommandeId = (id, callback) => {
+    getLigneCommandeBycommandeIdAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getLigneCommandeBycommandeIdAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT * FROM ligne_commande WHERE id_commande=$1;", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getLigneCommandeBycommandeIdAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getCommandeByUserId: getCommandeByUserId,
-    addCommande: addCommande
+    addCommande: addCommande,
+    getLigneCommandeBycommandeId: getLigneCommandeBycommandeId
 }

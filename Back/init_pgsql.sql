@@ -782,3 +782,6 @@ GROUP BY
   DATE_TRUNC('month', date_achat)
 ORDER BY
   DATE_TRUNC('month', date_achat);
+
+
+SELECT * FROM ligne_commande WHERE id_commande = 2;
