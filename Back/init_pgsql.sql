@@ -782,3 +782,6 @@ ORDER BY
   DATE_TRUNC('month', date_achat);
 
 UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
+
+
+SELECT * FROM ligne_commande WHERE id_commande = 2;
