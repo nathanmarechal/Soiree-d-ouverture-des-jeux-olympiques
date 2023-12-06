@@ -1,16 +1,14 @@
 <template>
   <div class="container text-center my-5">
-    <h1 class="display-4 border-bottom pb-2">{{ pageTitle }}</h1>
+    <h1 class="display-4 border-bottom pb-2">{{ translate("stand_title") }}</h1>
   </div>
 </template>
 
 <script>
+import {translate} from "../../lang/translationService";
+
 export default {
-  data() {
-    return {
-      pageTitle: "Découvrez les stands disponibles."
-    }
-  }
+  methods: {translate},
 }
 </script>
 

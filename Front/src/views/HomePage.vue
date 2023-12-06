@@ -1,6 +1,11 @@
 <template>
   <div class="marge">
-    <MainImageAndTitle/>
+    <div v-if="$store.getters.getLang==='fr'">
+    <MainImageAndTitle_fr/>
+    </div>
+    <div v-else>
+    <MainImageAndTitle_en/>
+    </div>
     <PageTitle />
     <PageDescription />
     <SlideshowTitleComponent/>
@@ -17,7 +22,8 @@
 import PageTitle from '../components/HomePage/PageTitle.vue'
 import PageSlideshow from '../components/HomePage/PageSlideshow.vue'
 import PageDescription from '../components/HomePage/PageDescription.vue'
-import MainImageAndTitle from "@/components/HomePage/MainImageAndTitle.vue";
+import MainImageAndTitle_fr from "@/components/HomePage/MainImageAndTitle_fr.vue";
+import MainImageAndTitle_en from "@/components/HomePage/MainImageAndTitle_en.vue";
 import SlideshowTitleComponent from "@/components/HomePage/SlideshowTitleComponent.vue";
 import CarteForHomePage from "@/components/HomePage/CarteForHomePage.vue";
 import CardHomeTitleComponent from "@/components/HomePage/CardHomeTitleComponent.vue";
@@ -28,7 +34,8 @@ export default {
     StandTitle,
     StandHomeView,
     SlideshowTitleComponent,
-    MainImageAndTitle,
+    MainImageAndTitle_fr,
+    MainImageAndTitle_en,
     PageSlideshow,
     PageTitle,
     PageDescription,

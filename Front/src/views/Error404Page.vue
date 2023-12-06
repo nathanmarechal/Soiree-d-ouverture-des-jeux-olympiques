@@ -1,18 +1,20 @@
 <template>
   <div class="main">
-    <h1>Vous êtes perdus!</h1>
-    <h2>Error 404</h2>
+    <h1>{{translate("erro_1")}}</h1>
+    <h2>{{translate("erro_2")}}</h2>
     <img src="@/assets/stand/arthur-clown.png" alt="Arthur Clown" @click="toggleRotation">
-    <h3>Vous pouvez retourner sur la page principale</h3>
+    <h3>{{translate("erro_3")}}</h3>
     <router-link to="/">
-      <button @click="playAudio" class="btn-success">Page Principale</button>
+      <button @click="playAudio" class="btn-success">{{translate("erro_4")}}</button>
     </router-link>
-    <button class="btn btn-danger" @click="playAudio"> The Clown Main Theme</button>
+    <button class="btn btn-danger" @click="playAudio">{{translate("erro_5")}} </button>
     <audio ref="audioPlayer" src="@/assets/Music/arthur-main-sound.mp3"></audio>
   </div> 
 </template>
 
 <script>
+import {translate} from "../lang/translationService";
+
 export default {
   data() {
     return {
@@ -20,6 +22,7 @@ export default {
     };
   },
   methods: {
+    translate,
     playAudio() {
       this.$refs.audioPlayer.play();
     },

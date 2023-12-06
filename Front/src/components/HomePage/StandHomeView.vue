@@ -64,7 +64,7 @@
 
                 <div class="card-front__bt">
                   <p class="card-front__text-view card-front__text-view--city">
-                    Découvrir
+                    {{translate("stand_1")}}
                   </p>
                 </div>
               </div>
@@ -79,7 +79,7 @@
               <h3 class="inside-page__heading inside-page__heading--city">
                 {{ stand.nom_stand}}
               </h3>
-              <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">Prestations</a>
+              <a @click="goToStore(stand)" class="inside-page__btn inside-page__btn--city">{{translate("stand_2")}}</a>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
       </div>
     </section>
     <div class="marginFix">
-      <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreTrue">Découvrir plus</button>
+      <button type="button" class="btn btn-outline-dark centerButton" @click="setDiscoverMoreTrue">{{translate("stand_3")}}</button>
     </div>
   </div>
   <div v-else>
@@ -164,6 +164,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {translate} from "../../lang/translationService";
 
 export default {
   data() {
@@ -189,6 +190,7 @@ export default {
     },
   },
   methods: {
+    translate,
     ...mapActions(['getStandsStore']),
     async loadData() {
       if (this.getAllStand.length === 0) {

@@ -1,15 +1,15 @@
 <template>
   <div class="container text-center my-5">
-    <h1 class="display-4 border-bottom pb-2">{{ SlideTitle }}</h1>
+    <h1 class="display-4 border-bottom pb-2">{{ translate("slide_title") }}</h1>
   </div>
 </template>
 
 <script>
+import {translate} from "../../lang/translationService";
+
 export default {
+  methods: {translate},
   data() {
-    return {
-      SlideTitle: "Les monuments de Paris mis à l'honneur."
-    }
   }
 }
 </script>

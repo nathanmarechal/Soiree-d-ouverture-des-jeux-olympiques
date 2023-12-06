@@ -1,16 +1,14 @@
 <template>
   <div class="container text-center my-5">
-    <h1 class="display-4 border-bottom pb-2">{{ SlideTitle }}</h1>
+    <h1 class="display-4 border-bottom pb-2">{{ translate("card_title") }}</h1>
   </div>
 </template>
 
 <script>
+import {translate} from "../../lang/translationService";
+
 export default {
-  data() {
-    return {
-      SlideTitle: "Comment profiter de la soirée ?"
-    }
-  }
+  methods: {translate},
 }
 </script>
 

@@ -54,5 +54,45 @@
 
   "desc_00h": "00h",
   "desc_00h_1": "Concerts et feux d'artifice",
-  "desc_00h_2": "Quais Tour Eiffel / Trocadéro / Iena"
+  "desc_00h_2": "Quais Tour Eiffel / Trocadéro / Iena",
+
+  "erro_1": "Vous êtes perdus!",
+  "erro_2": "Error 404",
+  "erro_3": "Vous pouvez retourner sur la page principale",
+  "erro_4": "Page Principale" ,
+  "erro_5": "The Clown Main Theme",
+
+  "home_title": "Déroulement et plan de la soirée d'ouverture des jeux olympiques de Paris 2024",
+
+  "slide_title": "Les monuments de Paris mis à l'honneur.",
+
+  "stand_title": "Découvrez les stands disponibles.",
+  "stand_1": "Découvrir",
+  "stand_2": "Prestations",
+  "stand_3": "Découvrir plus",
+
+  "card_title": "Comment profiter de la soirée ?",
+
+  "map_1": "Ne manquez de rien.",
+  "map_2":"Bienvenue à la cérémonie d'ouverture des Jeux Olympiques ! Ce moment emblématique marque le début d'un événement mondial célébré, rassemblant des athlètes et des fans de tous les horizons. Pour vous assurer une expérience inoubliable, nous avons préparé un guide complet des services disponibles sur le site. Consultez la carte interactive à droite pour localiser chaque stand et accéder directement à leurs offres spécifiques comme : ",
+  "map_3": "De la ",
+  "map_4": "nourriture",
+  "map_4.5": " française, mais également internationale !",
+  "map_5": "Des ",
+  "map_6": "boissons",
+  "map_7": " pour tous les goûts !",
+  "map_8": "Des possibilités de ",
+  "map_9": "transport",
+  "map_10": " pour suivre l'évènement !",
+  "map_11": "Des ",
+  "map_12": "activités",
+  "map_13": " en tout genre pour ne jamais s'ennuyer !",
+  "map_14": " De la découverte ainsi que de la promotion ",
+  "map_15": "internationale",
+  "map_16": "Différents ",
+  "map_17": "magasins",
+  "map_18": " afin de ne manquer de rien !",
+  "map_19": "De nombreuses ",
+  "map_20": "fanzones",
+  "map_21": " pour ne rien rater de l'évènement "
 }
