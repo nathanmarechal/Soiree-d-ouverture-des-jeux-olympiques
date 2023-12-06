@@ -116,8 +116,73 @@ const uploadPicturePresatation = (req, callback) => {
         });
 }
 
+
+const addPrestation = (libelle, prix, image, id_type_prestation, id_stand,is_available, callback) => {
+        addPrestationAsync(libelle, prix, image, id_type_prestation, id_stand,is_available)
+            .then(res => {
+                callback(null, res);
+            })
+            .catch(error => {
+                console.log(error);
+                callback(error, null);
+            });
+}
+
+
+async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_stand, is_available) {
+    try {
+        const conn = await pool.connect();
+        const date = new Date().toISOString(); // Get the current timestamp in ISO format
+
+        const query = `
+            INSERT INTO prestation (libelle, prix, date, image, id_type_prestation, id_stand, is_available)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING *
+        `;
+        const result = await conn.query(query, [libelle, prix, date, image, id_type_prestation, id_stand, is_available]);
+        conn.release();
+
+        return result.rows;
+    } catch (error) {
+        console.error('Error in addPrestationAsync:', error);
+        throw error;
+    }
+}
+
+
+const updateIsAvailablePrestation = (id, body, callback) => {
+    updateIsAvailablePrestationAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updateIsAvailablePrestationAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        console.log("foufou")
+
+        console.log("id in updateIsAvailablePrestationAsync: ", id)
+        console.log("body in updateIsAvailablePrestationAsync: ", body)
+        const result = await conn.query("UPDATE prestation SET is_available = $1 WHERE id_prestation = $2;\n;", [body.is_available, id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateIsAvailablePrestationAsync:', error);
+        throw error;
+    }
+}
+
+
+
 module.exports = {
     getAllPrestations: getAllPrestations,
     getPrestationByUserId: getPrestationByUserId,
-    uploadPicturePresatation:uploadPicturePresatation
+    uploadPicturePresatation:uploadPicturePresatation,
+    addPrestation:addPrestation,
+    updateIsAvailablePrestation:updateIsAvailablePrestation
 }

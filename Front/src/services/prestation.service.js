@@ -1,4 +1,4 @@
-import {getRequest,postRequestPicture} from "@/services/axios.service";
+import {getRequest, patchRequest, postRequest, postRequestPicture} from "@/services/axios.service";
 
 async function getAllPrestationsFromAPI() {
     let answer = await getRequest('/prestations/get', 'GETALLPRESTATIONS')
@@ -42,9 +42,39 @@ async function uploadImagePresation(image) {
     let answer = await uploadImagePresationFromAPI(image);
     return answer;
 }
+
+
+async function createPrestation(body) {
+    let answer = await createPrestationFromAPI(body)
+    //console.log("createZone: ", answer)
+    return answer
+}
+
+async function createPrestationFromAPI(body) {
+    console.log("createPrestationFromAPI: ", body)
+    let answer = await postRequest('/prestations/add', body, 'CREATEPRESTATION')
+    return answer
+}
+
+
+async function updateIsAvailablePrestationFromAPI(id, body) {
+    console.log("updateIsAvailablePrestationFromAPI: ", id, body)
+    return patchRequest('/prestations/update/is-available/' + id, body, 'UPDATEPRESTATIONISAVAIBLE')
+}
+
+async function updateIsAvailablePrestation(id, body) {
+    let answer = await updateIsAvailablePrestationFromAPI(id, body)
+    //console.log("updateZone: ", answer)
+    return answer
+}
+
+
+
 export {
     getAllPrestations,
     getAllTypePrestations,
     getPrestationByUserId,
-    uploadImagePresation
+    uploadImagePresation,
+    createPrestation,
+    updateIsAvailablePrestation
 }

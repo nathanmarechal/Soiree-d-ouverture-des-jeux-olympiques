@@ -8,12 +8,15 @@
           <div class="card-body">
             <h5 class="card-text">{{ prestation.libelle }}</h5>
             <p class="card-text">Prix : {{ prestation.prix }} €</p>
-            <p class="card-text">{{ prestation.type_prestation_libelle }}</p>
-            <!-- Indicateur de disponibilité -->
+            <p class="card-text">{{ getTypePrestationLibelle(prestation.id_type_prestation) }}</p>
             <p class="card-text">Disponible:
               <span v-if="prestation.is_available">Oui</span>
               <span v-else>Non</span>
             </p>
+            <button type="button" class="btn btn-warning" @click="toggleAvailability(prestation.id_prestation,!prestation.is_available); prestation.is_available=!prestation.is_available">
+              {{ prestation.is_available ? 'Rendre indisponible' : 'Rendre disponible' }}
+            </button>
+
             <div class="d-flex justify-content-center">
               <router-link :to="{ name: 'AdminEditPrestationView', params: { id_prestation: prestation.id_prestation } }" class="btn btn-primary">Modifier</router-link>
               <button class="btn btn-danger" @click="prestationDelete(prestation.id_prestation)">Supprimer</button>
@@ -26,8 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { getPrestationByUserId } from '@/services/prestation.service';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   data () {
@@ -36,27 +38,45 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentUser']),
+    ...mapGetters(['getCurrentUser', 'getAllPrestation','getAllTypePrestation']),
   },
   async created() {
     await this.loadData()
+    this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
+    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore']),
     async loadData() {
       try {
-        const userId = this.getCurrentUser.id_user; // ou toute autre propriété pertinente
-        this.prestations = await getPrestationByUserId(userId);
+        console.log(this.getCurrentUser.id_stand)
+        if (this.getAllPrestation.length === 0){
+          await this.getPrestationsStore()
+        }
+        if (this.getAllTypePrestation.length === 0) {
+          await this.getTypePrestationsStore()
+        }
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/' + imageName);
+        return require('./../../../../../Back/assets/prestation/' + imageName)
       } catch {
         return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }
     },
+    getPrestationByUserId(id){
+      console.log('chef')
+      this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
+    },
+    getTypePrestationLibelle(idTypePrestation) {
+      const typePrestation = this.getAllTypePrestation.find(type => type.id_type_prestation === idTypePrestation);
+      return typePrestation ? typePrestation.libelle : 'Type inconnu';
+    },
+    toggleAvailability(id, is_available){
+       this.updateIsAvailablePrestationStore({id : id, is_available:is_available})
+    }
   },
 }
 </script>

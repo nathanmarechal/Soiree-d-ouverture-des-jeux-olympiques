@@ -8,4 +8,8 @@ router.get("/get/:id", prestationController.getPrestationByUserId);
 
 router.post("/add/picture", prestationController.uploadPicturePresatation);
 
+router.post("/add", prestationController.addPrestation);
+
+router.patch("/update/is-available/:id", prestationController.updateIsAvailablePrestation);
+
 module.exports = router;
