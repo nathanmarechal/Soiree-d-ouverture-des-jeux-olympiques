@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Liste des Types de prestations</h4>
+    <h4>{{translate("filterByTypeC_title")}}</h4>
     <div class="form-check form-switch"
          v-for="typePrestation in getAllTypePrestation"
          :key="typePrestation">
@@ -17,6 +17,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex';
+import {translate} from "../../lang/translationService";
 
 export default {
   data() {
@@ -37,6 +38,7 @@ export default {
     ...mapGetters(['getAllTypePrestation']),
   },
   methods: {
+    translate,
     ...mapActions(['getTypePrestationsStore']),
     async loadData(){
       if (this.getAllTypePrestation.length === 0){

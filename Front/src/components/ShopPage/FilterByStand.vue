@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Filtrer par Stand</h4>
+    <h4>{{translate("filterByStandC_title")}}</h4>
     <div class="form-check form-switch"
          v-for="stand in getAllStand"
          :key="stand">
@@ -17,6 +17,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex';
+import {translate} from "../../lang/translationService";
 
 export default {
   data() {
@@ -37,6 +38,7 @@ export default {
     ...mapGetters(['getAllStand']),
   },
   methods: {
+    translate,
     ...mapActions(['getStandsStore']),
     async loadData(){
       if (this.getAllStand.length === 0){

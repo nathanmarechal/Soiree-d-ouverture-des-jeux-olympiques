@@ -94,5 +94,30 @@
   "map_18": " afin de ne manquer de rien !",
   "map_19": "De nombreuses ",
   "map_20": "fanzones",
-  "map_21": " pour ne rien rater de l'évènement "
+  "map_21": " pour ne rien rater de l'évènement ",
+
+  "footer_1": "À propos",
+  "footer_2": "Site officiel des JO",
+  "footer_3": "Projets",
+  "footer_4": "Contact",
+  "footer_5": "Tous droits réservés.",
+
+  "filterByTypeC_title": "Liste des Types de prestations",
+  "filterByStandC_title": "Filtrer par Stand",
+  "shopC_1": "Réserver",
+
+  "login_title": "Se connecter",
+  "login_0": "Email : ",
+  "login_1":"Mot de passe : ",
+  "login_2":"Se connecter",
+  "login_3":"s'inscrire",
+
+  "adminUser_1": "Ajouter un utilisateur",
+
+  "userList_1": "Prénom",
+  "userList_2": "Nom",
+  "userList_3": "Email",
+  "userList_4": "Role",
+  "userList_5": "Modifier",
+  "userList_6": "Supprimer"
 }

@@ -4,19 +4,19 @@
       <div class="login-box bg-white p-4 rounded shadow">
 
         <button class="close-btn" @click="closeModal">X</button>
-        <h2 class="text-center mb-4">Login</h2>
+        <h2 class="text-center mb-4">{{translate("login_title")}}</h2>
         <form @submit.prevent="submitForm">
           <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">{{translate("login_0")}}</label>
             <input type="email" v-model="email" id="email" class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="password">Mot de passe:</label>
+            <label for="password">{{translate("login_1")}}</label>
             <input type="password" v-model="password" id="password" class="form-control" required>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+          <button type="submit" class="btn btn-primary w-100">{{translate("login_2")}}</button>
         </form>
-        <router-link to="/sign-up" @click="closeModal">s'inscrire</router-link>
+        <router-link to="/sign-up" @click="closeModal">{{translate("login_3")}}</router-link>
 
       </div>
     </div>
@@ -29,6 +29,7 @@ import {getUserFromSessionId} from "@/services/utilisateur.service";
 import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant} from "@/services/commande.service";
+import {translate} from "../lang/translationService";
 
 export default {
   props : ['isLoginOpen'],
@@ -82,6 +83,7 @@ export default {
 
    */
   methods: {
+    translate,
     ...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);

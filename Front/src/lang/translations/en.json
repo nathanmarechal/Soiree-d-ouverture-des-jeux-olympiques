@@ -94,5 +94,30 @@
   "map_18": " to ensure you have everything you need!",
   "map_19": "Numerous ",
   "map_20": "fan zones",
-  "map_21": " to not miss any part of the event"
+  "map_21": " to not miss any part of the event",
+
+  "footer_1": "About",
+  "footer_2": "Official Olympic Games Website",
+  "footer_3": "Projects",
+  "footer_4": "Contact",
+  "footer_5": "All rights reserved.",
+
+  "filterByTypeC_title": "List of Performance Types",
+  "filterByStandC_title": "Filter by Stand",
+  "shopC_1": "Book",
+
+  "login_title": "Log in",
+  "login_0": "Email : ",
+  "login_1":"Password : ",
+  "login_2":"Log in",
+  "login_3":"Sign up",
+
+  "adminUser_1": "Add a user",
+
+  "userList_1": "First Name",
+  "userList_2": "Last Name",
+  "userList_3": "Email",
+  "userList_4": "Role",
+  "userList_5": "Edit",
+  "userList_6": "Delete"
 }

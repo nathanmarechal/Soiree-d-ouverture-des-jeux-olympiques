@@ -3,10 +3,10 @@
       <table>
         <thead>
           <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>{{translate("userList_1")}}</th>
+            <th>{{translate("userList_2")}}</th>
+            <th>{{translate("userList_3")}}</th>
+            <th>{{translate("userList_4")}}</th>
           </tr>
         </thead>
         <tbody>
@@ -16,8 +16,8 @@
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
             <td>
-              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="blue-button">Modifier</router-link>
-              <button class="red-button" @click="deleteUser(index)">Supprimer</button>
+              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="blue-button">{{translate("userList_5")}}</router-link>
+              <button class="red-button" @click="deleteUser(index)">{{translate("userList_6")}}</button>
             </td>
           </tr>
         </tbody>
@@ -27,6 +27,7 @@
   
   <script>
   import {mapActions, mapGetters} from 'vuex';
+  import {translate} from "../../../lang/translationService";
 
   export default{
     async mounted() {
@@ -40,6 +41,7 @@
       ...mapGetters(['getAllUsers', 'getFilteredUsers', 'getAllRoles']),
     },
     methods: {
+      translate,
       ...mapActions(['getUsersStore', 'deleteUserStore']),
       async loadData() {
         if (this.getAllUsers.length === 0)

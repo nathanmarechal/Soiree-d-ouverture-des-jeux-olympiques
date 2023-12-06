@@ -18,14 +18,14 @@
         </div>
         <div class="col-md-3">
           <ul class="list-unstyled mb-0 ">
-            <li><a href="#" class="text-custom">À propos</a></li>
-            <li><a href="https://www.paris2024.org/fr/" class="text-custom">Site officiel des JO</a></li>
-            <li><a href="#" class="text-custom">Projets</a></li>
-            <li><a href="#" class="text-custom">Contact</a></li>
+            <li><a href="#" class="text-custom">{{translate("footer_1")}}</a></li>
+            <li><a href="https://www.paris2024.org/fr/" class="text-custom">{{translate("footer_2")}}</a></li>
+            <li><a href="#" class="text-custom">{{ translate("footer_3") }}</a></li>
+            <li><a href="#" class="text-custom">{{translate("footer_4")}}</a></li>
           </ul>
         </div>
         <div class="col-md-3 text-right custom-margin">
-          <p class="mb-0">&copy; {{ currentYear }} SAE_S3. Tous droits réservés.</p>
+          <p class="mb-0">&copy; {{ currentYear }} SAE_S3. {{translate("footer_5")}}</p>
         </div>
       </div>
     </div>
@@ -33,8 +33,11 @@
 </template>
 
 <script>
+import {translate} from "../lang/translationService";
+
 export default {
   name: "FooterComponent",
+  methods: {translate},
   data() {
     return {
       currentYear: new Date().getFullYear()

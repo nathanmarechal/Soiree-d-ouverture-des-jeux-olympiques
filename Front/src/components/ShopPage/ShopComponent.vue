@@ -11,7 +11,7 @@
             <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
 
             <div class="buy d-flex justify-content-between align-items-center">
-              <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">Réserver</a>
+              <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
 
               <modal-reservation
                   @close="selectedPrestationId = null"
@@ -31,6 +31,7 @@
 
 import {mapActions, mapGetters} from 'vuex';
 import ModalReservation from '@/components/ShopPage/ModalReservation.vue'
+import {translate} from "../../lang/translationService";
 export default {
   components: {
     ModalReservation
@@ -69,6 +70,7 @@ export default {
     },
   },
   methods: {
+    translate,
     ...mapActions(['getPrestationsStore', 'getTypePrestationsStore', 'getStandsStore', 'getCreneauStore']),
     async loadData() {
       if (this.getAllPrestation.length === 0)
