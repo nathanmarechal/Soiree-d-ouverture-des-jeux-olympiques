@@ -137,12 +137,12 @@ async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_s
         const query = `
             INSERT INTO prestation (libelle, prix, date, image, id_type_prestation, id_stand, is_available)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id_prestation,date
+            RETURNING *
         `;
         const result = await conn.query(query, [libelle, prix, date, image, id_type_prestation, id_stand, is_available]);
         conn.release();
 
-        return result.rows[0];
+        return result.rows;
     } catch (error) {
         console.error('Error in addPrestationAsync:', error);
         throw error;

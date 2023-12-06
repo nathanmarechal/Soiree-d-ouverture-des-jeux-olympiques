@@ -430,13 +430,7 @@ export default new Vuex.Store({
             try {
                 console.log("createPrestation: ", body)
                 let response = await createPrestation(body);
-
-                console.log(response)
-
-                let combinedData = { ...body, ...response };
-
-
-                commit('CREATE_PRESTATION', combinedData);
+                commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);
             }
