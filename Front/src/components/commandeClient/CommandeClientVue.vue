@@ -11,12 +11,12 @@
      </tr>
      </thead>
      <tbody>
-     <tr v-for="item in commande" :key="item.id_commande">
+     <tr v-for="item in getCurrentUser.commandes" :key="item.id_commande">
        <td>{{convertDateFormat(item.date_commande)}}</td>
        <td>{{ item.prix_total }} €</td>
        <td>{{item.libelle}}</td>
        <td>{{item.nbr_presta}}</td>
-       <td><button class="btn btn-info">voir le détail</button></td>
+       <td><button @click="viewDetails(item.id_commande)" class="btn btn-info">voir le détail</button></td>
      </tr>
      </tbody>
    </table>
@@ -24,26 +24,25 @@
 </template>
 
 <script>
-
-
 import {mapActions, mapGetters} from "vuex";
 
+
 export default {
-  data() {
-    return {
-      commande : this.$store.state.userCourant.commandes,
-    }
-  },
   computed: {
-    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser"]),
+    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId']),
   },
   // this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
       //     .then(res=>{
       //       console.log("commande : ", res)
       //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
       //     })
+
   methods: {
-    ...mapActions(['getCommandeUserCourantStore']),
+    ...mapActions(['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
+
+    viewDetails(id_commande) {
+      this.$router.push({ name: 'DetailCommande', params: { id: id_commande } });
+    },
 
     convertDateFormat(dateString) {
       try {

@@ -23,6 +23,7 @@ import PanierPage from "@/views/PanierPage.vue";
 import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
 import CommandePage from "@/views/CommandePage.vue";
 import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
+import CommandeDetailClientVue from '@/components/commandeClient/detailleCommandeClient.vue'
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/panier',
     name: 'panierView',
     component: PanierPage
+  },
+  {
+    path: '/detail-commande/:id',
+    name: 'DetailCommande',
+    component: CommandeDetailClientVue
   },
   {
     path: '/commande', 
