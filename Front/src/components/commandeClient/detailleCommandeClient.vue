@@ -1,17 +1,17 @@
 <template>
-  <div style="margin-top: 10%">
-    <h2>Détail des Commandes</h2>
-    <div v-for="commande in getCurrentUser.commandes[commandeId]" :key="commande.id_commande" class="mb-5">
+  <div class="container mt-5" >
+    <h2 class="text-center" style="margin-top: 15%">Détail des Commandes</h2>
+    <div class="mb-5" >
       <h3>Commande #{{ commande.id_commande }}</h3>
       <p><strong>Date:</strong> {{ commande.date_commande }}</p>
       <p><strong>État:</strong> {{ commande.libelle }}</p>
       <p><strong>Prix Total:</strong> {{ commande.prix_total }} €</p>
       <p><strong>Nombre de Prestations:</strong> {{ commande.nbr_presta }}</p>
 
-      <div v-if="commande.lignes_commande">
-        <h4>Détails des Prestations</h4>
+      <div style="margin-bottom: 13%" v-if="this.commande.lignes_commande">
+        <h4 class="mt-4">Détails des Prestations</h4>
         <table class="table table-striped">
-          <thead>
+          <thead class="thead-light">
           <tr>
             <th>Prestation</th>
             <th>Type</th>
@@ -20,20 +20,19 @@
           </tr>
           </thead>
           <tbody>
-          <div v-for="commande in getCurrentUser.commandes[commandeId].lignes_commande" :key="commande.id_presta">
-          <tr>
-            <td>{{ commande.lignes_commande.prestation_libelle }}</td>
-            <td>{{ commande.lignes_commande.type_prestation_libelle }}</td>
-            <td>{{ commande.lignes_commande.quantite }}</td>
-            <td>{{ commande.lignes_commande.prix }} €</td>
+          <tr v-for="ligne in this.commande.lignes_commande" :key="ligne.id">
+            <td>{{ ligne.prestation_libelle }}</td>
+            <td>{{ ligne.type_prestation_libelle }}</td>
+            <td>{{ ligne.quantite }}</td>
+            <td>{{ ligne.prix }} €</td>
           </tr>
-          </div>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 import {mapActions, mapGetters} from "vuex";
@@ -48,12 +47,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId']),
-
+    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId','getCommandeById']),
+    commande() {
+      return this.getCommandeById(this.commandeId);
+    }
   },
 
   created() {
     this.commandeId = this.$route.params.id;
+    console.log("commandeId : ", this.commandeId)
+    console.log("commande : ", this.getCurrentUser.commandes)
+    console.log("commande", this.commande.lignes_commande)
     this.loadCommandeDetails();
   },
 
@@ -62,10 +66,12 @@ export default {
 
     loadCommandeDetails() {
       this.getLigneCommandebyIdCommandeStore(this.commandeId)
+      console.log("commande : ", this.commande)
     }
   }
 };
 </script>
+
+
 <style scoped>
-/* Ici, vous pouvez ajouter votre CSS personnalisé si nécessaire */
 </style>

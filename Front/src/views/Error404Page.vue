@@ -9,7 +9,7 @@
     </router-link>
     <button class="btn btn-danger" @click="playAudio">{{translate("erro_5")}} </button>
     <audio ref="audioPlayer" src="@/assets/Music/arthur-main-sound.mp3"></audio>
-  </div> 
+  </div>
 </template>
 
 <script>

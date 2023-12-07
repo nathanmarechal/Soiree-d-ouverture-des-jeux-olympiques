@@ -82,6 +82,9 @@ export default new Vuex.Store({
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
         getLigneCommandeBycommandeId : state => state.userCourant.commandes.lignes_commande,
+        getCommandeById: (state) => (id) => {
+            return state.userCourant.commandes.find(commande => commande.id_commande === id);
+        },
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -171,8 +174,11 @@ export default new Vuex.Store({
             console.log("dans le store" + id_user)
         },
 
-        SET_LIGNE_COMMANDE(state, ligne_commande){
-            state.userCourant.commandes.lignes_commande = ligne_commande;
+        SET_LIGNE_COMMANDE(state, { id_commande, ligne_commande }) {
+            let commande = state.userCourant.commandes.find(c => c.id_commande === id_commande);
+            if (commande) {
+                commande.lignes_commande = ligne_commande;
+            }
         },
 
         DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, payload) {
@@ -311,7 +317,7 @@ export default new Vuex.Store({
         async getLigneCommandebyIdCommandeStore({commit}, id_commande){
             try {
                 const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
-                commit('SET_LIGNE_COMMANDE', ligne_commande);
+                commit('SET_LIGNE_COMMANDE', { id_commande, ligne_commande });
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }

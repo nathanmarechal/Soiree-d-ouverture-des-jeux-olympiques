@@ -781,7 +781,7 @@ GROUP BY
 ORDER BY
   DATE_TRUNC('month', date_achat);
 
-UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
+-- UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
 
 
 SELECT p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle
