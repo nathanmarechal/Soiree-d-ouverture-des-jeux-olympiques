@@ -19,7 +19,17 @@ async function addCommandeFromApi(id_user){
     return postRequest('/commande/add', {id_user}, 'ADDPCOMMANDEFROMPANIERUSER')
 }
 
+async function getLigneCommandeBycommandeId(id_commande){
+    let answer = await getLigneCommandeBycommandeIdFromApi(id_commande)
+    return answer;
+}
+
+async function getLigneCommandeBycommandeIdFromApi(id_commande) {
+    return getRequest('/commande/getligne/' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
+}
+
 export {
     getCommandeUserCourant,
-    addCommande
+    addCommande,
+    getLigneCommandeBycommandeId
 }

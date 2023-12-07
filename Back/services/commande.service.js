@@ -92,7 +92,7 @@ const getLigneCommandeBycommandeId = (id, callback) => {
 async function getLigneCommandeBycommandeIdAsync(id) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("SELECT * FROM ligne_commande WHERE id_commande=$1;", [id]);
+        const result = await conn.query("SELECT p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_commande JOIN prestation p on p.id_prestation = ligne_commande.id_prestation JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation JOIN creneau c on c.id_creneau = ligne_commande.id_creneau JOIN commande c2 on c2.id_commande = ligne_commande.id_commande WHERE ligne_commande.id_commande = $1;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {

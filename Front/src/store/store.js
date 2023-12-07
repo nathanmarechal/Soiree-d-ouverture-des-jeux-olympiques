@@ -12,7 +12,7 @@ import {
     getPanierUserCourant,
     updateQuantityInPanier
 } from "@/services/panier.service";
-import {addCommande, getCommandeUserCourant} from "@/services/commande.service";
+import {addCommande, getCommandeUserCourant, getLigneCommandeBycommandeId} from "@/services/commande.service";
 // import {stat} from "@babel/core/lib/gensync-utils/fs";
 
 Vue.use(Vuex)
@@ -30,7 +30,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier":  [],
-            "commandes" : [],
+            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null}] }],
             "id_role": null,
             "id_stand" : null
         },
@@ -81,6 +81,7 @@ export default new Vuex.Store({
 
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
+        getLigneCommandeBycommandeId : state => state.userCourant.commandes.lignes_commande,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -94,6 +95,7 @@ export default new Vuex.Store({
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
         getLang: state=> state.lang
+        
     },
 
     mutations: {
@@ -167,6 +169,10 @@ export default new Vuex.Store({
 
         ADD_COMMANDES_USER_COURANT(state, id_user) {
             console.log("dans le store" + id_user)
+        },
+
+        SET_LIGNE_COMMANDE(state, ligne_commande){
+            state.userCourant.commandes.lignes_commande = ligne_commande;
         },
 
         DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, payload) {
@@ -301,6 +307,16 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+        async getLigneCommandebyIdCommandeStore({commit}, id_commande){
+            try {
+                const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
+                commit('SET_LIGNE_COMMANDE', ligne_commande);
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
 
         async getCommandeUserCourantStore({commit},user_id){
             try {
