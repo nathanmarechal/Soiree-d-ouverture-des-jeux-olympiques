@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Prestation ayant rapportées le plus</h4>
+    <h4>{{translate("bestSellerStats_1")}}</h4>
     <svg ref="svg" :width="width" :height="height"></svg>
   </div>
 </template>
@@ -8,6 +8,7 @@
 <script>
 import * as d3 from 'd3';
 import { getBestSellerPrestation } from '@/services/statistiques.service';
+import {translate} from "../../../lang/translationService";
 
 export default {
   name: 'BarChart',
@@ -23,6 +24,7 @@ export default {
     this.createBarChart();
   },
   methods: {
+    translate,
     async loadData() {
       try {
         const response = await getBestSellerPrestation();

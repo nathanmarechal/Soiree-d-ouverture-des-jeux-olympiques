@@ -17,7 +17,7 @@
   "statistiques": "Statistics",
   "monStand": "My stand",
   "prestations": "Performances",
-  "monPanier": "My kart",
+  "monPanier": "My cart",
   "mesCommandes":"My commands",
   "seDeconnecter": "Log off",
 
@@ -119,5 +119,28 @@
   "userList_3": "Email",
   "userList_4": "Role",
   "userList_5": "Edit",
-  "userList_6": "Delete"
+  "userList_6": "Delete",
+
+  "filterMap_1": "Filter",
+  "filterMap_2": "Company",
+  "filterMap_3": "Zone",
+  "filterMap_4": "Performance type",
+
+  "addZone_1": "Add",
+  "addZone_2": "Quit",
+
+  "editZone_1": "Edit",
+  "editZone_2": "Quit",
+
+  "showZone_1": "Zone ID",
+  "showZone_2": "Label",
+  "showZone_3": "Color",
+  "showZone_4": "Zone Type",
+  "showZone_5": "Actions",
+  "showZone_6": "Edit",
+  "showZone_7": "Delete",
+  "zone_1": "Add a zone",
+
+  "bestSellerStats_1": "Performances that brought in the most money",
+  "newStandStats_1": "Evolution of the number of stands"
 }

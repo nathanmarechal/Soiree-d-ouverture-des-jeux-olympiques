@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h3>Filtre</h3>
+    <h3>{{translate("filterMap_1")}}</h3>
 
-    <h4>Entreprise</h4>
-    <div class="form-outline">
+    <h4>{{translate("filterMap_2")}}</h4>
+
+    <div class="form-outline" v-if="$store.getters.getLang==='fr'">
       <input type="search" id="form1" class="form-control" placeholder="Chercher entreprise" aria-label="Search" @input="updateSearchQuery"/>
     </div>
 
+    <div class="form-outline" v-else>
+      <input type="search" id="form1" class="form-control" placeholder="Search company" aria-label="Search" @input="updateSearchQuery"/>
+    </div>
 
-      <h4>Zone</h4>
+      <h4>{{translate("filterMap_3")}}</h4>
       <div v-for="(zone, index) in getAllZone" :key="index" class="form-check">
         <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone" @change="updateFilterZone">
         <label class="d-flex gap-2 form-check-label" :for="'zoneCheck' + index">
@@ -17,7 +21,7 @@
       </div>
 
 
-    <h4>Type de prestation</h4>
+    <h4>{{translate("filterMap_4")}}</h4>
     <div v-for="(type_prestation, index) in getAllTypePrestation" :key="index" class="form-check">
       <input class="form-check-input" type="checkbox" :id="'typePrestationCheck' + index" v-model="selectedTypePrestations" :value="type_prestation.id_type_prestation" @change="updateFilterTypePrestation">
       <label class="form-check-label" :for="'typePrestationCheck' + index">{{ type_prestation.libelle }}</label>
@@ -28,6 +32,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex';
+import {translate} from "../../lang/translationService";
 
 export default {
   data() {
@@ -54,6 +59,7 @@ export default {
     ...mapGetters(['getSelectedTypePrestation', 'getSelectedZone', 'getAllTypePrestation', 'getAllZone']),
   },
   methods: {
+    translate,
     ...mapActions(['getTypePrestationsStore', 'getZonesStore']),
     async loadData() {
       if (this.getAllTypePrestation.length === 0) {

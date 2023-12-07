@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Évolution du nombre de stand</h4>
+    <h4>{{translate("newStandStats_1")}}</h4>
     <svg ref="svg" :width="width" :height="height"></svg>
   </div>
 </template>
@@ -8,6 +8,7 @@
 <script>
 import * as d3 from 'd3';
 import { getNewStandByMonth } from '@/services/statistiques.service';
+import {translate} from "../../../lang/translationService";
 
 export default {
   name: 'CumulativeLineChart',
@@ -31,6 +32,7 @@ export default {
     }
   },
   methods: {
+    translate,
     createCumulativeBarChart() {
       const svg = d3.select(this.$refs.svg);
       const margin = {top: 20, right: 20, bottom: 30, left: 50};

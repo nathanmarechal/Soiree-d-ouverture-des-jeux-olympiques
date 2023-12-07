@@ -14,13 +14,14 @@
         <option v-for="type in getAllTypeZone" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-success">Ajouter</button>
-    <router-link to="/admin/zones/" class="btn btn-danger">Quitter</router-link>
+    <button type="submit" class="btn btn-success">{{translate("addZone_1")}}</button>
+    <router-link to="/admin/zones/" class="btn btn-danger">{{translate("addZone_2")}}</router-link>
   </form>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import {translate} from "../../../lang/translationService";
 
 export default {
   data() {
@@ -45,6 +46,7 @@ export default {
     ...mapGetters(["getAllTypeZone"]),
   },
   methods: {
+    translate,
     ...mapActions(["getTypeZonesStore", "createZoneStore"]),
     async loadData(){
       try {

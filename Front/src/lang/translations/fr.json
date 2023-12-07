@@ -119,5 +119,28 @@
   "userList_3": "Email",
   "userList_4": "Role",
   "userList_5": "Modifier",
-  "userList_6": "Supprimer"
+  "userList_6": "Supprimer",
+
+  "filterMap_1": "Filtre",
+  "filterMap_2": "Entreprise",
+  "filterMap_3": "Zone",
+  "filterMap_4": "Type de prestation",
+
+  "addZone_1": "Ajouter",
+  "addZone_2": "Quitter",
+
+  "editZone_1": "Modifier",
+  "editZone_2": "Quitter",
+
+  "showZone_1": "ID Zone",
+  "showZone_2": "Libellé",
+  "showZone_3": "Couleur",
+  "showZone_4": "Type Zone",
+  "showZone_5": "Actions",
+  "showZone_6": "Modifier",
+  "showZone_7": "Supprimer",
+  "zone_1": "Ajouter une zone",
+
+  "bestSellerStats_1": "Prestation ayant rapportées le plus",
+  "newStandStats_1": "Évolution du nombre de stand"
 }

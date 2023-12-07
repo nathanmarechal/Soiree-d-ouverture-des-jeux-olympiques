@@ -3,11 +3,11 @@
     <table class="table">
       <thead>
       <tr>
-        <th>ID Zone</th>
-        <th>Libellé</th>
-        <th>Couleur</th>
-        <th>Type Zone</th>
-        <th>Actions</th>
+        <th>{{translate("showZone_1")}}</th>
+        <th>{{translate("showZone_2")}}</th>
+        <th>{{translate("showZone_3")}}</th>
+        <th>{{translate("showZone_4")}}</th>
+        <th>{{translate("showZone_5")}}</th>
       </tr>
       </thead>
       <tbody>
@@ -19,8 +19,8 @@
         </td>
         <td>{{ zone.type_zone_libelle }}</td>
         <td>
-          <router-link :to="{ name: 'AdminEditZoneView', params: { selected_zone: zone } }" class="btn btn-primary">Modifier</router-link>
-          <button class="btn btn-danger" @click="zoneDelete(index)">Supprimer</button>
+          <router-link :to="{ name: 'AdminEditZoneView', params: { selected_zone: zone } }" class="btn btn-primary">{{translate("showZone_6")}}</router-link>
+          <button class="btn btn-danger" @click="zoneDelete(index)">{{translate("showZone_7")}}</button>
         </td>
       </tr>
       </tbody>
@@ -30,6 +30,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import {translate} from "../../../lang/translationService";
 //import { deleteZone } from '@/services/map.service';
 
 export default {
@@ -53,6 +54,7 @@ export default {
     ...mapGetters(['getAllZone']),
   },
   methods: {
+    translate,
     ...mapActions(['getZonesStore', 'deleteZoneStore']),
     async loadData() {
       if (this.getAllZone.length === 0)
