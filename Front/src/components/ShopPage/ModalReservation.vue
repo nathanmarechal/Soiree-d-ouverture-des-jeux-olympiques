@@ -82,13 +82,18 @@ export default {
         await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
     },
     async validerReservation() {
-      console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
+      if (this.total > this.getCurrentUser.solde){
+        console.log("le total est " + this.total + " et le solde est " + this.getCurrentUser.solde)
+        alert("Vous n'avez pas assez d'argent sur votre compte")
+        return
+      }
       await this.addPrestationToPanierUserCourantStore({
         id_prestation: this.prestation.id_prestation,
         id_user: this.getCurrentUser.id_user,
         quantite: this.quantite,
         id_creneau: this.creneau,
       });
+      console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
       await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
       this.$emit('close');},
   },

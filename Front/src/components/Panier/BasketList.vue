@@ -99,6 +99,10 @@ export default {
     },
 
     async validerPanier(){
+      if(this.getCurrentUser.solde < this.calculateTotal()){
+        alert("Votre solde est insuffisant")
+        return;
+      }
       console.log("valider panier" + this.getCurrentUser.id_user)
       if(this.getPanierUserCourant.length === 0){
         console.log(this.getPanierUserCourant.length)
