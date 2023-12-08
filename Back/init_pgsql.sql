@@ -609,7 +609,6 @@ INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, com
 ('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
 
 INSERT INTO etat_commande (libelle) VALUES
-('En attente de paiement'),
 ('En attente de validation'),
 ('Validée'),
 ('Annulée');
