@@ -8,14 +8,6 @@
 import editZone from '@/components/Admin/Zone/EditZone.vue'
 
 export default {
-  /*
-  data() {
-    return {
-      id_zone: null,
-    }
-  },
-
-   */
   components: {
     editZone
   }

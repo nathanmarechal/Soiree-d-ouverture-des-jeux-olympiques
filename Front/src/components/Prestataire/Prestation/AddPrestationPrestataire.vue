@@ -79,7 +79,7 @@ export default {
         if (this.getAllTypePrestation.length === 0)
           await this.getTypePrestationsStore()
       this.prestation.id_stand = this.getCurrentUser.id_stand
-      console.log('crampté')
+
       console.log(getAllTypePrestations)
     },
 

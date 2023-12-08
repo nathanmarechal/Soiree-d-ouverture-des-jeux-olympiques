@@ -18,7 +18,7 @@
             </button>
 
             <div class="d-flex justify-content-center">
-              <router-link :to="{ name: 'AdminEditPrestationView', params: { id_prestation: prestation.id_prestation } }" class="btn btn-primary">Modifier</router-link>
+              <router-link :to="{ name: 'PrestatairePrestationEditView', params: { selected_prestation: prestation } }" class="btn btn-primary">Modifier</router-link>
               <button class="btn btn-danger" @click="prestationDelete(prestation.id_prestation)">Supprimer</button>
             </div>
           </div>

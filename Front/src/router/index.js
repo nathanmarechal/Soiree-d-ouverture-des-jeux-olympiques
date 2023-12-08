@@ -19,6 +19,7 @@ import AdminEditZonePage from '@/views/Admin/Zone/AdminEditZonePage.vue'
 import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
 import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
+import PrestatairePrestationEditPage from '@/views/Prestataire/Prestation/EditPrestatatairePrestation.vue'
 import PanierPage from "@/views/PanierPage.vue";
 import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
 import CommandePage from "@/views/CommandePage.vue";
@@ -140,7 +141,11 @@ const routes = [
     name: 'PrestatairePrestationAddView',
     component: PrestatairePrestationAddPage
   },
-  
+  {
+    path: '/prestataire/prestations/edit',
+    name: 'PrestatairePrestationEditView',
+    component: PrestatairePrestationEditPage
+  },
   {
     path: '/prestataire/stand',
     name: 'ShowStandPrestataireView',
