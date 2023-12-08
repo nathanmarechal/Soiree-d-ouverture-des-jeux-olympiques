@@ -93,6 +93,7 @@ CREATE TABLE utilisateur(
    code_postal INT,
    adresse VARCHAR(50),
    commune VARCHAR(50),
+   solde numeric,
    id_stand INT,
    id_role INT,
    id_etat INT,
@@ -598,15 +599,15 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_av
 ('billet match de badminton',260,'billet-badminton.png',7,12,true)
 ;
 
-INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES
-('email1@example.com', 'password1', 'Nom1', 'Prenom1', 75001, 'Adresse1', 'Commune1', null, 1),
-('email2@example.com', 'password2', 'Nom2', 'Prenom2', 75002, 'Adresse2', 'Commune2', 2, 2),
-('email4@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 3, 2),
-('email5@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 4, 2),
-('email6@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 5, 2),
-('email7@example.com', 'password4', 'Nom4', 'Prenom4', 75004, 'Adresse4', 'Commune4', 6, 2),
-('email8@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 7, 2),
-('email9@example.com', 'password5', 'Nom5', 'Prenom5', 75005, 'Adresse5', 'Commune5', 8, 2);
+INSERT INTO utilisateur (email, password, nom, prenom,solde, code_postal, adresse, commune, id_stand, id_role) VALUES
+('email1@example.com', 'password1', 'Nom1', 'Prenom1',1000, 75001, 'Adresse1', 'Commune1', null, 1),
+('email2@example.com', 'password2', 'Nom2', 'Prenom2',1000, 75002, 'Adresse2', 'Commune2', 2, 2),
+('email4@example.com', 'password4', 'Nom4', 'Prenom4',1000, 75004, 'Adresse4', 'Commune4', 3, 2),
+('email5@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 4, 2),
+('email6@example.com', 'password4', 'Nom4', 'Prenom4', 1000,75004, 'Adresse4', 'Commune4', 5, 2),
+('email7@example.com', 'password4', 'Nom4', 'Prenom4', 1000,75004, 'Adresse4', 'Commune4', 6, 2),
+('email8@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 7, 2),
+('email9@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 8, 2);
 
 INSERT INTO etat_commande (libelle) VALUES
 ('En attente de validation'),

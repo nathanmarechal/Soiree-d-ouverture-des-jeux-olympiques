@@ -26,6 +26,7 @@ export default new Vuex.Store({
             "nom": null,
             "email": null,
             "prenom": null,
+            "solde": null,
             "code_postal": null,
             "adresse": null,
             "commune": null,

@@ -85,7 +85,7 @@ const getUserBySessionId = (session_id, callback) => {
 async function getUserBySessionIdAsync(session_id) {
     try {
         const client = await pool.connect();
-        const res = await client.query("SELECT utilisateur.id_user, id_role,email, id_stand, prenom,nom,adresse,code_postal,commune " +
+        const res = await client.query("SELECT utilisateur.id_user, id_role,email, id_stand, prenom,nom, solde,adresse,code_postal,commune " +
             "FROM session\n" +
             "LEFT JOIN utilisateur on session.id_user = utilisateur.id_user\n" +
             "WHERE session_id = $1;", [session_id]);
