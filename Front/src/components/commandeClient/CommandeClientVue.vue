@@ -37,8 +37,8 @@ export default {
       //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
       //     })
 
-  mounted() {
-    this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
+  async mounted() {
+    await this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
   },
 
 
