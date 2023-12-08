@@ -224,9 +224,7 @@ export default new Vuex.Store({
         },
 
         SET_COMMANDES_USER_COURANT(state, commandes) {
-            console.log("commande reçue dans le set bah oui" + commandes)
             state.userCourant.commandes = commandes;
-            console.log("la state : " + JSON.stringify(this.state.userCourant.commandes))
         },
 
         SET_IS_USER_CONNECTED(state, value) {

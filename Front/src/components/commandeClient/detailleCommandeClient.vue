@@ -15,6 +15,7 @@
           <tr>
             <th>Prestation</th>
             <th>Type</th>
+            <th>Créneau</th>
             <th>Quantité</th>
             <th>Prix</th>
           </tr>
@@ -23,6 +24,7 @@
           <tr v-for="ligne in this.commande.lignes_commande" :key="ligne.id">
             <td>{{ ligne.prestation_libelle }}</td>
             <td>{{ ligne.type_prestation_libelle }}</td>
+            <td>{{ ligne.creneau}}</td>
             <td>{{ ligne.quantite }}</td>
             <td>{{ ligne.prix }} €</td>
           </tr>
@@ -42,34 +44,34 @@ export default {
 
   data() {
     return {
+      commande: null,
       commandeId: null,
       commandeDetails: null
     };
   },
   computed: {
     ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId','getCommandeById']),
+    /*
     commande() {
-      return this.getCommandeById(this.commandeId);
+      return this.getCommandeById(this.$route.params.id);
     }
+     */
   },
 
-  created() {
-    this.commandeId = this.$route.params.id;
-    console.log("commandeId : ", this.commandeId)
-    console.log("commande : ", this.getCurrentUser.commandes)
-    console.log("commande", this.commande.lignes_commande)
-    this.loadCommandeDetails();
+  async mounted() {
+    await this.loadCommandeDetails();
+    this.commande = this.getCommandeById(this.$route.params.id);
   },
 
   methods: {
     ...mapActions(['getLigneCommandebyIdCommandeStore']),
 
-    loadCommandeDetails() {
-      this.getLigneCommandebyIdCommandeStore(this.commandeId)
-      console.log("commande : ", this.commande)
+    async loadCommandeDetails() {
+      await this.getLigneCommandebyIdCommandeStore(this.$route.params.id)
     }
   }
 };
+
 </script>
 
 

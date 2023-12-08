@@ -37,6 +37,11 @@ export default {
       //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
       //     })
 
+  mounted() {
+    this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
+  },
+
+
   methods: {
     ...mapActions(['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
 
@@ -46,28 +51,23 @@ export default {
 
     convertDateFormat(dateString) {
       try {
-        // Séparer la chaîne de date en parties
         const parts = dateString.split(' ');
         if (parts.length < 4) {
           throw new Error('Format de date invalide');
         }
 
-        // Extraire les composants nécessaires
         const day = parts[2];
         const monthName = parts[1];
         const timePart = parts[3];
 
-        // Convertir le nom du mois en numéro
         const months = {
           "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
           "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
         };
         const month = months[monthName];
 
-        // Extraire les heures et les minutes
         const [hours, minutes] = timePart.split(':');
 
-        // Assembler le format final
         return `${day}/${month} - ${hours}:${minutes}`;
       } catch (error) {
         console.error(error);
