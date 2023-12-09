@@ -118,7 +118,7 @@ export default {
                       this.currentUser.commune = res.commune;
                       this.currentUser.id_role = res.id_role;
                       this.currentUser.id_stand = res.id_stand;
-                      this.currentUser.solde = res.solde;
+                      this.currentUser.solde = parseFloat(res.solde);
                       this.$store.commit('SET_CURRENT_USER', this.currentUser)
                       console.log("id_user : ", this.currentUser.id_user)
                       getPanierUserCourant(res.id_user)
