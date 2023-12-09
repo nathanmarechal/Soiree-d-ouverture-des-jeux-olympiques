@@ -252,6 +252,30 @@ async function updateRoleAsync(body) {
     }
 }
 
+const updateSolde = (id, newsolde, callback) => {
+    try{
+        updateSoldeAsync(id, newsolde)
+            .then(res => {
+                callback(null, "success");
+            })
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+
+}
+
+async function updateSoldeAsync(id_user, newsolde) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE utilisateur SET solde = $1 WHERE id_user = $2", [newsolde, id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateSoldeAsync:', error);
+        throw error;
+    }
+}
 
 const deleteRole = (body, callback) => {
     try{
@@ -289,4 +313,5 @@ module.exports = {
     , createRole: createRole
     , updateRole: updateRole
     , deleteRole: deleteRole
+    , updateSolde: updateSolde
 }
