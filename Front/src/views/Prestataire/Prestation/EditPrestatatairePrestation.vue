@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <edit-prestation-prestataire  :selected_prestation="this.$route.params.selected_zone"></edit-prestation-prestataire>
+    <edit-prestation-prestataire  :selected_prestation="this.$route.params.selected_prestation"></edit-prestation-prestataire>
   </div>
 </template>
 

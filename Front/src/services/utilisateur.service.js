@@ -84,6 +84,10 @@ async function updateRoleFromAPI(body) {
     return patchRequest('/users/roles/' + id, body, 'UPDATEROLE')
 }
 
+async function updateSolde(body) {
+    return patchRequest('/users/updateSolde', body, 'UPDATESOLDE')
+}
+
 async function getAllRoles(session_id) {
     let answer = await getAllRolesFromAPI(session_id)
     //console.log("getAllRoles: ", answer)
@@ -114,5 +118,6 @@ export {
     updateRole,
     getAllRoles,
     getAllUsers,
-    getUserFromSessionId
+    getUserFromSessionId,
+    updateSolde
 }

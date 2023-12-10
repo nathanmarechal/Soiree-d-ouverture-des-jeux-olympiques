@@ -23,7 +23,7 @@
       <label for="image_stand">Image :</label><br>
       <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
     </div>
-    <div v-if="croppedImage">
+    <div>
       <img :src="croppedImage" class="cropped-image" style="width: 100%;border-radius: 15%;" />
     </div>
     <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
@@ -63,7 +63,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllTypePrestation', 'getCurrentUser',]),
+    ...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
   },
   async mounted() {
     try {
@@ -103,7 +103,7 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    initializeCropper() {
+      initializeCropper() {
       const image = this.$refs.image;
       this.cropper = new Cropper(image, {
         aspectRatio: 1,

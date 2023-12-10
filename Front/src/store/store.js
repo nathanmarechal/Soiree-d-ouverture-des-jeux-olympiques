@@ -1,7 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {getAllUsers, getAllRoles, deleteRole, updateRole, createRole, createUser, updateUser, deleteUser} from "@/services/utilisateur.service";
+import {
+    getAllUsers,
+    getAllRoles,
+    deleteRole,
+    updateRole,
+    createRole,
+    createUser,
+    updateUser,
+    deleteUser,
+    updateSolde
+} from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation} from "@/services/prestation.service";
 import {getAllStands} from "@/services/stand.service";
@@ -305,6 +315,12 @@ export default new Vuex.Store({
                 return item;
             });
         },
+
+        UPDATE_SOLDE(state, newsolde) {
+            console.log("update solde " + newsolde);
+            state.userCourant.solde = parseFloat(newsolde);
+        },
+
         SET_LANG(state,lang)
         {
             state.lang = lang;
@@ -312,6 +328,16 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+        async updateSoldeStore({ commit }, {id_user, solde}) {
+            try {
+                await updateSolde({id_user, solde});
+                console.log("updateSoldeStore: ", id_user, solde)
+                commit('UPDATE_SOLDE', solde);
+            } catch (err) {
+                console.error("Error in updateSoldeStore():", err);
+            }
+        },
 
         async getLigneCommandebyIdCommandeStore({commit}, id_commande){
             try {

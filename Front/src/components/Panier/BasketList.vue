@@ -3,6 +3,8 @@
     <div class="row">
       <div class="col-12">
         <h1 class="text-center">Panier</h1>
+        <p>{{getCurrentUser.solde}}</p>
+        <button @click="ajouterdufric" >dzqdzqdzq</button>
       </div>
     </div>
     <div class="row">
@@ -87,9 +89,11 @@ export default {
     },
 
 
-    ...mapActions(['getCreneauStore', "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore"]),
+    ...mapActions(['getCreneauStore', "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore", "updateSoldeStore"]),
 
-
+    ajouterdufric(){
+      this.updateSoldeStore({id_user : this.getCurrentUser.id_user, solde : this.getCurrentUser.solde + 100})
+    },
 
     modifierPanier() {
       this.getPanierUserCourant.forEach(item => {
@@ -109,6 +113,8 @@ export default {
         alert("Votre panier est vide")
         return;
       }
+      let newSolde = this.getCurrentUser.solde - this.calculateTotal();
+      await this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: newSolde})
       this.$store.commit('SET_PANIER_USER_COURANT', [])
       await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
       await this.getCommandeUserCourantStore(this.getCurrentUser.id_user);

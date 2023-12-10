@@ -74,7 +74,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore' ]),
+    ...mapActions(['getCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore', "updateSoldeStore" ]),
     async loadData(){
       if (this.getAllCreneau.length === 0)
         await this.getCreneauStore()
@@ -82,11 +82,6 @@ export default {
         await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
     },
     async validerReservation() {
-      if (this.total > this.getCurrentUser.solde){
-        console.log("le total est " + this.total + " et le solde est " + this.getCurrentUser.solde)
-        alert("Vous n'avez pas assez d'argent sur votre compte")
-        return
-      }
       await this.addPrestationToPanierUserCourantStore({
         id_prestation: this.prestation.id_prestation,
         id_user: this.getCurrentUser.id_user,
@@ -94,6 +89,7 @@ export default {
         id_creneau: this.creneau,
       });
       console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
+
       await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
       this.$emit('close');},
   },

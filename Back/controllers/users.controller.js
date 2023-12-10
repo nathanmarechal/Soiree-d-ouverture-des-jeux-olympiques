@@ -154,7 +154,7 @@ exports.createRole = (req, res) => {
 
 exports.updateRole = (req, res) => {
     const id = req.params.id;
-    const body = req.body;
+    const body = req.body.solde;
 
     // Log function name and data
     console.log("updateRole", { id, body });
@@ -175,6 +175,21 @@ exports.deleteRole = (req, res) => {
     console.log("deleteRole", { id });
 
     usersService.deleteRole(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}
+
+exports.updateSolde = (req, res) => {
+    const id = req.body.id_user;
+    const newsolde = req.body.solde;
+
+    console.log("updateSolde", { id, newsolde });
+
+    usersService.updateSolde(id, newsolde, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

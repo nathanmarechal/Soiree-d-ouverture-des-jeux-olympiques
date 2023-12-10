@@ -24,6 +24,10 @@ router.get("/getBySessionId",usersController.getUserBySessionId)
 router.post("/update/:id", usersController.updateUser);
 router.delete("/delete/:id", usersController.deleteUser);
 
+
+router.patch("/updateSolde", usersController.updateSolde);
+
+
 router.post("/", (req, res, next) => {
     checkRight(req, res, next, "create_users");
 }, usersController.createUser);
