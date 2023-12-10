@@ -279,6 +279,7 @@ async function updateSoldeAsync(id_user, newsolde) {
 
 const deleteRole = (body, callback) => {
     try{
+        console.log("deleteRole1",body);
         deleteRoleAsync(body);
         callback(null,"Deleted successfully")
     }
@@ -291,6 +292,7 @@ const deleteRole = (body, callback) => {
 
 async function deleteRoleAsync(id_role) {
     try {
+        console.log("deleteRole2",id_role);
         const conn = await pool.connect();
         await conn.query('DELETE FROM role WHERE id_role = $1', [id_role]);
         conn.release();

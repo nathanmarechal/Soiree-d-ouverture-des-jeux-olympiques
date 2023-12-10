@@ -12,7 +12,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(role, index) in getAllRole" :key="index">
+              <tr v-for="(role, index) in getAllRoles" :key="index">
                 <td>{{ role.id_role }}</td>
                 <td>{{ role.libelle }}</td>
                 <td>
@@ -40,18 +40,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRole']),
+    ...mapGetters(['getAllRoles']),
   },
   methods: {
     ...mapActions(['getRolesStore', 'deleteRoleStore']),
     async loadData() {
-      if (this.getAllRole.length === 0) {
+      if (this.getAllRoles.length === 0) {
         await this.getRolesStore();
       }
     },
     async removeRole(id) {
-      const role = this.getAllRole.find(role => role.id_role === id);
+      const role = this.getAllRoles.find(role => role.id_role === id);
       const confirmMessage = `Êtes-vous sûr de vouloir supprimer le rôle ${role.libelle} ?`;
+      console.log(role.id_role);
       if (window.confirm(confirmMessage)) {
         try {
           await this.deleteRoleStore(role.id_role);

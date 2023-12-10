@@ -30,13 +30,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllRole"]),
+    ...mapGetters(["getAllRoles"]),
   },
   methods: {
     ...mapActions(["getRolesStore", "updateRoleStore"]),
     async loadData(){
       try {
-        if (this.getAllRole.length === 0)
+        if (this.getAllRoles.length === 0)
             await this.getRolesStore();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
