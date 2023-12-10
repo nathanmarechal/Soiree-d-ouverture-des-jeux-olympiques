@@ -1,14 +1,14 @@
 const usersService = require("../services/users.service");
 
 exports.createUser = (req, res) => {
-    const nom = req.body.nom;
-    const prenom = req.body.prenom;
+    const nom = req.body.lastName;
+    const prenom = req.body.firstName;
     const email = req.body.email;
     const password = req.body.password;
     const adresse = req.body.adresse;
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
-    const id_role = req.body.id_role;
+    const id_role = req.body.id_role.id_role;
     const id_stand = req.body.id_stand;
     //const session_id = req.body.session_id;
 

@@ -5,7 +5,7 @@
       <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-success">Add Role</button>
-    <router-link to="/admin/roles/" class="btn btn-danger">Cancel</router-link>
+    <router-link to="/admin/roles" class="btn btn-danger">Cancel</router-link>
   </form>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllRole"]),
+    ...mapGetters(["getAllRoles"]),
   },
   methods: {
     ...mapActions(["getRolesStore", "createRoleStore"]),
