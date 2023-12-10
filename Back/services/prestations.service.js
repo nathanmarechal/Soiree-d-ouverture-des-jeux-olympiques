@@ -168,7 +168,7 @@ async function updateIsAvailablePrestationAsync(id, body) {
 
         console.log("id in updateIsAvailablePrestationAsync: ", id)
         console.log("body in updateIsAvailablePrestationAsync: ", body)
-        const result = await conn.query("UPDATE prestation SET is_available = $1 WHERE id_prestation = $2;\n;", [body.is_available, id]);
+        const result = await conn.query("UPDATE prestation SET is_available = NOT is_available WHERE id_prestation = $1;\n;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {

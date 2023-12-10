@@ -19,29 +19,33 @@
       <label for="isAvailable">Est disponible:</label>
       <input v-model="prestation.is_available" id="isAvailable" type="checkbox" class="form-check-input">
     </div>
-    <div class="form">
-      <label for="image_stand">Image :</label><br>
-      <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*">
-    </div>
+
+    <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top" style="border-radius: 10%;">
+
     <div v-if="croppedImage">
-      <img :src="croppedImage" class="cropped-image" style="width: 100%;border-radius: 15%;" />
+      <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
     </div>
+
+    <!-- Bouton pour l'upload d'image -->
+    <button type="button" @click="toggleImageUpload" class="btn btn-primary">Changer l'image</button>
+
+    <!-- Champ d'upload d'image -->
     <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
       <img ref="image" class="cropper-image" style=""/>
-      <button  type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+      <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*">
+      <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
     </div>
+
+
     <button type="submit" class="btn btn-success">Mettre à jour</button>
     <router-link to="/prestataire/prestations" class="btn btn-danger">Quitter</router-link>
-
-    {{prestation}}
-
   </form>
 </template>
 
 <script>
-//import Cropper from 'cropperjs';
 import { mapActions, mapGetters } from 'vuex';
-
+import Cropper from "cropperjs";
+import {uploadImagePresation} from "@/services/prestation.service";
 export default {
   props: ["selected_prestation"],
   data() {
@@ -60,50 +64,102 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
   },
   async mounted() {
-    this.prestation = { ...this.selected_prestation };
-    if (this.prestation.image) {
-      // Chargement de l'image existante
-      this.croppedImage = require('./../../../../../Back/assets/prestation/' + this.prestation.image)
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors de l’exécution de mounted :', error);
     }
-    await this.loadData();
   },
+
   methods: {
-    ...mapActions(['updatePrestationStore']), // Ajoutez votre action Vuex pour la mise à jour
-  /*  async loadData() {
-      // Logique de chargement des données supplémentaires si nécessaire
+    ...mapActions(['updatePrestationStore','getTypePrestations']), // Ajoutez votre action Vuex pour la mise à jour
+
+    async loadData() {
+      // Load selected prestation
+      this.prestation = await this.selected_prestation;
+      console.log(this.prestation.image);
+
+      // Load type prestations if not already loaded
+      if (this.getAllTypePrestation.length === 0) {
+        await this.getTypePrestationsStore();
+      }
     },
+    getImageSrc(imageName) {
+      try {
+        return require('./../../../../../Back/assets/prestation/' + imageName)
+      } catch {
+        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+      }
+    },
+
     handleImageUpload(event) {
-      // La même logique que dans le composant d'ajout
+      this.croppedImage = null;
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      this.isImageInputUpload = true;
+
+      // Stocker le nom du fichier original sans l'extension
+      this.prestation.image = file.name.split('.').slice(0, -1).join('.');
+
+      reader.onload = (e) => {
+        this.$refs.image.src = e.target.result;
+        this.initializeCropper();
+      };
+      reader.readAsDataURL(file);
     },
     initializeCropper() {
-      // La même logique que dans le composant d'ajout
+      const image = this.$refs.image;
+      this.cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 3,
+        zoomable:true,
+        scalable:true
+
+      });
     },
     cropImage() {
-      // La même logique que dans le composant d'ajout
-    },
-    */
+      const croppedCanvas = this.cropper.getCroppedCanvas();
+      croppedCanvas.toBlob((blob) => {
+        const timestamp = Math.floor(Date.now() / 1000); // Temps en Unix
+        const fileName = `prestation_${timestamp}.jpeg`;
+        this.prestation.image=fileName;
 
+        // Créer un nouveau fichier à partir du blob
+        const file = new File([blob], fileName, { type: 'image/jpeg' });
+
+        const url = URL.createObjectURL(file);
+        this.croppedImage = url;
+        this.image_raw = file;
+        this.cropper.destroy();
+        this.isImageInputUpload = false;
+        console.log(fileName)
+      });
+    },
     async submitForm() {
       try {
-        console.log("Mise à jour de la prestation :", this.prestation);
-        await this.updatePrestationStore(this.prestation);
-        if (this.croppedImage && this.isImageInputUpload) {
-          // Logique d'upload de l'image modifiée
-        }
-        this.$router.push('/prestataire/prestations/');
+        console.log("Données de la prestation :", this.prestation);
+
+        await uploadImagePresation(this.image_raw);
+
+        await this.$router.push('/prestataire/prestations/');
       } catch (error) {
-        console.error("Erreur lors de la mise à jour de la prestation :", error);
+        // Gestion des erreurs
+        console.error("Erreur lors de la création de la prestation :", error);
+        // Afficher un message d'erreur à l'utilisateur, si nécessaire
       }
-    }
+    },
+    toggleImageUpload() {
+      this.isImageInputUpload = !this.isImageInputUpload;
+    },
   }
 };
 </script>
 
 <style scoped>
 @import 'cropperjs/dist/cropper.css';
-/* Autres styles si nécessaire */
 </style>
