@@ -197,3 +197,48 @@ exports.updateSolde = (req, res) => {
         }
     });
 }
+
+exports.updateNom = (req, res) => {
+    const id = req.body.id_user;
+    const nom = req.body.nom;
+
+    console.log("updateNom", { id, nom });
+
+    usersService.updateNom(id, nom, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}
+
+exports.updatePrenom = (req, res) => {
+    const id = req.body.id_user;
+    const prenom = req.body.prenom;
+
+    console.log("updatePrenom", { id, prenom });
+
+    usersService.updatePrenom(id, prenom, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}
+
+exports.updateEmail = (req, res) => {
+    const id = req.body.id_user;
+    const email = req.body.email;
+
+    console.log("updateEmail", { id, email });
+
+    usersService.updateEmail(id, email, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}

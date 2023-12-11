@@ -26,6 +26,10 @@ router.delete("/delete/:id", usersController.deleteUser);
 
 
 router.patch("/updateSolde", usersController.updateSolde);
+router.patch("/updateNom", usersController.updateNom);
+router.patch("/updatePrenom", usersController.updatePrenom);
+router.patch("/updateEmail", usersController.updateEmail);
+
 
 
 router.post("/", (req, res, next) => {

@@ -10,7 +10,10 @@ import {
     createUser,
     updateUser,
     deleteUser,
-    updateSolde
+    updateSolde,
+    updateEmail,
+    updatePrenom,
+    updateNom
 } from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation} from "@/services/prestation.service";
@@ -321,6 +324,21 @@ export default new Vuex.Store({
             state.userCourant.solde = parseFloat(newsolde);
         },
 
+        UPDATE_NOM(state, nom) {
+            console.log("update nom " + nom);
+            state.userCourant.nom = nom;
+        },
+
+        UPDATE_PRENOM(state, prenom) {
+            console.log("update prenom " + prenom);
+            state.userCourant.prenom = prenom;
+        },
+
+        UPDATE_EMAIL(state, email) {
+            console.log("update email " + email);
+            state.userCourant.email = email;
+        },
+
         SET_LANG(state,lang)
         {
             state.lang = lang;
@@ -328,6 +346,33 @@ export default new Vuex.Store({
     },
 
     actions: {
+
+        async updateEmailStore({ commit }, {id_user, email}) {
+            try {
+                await updateEmail({id_user, email});
+                commit('UPDATE_EMAIL', email);
+            } catch (err) {
+                console.error("Error in updateEmailStore():", err);
+            }
+        },
+
+        async updatePrenomStore({ commit }, {id_user, prenom}) {
+            try {
+                await updatePrenom({id_user, prenom});
+                commit('UPDATE_PRENOM', prenom);
+            } catch (err) {
+                console.error("Error in updatePrenomStore():", err);
+            }
+        },
+
+        async updateNomStore({ commit }, {id_user, nom}) {
+            try {
+                await updateNom({id_user, nom});
+                commit('UPDATE_NOM', nom);
+            } catch (err) {
+                console.error("Error in updateNomStore():", err);
+            }
+        },
 
         async updateSoldeStore({ commit }, {id_user, solde}) {
             try {

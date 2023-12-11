@@ -93,7 +93,7 @@ CREATE TABLE utilisateur(
    code_postal INT,
    adresse VARCHAR(50),
    commune VARCHAR(50),
-   solde numeric(5.2),
+   solde numeric,
    id_stand INT,
    id_role INT,
    id_etat INT,

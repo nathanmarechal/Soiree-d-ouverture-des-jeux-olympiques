@@ -4,7 +4,7 @@
       <div class="col-12">
         <h1 class="text-center">Panier</h1>
         <p>{{getCurrentUser.solde}}</p>
-        <button @click="ajouterdufric" >dzqdzqdzq</button>
+        <button @click="ajouterdufric" >+ 100 balles</button>
       </div>
     </div>
     <div class="row">

@@ -25,6 +25,7 @@ import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestat
 import CommandePage from "@/views/CommandePage.vue";
 import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
 import CommandeDetailClientVue from '@/components/commandeClient/detailleCommandeClient.vue'
+import UserInfo from '@/views/UserInfoView.vue'
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/',
     name: 'homeView',
     component: Home
+  },
+  {
+    path: '/userinfo',
+    name: 'userInfo',
+    component: UserInfo
   },
   {
     path: '/information',

@@ -277,6 +277,72 @@ async function updateSoldeAsync(id_user, newsolde) {
     }
 }
 
+const updateNom = (id, nom, callback) => {
+    try{
+        updateNomAsync(id, nom)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function updateNomAsync(id_user, nom) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE utilisateur SET nom = $1 WHERE id_user = $2", [nom, id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateNomAsync:', error);
+        throw error;
+    }
+}
+
+const updatePrenom = (id, prenom, callback) => {
+    try{
+        updatePrenomAsync(id, prenom)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function updatePrenomAsync(id_user, prenom) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE utilisateur SET prenom = $1 WHERE id_user = $2", [prenom, id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updatePrenomAsync:', error);
+        throw error;
+    }
+}
+
+const updateEmail = (id, email, callback) => {
+    try{
+        updateEmailAsync(id, email)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function updateEmailAsync(id_user, email) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE utilisateur SET email = $1 WHERE id_user = $2", [email, id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateEmailAsync:', error);
+        throw error;
+    }
+}
+
 const deleteRole = (body, callback) => {
     try{
         console.log("deleteRole1",body);
@@ -316,4 +382,7 @@ module.exports = {
     , updateRole: updateRole
     , deleteRole: deleteRole
     , updateSolde: updateSolde
+    , updateNom: updateNom
+    , updatePrenom: updatePrenom
+    , updateEmail: updateEmail
 }
