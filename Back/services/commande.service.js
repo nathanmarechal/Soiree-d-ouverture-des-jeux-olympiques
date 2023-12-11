@@ -92,7 +92,7 @@ const getLigneCommandeBycommandeId = (id, callback) => {
 async function getLigneCommandeBycommandeIdAsync(id) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("SELECT p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_commande JOIN prestation p on p.id_prestation = ligne_commande.id_prestation JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation JOIN creneau c on c.id_creneau = ligne_commande.id_creneau JOIN commande c2 on c2.id_commande = ligne_commande.id_commande WHERE ligne_commande.id_commande = $1;", [id]);
+        const result = await conn.query("SELECT ligne_commande.id_commande as id_commande, ligne_commande.id_etat_commande as id_etat_commande, ec.libelle as etat_libelle ,p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle FROM ligne_commande JOIN prestation p on p.id_prestation = ligne_commande.id_prestation JOIN etat_commande ec on ec.id_etat = ligne_commande.id_etat_commande JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation JOIN creneau c on c.id_creneau = ligne_commande.id_creneau JOIN commande c2 on c2.id_commande = ligne_commande.id_commande WHERE ligne_commande.id_commande = $1;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -101,8 +101,33 @@ async function getLigneCommandeBycommandeIdAsync(id) {
     }
 }
 
+const setEtatLigneCommandeExterieur = ({ id_commande, id_presta, id_creneau}, callback) => {
+    console.log("id_commande:" + id_commande + ", id_prestation:" + id_presta + ", id_creneau:" + id_creneau + " dans le const service commande.service.js")
+    setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_creneau})
+        .then(res => {
+            callback(null, "success");
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_creneau}) {
+    try {
+        const conn = await pool.connect();
+        console.log("id_commande:" + id_commande + ", id_prestation:" + id_presta + ", id_creneau:" + id_creneau + " dans le service commande.service.js")
+        await conn.query("UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = $1 AND id_prestation = $2 AND id_creneau = $3;", [  id_commande, id_presta, id_creneau]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in setEtatLigneCommandeExterieurAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getCommandeByUserId: getCommandeByUserId,
     addCommande: addCommande,
-    getLigneCommandeBycommandeId: getLigneCommandeBycommandeId
+    getLigneCommandeBycommandeId: getLigneCommandeBycommandeId,
+    setEtatLigneCommandeExterieur: setEtatLigneCommandeExterieur
 }

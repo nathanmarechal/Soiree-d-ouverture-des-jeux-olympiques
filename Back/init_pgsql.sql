@@ -156,7 +156,9 @@ CREATE TABLE ligne_commande
     id_creneau INT,
     quantite INT,
     prix FLOAT,
+    id_etat_commande INT,
     PRIMARY KEY(id_user, id_prestation, id_creneau),
+    FOREIGN KEY (id_etat_commande) REFERENCES etat_commande(id_etat) ON DELETE CASCADE,
     FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau) ON DELETE CASCADE,
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
     FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE,
@@ -621,10 +623,10 @@ INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
 ('2022-02-15', 1, 2),
 ('2022-02-15', 2, 1);
 
-INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix ) VALUES
-(1,1,5,1,5, 50),
-(1,1,1,1,5, 50),
-(2,2,2,1,10, 20);
+INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix , id_etat_commande) VALUES
+(1,1,5,1,5, 50,1),
+(1,1,1,1,5, 50,1),
+(2,2,2,1,10, 20,1);
 
 
 INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
@@ -786,10 +788,13 @@ ORDER BY
 -- UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
 
 
-SELECT p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle
+SELECT ligne_commande.id_etat_commande, ec.libelle ,p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.id_creneau, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_commande
 JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
+JOIN etat_commande ec on ec.id_etat = ligne_commande.id_etat_commande
 JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
 JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
 JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
-WHERE ligne_commande.id_commande = 1;
+WHERE ligne_commande.id_commande = 2;
+
+UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = 1 AND id_prestation = 1 AND id_creneau = 1;

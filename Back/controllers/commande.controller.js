@@ -36,3 +36,17 @@ exports.getLigneCommandeBycommandeId = (req, res) => {
         }
     })
 }
+
+exports.setEtatLigneCommandeExterieur = (req, res) => {
+    const id_presta = req.body.id_prestation;
+    const id_creneau = req.body.id_creneau;
+    const id_commande = req.body.id_commande;
+    console.log("id_presta:" + id_presta + ", id_creneau:" + id_creneau + ", id_commande:" + id_commande + " dans le controller commande.controller.js")
+    commandeService.setEtatLigneCommandeExterieur({ id_presta, id_creneau, id_commande}, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}

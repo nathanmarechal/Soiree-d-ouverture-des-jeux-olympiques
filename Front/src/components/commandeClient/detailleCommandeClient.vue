@@ -18,6 +18,8 @@
             <th>Créneau</th>
             <th>Quantité</th>
             <th>Prix</th>
+            <th>Etat</th>
+            <th>QRcode</th>
           </tr>
           </thead>
           <tbody>
@@ -27,6 +29,8 @@
             <td>{{ ligne.creneau}}</td>
             <td>{{ ligne.quantite }}</td>
             <td>{{ ligne.prix }} €</td>
+            <td>{{ ligne.etat_libelle}}</td>
+            <td><QRComponent :ligne_commande="ligne" :id_user="getCurrentUser.id_user" ></QRComponent></td>
           </tr>
           </tbody>
         </table>
@@ -38,9 +42,12 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-
+import QRComponent from "@/components/QRComponent.vue";
 export default {
   name: 'DetailCommande',
+  components: {
+    QRComponent
+  },
 
   data() {
     return {

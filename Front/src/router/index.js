@@ -29,6 +29,7 @@ import CommandePage from "@/views/CommandePage.vue";
 import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
 import CommandeDetailClientVue from '@/components/commandeClient/detailleCommandeClient.vue'
 import UserInfo from '@/views/UserInfoView.vue'
+import ValidLignePage from "@/views/ValidLignePage.vue";
 
 Vue.use(VueRouter);
 
@@ -57,6 +58,11 @@ const routes = [
     path: '/detail-commande/:id',
     name: 'DetailCommande',
     component: CommandeDetailClientVue
+  },
+  {
+    path: '/validLigneCommande/:id_prestation/:id_creneau/:id_commande',
+    name: 'validLigneCommande',
+    component: ValidLignePage
   },
   {
     path: '/commande', 

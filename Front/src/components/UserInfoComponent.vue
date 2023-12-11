@@ -4,12 +4,12 @@
     <div class="card">
       <ul class="list-group list-group-flush">
         <li v-if="!isModifNameModeActive" class="list-group-item">Nom : {{ getCurrentUser.nom }} <button class="btn btn-info btn-sm" @click="setModifNameModeActive">editer</button></li>
-        <li v-if="isModifNameModeActive" class="list-group-item"><input required type="text" v-model="newname"><button class="btn btn-info btn-sm" @click="updateName">confirmer</button></li>
+        <li v-if="isModifNameModeActive" class="list-group-item">Nouveau nom :<input required type="text" v-model="newname"><button class="btn btn-info btn-sm" @click="updateName">confirmer</button></li>
         <li v-if="!isModifSurnameModeActive" class="list-group-item">Prénom : {{ getCurrentUser.prenom }} <button class="btn btn-info btn-sm" @click="setModifSurnameModeActive">editer</button></li>
-        <li v-if="isModifSurnameModeActive" class="list-group-item"><input required type="text" v-model="newsurname"><button class="btn btn-info btn-sm" @click="updateSurname">confirmer</button></li>
+        <li v-if="isModifSurnameModeActive" class="list-group-item">Nouveau prénom<input required type="text" v-model="newsurname"><button class="btn btn-info btn-sm" @click="updateSurname">confirmer</button></li>
         <li class="list-group-item">solde : {{ getCurrentUser.solde }}       <button class="btn btn-info btn-sm" @click="addMoney">+100</button></li>
         <li v-if="!isModifEmailModeActive" class="list-group-item">Email : {{ getCurrentUser.email }} <button class="btn btn-info btn-sm" @click="setModifEmailModeActive">editer</button></li>
-        <li v-if="isModifEmailModeActive" class="list-group-item"><input required type="text" v-model="newemail"><button class="btn btn-info btn-sm" @click="updateEmail">confirmer</button></li>
+        <li v-if="isModifEmailModeActive" class="list-group-item">nouvelle adresse email : <input required type="text" v-model="newemail"><button class="btn btn-info btn-sm" @click="updateEmail">confirmer</button></li>
 
         <li class="list-group-item">Adresse : {{ getCurrentUser.adresse }}</li>
         <li class="list-group-item">Code postal : {{ getCurrentUser.code_postal }}</li>

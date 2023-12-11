@@ -9,6 +9,6 @@ router.get("/getligne/:id", commandeController.getLigneCommandeBycommandeId);
 
 router.post("/add", commandeController.addCommande);
 
-
+router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
 
 module.exports = router;

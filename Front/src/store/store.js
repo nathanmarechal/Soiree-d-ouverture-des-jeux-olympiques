@@ -25,8 +25,12 @@ import {
     getPanierUserCourant,
     updateQuantityInPanier
 } from "@/services/panier.service";
-import {addCommande, getCommandeUserCourant, getLigneCommandeBycommandeId} from "@/services/commande.service";
-// import {stat} from "@babel/core/lib/gensync-utils/fs";
+import {
+    addCommande,
+    getCommandeUserCourant,
+    getLigneCommandeBycommandeId,
+    setEtatLigneCommandeExterieur
+} from "@/services/commande.service";
 
 Vue.use(Vuex)
 
@@ -44,7 +48,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier":  [],
-            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null}] }],
+            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
             "id_role": null,
             "id_stand" : null
         },
@@ -358,10 +362,24 @@ export default new Vuex.Store({
         SET_LANG(state,lang)
         {
             state.lang = lang;
+        },
+        SET_ETAT_LIGNE_COMMANDE_EXTERIEUR(state, { id_commande, id_prestation, id_creneau}) {
+            console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
         }
     },
 
     actions: {
+
+        //ne pas toucher svp, c'est normal si ce n'est pas méthode domas
+        async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
+            console.log({ id_commande, id_prestation, id_creneau})
+            try {
+                await setEtatLigneCommandeExterieur({ id_commande, id_prestation, id_creneau});
+                commit('SET_ETAT_LIGNE_COMMANDE_EXTERIEUR', { id_commande, id_prestation, id_creneau});
+            } catch (err) {
+                console.error("Error in setEtatLigneCommandeExterieurStore():", err);
+            }
+        },
 
         async updateEmailStore({ commit }, {id_user, email}) {
             try {

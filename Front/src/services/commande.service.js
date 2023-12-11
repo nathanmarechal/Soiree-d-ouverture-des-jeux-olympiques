@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "@/services/axios.service";
+import {getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 
 async function getCommandeUserCourant(id_user){
@@ -28,8 +28,19 @@ async function getLigneCommandeBycommandeIdFromApi(id_commande) {
     return getRequest('/commande/getligne/' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
 }
 
+async function setEtatLigneCommandeExterieur({id_commande, id_prestation, id_creneau}){
+    let answer = await setEtatLigneCommandeExterieurFromAPI({id_commande, id_prestation, id_creneau})
+    return answer;
+}
+
+async function setEtatLigneCommandeExterieurFromAPI({ id_commande,id_prestation, id_creneau}){
+    console.log("id_prestation:" + id_prestation + ", id_creneau:" + id_creneau + ", id_commande:" + id_commande + " dans le service commande.service.js")
+    return patchRequest('/commande/setetatligne', {id_commande, id_prestation, id_creneau}, 'SETETATLIGNECOMMANDEEXTERIEUR')
+}
+
 export {
     getCommandeUserCourant,
     addCommande,
-    getLigneCommandeBycommandeId
+    getLigneCommandeBycommandeId,
+    setEtatLigneCommandeExterieur
 }
