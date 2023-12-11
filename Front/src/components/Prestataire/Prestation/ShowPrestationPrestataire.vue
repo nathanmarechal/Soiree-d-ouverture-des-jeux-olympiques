@@ -67,7 +67,6 @@ export default {
       }
     },
     getPrestationByUserId(id){
-      console.log('chef')
       this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
     },
     getTypePrestationLibelle(idTypePrestation) {

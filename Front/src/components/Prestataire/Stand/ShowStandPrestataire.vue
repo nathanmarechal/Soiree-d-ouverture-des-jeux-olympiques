@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <main id="sample">
       <Editor
           ref="myEditor"
@@ -28,10 +29,10 @@
 
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 
 import Editor from '@tinymce/tinymce-vue';
-import {uploadImageDescriptionStand,getStandByUserId,updateDescriptionStand} from '@/services/stand.service'
+import {uploadImageDescriptionStand,updateDescriptionStand} from '@/services/stand.service'
 
 export default {
   components: {
@@ -50,23 +51,28 @@ export default {
   },
   computed: {
     ...mapGetters(['getCurrentUser']),
+    ...mapActions(['getStands'])
   },
   async created() {
-    try {
-      const userId = this.getCurrentUser.id_user;
-      const standData = await getStandByUserId(userId);
-      if (standData && standData.length > 0) {
-        this.stand = standData[0];
-        this.standDescription = this.stand.description_stand; // Initialiser la description
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    await this.loadData()
   },
   mounted() {
     this.myEditor = this.$refs.myEditor;
   },
   methods: {
+    async loadData() {
+      try {
+        console.log(this.getCurrentUser.id_stand)
+        if (this.getAllPrestation.length === 0){
+          await this.getPrestationsStore()
+        }
+        if (this.getAllTypePrestation.length === 0) {
+          await this.getTypePrestationsStore()
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
     async handleImageUpload(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
