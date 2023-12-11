@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Nombre de prestation par heure</h4>
+    <h4>Nombre de prestations par heure</h4>
     <div ref="chart"></div>
   </div>
 </template>
