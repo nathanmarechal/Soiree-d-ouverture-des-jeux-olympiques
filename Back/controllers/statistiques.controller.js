@@ -21,3 +21,15 @@ exports.getNewStandByMonth = (req, res) => {
         }
     })
 }
+
+exports.getNbPrestationHeure = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getNbPrestationHeure(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}

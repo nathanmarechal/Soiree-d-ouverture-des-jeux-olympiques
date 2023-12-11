@@ -20,8 +20,18 @@ async function getNewStandByMonth() {
     return answer
 }
 
+async function getNbPrestationHeureFromAPI(id) {
+    return getRequest('/statistiques/prestataire/nb-prestation-heure/' + id, 'GETPRESTATAIREPRESTATIONBYHOURS')
+}
+
+async function getNbPrestationHeure(id) {
+    let answer = await getNbPrestationHeureFromAPI(id)
+    console.log("getPrestationByUserId: ", answer)
+    return answer
+}
 
 export {
     getBestSellerPrestation,
-    getNewStandByMonth
+    getNewStandByMonth,
+    getNbPrestationHeure
 }

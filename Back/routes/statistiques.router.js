@@ -6,4 +6,6 @@ router.get('/best-seller-prestation', statistiquesController.getBestSellerPresta
 
 router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
 
+router.get('/prestataire/nb-prestation-heure/:id', statistiquesController.getNbPrestationHeure)
+
 module.exports = router;

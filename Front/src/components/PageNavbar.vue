@@ -26,6 +26,8 @@
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+              <br>
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 
@@ -34,6 +36,8 @@
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+              <br>
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 
