@@ -1,4 +1,4 @@
-import {getRequest, patchRequest, postRequest, postRequestPicture} from "@/services/axios.service";
+import {deleteRequest, getRequest, patchRequest, postRequest, postRequestPicture} from "@/services/axios.service";
 
 async function getAllPrestationsFromAPI() {
     let answer = await getRequest('/prestations/get', 'GETALLPRESTATIONS')
@@ -77,6 +77,15 @@ async function updatePrestation(id, body) {
 }
 
 
+async function deletePrestation(id){
+    let answer = await deletePrestationFromApi(id)
+    return answer;
+}
+
+async function deletePrestationFromApi(id){
+    return deleteRequest('/prestations/delete/' + id , 'DELETEPRESTATIONFROMPANIERUSER')
+}
+
 
 export {
     getAllPrestations,
@@ -85,5 +94,6 @@ export {
     uploadImagePresation,
     createPrestation,
     updateIsAvailablePrestation,
-    updatePrestation
+    updatePrestation,
+    deletePrestation
 }

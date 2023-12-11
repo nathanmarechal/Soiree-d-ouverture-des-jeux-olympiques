@@ -143,7 +143,7 @@ export default {
       try {
 
         console.log(this.prestation.image)
-        
+
         this.prestation.prix = parseFloat(this.prestation.prix);
 
         await uploadImagePresation(this.image_raw);

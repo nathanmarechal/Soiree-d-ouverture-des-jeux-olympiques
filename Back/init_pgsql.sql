@@ -562,12 +562,15 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_available) VALUES
-('initiation au mma',120,'initiation_au_mma.jpg',3,1,true),
-('inscription au club',120,'inscription_au_club.jpg',3,1,true),
+
 ('kebab frites',12,'kebab_frites.jpg',1,2,true),
 ('kebab simple',9,'kebab_simple.jpg',1,2,true),
 ('Dorum frites',15,'dorum_frites.jpg',1,2,true),
-('Coca',3,'coca.jpg',2,2,true),
+('Coca',3,'coca.jpg',2,2,true);
+
+/*
+('initiation au mma',120,'initiation_au_mma.jpg',3,1,true),
+('inscription au club',120,'inscription_au_club.jpg',3,1,true),
 ('spectacle de clown', 5, 'spectacle_de_clown.jpg', 3, 3,true),
 ('baguette', 2, 'baguette.jpg', 1, 4,true),
 ('croissant', 1.5, 'croissant.jpg', 1, 4,true),
@@ -598,6 +601,7 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_av
 ('billet match de volley',225,'billet-volley.png',7,12,true),
 ('billet match de badminton',260,'billet-badminton.png',7,12,true)
 ;
+ */
 
 INSERT INTO utilisateur (email, password, nom, prenom,solde, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1',1000, 75001, 'Adresse1', 'Commune1', null, 1),

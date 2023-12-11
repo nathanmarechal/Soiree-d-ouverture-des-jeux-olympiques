@@ -45,7 +45,7 @@ export default {
     this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
-    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore']),
+    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)
@@ -76,6 +76,9 @@ export default {
     },
     toggleAvailability(id, is_available){
        this.updateIsAvailablePrestationStore({id : id, is_available:is_available})
+    },
+    prestationDelete(id){
+      this.deletePrestationStore(id);
     }
   },
 }

@@ -226,7 +226,36 @@ async function updatePrestationAsync(id, body) {
         throw error;
     }
 }
+const deletePrestation = (id, callback) => {
+    deletePrestationAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
 
+async function deletePrestationAsync(id) {
+    try {
+        const conn = await pool.connect();
+        console.log('id in deletePrestationAsync: ', id);
+
+        const deleteQuery = `
+            DELETE FROM prestation
+            WHERE id_prestation = $1;
+        `;
+        const values = [id];
+
+        const result = await conn.query(deleteQuery, values);
+        conn.release();
+        return result.rows; // This will return the number of rows deleted.
+    } catch (error) {
+        console.error('Error in deletePrestationAsync:', error);
+        throw error;
+    }
+}
 
 module.exports = {
     getAllPrestations: getAllPrestations,
@@ -234,5 +263,6 @@ module.exports = {
     uploadPicturePresatation:uploadPicturePresatation,
     addPrestation:addPrestation,
     updateIsAvailablePrestation:updateIsAvailablePrestation,
-    updatePrestation:updatePrestation
+    updatePrestation:updatePrestation,
+    deletePrestation:deletePrestation
 }

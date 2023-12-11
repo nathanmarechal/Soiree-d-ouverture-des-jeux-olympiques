@@ -16,7 +16,7 @@ import {
     updateNom
 } from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
-import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation} from "@/services/prestation.service";
+import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
 import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
@@ -301,6 +301,9 @@ export default new Vuex.Store({
             state.users = state.users.filter(item => item.id_user !== id);
         },
 
+        DELETE_PRESTATION(state, id) {
+            state.prestations = state.prestations.filter(item => item.id_prestation !== id);
+        },
         DELETE_ROLE(state, id) {
             state.roles = state.roles.filter(item => item.id_role !== id);
         },
@@ -548,6 +551,15 @@ export default new Vuex.Store({
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
+            }
+        },
+
+        async deletePrestationStore({ commit }, id) {
+            try {
+                await deletePrestation(id);
+                commit('DELETE_PRESTATION', id);
+            } catch (err) {
+                console.error("Error in deleteUserStore():", err);
             }
         },
 
