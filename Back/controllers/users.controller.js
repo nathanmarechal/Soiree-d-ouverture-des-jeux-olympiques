@@ -101,12 +101,12 @@ exports.getUserWithLongestPrenom = (req, res) => {
 }
 
 exports.updateUser = (req, res) => {
-    const { prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand } = req.body;
+    const { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand } = req.body;
 
     // Log function name and data
-    console.log("updateUser", { prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand });
+    console.log("updateUser", { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand });
 
-    usersService.updateUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, (error, data) => {
+    usersService.updateUser(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, (error, data) => {
         if (error) {
             if (error === "User not found") {
                 return res.status(404).send("User not found");

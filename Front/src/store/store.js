@@ -562,10 +562,11 @@ export default new Vuex.Store({
             }
         },
 
-        async updateUserStore({ commit }, {id, body}) {
+        async updateUserStore({ commit }, {body}) {
             try {
-                await updateUser(id, body);
-                commit('UPDATE_USER', id, body);
+                await updateUser(body.id_user, body);
+                console.log("eee", body, "id", body.id_user)
+                commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
                 console.error("Error in updateUserStore():", err);
             }

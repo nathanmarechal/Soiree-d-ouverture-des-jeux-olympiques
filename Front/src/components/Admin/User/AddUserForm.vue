@@ -35,6 +35,11 @@
         <input type="text" id="commune" v-model="utilisateur.commune" required>
       </div>
 
+      <div class="form-group">
+        <label for="solde">solde</label>
+        <input type="number" id="solde" v-model="utilisateur.solde" value="0" required> 
+      </div>
+
       <div class="form-group" >
         <label for="role ">Role</label>
         <select id="role" v-model="utilisateur.id_role" required>
@@ -65,6 +70,7 @@ export default {
         adresse: "",
         code_postal: "",
         commune: "",
+        solde: 0,
         id_role: null,
       },
     };

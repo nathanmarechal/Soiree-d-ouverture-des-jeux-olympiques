@@ -3,7 +3,7 @@
         <h2>Modifier Utilisateur</h2>
         <form @submit.prevent="submitForm">
             <div>
-                <input type="hidden" id="id" v-model="user.id_user" required>
+                <input type="hidden" id="id_user" v-model="user.id_user" required>
             </div>
             <div>
                 <label for="first-name">Prénom:</label>
@@ -22,6 +22,14 @@
                 <input type="text" id="adresse" v-model="user.adresse" required>
             </div>
             <div>
+                <label for="commune">Commune :</label>
+                <input type="text" id="commune" v-model="user.commune" required>
+            </div>
+            <div>
+                <label for="solde">Solde :</label>
+                <input type="text" id="solde" v-model="user.solde" required>
+            </div>
+            <div>
                 <label for="code_postal">Code Postal :</label>
                 <input type="text" id="code_postal" v-model="user.code_postal" required>
             </div>
@@ -31,7 +39,7 @@
             </div>
             <div>
                 <label for="role">Role:</label>
-                <select id="role" v-model="user.role" required>
+                <select id="role" v-model="user.id_role" required>
                     <option value="">Sélectionner un role</option>
                     <option v-for="role in getAllRoles" :key="role.id_role" :value="role.id_role">{{ role.libelle }}</option>
                 </select>
@@ -80,14 +88,17 @@ export default {
         async submitForm() {
             try {
                 console.log("Données de l'utilisateur :", this.user);
-                await this.updateUserStore({id : this.user.id, body : {
+                await this.updateUserStore({body : {
+                    id_user: this.selected_user.id_user,
                     prenom: this.user.prenom,
                     nom: this.user.nom,
                     email: this.user.email,
                     adresse: this.user.adresse,
+                    commune : this.user.commune,
+                    solde : this.user.solde,
                     code_postal: this.user.code_postal,
                     password: this.user.password,
-                    role: this.user.role
+                    id_role: this.user.id_role
                 }});
                 await this.$router.push('/admin/users/');
             } catch (error) {

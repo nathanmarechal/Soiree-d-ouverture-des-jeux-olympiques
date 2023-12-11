@@ -149,9 +149,9 @@ const getAllRoles = (callback) => {
         });
 }
 
-const updateUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
+const updateUser = (id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, callback) => {
     try{
-        updateUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
+        updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune,solde, id_role, id_stand)
         callback(null, "success");
     } catch (error) {
         console.log(error);
@@ -159,13 +159,21 @@ const updateUser = (prenom, nom, email, password, adresse, code_postal, commune,
     }
 }
 
-async function updateUserAsync(id, prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
+async function updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune,solde, id_role, id_stand) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query(
-            "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, id_stand = $9, id_role = $10 WHERE id_user = $1",
-            [id, email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]
-        );        
+        let result;
+        if (id_stand == null) {
+            result = await conn.query(
+                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9, id_role = $10 WHERE id_user = $1",
+                [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_role]
+            );
+        } else {
+            result = await conn.query(
+                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9 id_stand = $10, id_role = $11 WHERE id_user = $1",
+                [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
+            );        
+        }
         conn.release();
         return result;
     } catch (error) {
