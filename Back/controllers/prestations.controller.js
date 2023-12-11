@@ -56,13 +56,24 @@ exports.addPrestation = (req, res) => {
     })
 }
 
-
-
 exports.updateIsAvailablePrestation = (req, res) => {
     const id = req.params.id;
     const body = req.body;
     console.log("updateIsAvailablePrestation: ", id, body)
     prestationsService.updateIsAvailablePrestation(id, body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.updatePrestation = (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    prestationsService.updatePrestation(id, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

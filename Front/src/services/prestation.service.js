@@ -67,6 +67,14 @@ async function updateIsAvailablePrestation(id, body) {
     //console.log("updateZone: ", answer)
     return answer
 }
+async function updatePrestationFromAPI(id, body) {
+    return patchRequest('/prestations/update/' + id, body, 'UPDATEPRESTATION')
+}
+
+async function updatePrestation(id, body) {
+    let answer = await updatePrestationFromAPI(id, body)
+    return answer
+}
 
 
 
@@ -76,5 +84,6 @@ export {
     getPrestationByUserId,
     uploadImagePresation,
     createPrestation,
-    updateIsAvailablePrestation
+    updateIsAvailablePrestation,
+    updatePrestation
 }

@@ -12,4 +12,6 @@ router.post("/add", prestationController.addPrestation);
 
 router.patch("/update/is-available/:id", prestationController.updateIsAvailablePrestation);
 
+router.patch("/update/:id", prestationController.updatePrestation);
+
 module.exports = router;

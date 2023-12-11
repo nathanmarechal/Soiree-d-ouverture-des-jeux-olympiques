@@ -20,7 +20,7 @@
       <input v-model="prestation.is_available" id="isAvailable" type="checkbox" class="form-check-input">
     </div>
 
-    <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top" style="border-radius: 10%;">
+    <img v-if="!isImageInputUpload" :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top" style="border-radius: 10%;">
 
     <div v-if="croppedImage">
       <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
@@ -142,7 +142,9 @@ export default {
     },
     async submitForm() {
       try {
-        console.log("Données de la prestation :", this.prestation);
+        this.prestation.prix = parseFloat(this.prestation.prix);
+
+        await this.updatePrestationStore(this.prestation)
 
         await uploadImagePresation(this.image_raw);
 

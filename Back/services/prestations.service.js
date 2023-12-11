@@ -178,11 +178,61 @@ async function updateIsAvailablePrestationAsync(id, body) {
 }
 
 
+const updatePrestation = (id, body, callback) => {
+    updatePrestationAsync(id, body)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function updatePrestationAsync(id, body) {
+    try {
+        const conn = await pool.connect();
+        console.log('id in updatePrestationAsync: ', id);
+        console.log('body in updatePrestationAsync: ', body);
+
+        const updateQuery = `
+            UPDATE prestation 
+            SET 
+                libelle = $1, 
+                prix = $2, 
+                date = $3, 
+                image = $4, 
+                id_type_prestation = $5, 
+                id_stand = $6, 
+                is_available = $7
+            WHERE id_prestation = $8;
+        `;
+        const values = [
+            body.libelle,
+            body.prix,
+            body.date,
+            body.image,
+            body.id_type_prestation,
+            body.id_stand,
+            body.is_available,
+            id
+        ];
+
+        const result = await conn.query(updateQuery, values);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updatePrestationAsync:', error);
+        throw error;
+    }
+}
+
 
 module.exports = {
     getAllPrestations: getAllPrestations,
     getPrestationByUserId: getPrestationByUserId,
     uploadPicturePresatation:uploadPicturePresatation,
     addPrestation:addPrestation,
-    updateIsAvailablePrestation:updateIsAvailablePrestation
+    updateIsAvailablePrestation:updateIsAvailablePrestation,
+    updatePrestation:updatePrestation
 }
