@@ -79,6 +79,9 @@ export default {
     },
     prestationDelete(id){
       this.deletePrestationStore(id);
+      this.prestations = this.prestations.filter(item => item.id_prestation !== id);
+
+
     }
   },
 }
