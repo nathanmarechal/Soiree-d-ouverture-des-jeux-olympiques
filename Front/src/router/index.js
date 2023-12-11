@@ -10,6 +10,9 @@ import NotFound from "@/views/Error404Page.vue";
 import AdminUsers from '@/views/Admin/User/AdminUsers.vue'
 import AdminAddUser from '@/views/Admin/User/AdminAddUser.vue'
 import AdminEditUsers from '@/views/Admin/User/AdminEditUsers.vue';
+import AdminStand from '@/views/Admin/Stand/AdminStand.vue';
+import AdminAddStand from '@/views/Admin/Stand/AdminAddStand.vue';
+import AdminEditStand from '@/views/Admin/Stand/AdminEditStand.vue';
 import AdminRoles from '@/views/Admin/Role/AdminRoles.vue';
 import AdminAddRoles from '@/views/Admin/Role/AdminAddRoles.vue';
 import AdminEditRoles from '@/views/Admin/Role/AdminEditRoles.vue';
@@ -95,6 +98,21 @@ const routes = [
     path: '/admin/users/edit',
     name: 'AdminEditUsers',
     component: AdminEditUsers
+  },
+  {
+    path: '/admin/stands',
+    name: 'AdminStand',
+    component: AdminStand
+  },
+  {
+    path: '/admin/stand/add',
+    name: 'AdminAddStand',
+    component: AdminAddStand
+  },
+  {
+    path: '/admin/stand/edit',
+    name: 'AdminEditStand',
+    component: AdminEditStand
   },
   {
     path: '/admin/roles',

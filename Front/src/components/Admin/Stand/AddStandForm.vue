@@ -21,14 +21,15 @@
                 <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">Reserver un emplacement</button>
               </div>
                <SelectEmplacement @close="toggleSelectEmplacementModal"  :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
-          <button type="submit">Add Stand</button>
+          <button type="submit" class="btn btn-primary">Add Stand</button>
+          <router-link to="/admin/stands" class="btn btn-danger">Cancel</router-link>
         </form>
     </div>
 </template>
 
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
-import MapSignUpPreView from '../User/MapSignUpPreView.vue'
+import MapSignUpPreView from '../../Map/MapSignUpPreView.vue'
 
 import {mapGetters} from 'vuex';
 

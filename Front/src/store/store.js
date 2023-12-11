@@ -17,7 +17,7 @@ import {
 } from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation} from "@/services/prestation.service";
-import {getAllStands} from "@/services/stand.service";
+import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
     deletePrestationFromPanierUser,
@@ -161,6 +161,19 @@ export default new Vuex.Store({
 
         SET_STANDS(state, stands) {
             state.stands = stands;
+        },
+
+        UPDATE_STAND(state, payload) {
+            state.stands = state.stands.map(item => {
+                if (item.id_stand === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        DELETE_STAND(state, id) {
+            state.stands = state.stands.filter(item => item.id_stand !== id);
         },
 
         SET_TYPE_PRESTATIONS(state, typePresations) {
@@ -729,6 +742,24 @@ export default new Vuex.Store({
                 return stands; // Return the fetched data
             } catch (error) {
                 console.error('Error fetching stands:', error);
+            }
+        },
+
+        async updateStandStore({ commit }, {id, body}) {
+            try {
+                await updateStand(id, body);
+                commit('UPDATE_STAND', id, body);
+            } catch (err) {
+                console.error("Error in updateStandStore():", err);
+            }
+        },
+
+        async deleteStandStore({ commit }, id) {
+            try {
+                await deleteStand(id);
+                commit('DELETE_STAND', id);
+            } catch (err) {
+                console.error("Error in deleteStandStore():", err);
             }
         },
 

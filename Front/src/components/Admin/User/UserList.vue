@@ -15,7 +15,6 @@
             <td>{{ user.nom }}</td>
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
-            <td>user = {{ user }}</td>
             <td>
               <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
               <button class="red-button" @click="removeUser(user.id_user)">{{translate("userList_6")}}</button>
@@ -43,9 +42,10 @@
     },
     methods: {
       translate,
-      ...mapActions(['getUsersStore', 'deleteUserStore']),
+      ...mapActions(['getUsersStore', 'deleteUserStore', 'getRolesStore']),
       async loadData() {
         await this.getUsersStore();
+        await this.getRolesStore();
       },
       async removeUser(index) {
         console.log("users", this.getAllUsers)
