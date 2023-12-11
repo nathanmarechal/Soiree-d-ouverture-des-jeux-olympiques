@@ -15,9 +15,10 @@
             <td>{{ user.nom }}</td>
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
+            <td>user = {{ user }}</td>
             <td>
-              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="blue-button">{{translate("userList_5")}}</router-link>
-              <button class="red-button" @click="deleteUser(index)">{{translate("userList_6")}}</button>
+              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
+              <button class="red-button" @click="removeUser(user.id_user)">{{translate("userList_6")}}</button>
             </td>
           </tr>
         </tbody>
@@ -38,21 +39,23 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllUsers', 'getFilteredUsers', 'getAllRoles']),
+      ...mapGetters(['getAllUsers', 'getAllRoles']),
     },
     methods: {
       translate,
       ...mapActions(['getUsersStore', 'deleteUserStore']),
       async loadData() {
-        if (this.getAllUsers.length === 0)
-          await this.getUsersStore();
+        await this.getUsersStore();
       },
-      async deleteUser(index) {
-        const user = this.filteredUsers[index];
+      async removeUser(index) {
+        console.log("users", this.getAllUsers)
+        console.log("index", index);
+        const user = this.getAllUsers.find(user => user.id_user === index);
+        console.log("aaa", user);
         const confirmMessage = `Êtes-vous sûr de vouloir supprimer l'utilisateur ${user.prenom} ${user.nom} ?`;
         if (confirm(confirmMessage)) {
           try {
-            await this.deleteUserStore(user.id_utilisateur);
+            await this.deleteUserStore(user.id_user);
           } catch (error) {
             console.error('Erreur lors de la suppression de l\'utilisateur :', error);
             }

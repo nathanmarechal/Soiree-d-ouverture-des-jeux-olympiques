@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="true" class="container" style="margin-top: 70px;">
-        <edit-user-form></edit-user-form>
+        <edit-user-form :selected_user="this.$route.params.selected_user"></edit-user-form>
     </div>
     <div v-else>
       {{ error404() }}

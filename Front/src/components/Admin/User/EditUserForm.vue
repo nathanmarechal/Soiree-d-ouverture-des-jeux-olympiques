@@ -33,11 +33,10 @@
                 <label for="role">Role:</label>
                 <select id="role" v-model="user.role" required>
                     <option value="">Sélectionner un role</option>
-                    <option value="admin">Admin</option>
-                    <option value="prestataire">Prestataire</option>
+                    <option v-for="role in getAllRoles" :key="role.id_role" :value="role.id_role">{{ role.libelle }}</option>
                 </select>
             </div>
-            <button class="blue-button" type="btn btn-success">Sauvegarder</button>
+            <button class="btn btn-primary">Sauvegarder</button>
             <router-link to="/admin/users/" class="btn btn-danger">Quitter</router-link>
         </form>
     </div>
@@ -50,12 +49,16 @@ export default {
     props: ['selected_user'],
     data() {
         return {
-            user : {},
+          user : {},
         };
     },
     async mounted() {
         try {
             this.user = this.selected_user;
+            console.log(this.user);
+            if (this.user === undefined) {
+                throw new Error("L'utilisateur n'a pas été trouvé");
+            }
             await this.loadData();
         } catch (error) {
             console.error('Erreur lors du chargement des données :', error);

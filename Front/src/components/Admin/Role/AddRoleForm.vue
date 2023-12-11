@@ -4,7 +4,7 @@
       <label for="libelle">Libellé:</label>
       <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-success">Add Role</button>
+    <button type="submit" class="btn btn-primary">Add Role</button>
     <router-link to="/admin/roles" class="btn btn-danger">Cancel</router-link>
   </form>
 </template>

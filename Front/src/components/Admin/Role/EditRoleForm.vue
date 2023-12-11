@@ -4,7 +4,7 @@
       <label for="libelle">Libellé:</label>
       <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-success">Modifier</button>
+    <button type="submit" class="btn btn-primary">Modifier</button>
     <router-link to="/admin/roles/" class="btn btn-danger">Quitter</router-link>
   </form>
 </template>
@@ -23,6 +23,9 @@ export default {
   async mounted() {
     try {
       this.role = this.selected_role;
+      if (this.role.id_role === undefined) {
+        throw new Error("Le rôle n'a pas été trouvé");
+      }
       console.log(this.role);
       await this.loadData();
     } catch (error) {

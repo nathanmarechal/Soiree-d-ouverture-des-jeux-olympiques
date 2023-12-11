@@ -2,7 +2,7 @@
     <div>
       <div v-if="true">
       <div class="main" style="margin-top: 10vh;  width: 100%;">
-          <add-user-form></add-user-form>
+          <add-user-form ></add-user-form>
       </div>
       </div>
     <div v-else>

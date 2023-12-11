@@ -94,13 +94,12 @@ export default {
         let role = this.getAllRoles.find(role => role.id_role === this.utilisateur.id_role);
         if (role)
           this.utilisateur.role = role.libelle;
-
         await this.createUserStore({
           user: this.utilisateur,
           session_id: this.getCurrentUser.session_id
         });
-        this.$emit('close');
-      } catch (error) {
+        this.$router.push('/admin/users');
+        } catch (error) {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
       }
     },
