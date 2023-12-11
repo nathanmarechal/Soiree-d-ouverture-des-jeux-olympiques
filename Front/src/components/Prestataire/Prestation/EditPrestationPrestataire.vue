@@ -104,7 +104,6 @@ export default {
       this.isImageInputUpload = true;
 
       // Stocker le nom du fichier original sans l'extension
-      this.prestation.image = file.name.split('.').slice(0, -1).join('.');
 
       reader.onload = (e) => {
         this.$refs.image.src = e.target.result;
@@ -142,11 +141,15 @@ export default {
     },
     async submitForm() {
       try {
+
+        console.log(this.prestation.image)
+        
         this.prestation.prix = parseFloat(this.prestation.prix);
+
+        await uploadImagePresation(this.image_raw);
 
         await this.updatePrestationStore(this.prestation)
 
-        await uploadImagePresation(this.image_raw);
 
         await this.$router.push('/prestataire/prestations/');
       } catch (error) {
