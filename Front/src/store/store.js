@@ -16,7 +16,7 @@ import {
     updateNom
 } from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
-import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation} from "@/services/prestation.service";
+import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation} from "@/services/prestation.service";
 import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
@@ -541,8 +541,15 @@ export default new Vuex.Store({
             }
         },
 
-
-
+        async updatePrestationStore({ commit }, body) {
+            try {
+                console.log(body)
+                await updatePrestation(body.id_prestation, body)
+                commit('UPDATE_PRESTATION', body.id_prestation, body);
+            } catch (err) {
+                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
+            }
+        },
 
         async createRoleStore({ commit }, body) {
             try {

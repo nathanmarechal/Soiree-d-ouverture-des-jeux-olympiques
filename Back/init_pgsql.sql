@@ -74,7 +74,7 @@ CREATE TABLE stand(
 CREATE TABLE prestation(
     id_prestation SERIAL PRIMARY KEY,
     libelle VARCHAR(50),
-    prix INT,
+    prix NUMERIC(7,2),
     date timestamp,
     image varchar(255),
     id_type_prestation INT NOT NULL,
