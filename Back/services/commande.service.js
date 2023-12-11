@@ -57,7 +57,7 @@ async function addCommandeAsync(id_user) {
                                 if (err) {
                                     console.log(err)
                                 } else {
-                                    conn.query('INSERT INTO ligne_commande (id_commande,  id_user, id_prestation, quantite, prix, id_creneau) VALUES ($1, $6 ,$2, $3, $4, $5);', [last_insert_id, item.id_prestation, item.quantite, item.prix, item.id_creneau, id_user], (err, result) => {
+                                    conn.query('INSERT INTO ligne_commande (id_commande,  id_user, id_prestation, quantite, prix, id_creneau, id_etat_commande) VALUES ($1, $6 ,$2, $3, $4, $5,1);', [last_insert_id, item.id_prestation, item.quantite, item.prix, item.id_creneau, id_user], (err, result) => {
                                         if (err) {
                                             console.log(err)
                                         } else {
