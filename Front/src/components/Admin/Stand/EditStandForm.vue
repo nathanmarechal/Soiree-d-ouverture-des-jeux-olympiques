@@ -10,7 +10,7 @@
         <label for="image_stand">Image :</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
       </div>
-      <img v-if="!isImageInputUpload && !newImage" :src="getImageSrc(stand.image_stand)" alt="Image de la stand" class="card-img-top " style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;">
+      <img v-if="!isImageInputUpload && !newImage" :src="getImageSrc(stand.image_stand)" alt="Image du stand" class="card-img-top " style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;">
       <div v-if="croppedImage">
         <img :src="croppedImage" class="cropped-image" style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;" />
       </div>
