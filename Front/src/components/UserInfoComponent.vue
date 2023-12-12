@@ -3,17 +3,14 @@
     <h1 class="mb-3">Informations personnelles</h1>
     <div class="card">
       <ul class="list-group list-group-flush">
-        <li v-if="!isModifNameModeActive" class="list-group-item">Nom : {{ getCurrentUser.nom }} <button class="btn btn-info btn-sm" @click="setModifNameModeActive">editer</button></li>
-        <li v-if="isModifNameModeActive" class="list-group-item">Nouveau nom :<input required type="text" v-model="newname"><button class="btn btn-info btn-sm" @click="updateName">confirmer</button></li>
-        <li v-if="!isModifSurnameModeActive" class="list-group-item">Prénom : {{ getCurrentUser.prenom }} <button class="btn btn-info btn-sm" @click="setModifSurnameModeActive">editer</button></li>
-        <li v-if="isModifSurnameModeActive" class="list-group-item">Nouveau prénom<input required type="text" v-model="newsurname"><button class="btn btn-info btn-sm" @click="updateSurname">confirmer</button></li>
-        <li class="list-group-item">solde : {{ getCurrentUser.solde }}       <button class="btn btn-info btn-sm" @click="addMoney">+100</button></li>
-        <li v-if="!isModifEmailModeActive" class="list-group-item">Email : {{ getCurrentUser.email }} <button class="btn btn-info btn-sm" @click="setModifEmailModeActive">editer</button></li>
-        <li v-if="isModifEmailModeActive" class="list-group-item">nouvelle adresse email : <input required type="text" v-model="newemail"><button class="btn btn-info btn-sm" @click="updateEmail">confirmer</button></li>
-
-        <li class="list-group-item">Adresse : {{ getCurrentUser.adresse }}</li>
-        <li class="list-group-item">Code postal : {{ getCurrentUser.code_postal }}</li>
-        <li class="list-group-item">Ville : {{ getCurrentUser.commune }}</li>
+        <li  class="list-group-item">Nom : {{ getCurrentUser.nom }} </li>
+        <li  class="list-group-item">Prénom : {{ getCurrentUser.prenom }} </li>
+        <li class="list-group-item">solde : {{ getCurrentUser.solde }} </li>
+        <li  class="list-group-item">Email : {{ getCurrentUser.email }} </li>
+        <li  class="list-group-item">Adresse : {{ getCurrentUser.adresse }}</li>
+        <li  class="list-group-item">Code postal : {{ getCurrentUser.code_postal }}</li>
+        <li  class="list-group-item">Ville : {{ getCurrentUser.commune }}</li>
+        <li><button class="btn btn-info btn-sm" @click="editMode">editer</button></li>
       </ul>
     </div>
   </div>
@@ -28,70 +25,24 @@ export default {
   data() {
     return {
       newname: "",
-      newemail: "",
-      newsurname: "",
-      modifNameOn: false,
-      modifSurnameOn: false,
-      modifEmailOn: false,
+      newemail: this.getCurrentUser.email,
+      newsurname: this.getCurrentUser.prenom,
+      newadresse: this.getCurrentUser.adresse,
+      newcode_postal: this.getCurrentUser.code_postal,
+      newcommune: this.getCurrentUser.commune,
+
+      modifOn: false,
     }
   },
   computed: {
-    ...mapGetters([ "getCurrentUser"]),
-    isModifNameModeActive() {
-      return this.modifNameOn;
+    ...mapGetters(["getCurrentUser"]),
     },
-    isModifSurnameModeActive() {
-      return this.modifSurnameOn;
-    },
-    isModifEmailModeActive() {
-      return this.modifEmailOn;
-    },
-  },
-  methods: {
-    ...mapActions(['updateSoldeStore','updateNomStore','updatePrenomStore','updateEmailStore']),
-
-    setModifNameModeActive() {
-      this.modifNameOn = true;
-    },
-    setModifSurnameModeActive() {
-      this.modifSurnameOn = true;
-    },
-    setModifEmailModeActive() {
-      this.modifEmailOn = true;
-    },
-    setModifNameModeInactive() {
-      this.modifNameOn = false;
-    },
-    setModifSurnameModeInactive() {
-      this.modifSurnameOn = false;
-    },
-    setModifEmailModeInactive() {
-      this.modifEmailOn = false;
-    },
-
-    addMoney() {
-      console.log("ajout de 100€");
-      this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: this.getCurrentUser.solde + 100})
-    },
-
-    updateName() {
-      console.log("update name" + this.newname);
-      this.updateNomStore({id_user: this.getCurrentUser.id_user, nom: this.newname})
-      this.setModifNameModeInactive();
-    },
-
-    updateSurname() {
-      this.updatePrenomStore({id_user: this.getCurrentUser.id_user, prenom: this.newsurname})
-      this.setModifSurnameModeInactive();
-    },
-
-    updateEmail() {
-      this.updateEmailStore({id_user: this.getCurrentUser.id_user, email: this.newemail})
-      this.setModifEmailModeInactive()
-    },
-  }
-
-
+    methods: {
+      ...mapActions(['updateSoldeStore', 'updateUserCourantWoPasswordStore']),
+      editMode(){
+        this.$emit('edit-initiated');
+      },
+    }
 }
 </script>
 

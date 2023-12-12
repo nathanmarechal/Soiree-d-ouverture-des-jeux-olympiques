@@ -7,9 +7,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateEmail,
-    updatePrenom,
-    updateNom
+    updateUserCourantWoPassword
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -203,8 +201,8 @@ export default new Vuex.Store({
             state.userCourant.panier = panier;
         },
 
-        ADD_COMMANDES_USER_COURANT(state, id_user) {
-            console.log("dans le store" + id_user)
+        ADD_COMMANDES_USER_COURANT(state, id_commande) {
+            console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
         },
 
         SET_LIGNE_COMMANDE(state, { id_commande, ligne_commande }) {
@@ -367,6 +365,15 @@ export default new Vuex.Store({
         },
         SET_ETAT_LIGNE_COMMANDE_EXTERIEUR(state, { id_commande, id_prestation, id_creneau}) {
             console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
+        },
+
+        UPDATE_USER_WO_PASSWORD(state, payload) {
+            state.userCourant.nom = payload.nom;
+            state.userCourant.prenom = payload.prenom;
+            state.userCourant.email = payload.email;
+            state.userCourant.adresse = payload.adresse;
+            state.userCourant.code_postal = payload.code_postal;
+            state.userCourant.commune = payload.commune;
         }
     },
 
@@ -424,28 +431,11 @@ export default new Vuex.Store({
             }
         },
 
-        async updateEmailStore({ commit }, {id_user, email}) {
-            try {
-                await updateEmail({id_user, email});
-                commit('UPDATE_EMAIL', email);
-            } catch (err) {
-                console.error("Error in updateEmailStore():", err);
-            }
-        },
 
-        async updatePrenomStore({ commit }, {id_user, prenom}) {
+        async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                await updatePrenom({id_user, prenom});
-                commit('UPDATE_PRENOM', prenom);
-            } catch (err) {
-                console.error("Error in updatePrenomStore():", err);
-            }
-        },
-
-        async updateNomStore({ commit }, {id_user, nom}) {
-            try {
-                await updateNom({id_user, nom});
-                commit('UPDATE_NOM', nom);
+                await updateUserCourantWoPassword( {id_user, nom, prenom, email, adresse, code_postal, commune});
+                commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);
             }
@@ -483,15 +473,6 @@ export default new Vuex.Store({
             }
         },
 
-        async addCommandeFromPanierStore({commit},id_user){
-            try {
-                console.log("dans le store" + id_user)
-                await addCommande(id_user);
-                commit('ADD_COMMANDES_USER_COURANT', id_user);
-            } catch (error) {
-                console.error('Error fetching commandes:', error);
-            }
-        },
 
 //-----------------------------------------------------------------Creneau-----------------------------------------------------------------------//
 
