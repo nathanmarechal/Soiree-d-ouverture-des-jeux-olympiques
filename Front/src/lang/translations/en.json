@@ -198,6 +198,21 @@
   "roleAdd": "Add role",
 
   "showZone_ConfirmDeleteMessage": "Are you sure you want to delete the zone : ",
-  "roleList_ConfirmDeleteMessage": "Are you sure you want to delete the role : "
+  "roleList_ConfirmDeleteMessage": "Are you sure you want to delete the role : ",
 
+  "label_placeholder": "Label",
+  "emailOuMdpIncorrect": "Wrong E-mail or password",
+
+  "adminStand_1": "Add a stand",
+
+  "standList_id": "Id",
+  "standList_nom": "Name",
+  "standList_image": "Image",
+  "standList_description": "Description",
+  "standList_dateAchat": "Date of purchase",
+  "standList_prix": "Price",
+  "standList_emplacement": "Emplacement",
+
+  "Edit": "Edit",
+  "Delete": "Delete"
 }

@@ -143,7 +143,7 @@ export default {
               }
               else
               {
-                alert("email ou mot de passe incorrect")
+                alert(this.translate("emailOuMdpIncorrect"))
                 this.email=""
                 this.password=""
               }

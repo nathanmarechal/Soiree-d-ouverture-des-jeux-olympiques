@@ -200,6 +200,20 @@
 
   "showZone_ConfirmDeleteMessage": "Êtes vous sûr de vouloir supprimer la zone : ",
   "roleList_ConfirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le rôle : ",
-  "bestSellerStats_1": "Prestations ayant rapportées le plus",
-  "newStandStats_1": "Évolution du nombre de stands"
+
+  "label_placeholder": "Libellé",
+  "emailOuMdpIncorrect": "E-mail ou mot de passe incorrect",
+
+  "adminStand_1": "Ajouter un stand",
+
+  "standList_id": "Id",
+  "standList_nom": "Nom",
+  "standList_image": "Image",
+  "standList_description": "Description",
+  "standList_dateAchat": "Date d'achat",
+  "standList_prix": "Prix",
+  "standList_emplacement": "Emplacement",
+
+  "Edit": "Modifier",
+  "Delete": "Supprimer"
 }
