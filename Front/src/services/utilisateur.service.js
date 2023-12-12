@@ -54,17 +54,13 @@ async function updateSolde(body) {
     return patchRequest('/users/updateSolde', body, 'UPDATESOLDE')
 }
 
-async function updateNom(body) {
-    return patchRequest('/users/updateNom', body, 'UPDATENOM')
+async function updateUserCourantWoPassword(body) {
+    let answer = await updateUserCourantWoPasswordFromAPI(body)
+    return answer
 }
 
-async function updatePrenom(body) {
-    return patchRequest('/users/updatePrenom', body, 'UPDATEPRENOM')
-}
-
-async function updateEmail(body) {
-    return patchRequest('/users/updateEmail', body, 'UPDATEEMAIL')
-
+async function updateUserCourantWoPasswordFromAPI(body) {
+    return patchRequest('/users/updateUserCourantWoPassword', body, 'UPDATEUSERCOURANTWOPASSWORD')
 }
 
 async function getUserFromSessionIdFromAPI(session_id) {
@@ -84,7 +80,6 @@ export {
     getAllUsers,
     getUserFromSessionId,
     updateSolde,
-    updateNom,
-    updatePrenom,
-    updateEmail
+    updateUserCourantWoPassword
+
 }

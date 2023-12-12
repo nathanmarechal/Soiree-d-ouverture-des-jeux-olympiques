@@ -242,3 +242,22 @@ exports.updateEmail = (req, res) => {
         }
     });
 }
+
+exports.updateUserCourantWoPassword = (req, res) => {
+    const id = req.body.id_user;
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
+    const email = req.body.email;
+    const adresse = req.body.adresse;
+    const code_postal = req.body.code_postal;
+    const commune = req.body.commune;
+
+    console.log("updateUserCourantWoPassword", { id, nom, prenom, email, adresse, code_postal, commune });
+
+    usersService.updateUserCourantWoPassword(id, nom, prenom, email, adresse, code_postal, commune, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        return res.status(200).send(data);
+    });
+}

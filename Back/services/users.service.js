@@ -277,6 +277,54 @@ async function updateEmailAsync(id_user, email) {
     }
 }
 
+const deleteRole = (body, callback) => {
+    try{
+        console.log("deleteRole1",body);
+        deleteRoleAsync(body);
+        callback(null,"Deleted successfully")
+    }
+    catch (error)
+    {
+        console.log(error);
+        callback(error,null)
+    }
+}
+
+async function deleteRoleAsync(id_role) {
+    try {
+        console.log("deleteRole2",id_role);
+        const conn = await pool.connect();
+        await conn.query('DELETE FROM role WHERE id_role = $1', [id_role]);
+        conn.release();
+        console.log('Records deleted successfully');
+    } catch (error) {
+        console.error('Error deleting records:', error);
+        throw error;
+    }
+}
+
+const updateUserCourantWoPassword = (id_user, prenom, nom, email, adresse, code_postal, commune, callback) => {
+    try{
+        updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adresse, code_postal, commune)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adresse, code_postal, commune) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("UPDATE utilisateur SET email = $1, nom = $2, prenom = $3, code_postal = $4, adresse = $5, commune = $6  WHERE id_user = $7", [email, nom, prenom, code_postal, adresse, commune, id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in updateUserCourantWoPasswordAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     createUser: createUser
     , getAllUsers: getAllUsers
@@ -289,4 +337,5 @@ module.exports = {
     , updateNom: updateNom
     , updatePrenom: updatePrenom
     , updateEmail: updateEmail
+    , updateUserCourantWoPassword: updateUserCourantWoPassword
 }

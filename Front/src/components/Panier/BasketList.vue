@@ -115,10 +115,10 @@ export default {
       }
       let newSolde = this.getCurrentUser.solde - this.calculateTotal();
       await this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: newSolde})
-      this.$store.commit('SET_PANIER_USER_COURANT', [])
       await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
       await this.getCommandeUserCourantStore(this.getCurrentUser.id_user);
-      await this.getPanierUserCourantStore(this.getCurrentUser.id_user);
+      this.$store.commit('SET_PANIER_USER_COURANT', [])
+
     },
 
     confirmerModifPanier() {

@@ -1,16 +1,38 @@
 
 <template>
   <div style="margin-top: 10%; margin-bottom:5%; " >
-    <UserInfo/>
+    <div v-if="!modif">
+      <UserInfo @edit-initiated="handleEdit"/>
+    </div>
+    <div v-else>
+      <EditUserCourantInformations @edit-finished="cancelEdit" />
+    </div>
   </div>
 </template>
 
 <script>
 import UserInfo from "@/components/UserInfoComponent.vue";
+import EditUserCourantInformations from "@/components/EditUserCourantInformations.vue";
 export default {
-  components: {
-    UserInfo
+  data() {
+    return {
+      modif:false,
+    }
   },
+  components: {
+    UserInfo,
+    EditUserCourantInformations
+  },
+  methods: {
+    handleEdit() {
+      this.modif = true;
+      console.log("edit initiated");
+      console.log(this.modif);
+    },
+    cancelEdit() {
+      this.modif = false;
+    }
+  }
 };
 
 

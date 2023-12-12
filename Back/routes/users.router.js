@@ -26,13 +26,12 @@ router.delete("/delete/:id", usersController.deleteUser);
 
 router.patch("/updateSolde", usersController.updateSolde);
 
-router.patch("/updateNom", usersController.updateNom);
+router.patch("/updateSolde", usersController.updateSolde);
 
-router.patch("/updatePrenom", usersController.updatePrenom);
-
-router.patch("/updateEmail", usersController.updateEmail);
-
+router.patch("/updateUserCourantWoPassword", usersController.updateUserCourantWoPassword);
 router.post("/", loginMiddleware.checkRight, usersController.createUser);
+
+
 
 router.post("/", (req, res, next) => {
     checkRight(req, res, next, "create_users");

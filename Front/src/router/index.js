@@ -45,6 +45,8 @@ const routes = [
     name: 'userInfo',
     component: UserInfo
   },
+
+
   {
     path: '/information',
     name: 'InformationView',
