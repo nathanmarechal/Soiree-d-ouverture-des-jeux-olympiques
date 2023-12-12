@@ -19,7 +19,6 @@
       <label for="isAvailable">Est disponible:</label>
       <input v-model="prestation.is_available" id="isAvailable" type="checkbox" class="form-check-input">
     </div>
-
     <img v-if="!isImageInputUpload" :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top" style="border-radius: 10%;">
 
     <div v-if="croppedImage">
@@ -29,8 +28,9 @@
     <!-- Bouton pour l'upload d'image -->
     <button type="button" @click="toggleImageUpload" class="btn btn-primary">Changer l'image</button>
 
-    <!-- Champ d'upload d'image -->
+
     <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
+
       <img ref="image" class="cropper-image" style=""/>
       <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*">
       <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
@@ -54,6 +54,7 @@ export default {
       isImageInputUpload: false,
       image_raw: false,
       cropper: null,
+
       prestation: {
         libelle: "",
         prix: null,
@@ -104,7 +105,6 @@ export default {
       this.isImageInputUpload = true;
 
       // Stocker le nom du fichier original sans l'extension
-      this.prestation.image = file.name.split('.').slice(0, -1).join('.');
 
       reader.onload = (e) => {
         this.$refs.image.src = e.target.result;
@@ -142,11 +142,15 @@ export default {
     },
     async submitForm() {
       try {
+
+        console.log(this.prestation.image)
+
         this.prestation.prix = parseFloat(this.prestation.prix);
+
+        await uploadImagePresation(this.image_raw);
 
         await this.updatePrestationStore(this.prestation)
 
-        await uploadImagePresation(this.image_raw);
 
         await this.$router.push('/prestataire/prestations/');
       } catch (error) {

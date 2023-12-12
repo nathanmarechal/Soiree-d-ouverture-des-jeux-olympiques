@@ -45,7 +45,7 @@ export default {
     this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
-    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore']),
+    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)
@@ -67,7 +67,6 @@ export default {
       }
     },
     getPrestationByUserId(id){
-      console.log('chef')
       this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
     },
     getTypePrestationLibelle(idTypePrestation) {
@@ -76,6 +75,12 @@ export default {
     },
     toggleAvailability(id, is_available){
        this.updateIsAvailablePrestationStore({id : id, is_available:is_available})
+    },
+    prestationDelete(id){
+      this.deletePrestationStore(id);
+      this.prestations = this.prestations.filter(item => item.id_prestation !== id);
+
+
     }
   },
 }

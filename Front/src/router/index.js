@@ -10,6 +10,9 @@ import NotFound from "@/views/Error404Page.vue";
 import AdminUsers from '@/views/Admin/User/AdminUsers.vue'
 import AdminAddUser from '@/views/Admin/User/AdminAddUser.vue'
 import AdminEditUsers from '@/views/Admin/User/AdminEditUsers.vue';
+import AdminStand from '@/views/Admin/Stand/AdminStand.vue';
+import AdminAddStand from '@/views/Admin/Stand/AdminAddStand.vue';
+import AdminEditStand from '@/views/Admin/Stand/AdminEditStand.vue';
 import AdminRoles from '@/views/Admin/Role/AdminRoles.vue';
 import AdminAddRoles from '@/views/Admin/Role/AdminAddRoles.vue';
 import AdminEditRoles from '@/views/Admin/Role/AdminEditRoles.vue';
@@ -20,12 +23,14 @@ import AdminAddZonePage from '@/views/Admin/Zone/AdminAddZonePage.vue'
 import PrestatairePrestationShowPage from '@/views/Prestataire/Prestation/ShowPrestationPrestatairePage.vue'
 import PrestatairePrestationAddPage from '@/views/Prestataire/Prestation/AddPrestatairePrestation.vue'
 import PrestatairePrestationEditPage from '@/views/Prestataire/Prestation/EditPrestatatairePrestation.vue'
+import PrestataireStatistiquePage from "@/views/Prestataire/Statistique/PrestataireStatistiquePage.vue";
 import PanierPage from "@/views/PanierPage.vue";
 import ShowStandPrestatairePage from "@/views/Prestataire/Stand/ShowStandPrestatairePage.vue"
 import CommandePage from "@/views/CommandePage.vue";
 import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage.vue'
 import CommandeDetailClientVue from '@/components/commandeClient/detailleCommandeClient.vue'
 import UserInfo from '@/views/UserInfoView.vue'
+import ValidLignePage from "@/views/ValidLignePage.vue";
 
 Vue.use(VueRouter);
 
@@ -54,6 +59,11 @@ const routes = [
     path: '/detail-commande/:id',
     name: 'DetailCommande',
     component: CommandeDetailClientVue
+  },
+  {
+    path: '/validLigneCommande/:id_prestation/:id_creneau/:id_commande',
+    name: 'validLigneCommande',
+    component: ValidLignePage
   },
   {
     path: '/commande', 
@@ -95,6 +105,21 @@ const routes = [
     path: '/admin/users/edit',
     name: 'AdminEditUsers',
     component: AdminEditUsers
+  },
+  {
+    path: '/admin/stands',
+    name: 'AdminStand',
+    component: AdminStand
+  },
+  {
+    path: '/admin/stand/add',
+    name: 'AdminAddStand',
+    component: AdminAddStand
+  },
+  {
+    path: '/admin/stand/edit',
+    name: 'AdminEditStand',
+    component: AdminEditStand
   },
   {
     path: '/admin/roles',
@@ -156,6 +181,11 @@ const routes = [
     path: '/prestataire/stand',
     name: 'ShowStandPrestataireView',
     component: ShowStandPrestatairePage
+  },
+  {
+    path: '/prestataire/statistiques',
+    name: 'PrestataireStatistiqueView',
+    component: PrestataireStatistiquePage
   },
     //Error 404
   {

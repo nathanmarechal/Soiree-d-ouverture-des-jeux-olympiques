@@ -16,7 +16,8 @@
   "roles": "Rôles",
   "statistiques": "Statistiques",
   "monStand": "Mon stand",
-  "prestations": "Prestations",
+  "prestations": "Mes prestations",
+  "mesStatistiques": "Mes statistiques",
   "monPanier": "Mon panier,",
   "mesCommandes":"Mes commandes",
   "seDeconnecter": "Se déconnecter",
@@ -147,7 +148,7 @@
   "showZone_7": "Supprimer",
   "zone_1": "Ajouter une zone",
 
-  "bestSellerStats_1": "Prestation ayant rapportées le plus",
+  "bestSellerStats_1": "Prestations ayant rapportées le plus",
   "newStandStats_1": "Évolution du nombre de stand",
 
   "addUser_1":"prénom",
@@ -199,4 +200,6 @@
 
   "showZone_ConfirmDeleteMessage": "Êtes vous sûr de vouloir supprimer la zone : ",
   "roleList_ConfirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le rôle : "
+  "bestSellerStats_1": "Prestations ayant rapportées le plus",
+  "newStandStats_1": "Évolution du nombre de stands"
 }

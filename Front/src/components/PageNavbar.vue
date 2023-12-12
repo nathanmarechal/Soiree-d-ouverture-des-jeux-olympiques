@@ -26,6 +26,8 @@
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+              <br>
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 
@@ -34,11 +36,15 @@
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+              <br>
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
+            <br>
+            <router-link to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             <br>
             <router-link to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
             <br>

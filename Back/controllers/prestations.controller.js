@@ -1,6 +1,5 @@
 const path = require('path');
 const prestationsService = require("../services/prestations.service");
-const mapService = require("../services/map.service");
 
 exports.getPrestations = (req, res) => {
     prestationsService.getAllPrestations((error, data) => {
@@ -74,6 +73,19 @@ exports.updatePrestation = (req, res) => {
     const id = req.params.id;
     const body = req.body;
     prestationsService.updatePrestation(id, body, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+
+exports.deletePrestation = (req, res) => {
+    const id = req.params.id;
+    prestationsService.deletePrestation(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

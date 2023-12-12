@@ -57,7 +57,42 @@ const getNewStandByMonth = (callback) => {
         });
 }
 
+async function getNbPrestationHeureAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `
+            SELECT SUM(lc.quantite) AS "nb_prestation_par_heure",
+                   c.heure_creneau
+            FROM ligne_commande lc
+                     JOIN prestation p ON lc.id_prestation = p.id_prestation
+                     JOIN creneau c ON c.id_creneau = lc.id_creneau
+                     JOIN stand s ON p.id_stand = s.id_stand
+            WHERE s.id_stand = $1
+            GROUP BY c.id_creneau, c.heure_creneau
+            ORDER BY c.id_creneau, c.heure_creneau;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getNbPrestationHeureAsync:', error);
+        throw error;
+    }
+}
+
+const getNbPrestationHeure = (id, callback) => {
+    getNbPrestationHeureAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 module.exports = {
     getBestSellerPrestation : getBestSellerPrestation,
-    getNewStandByMonth : getNewStandByMonth
+    getNewStandByMonth : getNewStandByMonth,
+    getNbPrestationHeure:getNbPrestationHeure
 }

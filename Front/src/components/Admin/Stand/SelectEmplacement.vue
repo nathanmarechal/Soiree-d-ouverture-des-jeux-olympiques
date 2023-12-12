@@ -12,8 +12,8 @@
 
 <script>
 
-import MapSignUp from '../User/MapSignUp.vue'
-import FilterAreas from '../User/FilterAreas.vue'
+import MapSignUp from '../../Map/MapSignUp.vue'
+import FilterAreas from './FilterAreas.vue'
 export default {
   props: ['showSelectEmplacementModal'],
   data() {

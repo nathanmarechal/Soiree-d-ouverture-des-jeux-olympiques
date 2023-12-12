@@ -16,8 +16,8 @@ import {
     updateNom
 } from "@/services/utilisateur.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
-import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation} from "@/services/prestation.service";
-import {getAllStands} from "@/services/stand.service";
+import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
+import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
     deletePrestationFromPanierUser,
@@ -25,8 +25,12 @@ import {
     getPanierUserCourant,
     updateQuantityInPanier
 } from "@/services/panier.service";
-import {addCommande, getCommandeUserCourant, getLigneCommandeBycommandeId} from "@/services/commande.service";
-// import {stat} from "@babel/core/lib/gensync-utils/fs";
+import {
+    addCommande,
+    getCommandeUserCourant,
+    getLigneCommandeBycommandeId,
+    setEtatLigneCommandeExterieur
+} from "@/services/commande.service";
 
 Vue.use(Vuex)
 
@@ -44,7 +48,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier":  [],
-            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null}] }],
+            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
             "id_role": null,
             "id_stand" : null
         },
@@ -161,6 +165,19 @@ export default new Vuex.Store({
 
         SET_STANDS(state, stands) {
             state.stands = stands;
+        },
+
+        UPDATE_STAND(state, payload) {
+            state.stands = state.stands.map(item => {
+                if (item.id_stand === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        DELETE_STAND(state, id) {
+            state.stands = state.stands.filter(item => item.id_stand !== id);
         },
 
         SET_TYPE_PRESTATIONS(state, typePresations) {
@@ -288,6 +305,9 @@ export default new Vuex.Store({
             state.users = state.users.filter(item => item.id_user !== id);
         },
 
+        DELETE_PRESTATION(state, id) {
+            state.prestations = state.prestations.filter(item => item.id_prestation !== id);
+        },
         DELETE_ROLE(state, id) {
             state.roles = state.roles.filter(item => item.id_role !== id);
         },
@@ -342,10 +362,24 @@ export default new Vuex.Store({
         SET_LANG(state,lang)
         {
             state.lang = lang;
+        },
+        SET_ETAT_LIGNE_COMMANDE_EXTERIEUR(state, { id_commande, id_prestation, id_creneau}) {
+            console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
         }
     },
 
     actions: {
+
+        //ne pas toucher svp, c'est normal si ce n'est pas méthode domas
+        async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
+            console.log({ id_commande, id_prestation, id_creneau})
+            try {
+                await setEtatLigneCommandeExterieur({ id_commande, id_prestation, id_creneau});
+                commit('SET_ETAT_LIGNE_COMMANDE_EXTERIEUR', { id_commande, id_prestation, id_creneau});
+            } catch (err) {
+                console.error("Error in setEtatLigneCommandeExterieurStore():", err);
+            }
+        },
 
         async updateEmailStore({ commit }, {id_user, email}) {
             try {
@@ -538,8 +572,14 @@ export default new Vuex.Store({
             }
         },
 
-
-
+        async deletePrestationStore({ commit }, id) {
+            try {
+                await deletePrestation(id);
+                commit('DELETE_PRESTATION', id);
+            } catch (err) {
+                console.error("Error in deleteUserStore():", err);
+            }
+        },
 
         async createRoleStore({ commit }, body) {
             try {
@@ -739,6 +779,24 @@ export default new Vuex.Store({
                 return stands; // Return the fetched data
             } catch (error) {
                 console.error('Error fetching stands:', error);
+            }
+        },
+
+        async updateStandStore({ commit }, {id, body}) {
+            try {
+                await updateStand(id, body);
+                commit('UPDATE_STAND', id, body);
+            } catch (err) {
+                console.error("Error in updateStandStore():", err);
+            }
+        },
+
+        async deleteStandStore({ commit }, id) {
+            try {
+                await deleteStand(id);
+                commit('DELETE_STAND', id);
+            } catch (err) {
+                console.error("Error in deleteStandStore():", err);
             }
         },
 

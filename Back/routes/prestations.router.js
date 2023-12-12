@@ -14,4 +14,6 @@ router.patch("/update/is-available/:id", prestationController.updateIsAvailableP
 
 router.patch("/update/:id", prestationController.updatePrestation);
 
+router.delete("/delete/:id", prestationController.deletePrestation);
+
 module.exports = router;
