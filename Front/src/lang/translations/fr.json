@@ -199,7 +199,7 @@
   "roleAdd": "Ajouter un rôle",
 
   "showZone_ConfirmDeleteMessage": "Êtes vous sûr de vouloir supprimer la zone : ",
-  "roleList_ConfirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le rôle : "
+  "roleList_ConfirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le rôle : ",
   "bestSellerStats_1": "Prestations ayant rapportées le plus",
   "newStandStats_1": "Évolution du nombre de stands"
 }
