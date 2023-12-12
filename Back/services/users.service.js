@@ -316,7 +316,7 @@ const updateUserCourantWoPassword = (id_user, prenom, nom, email, adresse, code_
 async function updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adresse, code_postal, commune) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("UPDATE utilisateur SET email = $1, nom = $2, prenom = $3, code_postal = $4, adresse = $5, commune = $6  WHERE id_user = $7", [email, nom, prenom, code_postal, adresse, commune, id_user]);
+        const result = await conn.query("UPDATE utilisateur SET email = $1, nom = $2, prenom = $3, code_postal = $4, adresse = $5, commune = $6   WHERE id_user = $7", [email, nom, prenom, code_postal, adresse, commune, id_user]);
         conn.release();
         return result.rows;
     } catch (error) {

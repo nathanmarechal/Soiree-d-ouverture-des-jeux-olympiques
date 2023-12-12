@@ -8,6 +8,7 @@ import {
     deleteUser,
     updateSolde,
     updateUserCourantWoPassword
+    updateUserCourantWoPassword
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -203,6 +204,8 @@ export default new Vuex.Store({
 
         ADD_COMMANDES_USER_COURANT(state, id_commande) {
             console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
+        ADD_COMMANDES_USER_COURANT(state, id_commande) {
+            console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
         },
 
         SET_LIGNE_COMMANDE(state, { id_commande, ligne_commande }) {
@@ -374,6 +377,15 @@ export default new Vuex.Store({
             state.userCourant.adresse = payload.adresse;
             state.userCourant.code_postal = payload.code_postal;
             state.userCourant.commune = payload.commune;
+        },
+
+        UPDATE_USER_WO_PASSWORD(state, payload) {
+            state.userCourant.nom = payload.nom;
+            state.userCourant.prenom = payload.prenom;
+            state.userCourant.email = payload.email;
+            state.userCourant.adresse = payload.adresse;
+            state.userCourant.code_postal = payload.code_postal;
+            state.userCourant.commune = payload.commune;
         }
     },
 
@@ -436,6 +448,11 @@ export default new Vuex.Store({
             try {
                 await updateUserCourantWoPassword( {id_user, nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
+
+        async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
+            try {
+                await updateUserCourantWoPassword( {id_user, nom, prenom, email, adresse, code_postal, commune});
+                commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);
             }
@@ -472,6 +489,18 @@ export default new Vuex.Store({
                 console.error('Error fetching commandes:', error);
             }
         },
+
+        async addCommandeFromPanierStore({commit},id_user){
+            try {
+                console.log("dans le store" + id_user)
+                const lastinstert = await addCommande(id_user);
+                commit('ADD_COMMANDES_USER_COURANT', lastinstert);
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+
 
 
 //-----------------------------------------------------------------Creneau-----------------------------------------------------------------------//
