@@ -35,11 +35,6 @@ export default {
     try {
       this.zone = this.selected_zone;
       await this.loadData();
-      /*
-      this.type_zones = await this.getTypesZone();
-      const zoneArray = await getZoneById(this.id_zone);
-      this.zone = zoneArray.length > 0 ? zoneArray[0] : {};
-       */
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
@@ -54,11 +49,6 @@ export default {
       try {
         if (this.getAllTypeZone.length === 0)
             await this.getTypeZonesStore();
-        /*
-        const zoneArray = await getZoneById(this.id_zone);
-        this.zone = zoneArray.length > 0 ? zoneArray[0] : {};
-
-         */
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
