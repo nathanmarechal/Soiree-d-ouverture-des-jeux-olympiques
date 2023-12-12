@@ -9,6 +9,12 @@ router.get("/get/:id", standsController.getStandById);
 
 router.patch("/description/:id", standsController.updateStandDescription);
 
+router.patch("/update/:id", standsController.updateStand);
+
+router.delete("/delete/:id", standsController.deleteStand);
+
+router.post("/", standsController.createStand);
+
 router.post("/uploading/picture-description", standsController.uploadingPictureDescription)
 
 router.use('/picture-description', express.static(path.join(__dirname,  '../assets/stand/description')))

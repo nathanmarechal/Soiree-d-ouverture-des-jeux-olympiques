@@ -367,6 +367,7 @@ export default new Vuex.Store({
             console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
         },
 
+
         UPDATE_USER_WO_PASSWORD(state, payload) {
             state.userCourant.nom = payload.nom;
             state.userCourant.prenom = payload.prenom;

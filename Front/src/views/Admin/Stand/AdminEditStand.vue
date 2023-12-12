@@ -2,7 +2,7 @@
     <div>
       <div v-if="true">
       <div class="main" style="margin-top: 10vh;  width: 100%;">
-          <edit-stand-form ></edit-stand-form>
+          <edit-stand-form :selected_stand="this.$route.params.selected_stand" ></edit-stand-form>
       </div>
       </div>
     <div v-else>
