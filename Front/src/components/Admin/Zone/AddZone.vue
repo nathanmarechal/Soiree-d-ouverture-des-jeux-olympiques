@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       zone: {
-        id_zone: null,  // A REMPLIR JSP COMMENT
         libelle: "",
         couleur_hexa: "",
         id_type_zone: null,

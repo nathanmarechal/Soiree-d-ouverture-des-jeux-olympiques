@@ -1,6 +1,9 @@
 const rolesService = require("../services/roles.service");
 
 exports.getRoles = (req, res) => {
+
+    console.log("path : " + req.path)
+
     rolesService.getAllRoles((error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -22,6 +25,13 @@ exports.createRole = (req, res) => {
 }
 
 exports.updateRole = (req, res) => {
+
+    //console.log("path : " + req.url)
+
+    var fullUrl = req.originalUrl;
+
+    console.log("fullUrl : " + fullUrl)
+
     const id = req.params.id;
     const body = req.body.solde;
     rolesService.updateRole(body, (error, data) => {

@@ -116,7 +116,7 @@ export default new Vuex.Store({
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
         getLang: state=> state.lang
-        
+
     },
 
     mutations: {
@@ -694,9 +694,10 @@ export default new Vuex.Store({
 
         async createZoneStore({ commit }, body) {
             try {
-                console.log("createZoneStore: ", body)
-                await createZone(body);
-                commit('CREATE_ZONE', body);
+                body['session_id'] = this.state.userCourant.session_id
+                const newZone = await createZone(body);
+                console.log("newZone: ", JSON.stringify(newZone, null, 2))
+                commit('CREATE_ZONE', newZone);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
             }
