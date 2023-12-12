@@ -31,24 +31,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import {translate} from "../../../lang/translationService";
-//import { deleteZone } from '@/services/map.service';
 
 export default {
-  /*
-  data () {
-    return {
-      //zones: [],
-    }
-  },
-
-   */
   async mounted() {
     try {
       await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
-    //this.zones = await this.getZones();
   },
   computed: {
     ...mapGetters(['getAllZone']),
@@ -67,12 +57,10 @@ export default {
       if (window.confirm(confirmMessage)) {
         try {
           await this.deleteZoneStore(zone.id_zone);
-          //this.getAllZone.splice(index, 1);
         } catch (error) {
           console.error('Erreur lors de la suppression de la zone :', error);
         }
       }
-      //await this.loadData();
     }
   },
 }
