@@ -6,13 +6,13 @@
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>id</th>
-                  <th>nom</th>
-                  <th>image</th>
-                  <th>description</th>
-                  <th>date achat</th>
-                  <th>prix</th>
-                  <th>emplacement</th>
+                  <th>{{ translate("standList_id") }}</th>
+                  <th>{{ translate("standList_nom") }}</th>
+                  <th>{{ translate("standList_image") }}</th>
+                  <th>{{ translate("standList_description") }}</th>
+                  <th>{{ translate("standList_dateAchat") }}</th>
+                  <th>{{ translate("standList_prix") }}</th>
+                  <th>{{ translate("standList_emplacement") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -25,8 +25,9 @@
                   <td>{{ stand.prix }}</td>
                   <td>WIP</td>
                   <td>
-                    <router-link :to="{ name: 'AdminEditStand', params: { selected_stand: stand } }" class="btn btn-primary">Modifier</router-link>
-                    <button class="btn btn-danger" @click="removeStand(stand.id_stand)">Supprimer</button>
+                    <router-link :to="{ name: 'AdminEditStand', params: { selected_stand: stand } }" class="btn btn-primary">
+                      {{ translate("Edit") }}</router-link>
+                    <button class="btn btn-danger" @click="removeStand(stand.id_stand)">{{ translate("Delete") }}</button>
                   </td>
                 </tr>
               </tbody>
@@ -39,6 +40,7 @@
   
   <script>
   import { mapActions, mapGetters } from "vuex";
+  import {translate} from "../../../lang/translationService";
   
   export default {
     async mounted() {
@@ -52,6 +54,7 @@
       ...mapGetters(['getAllStand']),
     },
     methods: {
+      translate,
       ...mapActions(['getStandsStore', 'deleteStandStore']),
       async loadData() {
         if (this.getAllStand.length === 0) {
