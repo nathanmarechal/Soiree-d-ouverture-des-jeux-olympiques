@@ -3,10 +3,6 @@ import Vuex from 'vuex'
 
 import {
     getAllUsers,
-    getAllRoles,
-    deleteRole,
-    updateRole,
-    createRole,
     createUser,
     updateUser,
     deleteUser,
@@ -15,6 +11,12 @@ import {
     updatePrenom,
     updateNom
 } from "@/services/utilisateur.service";
+import {
+    getAllRoles,
+    deleteRole,
+    updateRole,
+    createRole
+} from "@/services/role.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
 import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
@@ -370,6 +372,47 @@ export default new Vuex.Store({
 
     actions: {
 
+//-----------------------------------------------------------------Panier-----------------------------------------------------------------------//
+
+        async getPanierUserCourantStore({commit},user_id){
+            try {
+                const panier = await getPanierUserCourant(user_id);
+                commit('SET_PANIER_USER_COURANT', panier);
+                console.log("le panier dans le store : " + panier)
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
+        async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
+            try {
+                await updateQuantityInPanier({id_user, id_prestation, id_creneau , quantite});
+                commit('UPDATE_PRESTATION_QUANTITY_IN_PANIER', {id_user, id_prestation, id_creneau , quantite});
+            }
+            catch (error) {
+                console.error('Error updating panier:', error);
+            }
+        },
+
+        async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
+            try {
+                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
+                commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
+        async deletePrestationFromPanierUserCourantStore({ commit },{id_user, id_prestation, id_creneau}){
+            try {
+                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation + " " + id_creneau);
+                await deletePrestationFromPanierUser( id_user, id_prestation, id_creneau);
+                commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau,});
+            } catch (error) {
+                console.error('Error fetching panier:', error);
+            }
+        },
+
         //ne pas toucher svp, c'est normal si ce n'est pas méthode domas
         async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
             console.log({ id_commande, id_prestation, id_creneau})
@@ -428,6 +471,8 @@ export default new Vuex.Store({
         },
 
 
+//-----------------------------------------------------------------Commande-----------------------------------------------------------------------//
+
         async getCommandeUserCourantStore({commit},user_id){
             try {
                 const commandes = await getCommandeUserCourant(user_id);
@@ -448,35 +493,7 @@ export default new Vuex.Store({
             }
         },
 
-        async getPanierUserCourantStore({commit},user_id){
-            try {
-                const panier = await getPanierUserCourant(user_id);
-                commit('SET_PANIER_USER_COURANT', panier);
-                console.log("le panier dans le store : " + panier)
-            } catch (error) {
-                console.error('Error fetching panier:', error);
-            }
-        },
-
-
-        async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
-            try {
-                await updateQuantityInPanier({id_user, id_prestation, id_creneau , quantite});
-                commit('UPDATE_PRESTATION_QUANTITY_IN_PANIER', {id_user, id_prestation, id_creneau , quantite});
-            }
-            catch (error) {
-                console.error('Error updating panier:', error);
-            }
-        },
-
-        async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
-            try {
-                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
-                commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
-            } catch (error) {
-                console.error('Error fetching panier:', error);
-            }
-        },
+//-----------------------------------------------------------------Creneau-----------------------------------------------------------------------//
 
         async getCreneauStore({ commit }){
             try {
@@ -487,26 +504,7 @@ export default new Vuex.Store({
             }
         },
 
-        async deletePrestationFromPanierUserCourantStore({ commit },{id_user, id_prestation, id_creneau}){
-            try {
-                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation + " " + id_creneau);
-                await deletePrestationFromPanierUser( id_user, id_prestation, id_creneau);
-                commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau,});
-            } catch (error) {
-                console.error('Error fetching panier:', error);
-            }
-        },
-
-
-        async getUsers(data,session_id) {
-            try {
-                const users = await getAllUsers(session_id);
-                return users; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        },
-
+//-----------------------------------------------------------------User-----------------------------------------------------------------------//
 
         async getUsersStore({ commit }) {
             try {
@@ -517,87 +515,7 @@ export default new Vuex.Store({
                     console.error("Unexpected response format:", result);
                 }
             } catch (err) {
-                console.error("Error in getUsers():", err);
-            }
-        },
-
-
-        async getRoles(data,session_id){
-            try {
-                //console.log("getting roles..."+session_id)
-                const roles = await getAllRoles(session_id);
-                return roles; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching roles:', error);
-            }
-        },
-
-        async deleteRoleStore({ commit }, id) {
-            try {
-                await deleteRole(id);
-                commit('DELETE_ROLE', id);
-            } catch (err) {
-                console.error("Error in deleteRoleStore():", err);
-            }
-        },
-
-        async updateRoleStore({ commit }, id, body) {
-            try {
-                await updateRole(id, body);
-                commit('UPDATE_ROLE', id, body);
-            } catch (err) {
-                console.error("Error in updateRoleStore():", err);
-            }
-        },
-
-        async updateIsAvailablePrestationStore({ commit }, body) {
-            try {
-                console.log("id : " + body.id)
-                console.log("body : " + body.is_available)
-                console.log("body : " + JSON.stringify(body, null, 2))
-                await updateIsAvailablePrestation(body.id, body.is_available);
-                commit('UPDATE_PRESTATION', body.id, body);
-            } catch (err) {
-                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
-            }
-        },
-
-        async updatePrestationStore({ commit }, body) {
-            try {
-                console.log(body)
-                await updatePrestation(body.id_prestation, body)
-                commit('UPDATE_PRESTATION', body.id_prestation, body);
-            } catch (err) {
-                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
-            }
-        },
-
-        async deletePrestationStore({ commit }, id) {
-            try {
-                await deletePrestation(id);
-                commit('DELETE_PRESTATION', id);
-            } catch (err) {
-                console.error("Error in deleteUserStore():", err);
-            }
-        },
-
-        async createRoleStore({ commit }, body) {
-            try {
-                console.log("createRoleStore: ", body)
-                await createRole(body);
-                commit('CREATE_ROLE', body);
-            } catch (err) {
-                console.error("Error in createRoleStore():", err);
-            }
-        },
-
-        async createPrestationStore({ commit }, body) {
-            try {
-                console.log("createPrestation: ", body)
-                let response = await createPrestation(body);
-                commit('CREATE_PRESTATION', response[0]);
-            } catch (err) {
-                console.error("Error in createPrestationStore():", err);
+                console.error("Error in getUsersStore():", err);
             }
         },
 
@@ -631,30 +549,110 @@ export default new Vuex.Store({
             }
         },
 
+//----------------------------------------------------------------------Role--------------------------------------------------------------------//
+
         async getRolesStore({ commit }) {
-          try {
-            const roles = await getAllRoles();
-              //if (result.error === 0) {
-              if (Array.isArray(roles)) {
-              commit('SET_ROLES', roles);
-            } else {
-              console.error("Unexpected response format:", roles);
-            }
-          } catch (err) {
-            console.error("Error in getRoles():", err);
-          }
-        },
-
-
-        async getTypesZone(){
             try {
-                const typeZone = await getAllTypeZones();
-                return typeZone; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching typeZone:', error);
+                const roles = await getAllRoles();
+                //if (result.error === 0) {
+                if (Array.isArray(roles)) {
+                    commit('SET_ROLES', roles);
+                } else {
+                    console.error("Unexpected response format:", roles);
+                }
+            } catch (err) {
+                console.error("Error in getRolesStore():", err);
             }
         },
 
+        async createRoleStore({ commit }, body) {
+            try {
+                console.log("createRoleStore: ", body)
+                await createRole(body);
+                commit('CREATE_ROLE', body);
+            } catch (err) {
+                console.error("Error in createRoleStore():", err);
+            }
+        },
+
+        async deleteRoleStore({ commit }, id) {
+            try {
+                await deleteRole(id);
+                commit('DELETE_ROLE', id);
+            } catch (err) {
+                console.error("Error in deleteRoleStore():", err);
+            }
+        },
+
+        async updateRoleStore({ commit }, id, body) {
+            try {
+                await updateRole(id, body);
+                commit('UPDATE_ROLE', id, body);
+            } catch (err) {
+                console.error("Error in updateRoleStore():", err);
+            }
+        },
+
+//-----------------------------------------------------------------Prestation-----------------------------------------------------------------------//
+
+        async updateIsAvailablePrestationStore({ commit }, body) {
+            try {
+                console.log("id : " + body.id)
+                console.log("body : " + body.is_available)
+                console.log("body : " + JSON.stringify(body, null, 2))
+                await updateIsAvailablePrestation(body.id, body.is_available);
+                commit('UPDATE_PRESTATION', body.id, body);
+            } catch (err) {
+                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
+            }
+        },
+
+        async updatePrestationStore({ commit }, body) {
+            try {
+                console.log(body)
+                await updatePrestation(body.id_prestation, body)
+                commit('UPDATE_PRESTATION', body.id_prestation, body);
+            } catch (err) {
+                console.error("Error in updatePrestationIsAvailableRoleStore():", err);
+            }
+        },
+
+        async deletePrestationStore({ commit }, id) {
+            try {
+                await deletePrestation(id);
+                commit('DELETE_PRESTATION', id);
+            } catch (err) {
+                console.error("Error in deleteUserStore():", err);
+            }
+        },
+
+        async createPrestationStore({ commit }, body) {
+            try {
+                console.log("createPrestation: ", body)
+                let response = await createPrestation(body);
+                commit('CREATE_PRESTATION', response[0]);
+            } catch (err) {
+                console.error("Error in createPrestationStore():", err);
+            }
+        },
+
+//-----------------------------------------------------------------TypePrestation-----------------------------------------------------------------------//
+
+        async getTypePrestationsStore({ commit }) {
+            try {
+                const result = await getAllTypePrestations();
+                if (Array.isArray(result)) {
+                    commit('SET_TYPE_PRESTATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getTypePrestationsStore():", err);
+            }
+        },
+
+
+//----------------------------------------------------------------------TypeZone--------------------------------------------------------------------//
 
         async getTypeZonesStore({ commit }) {
           try {
@@ -669,16 +667,7 @@ export default new Vuex.Store({
           }
         },
 
-
-        async getZones(){
-            try {
-                const zones = await getAllZones();
-                return zones; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching zones:', error);
-            }
-        },
-
+//----------------------------------------------------------------------Zone--------------------------------------------------------------------//
 
         async getZonesStore({ commit }) {
           try {
@@ -702,7 +691,7 @@ export default new Vuex.Store({
             }
         },
 
-        async updateZoneStore({ commit }, {id, body}) {  // A REVOIR
+        async updateZoneStore({ commit }, {id, body}) {
             try {
                 await updateZone(id, body);
                 commit('UPDATE_ZONE', id, body);
@@ -721,15 +710,7 @@ export default new Vuex.Store({
             }
         },
 
-        async getAreas(){
-            try {
-                const areas = await getAllAreas();
-                return areas; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching areas:', error);
-            }
-        },
-
+//----------------------------------------------------------------------Emplacement--------------------------------------------------------------------//
 
         async getAreasStore({ commit }) {
           try {
@@ -772,15 +753,7 @@ export default new Vuex.Store({
             }
         },
 
-
-        async getStands(){
-            try {
-                const stands = await getAllStands();
-                return stands; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching stands:', error);
-            }
-        },
+//----------------------------------------------------------------------Stand--------------------------------------------------------------------//
 
         async updateStandStore({ commit }, {id, body}) {
             try {
@@ -814,39 +787,7 @@ export default new Vuex.Store({
           }
         },
 
-
-        async getTypePrestations(){
-            try {
-                const typePresations = await getAllTypePrestations();
-                return typePresations; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching typePresations:', error);
-            }
-        },
-
-
-        async getTypePrestationsStore({ commit }) {
-            try {
-                const result = await getAllTypePrestations();
-                if (Array.isArray(result)) {
-                    commit('SET_TYPE_PRESTATIONS', result);
-                } else {
-                    console.error("Unexpected response format:", result);
-                }
-            } catch (err) {
-                console.error("Error in getTypePrestations():", err);
-            }
-        },
-
-
-        async getPrestations(){
-            try {
-                const prestations = await getAllPrestations();
-                return prestations; // Return the fetched data
-            } catch (error) {
-                console.error('Error fetching prestations:', error);
-            }
-        },
+//----------------------------------------------------------------------Prestations--------------------------------------------------------------------//
 
 
         async getPrestationsStore({ commit }) {
@@ -861,6 +802,8 @@ export default new Vuex.Store({
               console.error("Error in getPrestations():", err);
           }
         },
+
+//------------------------------------------------------------------------------------------------------------------------------------------------//
 
     },
     modules: {

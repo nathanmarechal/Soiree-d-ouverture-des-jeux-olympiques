@@ -30,8 +30,11 @@ export default {
   },
   async mounted() {
     try {
+      await this.loadData()
+      /*
       await this.$store.dispatch('getAreas');
       await this.$store.dispatch('getZones');
+       */
       this.initializeMap();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
@@ -40,13 +43,27 @@ export default {
   computed: {
     //...mapGetters(['getAreas', 'getSelectedZone', 'getSelectedType']),
     ...mapGetters([
+      'getAllArea',
+      'getAllZone',
       'getSelectedZone',
       'getSelectedTypeZones',
     ]),
   },
 
   methods: {
-    ...mapActions(['getAreas', 'getZones']),
+    ...mapActions(['getAreasStore', 'getZonesStore']),
+
+    async loadData(){
+      try {
+        if (this.getAllArea.length === 0)
+          await this.getAreasStore();
+        if (this.getAllZone.length === 0)
+          await this.getZonesStore();
+      }
+      catch (error) {
+        console.log("Erreur lors de la récupération des données : " + error);
+      }
+    },
 
     initializeMap() {
       console.log('initalized')

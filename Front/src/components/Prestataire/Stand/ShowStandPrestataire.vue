@@ -49,17 +49,15 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapGetters(['getCurrentUser']),
-    ...mapActions(['getStands'])
-  },
-  async created() {
+  async mounted() {
     await this.loadData()
-  },
-  mounted() {
     this.myEditor = this.$refs.myEditor;
   },
+  computed: {
+    ...mapGetters(['getCurrentUser', 'getAllPrestation', 'getAllTypePrestation']),
+  },
   methods: {
+    ...mapActions(['getStandsStore', 'getPrestationsStore', 'getTypePrestationsStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)

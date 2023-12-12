@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getTypePrestations','createPrestationStore']),
+    ...mapActions(['getTypePrestationsStore','createPrestationStore']),
     async loadData(){
         if (this.getAllTypePrestation.length === 0)
           await this.getTypePrestationsStore()

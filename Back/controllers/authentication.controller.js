@@ -13,4 +13,4 @@ exports.getLoginToken = (req, res) => {
             return res.status(200).send(data);
         }
     })
-} //POSTMAN: GET http://localhost:3000/users/
+}

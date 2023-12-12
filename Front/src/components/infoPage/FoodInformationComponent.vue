@@ -1,6 +1,6 @@
 <template>
   <section>
-  <div v-for="type in typePrestations" :key="type">
+  <div v-for="type in getAllTypePrestation" :key="type">
   <div  class="food-image-container">
     <img :src="getImageSrc(type.image)" alt="Background" class="food-img-fluid w-100 h-100">
     <div class="food-overlay-text">
@@ -19,17 +19,30 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
   data() {
     return {
-      typePrestations: [],
+      //typePrestations: [],
       selectedTypePrestation: [],
     }
   },
   async mounted() {
-    this.typePrestations = await this.getTypePrestations();
+    await this.loadData()
+    //this.typePrestations = await this.getTypePrestations();
+  },
+  computed: {
+    ...mapGetters(['getSelectedTypePrestation', 'getAllTypePrestation']),
   },
   methods: {
-    ...mapGetters(['getSelectedTypePrestation']),
     ...mapMutations(['SET_PROVENANCE', "SET_SELECTED_TYPE_PRESTATION"]),
-    ...mapActions(['getTypePrestations']),
+    ...mapActions(['getTypePrestationsStore']),
+
+    async loadData(){
+      try {
+        if (this.getAllTypePrestation.length === 0) {
+          await this.getTypePrestationsStore()
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
 
     updateFilterI(type) {
       let newSelection = [...this.selectedTypePrestation];

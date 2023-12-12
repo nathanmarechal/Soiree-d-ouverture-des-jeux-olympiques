@@ -15,13 +15,9 @@ exports.getPanierByUserId = (req, res) => {
 
 exports.updateQuantityInPanier = (req, res) => {
     const id_user = req.body.id_user;
-    console.log(id_user, "id_user dans le controlleur panier.controller.js")
     const id_prestation = req.body.id_prestation;
-    console.log(id_prestation, "id_prestation dans le controlleur panier.controller.js")
     const quantite = req.body.quantite;
-    console.log(quantite, "quantite dans le controlleur panier.controller.js")
     const id_creneau = req.body.id_creneau;
-    console.log(id_creneau, "id_creneau dans le controlleur panier.controller.js")
     panierService.updateQuantityInPanier(id_user, id_prestation, quantite, id_creneau, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -34,7 +30,6 @@ exports.updateQuantityInPanier = (req, res) => {
 }
 
 exports.deletePrestationFromPanierUser = (req, res) => {
-    console.log(req.query.id, req.query.presta, "deletePrestationFromPanierUser dans le controlleur panier.controller.js");
     const id_user = req.query.id;
     const id_prestation = req.query.presta;
     const id_creneau = req.query.creneau;

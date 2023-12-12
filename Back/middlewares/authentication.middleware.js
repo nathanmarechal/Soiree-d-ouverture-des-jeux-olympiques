@@ -1,4 +1,5 @@
 const pool = require("../database/db");
+
 exports.checkRight = (req, res, next,right_name) => {
     const session_id = req.query.session_id;
     console.log("session_id=",session_id,"right name=",right_name)
@@ -6,19 +7,15 @@ exports.checkRight = (req, res, next,right_name) => {
     {
         if(success)
         {
-            //console.log("success!")
             next();
         }
         else
         {
-            //console.log("failure!")
-            //console.log("l'utilisateur est : "+session_id)
             return res.status(400).send("l'utilisateur courant ne dispose pas de ce droit");
         }
     })
         .catch(error=>
         {
-            //console.log("error!")
             return res.status(400).send("erreur:"+error);
         })
 }
@@ -40,6 +37,7 @@ async function checkRight_by_name(session_id,right_name)
 //    console.log("id : "+res.rows[0].id)
     return checkRight_by_id(session_id,res.rows[0].id)
 }
+
 async function checkRight_by_id(session_id,right_id)
 {
 
