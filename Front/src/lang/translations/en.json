@@ -16,7 +16,7 @@
   "roles": "Roles",
   "statistiques": "Statistics",
   "monStand": "My stand",
-  "prestations": "Performances",
+  "prestations": "Services",
   "monPanier": "My cart",
   "mesCommandes":"My commands",
   "seDeconnecter": "Log off",
@@ -33,7 +33,7 @@
   "desc_10": "These Olympic Games in Paris are not just a sporting event but also a cultural celebration.",
 
   "desc_horaire": "schedule",
-  "desc_prestation": "performance",
+  "desc_prestation": "service",
   "desc_lieuObservation": "observation location",
 
   "desc_19h": "7:00 PM",
@@ -68,7 +68,7 @@
 
   "stand_title": "Discover the available stands",
   "stand_1": "Discover",
-  "stand_2": "Performances",
+  "stand_2": "Services",
   "stand_3": "Learn more",
 
   "card_title": "How to enjoy the evening?",
@@ -102,7 +102,7 @@
   "footer_4": "Contact",
   "footer_5": "All rights reserved.",
 
-  "filterByTypeC_title": "List of Performance Types",
+  "filterByTypeC_title": "List of service types",
   "filterByStandC_title": "Filter by Stand",
   "shopC_1": "Book",
 
@@ -126,9 +126,15 @@
   "filterMap_3": "Zone",
   "filterMap_4": "Performance type",
 
+  "addZone_libelle": "Label : ",
+  "addZone_couleur": "Color : ",
+  "addZone_typeZone": "Zone type : ",
   "addZone_1": "Add",
   "addZone_2": "Quit",
 
+  "editZone_libelle": "Label : ",
+  "editZone_couleur": "Color : ",
+  "editZone_typeZone": "Zone type : ",
   "editZone_1": "Edit",
   "editZone_2": "Quit",
 
@@ -141,6 +147,58 @@
   "showZone_7": "Delete",
   "zone_1": "Add a zone",
 
-  "bestSellerStats_1": "Performances that brought in the most money",
-  "newStandStats_1": "Evolution of the number of stands"
+  "bestSellerStats_1": "Services that brought in the most money",
+  "newStandStats_1": "Evolution of the number of stands",
+
+
+  "addUser_1":"first name",
+  "addUser_2":"last name",
+  "addUser_3":"e-mail",
+  "addUser_4":"password",
+  "addUser_5":"postal code",
+  "addUser_6":"adress",
+  "addUser_7":"commune",
+  "addUser_8":"balance",
+  "addUser_9":"Role",
+  "addUser_10":"Select a role",
+  "addUser_11":"Add a user",
+  "addUser_12":"Go back",
+
+  "addEmplacement_1": "Add a zone",
+  "addEmplacement_2": "Area",
+  "addEmplacement_3": "Zone",
+
+  "oui": "Yes",
+  "non": "No",
+  "editEmplacement_1": "Edit zone",
+  "editEmplacement_2": "ID",
+  "editEmplacement_3": "Area",
+  "editEmplacement_4": "Free",
+  "editEmplacement_5": "Close",
+  "editEmplacement_6": "Edit emplacement",
+  "editEmplacement_7": "Confirm emplacement modification",
+  "editEmplacement_8": "Delete",
+
+  "showColorZone_1": "Zones legend",
+  "showColorZone_err": "Error while loading data :",
+
+  "roleList_id": "Id",
+  "roleList_libelle":"Label",
+  "roleList_actions":"Actions",
+  "roleList_modifier":"Edit",
+  "roleList_supprimer":"Delete",
+
+  "editRole_libelle": "Label : ",
+  "editRole_modifier": "Edit",
+  "editRole_quitter": "Quit",
+
+  "addRole_libelle": "Label : ",
+  "addRole_confirm": "Add role",
+  "addRole_annuler": "Cancel",
+
+  "roleAdd": "Add role",
+
+  "showZone_ConfirmDeleteMessage": "Are you sure you want to delete the zone : ",
+  "roleList_ConfirmDeleteMessage": "Are you sure you want to delete the role : "
+
 }

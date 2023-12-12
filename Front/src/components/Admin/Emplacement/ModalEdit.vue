@@ -1,12 +1,12 @@
 <template>
   <div v-if="modalActiveEdit" class="overlay">
     <div class="modal-inner">
-      <h3>Edit Area</h3>
+      <h3>{{translate("editEmplacement_1")}}</h3>
 
       <!-- Tableau pour afficher les détails de l'emplacement verticalement -->
       <table>
         <tr>
-          <th>ID </th>
+          <th>{{translate("editEmplacement_2")}} </th>
           <td>{{ selectedArea.id_emplacement }}</td>
         </tr>
         <tr>
@@ -21,19 +21,19 @@
           </td>
         </tr>
         <tr>
-          <th>Surface</th>
+          <th>{{translate("editEmplacement_3")}}</th>
           <td>{{ selectedArea.surface }}</td>
         </tr>
         <tr>
-          <th>Libre</th>
-          <td>{{ selectedArea.isfree ? 'Oui' : 'Non' }}</td>
+          <th>{{translate("editEmplacement_4")}}</th>
+          <td>{{ selectedArea.isfree ? translate('oui') : translate('non') }}</td>
         </tr>
       </table>
 
-      <button @click="$emit('close'); isEditAreaActive = false" type="button" class="btn btn-success">Fermer</button>
-      <button v-if="!isEditAreaActive" @click="isEditAreaActive = true; initializeArea()" type="button" class="btn btn-warning">Modifier emplacement</button>
-      <button v-if="isEditAreaActive" @click=" areaUpdate(); isEditAreaActive = false" type="button" class="btn btn-warning">Confirmer modification emplacement</button>
-      <button @click="areaDelete()" type="button" class="btn btn-danger">Supprimer</button>
+      <button @click="$emit('close'); isEditAreaActive = false" type="button" class="btn btn-success">{{translate("editEmplacement_5")}}</button>
+      <button v-if="!isEditAreaActive" @click="isEditAreaActive = true; initializeArea()" type="button" class="btn btn-warning">{{translate("editEmplacement_6")}}</button>
+      <button v-if="isEditAreaActive" @click=" areaUpdate(); isEditAreaActive = false" type="button" class="btn btn-warning">{{translate("editEmplacement_7")}}</button>
+      <button @click="areaDelete()" type="button" class="btn btn-danger">{{translate("editEmplacement_8")}}</button>
     </div>
   </div>
 </template>
@@ -41,6 +41,7 @@
 <script>
 
 import {mapActions, mapGetters} from "vuex";
+import {translate} from "../../../lang/translationService";
 
 export default {
   props: ['modalActiveEdit','selectedArea'],
@@ -54,6 +55,7 @@ export default {
     ...mapGetters(['getAllZone']),
   },
   methods: {
+    translate,
     ...mapActions(['updateAreasStore', 'deleteAreasStore']),
     initializeArea() {
       this.zone = this.selectedArea.id_zone;

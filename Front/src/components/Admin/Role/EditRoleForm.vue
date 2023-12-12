@@ -1,17 +1,19 @@
 <template>
   <form @submit.prevent="submitForm()" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
-      <label for="libelle">Libellé:</label>
-      <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
+      <label for="libelle">{{translate("editRole_libelle")}}</label>
+      <input v-if="$store.getters.getLang==='fr'" v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
+      <input v-if="$store.getters.getLang==='en'" v-model="role.libelle" id="libelle" placeholder="Label" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary">Modifier</button>
-    <router-link to="/admin/roles/" class="btn btn-danger">Quitter</router-link>
+    <button type="submit" class="btn btn-primary">{{ translate("editRole_modifier") }}</button>
+    <router-link to="/admin/roles/" class="btn btn-danger">{{ translate("editRole_quitter") }}</router-link>
   </form>
 </template>
 
 <script>
 // Import the updateRole method from the service
 import { mapActions, mapGetters } from "vuex";
+import {translate} from "@/lang/translationService";
 
 export default {
   props: ["selected_role"],
@@ -36,6 +38,7 @@ export default {
     ...mapGetters(["getAllRoles"]),
   },
   methods: {
+    translate,
     ...mapActions(["getRolesStore", "updateRoleStore"]),
     async loadData(){
       try {

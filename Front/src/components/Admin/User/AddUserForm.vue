@@ -2,54 +2,54 @@
   <div class="add-user-form" >
     <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center" style="width: 40vh">
       <div class="form-group">
-        <label for="first-name">prénom</label>
+        <label for="first-name">{{translate("addUser_1")}}</label>
         <input type="text" id="first-name" v-model="utilisateur.firstName" required>
 
       </div>
       <div class="form-group">
-        <label for="last-name">nom</label>
+        <label for="last-name">{{translate("addUser_2")}}</label>
         <input type="text" id="last-name" v-model="utilisateur.lastName" required>
       </div>
       <div class="form-group">
-        <label for="email">e-mail</label>
+        <label for="email">{{translate("addUser_3")}}</label>
         <input type="email" id="email" v-model="utilisateur.email" required>
       </div>
 
       <div  class="form-group">
-        <label for="password">mot de passe</label>
+        <label for="password">{{translate("addUser_4")}}</label>
         <input type="password" id="password" v-model="utilisateur.password" required>
       </div>
 
       <div class="form-group">
-        <label for="code_postal">code postal</label>
+        <label for="code_postal">{{translate("addUser_5")}}</label>
         <input type="number" id="code_postal" v-model="utilisateur.code_postal" required>
       </div>
 
       <div class="form-group">
-        <label for="adresse">adresse</label>
+        <label for="adresse">{{translate("addUser_6")}}</label>
         <input type="text" id="adresse" v-model="utilisateur.adresse" required>
       </div>
 
       <div class="form-group">
-        <label for="commune">commune</label>
+        <label for="commune">{{translate("addUser_7")}}</label>
         <input type="text" id="commune" v-model="utilisateur.commune" required>
       </div>
 
       <div class="form-group">
-        <label for="solde">solde</label>
+        <label for="solde">{{translate("addUser_8")}}</label>
         <input type="number" id="solde" v-model="utilisateur.solde" value="0" required> 
       </div>
 
       <div class="form-group" >
-        <label for="role ">Role</label>
+        <label for="role ">{{translate("addUser_9")}}</label>
         <select id="role" v-model="utilisateur.id_role" required>
-          <option value="">Sélectionner un rôle</option>
+          <option value="">{{translate("addUser_10")}}</option>
           <option v-for="role in getAllRoles" :key="role.id_role" :value="role">{{ role.libelle }}</option>
         </select>
       </div>
       <div>
-        <button type="submit" class="btn btn-success">Add User</button>
-        <router-link to="/admin/users" class="btn btn-danger">Cancel</router-link>
+        <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
+        <router-link to="/admin/users" class="btn btn-danger">{{translate("addUser_12")}}</router-link>
       </div>
     </form>
   </div>
@@ -57,6 +57,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {translate} from "../../../lang/translationService";
 
 
 export default {
@@ -86,6 +87,7 @@ export default {
     ...mapGetters(['getAllRoles', 'getCurrentUser'])
   },
   methods: {
+    translate,
     ...mapActions(['getRolesStore', 'createUserStore']),
     async loadData(){
       try {

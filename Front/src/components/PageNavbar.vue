@@ -30,7 +30,7 @@
           </div>
 
           <div v-if="isUserPrestataire & $store.getters.getLang==='en'">
-            <b-nav-item-dropdown name="prestataire" right text="Performer" @mouseover="underline = 'Performer'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Performer' }">
+            <b-nav-item-dropdown name="prestataire" right text="Performer" @mouseover="underline = 'Provider'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Performer' }">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
@@ -62,8 +62,8 @@
       <img v-if="isUserPrestataire" src="../assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
 
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
-        <option value="en">English</option>
         <option value="fr">Français</option>
+        <option value="en">English</option>
       </select>
 
     </b-navbar>

@@ -1,15 +1,16 @@
 <template>
   <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
-      <label for="libelle">Libellé:</label>
-      <input v-model="zone.libelle" id="libelle" placeholder="Libellé" class="form-control">
+      <label for="libelle">{{translate("addZone_libelle")}}</label>
+      <input v-if="$store.getters.getLang==='fr'" v-model="zone.libelle" id="libelle" placeholder="Libellé" class="form-control">
+      <input v-if="$store.getters.getLang==='en'" v-model="zone.libelle" id="libelle" placeholder="Label" class="form-control">
     </div>
     <div class="form-group">
-      <label for="couleur_hexa">Couleur:</label>
+      <label for="couleur_hexa">{{translate("addZone_couleur")}}</label>
       <input v-model="zone.couleur_hexa" id="couleur_hexa" type="color" class="form-control">
     </div>
     <div class="form-group">
-      <label for="type_zone_libelle">Type de zone:</label>
+      <label for="type_zone_libelle">{{translate("addZone_typeZone")}}</label>
       <select v-model="zone.id_type_zone" id="type_zone_libelle" class="form-control">
         <option v-for="type in getAllTypeZone" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
       </select>

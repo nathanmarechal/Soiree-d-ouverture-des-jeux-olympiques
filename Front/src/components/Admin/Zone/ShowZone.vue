@@ -62,7 +62,8 @@ export default {
     },
     async zoneDelete(index) {
       const zone = this.getAllZone[index];
-      const confirmMessage = `Êtes-vous sûr de vouloir supprimer la zone ${zone.libelle} ?`;
+      const  confirmMessage1 = this.translate("showZone_ConfirmDeleteMessage")
+      const confirmMessage = confirmMessage1+` ${zone.libelle} ?`;
       if (window.confirm(confirmMessage)) {
         try {
           await this.deleteZoneStore(zone.id_zone);

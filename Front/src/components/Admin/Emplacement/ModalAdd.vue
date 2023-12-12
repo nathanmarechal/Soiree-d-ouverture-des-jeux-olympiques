@@ -1,14 +1,14 @@
 <template>
   <div v-if="modalActiveAdd" class="overlay">
     <div class="modal-inner">
-      <h3>Ajouter une zone</h3>
+      <h3>{{translate("addEmplacement_1")}}</h3>
       <table>
         <tr>
-          <th>Surface </th>
+          <th>{{translate("addEmplacement_2")}} </th>
           <td>{{newArea.surface}}</td>
         </tr>
         <tr>
-          <th>Zone</th>
+          <th>{{translate("addEmplacement_3")}}</th>
           <td>
             <select v-model="zone">
               <option v-for="(zoneList, index) in getAllZone" :key="index" :value="zoneList.id_zone">
@@ -30,6 +30,7 @@
 //import { createArea } from "@/services/map.service";
 
 import {mapGetters, mapActions} from "vuex";
+import {translate} from "../../../lang/translationService";
 
 export default {
   props: ['modalActiveAdd','newArea'],
@@ -42,6 +43,7 @@ export default {
     ...mapGetters(['getAllZone']),
   },
   methods: {
+    translate,
     ...mapActions(['createAreasStore']),
     initializeZone() {
       this.zone = this.selectedZone.id_zone;

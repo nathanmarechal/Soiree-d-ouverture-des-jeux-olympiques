@@ -6,9 +6,9 @@
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>id</th>
-                <th>libelle</th>
-                <th>Actions</th>
+                <th>{{translate("roleList_id")}}</th>
+                <th>{{translate("roleList_libelle")}}</th>
+                <th>{{ translate("roleList_actions") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -16,8 +16,10 @@
                 <td>{{ role.id_role }}</td>
                 <td>{{ role.libelle }}</td>
                 <td>
-                  <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">Modifier</router-link>
-                  <button class="btn btn-danger" @click="removeRole(role.id_role)">Supprimer</button>
+                  <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
+                    {{ translate("roleList_modifier") }}
+                  </router-link>
+                  <button class="btn btn-danger" @click="removeRole(role.id_role)">{{ translate("roleList_supprimer") }}</button>
                 </td>
               </tr>
             </tbody>
@@ -30,6 +32,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import {translate} from "@/lang/translationService";
 
 export default {
   async mounted() {
@@ -43,6 +46,7 @@ export default {
     ...mapGetters(['getAllRoles']),
   },
   methods: {
+    translate,
     ...mapActions(['getRolesStore', 'deleteRoleStore']),
     async loadData() {
       if (this.getAllRoles.length === 0) {
@@ -51,7 +55,7 @@ export default {
     },
     async removeRole(id) {
       const role = this.getAllRoles.find(role => role.id_role === id);
-      const confirmMessage = `Êtes-vous sûr de vouloir supprimer le rôle ${role.libelle} ?`;
+      const confirmMessage = this.translate("roleList_ConfirmDeleteMessage")+` ${role.libelle} ?`;
       console.log(role.id_role);
       if (window.confirm(confirmMessage)) {
         try {

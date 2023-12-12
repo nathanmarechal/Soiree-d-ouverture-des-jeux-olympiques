@@ -1,16 +1,18 @@
 <template>
   <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
-      <label for="libelle">Libellé:</label>
-      <input v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
+      <label for="libelle">{{ translate("addRole_libelle") }}</label>
+      <input v-if="$store.getters.getLang==='fr'" v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
+      <input v-if="$store.getters.getLang==='en'" v-model="role.libelle" id="Label" placeholder="Libellé" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary">Add Role</button>
-    <router-link to="/admin/roles" class="btn btn-danger">Cancel</router-link>
+    <button type="submit" class="btn btn-primary">{{ translate("addRole_confirm") }}</button>
+    <router-link to="/admin/roles" class="btn btn-danger">{{translate("addRole_annuler")}}</router-link>
   </form>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import {translate} from "../../../lang/translationService";
 export default {
   data() {
     return {
@@ -30,6 +32,7 @@ export default {
     ...mapGetters(["getAllRoles"]),
   },
   methods: {
+    translate,
     ...mapActions(["getRolesStore", "createRoleStore"]),
     async loadData(){
       try {
