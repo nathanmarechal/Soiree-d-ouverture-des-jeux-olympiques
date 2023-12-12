@@ -473,6 +473,18 @@ export default new Vuex.Store({
             }
         },
 
+        async addCommandeFromPanierStore({commit},id_user){
+            try {
+                console.log("dans le store" + id_user)
+                const lastinstert = await addCommande(id_user);
+                commit('ADD_COMMANDES_USER_COURANT', lastinstert);
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+
+
 
 //-----------------------------------------------------------------Creneau-----------------------------------------------------------------------//
 
