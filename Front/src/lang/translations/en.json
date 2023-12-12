@@ -214,5 +214,12 @@
   "standList_emplacement": "Emplacement",
 
   "Edit": "Edit",
-  "Delete": "Delete"
+  "Delete": "Delete",
+
+  "addStand_1": "Stand name",
+  "addStand_2": "Stand picture",
+  "addStand_3": "Stand description: ",
+  "addStand_4": "Book an emplacement",
+  "addStand_5": "Add a stand",
+  "addStand_6": "Cancel"
 }

@@ -3,26 +3,26 @@
       <h4>Création du stand</h4>
         <form @submit.prevent="submitForm" class="stand">
                 <div class="form">
-                        <label for="nom_stand">Nom du stand</label>
+                        <label for="nom_stand">{{translate("addStand_1")}}</label>
                         <input type="text" id="nom_stand" v-model="stand.nom_stand" required>
                 </div>
                 <div class="form">
-                        <label for="image_stand">Image du stand</label><br>
+                        <label for="image_stand">{{translate("addStand_2")}}</label><br>
                         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
                 </div>
                 <div  class="d-flex flex-column">
-                        <label for="description_stand">Description du stand:</label>
+                        <label for="description_stand">{{translate("addStand_3")}}</label>
                   <textarea id="description_stand" v-model="stand.description_stand" required class="w-100"></textarea>
                 </div>
 
               <map-sign-up-pre-view style="width: 100%; height: 25vh;"> </map-sign-up-pre-view>
 
               <div class="d-flex justify-content-center"> <!-- Flexbox for centering -->
-                <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">Reserver un emplacement</button>
+                <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{translate("addStand_4")}}</button>
               </div>
                <SelectEmplacement @close="toggleSelectEmplacementModal"  :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
-          <button type="submit" class="btn btn-primary">Add Stand</button>
-          <router-link to="/admin/stands" class="btn btn-danger">Cancel</router-link>
+          <button type="submit" class="btn btn-primary">{{translate("addStand_5")}}</button>
+          <router-link to="/admin/stands" class="btn btn-danger">{{translate("addStand_6")}}</router-link>
         </form>
     </div>
 </template>
@@ -32,6 +32,7 @@ import SelectEmplacement from './SelectEmplacement.vue';
 import MapSignUpPreView from '../../Map/MapSignUpPreView.vue'
 
 import {mapGetters} from 'vuex';
+import {translate} from "../../../lang/translationService";
 
 export default {
     components: {
@@ -53,6 +54,7 @@ export default {
         };
     },
     methods: {
+      translate,
         handleImageUpload(event) {
             const file = event.target.files[0];
             this.stand.image_stand = file;

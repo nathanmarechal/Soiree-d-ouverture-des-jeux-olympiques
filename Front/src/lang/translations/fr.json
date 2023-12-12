@@ -215,5 +215,12 @@
   "standList_emplacement": "Emplacement",
 
   "Edit": "Modifier",
-  "Delete": "Supprimer"
+  "Delete": "Supprimer",
+
+  "addStand_1": "Nom du stand",
+  "addStand_2": "Image du stand",
+  "addStand_3": "Description du stand : ",
+  "addStand_4": "Reserver un emplacement",
+  "addStand_5": "Ajouter un stand",
+  "addStand_6": "Annuler"
 }
