@@ -1,5 +1,12 @@
 <template>
-  <div class="main" style="margin-top: 8%">
+  <div style="margin-top: 8%">
+  <div v-if="getProvenance === 1">
+    <StandShopComponent></StandShopComponent>
+  </div>
+  <div v-if="getProvenance === 0">
+    <TypePrestaShopComponent></TypePrestaShopComponent>
+  </div>
+  <div class="main" style="margin-top: 2%">
     <div class="search">
       <div v-if="getProvenance !== 0">
         <filterByTypeComponent></filterByTypeComponent>
@@ -8,10 +15,10 @@
         <filter-by-stand></filter-by-stand>
       </div>
     </div>
-
     <div class="prestation">
       <shopcomponent></shopcomponent>
     </div>
+  </div>
   </div>
 </template>
 
@@ -21,6 +28,8 @@
 import shopcomponent from '../components/ShopPage/ShopComponent.vue'
 import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.vue";
 import filterByStand from "@/components/ShopPage/FilterByStand.vue";
+import StandShopComponent from "@/components/ShopPage/StandShopComponent.vue";
+import TypePrestaShopComponent from "@/components/ShopPage/TypePrestaShopComponent.vue";
 import {mapGetters} from "vuex";
 //import {mapGetters, mapMutations} from "vuex";
 export default {
@@ -39,7 +48,9 @@ export default {
    */
 
   components: {
+    TypePrestaShopComponent,
     filterByTypeComponent,
+    StandShopComponent,
     shopcomponent,
     filterByStand,
   },
