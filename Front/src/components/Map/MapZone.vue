@@ -22,7 +22,7 @@ export default {
     return {
       //areas : [],
       //zones : [],
-
+      areasShow : [],
       map: null,
       selectedStand: null,
       polygons: [],
@@ -48,6 +48,7 @@ export default {
       'getAllArea',
       'getAllZone',
       'getAllStand',
+      'getAllPrestation',
       'getSelectedZone',
       'getSelectedTypePrestation',
       'getAllPrestation',
@@ -72,13 +73,42 @@ methods: {
         if (this.getAllPrestation.length === 0) {
           await this.getPrestationsStore();
         }
-        console.log(("Area" + this.getAllArea))
-        console.log(("Zone"  + this.getAllZone))
-        console.log(("stand"  + this.getAllStand))
-        console.log(("prestation"  + this.getAllPrestation))
+
+        this.areasShow = this.mergeData();
+
+        console.log(this.areasShow)
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
+    },
+    mergeData() {
+      return this.getAllStand.map(stand => {
+        // Trouver l'area correspondante
+        const area = this.getAllArea.find(area => area.id_emplacement === stand.id_emplacement) || {};
+
+        // Trouver la zone correspondante
+        const zone = this.getAllZone.find(zone => zone.id_zone === area.id_zone) || {};
+
+        // Trouver les prestations liées
+        const prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === stand.id_stand);
+
+        return {
+          id_emplacement: area.id_emplacement,
+          nom_emplacement: zone.libelle, // ou autre propriété selon votre structure
+          image_stand: stand.image_stand,
+          nom_stand: stand.nom_stand,
+          id_stand: stand.id_stand,
+          description_stand: stand.description_stand,
+          zone: zone.libelle,
+          id_zone: zone.id_zone,
+          id_type_zone: zone.id_type_zone,
+          couleur_hexa: zone.couleur_hexa,
+          id_type_prestation: prestations.map(p => p.id_type_prestation),
+          coordinates: area.coordonnes,
+          surface: area.surface,
+          // Ajoutez d'autres champs si nécessaire
+        };
+      });
     },
     initializeMap() {
       console.log('initalized')
@@ -123,21 +153,19 @@ methods: {
       let filteredAreas = [];
 
       if (hasSearchCriteria) {
-        filteredAreas = this.getAllArea.filter(zone => {
+        filteredAreas = this.areasShow.filter(zone => {
           const matchesSearch = !searchQuery || (zone.nom_stand && zone.nom_stand.toLowerCase().includes(searchQuery.toLowerCase())) || (zone.description_stand && zone.description_stand.toLowerCase().includes(searchQuery.toLowerCase()));
           const matchesZone = selectedZoneIds.length === 0 || selectedZoneIds.includes(zone.id_zone);
           const matchesType = selectedTypePrestationIds.length === 0 || (zone.id_type_prestation && zone.id_type_prestation.some(id => selectedTypePrestationIds.includes(id)));
 
-          return (zone.isfree === false) && matchesSearch && matchesZone && matchesType;
+          return matchesSearch && matchesZone && matchesType;
         });
       }
       if (!hasSearchCriteria) {
         // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
-        filteredAreas = this.getAllArea.filter(zone => {
-          return (zone.isfree === false)});
+        filteredAreas = this.areasShow
+        // Ajoutez à nouveau les polygones filtrés à la carte
       }
-
-      // Ajoutez à nouveau les polygones filtrés à la carte
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
