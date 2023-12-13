@@ -713,6 +713,7 @@ SELECT * FROM utilisateur;
 
 
 SELECT *  FROM prestation;
+SELECT *  FROM emplacement;
 
 SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
 FROM ligne_panier

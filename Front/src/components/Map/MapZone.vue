@@ -3,10 +3,8 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <!-- Utilisez un élément pour afficher la modal -->
-
     <ModalStand @close="toggleModal" :modalActive="modalActive" :stand="selectedStand">
-      <!-- Contenu personnalisé ici -->
+
     </ModalStand>
   </div>
 </template>
@@ -49,15 +47,17 @@ export default {
     ...mapGetters([
       'getAllArea',
       'getAllZone',
+      'getAllStand',
       'getSelectedZone',
       'getSelectedTypePrestation',
+      'getAllPrestation',
       'getSearchQuery'
     ]),
     //...mapState(['areas', 'zones']),
   },
 
 methods: {
-    ...mapActions(['getAreasStore', 'getZonesStore']),
+    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getPrestationsStore']),
     async loadData() {
       try {
         if (this.getAllArea.length === 0) {
@@ -66,6 +66,16 @@ methods: {
         if (this.getAllZone.length === 0) {
           await this.getZonesStore();
         }
+        if (this.getAllStand.length === 0) {
+          await this.getStandsStore();
+        }
+        if (this.getAllPrestation.length === 0) {
+          await this.getPrestationsStore();
+        }
+        console.log(("Area" + this.getAllArea))
+        console.log(("Zone"  + this.getAllZone))
+        console.log(("stand"  + this.getAllStand))
+        console.log(("prestation"  + this.getAllPrestation))
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -75,8 +85,6 @@ methods: {
 
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
-
-
       
       // Ajoute une couche de tuiles OpenStreetMap à la carte
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {

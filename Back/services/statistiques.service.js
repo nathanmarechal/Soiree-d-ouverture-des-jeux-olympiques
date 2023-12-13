@@ -67,7 +67,7 @@ async function getNbPrestationHeureAsync(idStand) {
                      JOIN prestation p ON lc.id_prestation = p.id_prestation
                      JOIN creneau c ON c.id_creneau = lc.id_creneau
                      JOIN stand s ON p.id_stand = s.id_stand
-            WHERE s.id_stand = $1
+            WHERE s.id_stand = $1   
             GROUP BY c.id_creneau, c.heure_creneau
             ORDER BY c.id_creneau, c.heure_creneau;`;
 
