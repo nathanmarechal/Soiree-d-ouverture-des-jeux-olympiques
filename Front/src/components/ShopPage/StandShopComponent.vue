@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Stand : {{stand.nom_stand}}</h1>
+    <h1>Stand : {{stand.nom_stand}}     <img style="width: 200px; height: 200px;" :src="imagePath" alt="Image du stand" /></h1>
     <h2>description : {{stand.description_stand}}</h2>
     <h2>toutes les prestations proposées par {{stand.nom_stand}} :</h2>
   </div>
@@ -14,11 +14,15 @@ export default {
   data() {
     return {
       id_stand : this.getSelectedStands,
-      stand : [],
+      stand : null,
     };
   },
   computed: {
     ...mapGetters(['getSelectedStands','getAllStand']),
+    imagePath() {
+      return require(`@/assets/stand/${this.stand.image_stand}`);
+    }
+
   },
   methods: {
     ...mapActions(['getStandsStore']),

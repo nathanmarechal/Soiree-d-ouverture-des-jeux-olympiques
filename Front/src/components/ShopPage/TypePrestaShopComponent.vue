@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>type de prestation : {{type.libelle}}</h1>
+    <h1>type de prestation : {{type.libelle}}  <img style="width: 200px; height: 200px;" :src="getImageSrc(type.image)" alt="Image du type" /></h1>
     <h2>description : {{type.description_type_prestation}}</h2>
     <h2>toutes les prestations proposées par {{type.libelle}} :</h2>
   </div>
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       id_type : this.getSelectedTypePrestation,
-      type : [],
+      type : null,
     };
   },
   computed: {
@@ -27,6 +27,14 @@ export default {
         await this.getTypePrestationsStore()
       }
     },
+    getImageSrc(imageName) {
+      try {
+        return require('@/assets/infoPage/' + imageName);
+      } catch {
+        return require('@/assets/' + "4.png");
+      }
+    },
+
   },
   async created() {
     this.id_type = this.getSelectedTypePrestation[0];

@@ -618,23 +618,23 @@
     ('Validée'),
     ('Annulée');
 
-    INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
-    ('2022-02-15', 1, 1),
-    ('2022-02-15', 1, 2),
-    ('2022-02-15', 2, 1);
-
-    INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix , id_etat_commande) VALUES
-    (1,1,5,1,5, 50,1),
-    (1,1,1,1,5, 50,1),
-    (2,2,2,1,10, 20,1);
-
-
-    INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
-    (1, 1, 1, 5),
-    (1, 2, 1, 8),
-    (1, 3, 1, 5),
-    (1, 4, 1, 6),
-    (1, 5, 10, 6);
+--     INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
+--     ('2022-02-15', 1, 1),
+--     ('2022-02-15', 1, 2),
+--     ('2022-02-15', 2, 1);
+--
+--     INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix , id_etat_commande) VALUES
+--     (1,1,5,1,5, 50,1),
+--     (1,1,1,1,5, 50,1),
+--     (2,2,2,1,10, 20,1);
+--
+--
+--     INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
+--     (1, 1, 1, 5),
+--     (1, 2, 1, 8),
+--     (1, 3, 1, 5),
+--     (1, 4, 1, 6),
+--     (1, 5, 10, 6);
 
 /*
 SELECT
