@@ -37,10 +37,9 @@ const createRoleDroitAssociation = (role_droit, callback) => {
 
 async function createRoleDroitAssociationAsync(role_droit) {
     try {
-        console.log("createRoleDroitAssociationAsync");
+        console.log("createRoleDroitAssociationAsync", role_droit);
         const conn = await pool.connect();
-        const result = await conn.query('INSERT INTO role_droits (id_role, id_droit) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING *;\n', [role_droit.role_id, role_droit.droit_id]);
-        console.log("result", result);
+        const result = await conn.query('INSERT INTO role_droits (id_role, id_droit) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING *;\n', [role_droit.id_role, role_droit.id_droit]);
         conn.release();
         return result.rows;
     } catch (error) {

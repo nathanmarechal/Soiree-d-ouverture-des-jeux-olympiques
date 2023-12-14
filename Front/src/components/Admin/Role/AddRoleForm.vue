@@ -41,6 +41,7 @@ export default {
     return {
       role: {
         libelle: '',
+        id_role: null, // Add id_role property
       },
       roleDroits: [],
       selectedCategory: 'all',
@@ -84,16 +85,20 @@ export default {
     },
     async submitForm() {
       try {
-        let id_role = await this.createRoleStore(this.role);
-        console.log("id", id_role);
+        // Generate a new ID for the role
+        const maxId = Math.max(...this.getAllRoles.map(role => role.id_role), 0);
+        this.role.id_role = maxId + 1;
+
+        // Create the role
+        await this.createRoleStore(this.role);
+
         // Save the selected droits for the role
         for (const droitId of this.roleDroits) {
           await this.createRoleDroitAssociationStore({
-            id_role: id_role.id_role,
+            id_role: this.role.id_role,
             id_droit: droitId,
           });
         }
-
         this.$router.push({ name: "AdminRoles" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);

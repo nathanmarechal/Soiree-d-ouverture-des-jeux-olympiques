@@ -1,42 +1,47 @@
 <template>
   <div>
-    <div v-if="isDataLoaded" class="container">
+    <div class="container">
       <div class="row">
         <div class="col-12">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>{{ translate("roleList_id") }}</th>
-                <th>{{ translate("roleList_libelle") }}</th>
-                <th>{{ translate("roleList_actions") }}</th>
-                <th>Droits</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(role, index) in getAllRoles" :key="index">
-                <td>{{ role.id_role }}</td>
-                <td>{{ role.libelle }}</td>
-                <td>
-                  <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
-                    {{ translate("roleList_modifier") }}
-                  </router-link>
-                  <button class="btn btn-danger" @click="removeRole(role.id_role)">
-                    {{ translate("roleList_supprimer") }}
-                  </button>
-                </td>
-                <td>
-                  <ul style="display: inline-block;">
-                    <li v-for="(droit, index) in role.droits" :key="index">
-                      {{ getDroitLibelleById(droit) }}
-                    </li>
-                    <li v-if="role.droits.length === 0">
-                      {{ translate("roleList_noDroit") }}
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div v-if="loading">
+            Loading data...
+          </div>
+          <div v-else>
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>{{ translate("roleList_id") }}</th>
+                  <th>{{ translate("roleList_libelle") }}</th>
+                  <th>{{ translate("roleList_actions") }}</th>
+                  <th>Droits</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(role, index) in getAllRoles" :key="index">
+                  <td>{{ role.id_role }}</td>
+                  <td>{{ role.libelle }}</td>
+                  <td>
+                    <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
+                      {{ translate("roleList_modifier") }}
+                    </router-link>
+                    <button class="btn btn-danger" @click="removeRole(role.id_role)">
+                      {{ translate("roleList_supprimer") }}
+                    </button>
+                  </td>
+                  <td>
+                    <ul style="display: inline-block;">
+                      <li v-for="(droit, index) in role.droits" :key="index">
+                        {{ getDroitLibelleById(droit) }}
+                      </li>
+                      <li v-if="role.droits.length === 0">
+                        {{ translate("roleList_noDroit") }}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -50,16 +55,17 @@ import { translate } from "@/lang/translationService";
 export default {
   data() {
     return {
-      isDataLoaded: false,
+      loading: true,
     };
   },
 
   async mounted() {
     try {
       await this.loadData();
-      this.isDataLoaded = true; // Set data loaded state to true
+      this.loading = false; // Set loading to false after data is loaded
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
+      this.loading = false; // Handle loading error
     }
   },
 
@@ -76,29 +82,24 @@ export default {
         await this.getRolesStore();
         await this.getDroitsStore();
         await this.getAllRoleDroitAssociationStore();
-
+      
         // Associate droits with roles
-        this.getAllRoles.forEach((role) => {
+        await this.getAllRoles.forEach((role) => {
           const roleAssociations = this.getAllRoleDroitAssociation.filter(
             (association) => association.id_role === role.id_role
           );
         
-          role.droits = roleAssociations.map((association) => association.id_droit);
+          // Ensure droits array exists
+          role.droits = roleAssociations.map((association) => association.id_droit) || [];
         });
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
 
+
     getDroitLibelleById(droitId) {
-      //console.log ('getAllDroits :', this.getAllDroits);
-      //console.log('droitId :', droitId);
-      const droit = this.getAllDroits.find(d => {
-        //console.log('Current Object:', d);
-        //console.log('Comparison Result:', d.id === Number(droitId));
-        return d.id === Number(droitId);
-      });
-      //console.log('droit :', droit);
+      const droit = this.getAllDroits.find(d => d.id === Number(droitId));
       return droit ? droit.libelle : 'Unknown Droit';
     },
 
