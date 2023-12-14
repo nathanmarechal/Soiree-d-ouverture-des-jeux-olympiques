@@ -1,4 +1,7 @@
                 -- Drop the tables with foreign key constraints
+    DROP TABLE IF EXISTS type_emplacement_logistique CASCADE;
+    DROP TABLE IF EXISTS emplacement_logistique CASCADE;
+
     DROP TABLE IF EXISTS ligne_panier CASCADE;
     DROP TABLE IF EXISTS ligne_commande CASCADE;
     DROP TABLE IF EXISTS commande CASCADE;
@@ -11,6 +14,7 @@
     DROP TABLE IF EXISTS zone CASCADE;
     DROP TABLE IF EXISTS type_zone CASCADE;
     DROP TABLE IF EXISTS type_prestation CASCADE;
+
 
     DROP TABLE IF EXISTS session;
 
@@ -177,6 +181,27 @@
         FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE
     );
 
+    CREATE TABLE type_emplacement_logistique(
+        id_type_emplacement_logistique SERIAL PRIMARY KEY,
+        image VARCHAR(50),
+        libelle VARCHAR(50)
+    );
+
+    CREATE TABLE emplacement_logistique(
+        id_emplacement_logistique SERIAL PRIMARY KEY,
+        libelle VARCHAR(50),
+        coordonnes json,
+        id_type_emplacement_logistique INT,
+        FOREIGN KEY(id_type_emplacement_logistique) REFERENCES type_emplacement_logistique(id_type_emplacement_logistique) ON DELETE CASCADE
+    );
+
+    INSERT INTO type_emplacement_logistique(libelle,image) VALUES
+    ('point eau','electricity.svg'),
+    ('branchement éléctrique','water.svg');
+
+    INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique) VALUES
+    ('point eau','[48.857572, 2.2977709]',1),
+    ('branchement éléctrique','[48.857572, 2.2977709]',1);
 
 
     -- Insert data into tables
@@ -699,7 +724,7 @@ WHERE u.id_user = 2
 GROUP BY p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle , s.id_stand, s.nom_stand
 ORDER BY p.id_type_prestation;
 
-*/
+
 
 
 SELECT s.id_stand, s.nom_stand, s.image_stand, s.description_stand, s.date_achat, s.prix, e.coordonnes FROM stand s
@@ -817,3 +842,6 @@ GROUP BY c.heure_creneau;
                 WHERE s.id_stand = 2
                 GROUP BY c.id_creneau, c.heure_creneau
                 ORDER BY c.id_creneau, c.heure_creneau;
+
+
+ */
