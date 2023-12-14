@@ -7,8 +7,8 @@ async function getDroitsRole(id_role){
 }
 
 async function getDroitsRoleFromApi(id_role) {
-
-    return getRequest('/droits/get/' + id_role, 'GETDROITSUSERCOURANT')
+    console.log("sending the get request...")
+    return getRequest('/droits/getByIdRole/' + id_role, 'GETDROITSPARROLE')
 }
 
 export {

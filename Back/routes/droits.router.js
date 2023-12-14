@@ -6,6 +6,6 @@ const rolesController = require('../controllers/droits.controller');
 
 router.get("/get", rolesController.getDroits);
 
-router.get("/getByIdRole/:idRole", droitsController.getDroits);
+router.get("/getByIdRole/:idRole", droitsController.getDroitsByIdRole);
 
 module.exports = router;

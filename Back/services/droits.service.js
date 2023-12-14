@@ -1,5 +1,5 @@
 const pool = require("../database/db");
-
+const {as} = require("pg-promise");
 const getDroits = (id, callback) => {
     getDroitsAsync(id)
         .then(res => {
@@ -22,12 +22,13 @@ async function getDroitsAsync(id) {
             "FROM role_droits\n" +
             "LEFT JOIN droits ON role_droits.id_droit = droits.id\n" +
             "WHERE role_droits.id_role=$1\n" +
-            ";",[id]);
+            ";", [id]);
         conn.release();
         return result.rows;
     } catch (error) {
         console.error('Error in getDroitsAsync:', error);
-const {as} = require("pg-promise");
+    }
+}
 
 const getAllDroits = (callback) => {
     getAllDroitsAsync()
@@ -53,6 +54,6 @@ async function getAllDroitsAsync() {
 }
 
 module.exports = {
-    getDroits: getDroits
-    getAllDroits
-}
+    getDroits: getDroits,
+    getAllDroits: getAllDroits
+};

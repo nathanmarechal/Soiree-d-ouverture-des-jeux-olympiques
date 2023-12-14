@@ -12,7 +12,6 @@ const loginRoutes = require('./routes/authentication.router');
 const panierRoutes = require('./routes/panier.router');
 const commandeRoutes = require('./routes/commande.router');
 const statistiquesRoutes = require('./routes/statistiques.router');
-const droitsRoutes = require('./routes/droits.router');
 dotenv.config();
 const app = express();
 const cors = require('cors');
