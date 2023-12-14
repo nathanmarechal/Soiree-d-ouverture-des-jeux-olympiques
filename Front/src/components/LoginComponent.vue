@@ -30,6 +30,7 @@ import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant} from "@/services/commande.service";
 import {translate} from "../lang/translationService";
+import {getDroitsRole} from "@/services/droits.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -55,7 +56,8 @@ export default {
         commune : null,
         panier : null,
         id_role : null,
-        id_stand : null
+        id_stand : null,
+        droits : []
       };
     },
   },
@@ -130,6 +132,12 @@ export default {
                           .then(res=>{
                             console.log("commande : ", res)
                             this.$store.commit('SET_COMMANDES_USER_COURANT', res)
+                          })
+                      getDroitsRole(res.id_role)
+                          .then(res=>{
+                            console.log("droits : ", res)
+                            this.$store.commit('SET_DROITS_USER_COURANT', res)
+                            console.log("state droits : "+this.$store.getters.getCurrentUser.droits)
                           })
 
                       this.email=""

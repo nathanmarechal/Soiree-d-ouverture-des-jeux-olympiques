@@ -48,6 +48,7 @@ export default new Vuex.Store({
             "adresse": null,
             "commune": null,
             "panier":  [],
+            "droits": [],
             "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
             "id_role": null,
             "id_stand" : null
@@ -203,6 +204,10 @@ export default new Vuex.Store({
 
         ADD_COMMANDES_USER_COURANT(state, id_commande) {
             console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
+        },
+
+        SET_DROITS_USER_COURANT(state, droits) {
+            state.userCourant.droits = droits;
         },
 
         SET_LIGNE_COMMANDE(state, { id_commande, ligne_commande }) {

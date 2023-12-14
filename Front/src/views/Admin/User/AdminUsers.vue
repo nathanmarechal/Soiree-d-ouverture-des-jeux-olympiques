@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div v-if="true" class="main">
+      <div v-if="currentUserHasRight('see_users')" class="main">
           <router-link to="/admin/users/add" class="btn btn-success">{{translate("adminUser_1")}}</router-link>
           <user-list></user-list>
       </div>
@@ -13,12 +13,14 @@
   <script>
   import UserList from '@/components/Admin/User/UserList.vue';
   import {translate} from "../../../lang/translationService";
+  import {currentUserHasRight} from "@/droits/droitUtil";
 
   export default {
       components: {
           UserList
       },
       methods: {
+        currentUserHasRight,
         translate,
       error404() {
         this.$router.push("/404");

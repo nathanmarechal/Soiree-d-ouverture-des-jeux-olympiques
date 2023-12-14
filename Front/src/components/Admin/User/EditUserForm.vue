@@ -98,7 +98,7 @@ export default {
                     solde : this.user.solde,
                     code_postal: this.user.code_postal,
                     password: this.user.password,
-                    id_role: this.user.id_role
+                    id_role: this.user.id_role,
                 }});
                 await this.$router.push('/admin/users/');
             } catch (error) {
