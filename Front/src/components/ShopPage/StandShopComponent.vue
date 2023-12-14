@@ -1,8 +1,16 @@
 <template>
-  <div>
-    <h1>Stand : {{stand.nom_stand}}     <img style="width: 200px; height: 200px;" :src="imagePath" alt="Image du stand" /></h1>
-    <h2>description : {{stand.description_stand}}</h2>
-    <h2>toutes les prestations proposées par {{stand.nom_stand}} :</h2>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 style="font-size: 500%">Stand : {{stand.nom_stand}}</h1>
+        <p style="font-size: 200%"> {{stand.description_stand}}</p>
+      </div>
+      <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <img :src="imagePath" alt="Image du stand" class="img-fluid" style="width: 80%; height: 80%;">
+      </div>
+    </div>
+    <h2>Toutes les prestations proposées par {{stand.nom_stand}} :</h2>
+
   </div>
 </template>
 

@@ -1,7 +1,14 @@
 <template>
-  <div>
-    <h1>type de prestation : {{type.libelle}}  <img style="width: 200px; height: 200px;" :src="getImageSrc(type.image)" alt="Image du type" /></h1>
-    <h2>description : {{type.description_type_prestation}}</h2>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 style="font-size: 500%"> type de prestation : {{type.libelle}}  </h1>
+        <p style="font-size: 200%" > {{type.description_type_prestation}}</p>
+      </div>
+      <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <img style="width: 80%; height: 80%;" class="img-fluid" :src="getImageSrc(type.image)" alt="Image du type" />
+  </div>
+</div>
     <h2>toutes les prestations proposées par {{type.libelle}} :</h2>
   </div>
 </template>
