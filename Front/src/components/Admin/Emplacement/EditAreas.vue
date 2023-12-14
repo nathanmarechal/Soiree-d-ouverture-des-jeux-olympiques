@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-
+      areas: null,
       map: null,
       selectedArea: null,
       polygons: [],
@@ -45,19 +45,48 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllArea', 'getAllZone']),
+    ...mapGetters(['getAllArea', 'getAllZone','getAllStand']),
   },
   methods: {
-    ...mapActions(['getAreasStore', 'getZonesStore']),
+    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore']),
     async loadData() {
       try {
-        if (this.getAllArea.length === 0)
+        if (this.getAllArea.length === 0) {
           await this.getAreasStore();
-        if (this.getAllZone.length === 0)
+        }
+        if (this.getAllZone.length === 0) {
           await this.getZonesStore();
+        }
+        if (this.getAllStand.length === 0) {
+          await this.getStandsStore();
+        }
+
+        this.areas = this.mergeData();
+
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
+    },
+    mergeData() {
+      return this.getAllArea.map(area => {
+        // Trouver le stand correspondant
+        const stand = this.getAllStand.find(stand => stand.id_emplacement === area.id_emplacement) || {};
+
+        // Trouver la zone correspondante
+        const zone = this.getAllZone.find(zone => zone.id_zone === area.id_zone) || {};
+
+        return {
+          id_emplacement: area.id_emplacement,
+          id_stand: stand.id_stand || null, // Utiliser null si aucun stand n'est trouvé
+          zone: zone.libelle || '',
+          id_zone: zone.id_zone || null,
+          id_type_zone: zone.id_type_zone || null,
+          couleur_hexa: zone.couleur_hexa || '',
+          coordinates: area.coordonnes,
+          surface: area.surface,
+          isFree: !stand
+        };
+      });
     },
     initializeMap() {
       // Initialize the Leaflet map with a default view
@@ -105,7 +134,7 @@ export default {
 
       //const areas = this.areas;
       // Ajoutez à nouveau les polygones filtrés à la carte
-        this.getAllArea.forEach((area) => {
+        this.areas.forEach((area) => {
         const polygon = L.polygon(area.coordinates, {
           //color: area.couleur_hexa,
           color: this.getAllZone.find(zone => zone.id_zone === area.id_zone).couleur_hexa,
