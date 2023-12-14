@@ -12,6 +12,9 @@ const loginRoutes = require('./routes/authentication.router');
 const panierRoutes = require('./routes/panier.router');
 const commandeRoutes = require('./routes/commande.router');
 const statistiquesRoutes = require('./routes/statistiques.router');
+const typeEmplacementLogistiqueRoutes = require('./routes/typeEmplacementLogistique.router');
+const emplacementLogistiqueRoutes = require('./routes/emplacementLogistique.router');
+
 dotenv.config();
 const app = express();
 const cors = require('cors');
@@ -34,6 +37,8 @@ app.use("/api/stands",standsRoutes);
 app.use("/api/statistiques",statistiquesRoutes);
 app.use("/api/commande", commandeRoutes);
 app.use("/api/droits", droitsRoutes);
+app.use("/api/type-emplacement-logistique", typeEmplacementLogistiqueRoutes);
+app.use("/api/emplacement-logistique", emplacementLogistiqueRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
