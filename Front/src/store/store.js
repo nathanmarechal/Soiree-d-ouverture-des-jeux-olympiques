@@ -31,6 +31,14 @@ import {
     getLigneCommandeBycommandeId,
     setEtatLigneCommandeExterieur
 } from "@/services/commande.service";
+import {
+    getAllDroits, 
+} from "@/services/droit.service";
+import {
+    getAllRoleDroitAssociation,
+    createRoleDroitAssociation,
+    deleteRoleDroitAssociation
+} from "@/services/role_droit.service";
 
 Vue.use(Vuex)
 
@@ -84,6 +92,8 @@ export default new Vuex.Store({
         getAllZone: state => state.zones,
         getAllUsers : state => state.users,
         getAllRoles : state => state.roles,
+        getAllDroits : state => state.droits,
+        getAllRoleDroitAssociation : state => state.roleDroitAssociation,
         getAllTypeZone: state => state.typeZone,
         getAllArea: state=> state.areas,
         getAllStand: state => state.stands,
@@ -128,6 +138,22 @@ export default new Vuex.Store({
 
         SET_ROLES(state, roles) {
           state.roles = roles;
+        },
+
+        SET_DROITS(state, droits) {
+            state.droits = droits;
+        },
+
+        SET_ROLE_DROIT_ASSOCIATION(state, roleDroitAssociation) {
+            state.roleDroitAssociation = roleDroitAssociation;
+        },
+
+        CREATE_ROLE_DROIT_ASSOCIATION(state, payload) {
+            state.roleDroitAssociation.push(payload);
+        },
+
+        DELETE_ROLE_DROIT_ASSOCIATION(state, payload) {
+            state.roleDroitAssociation = state.roleDroitAssociation.filter(item => item.role_id !== payload.role_id && item.droit_id !== payload.droit_id);
         },
 
         SET_ZONES(state, zones) {
@@ -561,8 +587,9 @@ export default new Vuex.Store({
         async createRoleStore({ commit }, body) {
             try {
                 console.log("createRoleStore: ", body)
-                await createRole(body);
-                commit('CREATE_ROLE', body);
+                const data = await createRole(body);
+                console.log("data: ", data);
+                commit('CREATE_ROLE', data);
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
             }
@@ -570,8 +597,8 @@ export default new Vuex.Store({
 
         async deleteRoleStore({ commit }, id) {
             try {
-                await deleteRole(id);
-                commit('DELETE_ROLE', id);
+                const data = await deleteRole(id);
+                commit('DELETE_ROLE', data);
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }
@@ -579,10 +606,62 @@ export default new Vuex.Store({
 
         async updateRoleStore({ commit }, id, body) {
             try {
-                await updateRole(id, body);
-                commit('UPDATE_ROLE', id, body);
+                const data = await updateRole(id, body);
+                commit('UPDATE_ROLE', data.id_role, data);
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
+            }
+        },
+
+//-----------------------------------------------------------------Droits-----------------------------------------------------------------------//
+
+        async getDroitsStore({ commit }) {
+            try {
+                const result = await getAllDroits();
+                if (Array.isArray(result)) {
+                    commit('SET_DROITS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getDroitsStore():", err);
+            }
+        },
+
+        async getAllRoleDroitAssociationStore({ commit }) {
+            try {
+                const result = await getAllRoleDroitAssociation(); // Wait for the Promise to resolve
+                // print what kind of object is result
+                console.log("result: ", result);
+        
+                if (Array.isArray(result)) {
+                    commit('SET_ROLE_DROIT_ASSOCIATION', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getAllRoleDroitAssociationStore():", err);
+            }
+        },      
+        
+        async createRoleDroitAssociationStore({ commit }, body) {
+            try {
+                console.log("createRoleDroitAssociationStore: ", body)
+                const data = await createRoleDroitAssociation(body);
+                console.log("data: ", data);
+                commit('CREATE_ROLE_DROIT_ASSOCIATION', data);
+            } catch (err) {
+                console.error("Error in createRoleDroitAssociationStore():", err);
+            }
+        },
+
+        async deleteRoleDroitAssociationStore({ commit }, body) {
+            try {
+                console.log("deleteRoleDroitAssociationStore: ", body)
+                const data = await deleteRoleDroitAssociation(body);
+                commit('DELETE_ROLE_DROIT_ASSOCIATION', data);
+            } catch (err) {
+                console.error("Error in deleteRoleDroitAssociationStore():", err);
             }
         },
 

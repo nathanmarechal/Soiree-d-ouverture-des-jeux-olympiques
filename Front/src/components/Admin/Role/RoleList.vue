@@ -1,14 +1,15 @@
 <template>
   <div>
-    <div class="container">
+    <div v-if="isDataLoaded" class="container">
       <div class="row">
         <div class="col-12">
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>{{translate("roleList_id")}}</th>
-                <th>{{translate("roleList_libelle")}}</th>
+                <th>{{ translate("roleList_id") }}</th>
+                <th>{{ translate("roleList_libelle") }}</th>
                 <th>{{ translate("roleList_actions") }}</th>
+                <th>Droits</th>
               </tr>
             </thead>
             <tbody>
@@ -19,7 +20,19 @@
                   <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
                     {{ translate("roleList_modifier") }}
                   </router-link>
-                  <button class="btn btn-danger" @click="removeRole(role.id_role)">{{ translate("roleList_supprimer") }}</button>
+                  <button class="btn btn-danger" @click="removeRole(role.id_role)">
+                    {{ translate("roleList_supprimer") }}
+                  </button>
+                </td>
+                <td>
+                  <ul style="display: inline-block;">
+                    <li v-for="(droit, index) in role.droits" :key="index">
+                      {{ getDroitLibelleById(droit) }}
+                    </li>
+                    <li v-if="role.droits.length === 0">
+                      {{ translate("roleList_noDroit") }}
+                    </li>
+                  </ul>
                 </td>
               </tr>
             </tbody>
@@ -32,41 +45,76 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import {translate} from "@/lang/translationService";
+import { translate } from "@/lang/translationService";
 
 export default {
+  data() {
+    return {
+      isDataLoaded: false,
+    };
+  },
+
   async mounted() {
     try {
       await this.loadData();
+      this.isDataLoaded = true; // Set data loaded state to true
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
+
   computed: {
-    ...mapGetters(['getAllRoles']),
+    ...mapGetters(['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
   },
+
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'deleteRoleStore']),
+    ...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+
     async loadData() {
-      if (this.getAllRoles.length === 0) {
+      try {
         await this.getRolesStore();
+        await this.getDroitsStore();
+        await this.getAllRoleDroitAssociationStore();
+
+        // Associate droits with roles
+        this.getAllRoles.forEach((role) => {
+          const roleAssociations = this.getAllRoleDroitAssociation.filter(
+            (association) => association.id_role === role.id_role
+          );
+        
+          role.droits = roleAssociations.map((association) => association.id_droit);
+        });
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
       }
     },
+
+    getDroitLibelleById(droitId) {
+      //console.log ('getAllDroits :', this.getAllDroits);
+      //console.log('droitId :', droitId);
+      const droit = this.getAllDroits.find(d => {
+        //console.log('Current Object:', d);
+        //console.log('Comparison Result:', d.id === Number(droitId));
+        return d.id === Number(droitId);
+      });
+      //console.log('droit :', droit);
+      return droit ? droit.libelle : 'Unknown Droit';
+    },
+
     async removeRole(id) {
       const role = this.getAllRoles.find(role => role.id_role === id);
-      const confirmMessage = this.translate("roleList_ConfirmDeleteMessage")+` ${role.libelle} ?`;
-      console.log(role.id_role);
+      const confirmMessage = this.translate("roleList_ConfirmDeleteMessage") + ` ${role.libelle} ?`;
+
       if (window.confirm(confirmMessage)) {
         try {
           await this.deleteRoleStore(role.id_role);
-          // Consider using Vuex mutations to update the state
         } catch (error) {
           console.error('Erreur lors de la suppression du rôle :', error);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
