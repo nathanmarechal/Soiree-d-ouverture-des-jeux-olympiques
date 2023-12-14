@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const usersRoutes = require('./routes/users.router');
 const rolesRoutes = require('./routes/roles.router');
+const droitsRoutes = require('./routes/droits.router');
+const role_droitRoutes = require('./routes/role_droit.router');
 const mapRoutes = require('./routes/map.router');
 const prestationsRoutes = require('./routes/prestations.router');
 const typePrestationsRoutes = require('./routes/typePrestations.router');
@@ -22,6 +24,8 @@ app.use(cors({
 app.use(express.json());
 app.use("/api/panier", panierRoutes);
 app.use("/api/roles", rolesRoutes);
+app.use("/api/droits", droitsRoutes);
+app.use("/api/role-droit", role_droitRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/map", mapRoutes);
 app.use("/api/login",loginRoutes);
