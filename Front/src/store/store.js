@@ -17,7 +17,7 @@ import {
 } from "@/services/role.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
-import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
+import {getAllStands, deleteStand, updateStand,updateDescriptionStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
     deletePrestationFromPanierUser,
@@ -560,7 +560,7 @@ export default new Vuex.Store({
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
-                console.error("Error in updateUserStore():", err);
+                console.error("Error in updateUserStore({ ...item, ...payload.body }):", err);
             }
         },
 
@@ -835,8 +835,18 @@ export default new Vuex.Store({
 
         async updateStandStore({ commit }, {id, body}) {
             try {
+                console.log(id, body)
                 await updateStand(id, body);
                 commit('UPDATE_STAND', id, body);
+            } catch (err) {
+                console.error("Error in updateStandStore():", err);
+            }
+        },
+        async updateDescriptionStandStore({ commit }, {id, body}) {
+            try {
+                console.log(id, body)
+                await updateDescriptionStand(id, body);
+                commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
             }

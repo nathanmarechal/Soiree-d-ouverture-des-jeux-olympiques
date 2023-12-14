@@ -120,10 +120,6 @@ export default {
 
     addArea(coordinates) {
       this.toggleModalAdd();
-
-      // Initialisez l'objet newArea avec des propriétés vides
-
-      // Convertir les coordonnées au format souhaité
       const formattedCoordinates = [];
 
       for (const coord of coordinates[0]) {
