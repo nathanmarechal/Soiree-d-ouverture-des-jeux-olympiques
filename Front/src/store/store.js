@@ -40,6 +40,9 @@ import {
     deleteRoleDroitAssociation
 } from "@/services/role_droit.service";
 
+import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
+import {getEmplacementLogistique} from "@/services/emplacementLogistique.service";
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -63,7 +66,6 @@ export default new Vuex.Store({
         },
 
         creneau: [],
-
         users : [],
         roles : [],
         typeZone: [],
@@ -72,6 +74,8 @@ export default new Vuex.Store({
         stands: [],
         prestations: [],
         typePresations: [],
+        typeEmplacementLogistique: [],
+        emplacementLogistique: [],
 
         areaSelectedForStand: null,
         isLoginOpen: false,
@@ -100,13 +104,13 @@ export default new Vuex.Store({
         getAllStand: state => state.stands,
         getAllTypePrestation: state => state.typePresations,
         getAllPrestation: state => state.prestations,
-
+        getAllTypeEmplacementLogistique: state => state.typeEmplacementLogistique,
+        getAllEmplacementLogistique: state => state.emplacementLogistique,
 
         getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
-
 
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
@@ -165,6 +169,13 @@ export default new Vuex.Store({
         SET_AREAS(state, areas) {
             state.areas.splice(0)
             areas.forEach(p => state.areas.push(p))
+        },
+
+        SET_TYPE_EMPLACEMENT_LOGISITIQUE(state, typeEmplacementLogistique) {
+            state.typeEmplacementLogistique = typeEmplacementLogistique;
+        },
+        SET_EMPLACEMENT_LOGISITIQUE(state, emplacementLogistique) {
+            state.emplacementLogistique = emplacementLogistique;
         },
 
         UPDATE_AREA(state, data) {
@@ -738,6 +749,35 @@ export default new Vuex.Store({
               commit('SET_TYPE_ZONE', typeZone);
             } else {
               console.error("Unexpected response format:", typeZone);
+            }
+          } catch (err) {
+            console.error("Error in getTypeZone():", err);
+          }
+        },
+
+//----------------------------------------------------------------------typeEmplacementLogistique--------------------------------------------------------------------//
+
+        async getTypeEmplacementLogistiqueStore({ commit }) {
+          try {
+            const typeEmplacementLogistique = await getTypeEmplacementLogistique();
+            if (Array.isArray(typeEmplacementLogistique)) {
+              commit('SET_TYPE_EMPLACEMENT_LOGISITIQUE', typeEmplacementLogistique);
+            } else {
+              console.error("Unexpected response format:", typeEmplacementLogistique);
+            }
+          } catch (err) {
+            console.error("Error in getTypeZone():", err);
+          }
+        },
+//----------------------------------------------------------------------EmplacementLogistique--------------------------------------------------------------------//
+
+        async getEmplacementLogistiqueStore({ commit }) {
+          try {
+            const emplacementLogistique = await getEmplacementLogistique();
+            if (Array.isArray(emplacementLogistique)) {
+              commit('SET_EMPLACEMENT_LOGISITIQUE', emplacementLogistique);
+            } else {
+              console.error("Unexpected response format:", emplacementLogistique);
             }
           } catch (err) {
             console.error("Error in getTypeZone():", err);

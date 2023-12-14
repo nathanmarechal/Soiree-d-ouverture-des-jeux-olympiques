@@ -200,8 +200,8 @@
     ('branchement éléctrique','water.svg');
 
     INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique) VALUES
-    ('point eau','[48.857572, 2.2977709]',1),
-    ('branchement éléctrique','[48.857572, 2.2977709]',1);
+    ('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2),
+    ('raccordement Anatole France','[48.8575458, 2.2963378]',1);
 
 
     -- Insert data into tables

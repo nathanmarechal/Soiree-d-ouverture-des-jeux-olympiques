@@ -45,10 +45,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllArea', 'getAllZone','getAllStand']),
+    ...mapGetters(['getAllArea', 'getAllZone','getAllStand','getAllTypeEmplacementLogistique','getAllEmplacementLogistique']),
   },
   methods: {
-    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore']),
+    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore']),
     async loadData() {
       try {
         if (this.getAllArea.length === 0) {
@@ -60,6 +60,12 @@ export default {
         if (this.getAllStand.length === 0) {
           await this.getStandsStore();
         }
+        if (this.getAllTypeEmplacementLogistique.length === 0) {
+          await this.getTypeEmplacementLogistiqueStore();
+        }
+        if (this.getAllEmplacementLogistique.length === 0) {
+          await this.getEmplacementLogistiqueStore();
+        }
 
         this.areas = this.mergeData();
 
@@ -67,6 +73,17 @@ export default {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
+    mergeLogisticLocations() {
+      return this.getAllEmplacementLogistique.map(location => {
+        const type = this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === location.id_type_emplacement_logistique) || {};
+        return {
+          ...location,
+          image: type.image,
+          libelle_type_emplacement_logistique: type.libelle // ou utilisez location.libelle si différent
+        };
+      });
+    },
+
     mergeData() {
       return this.getAllArea.map(area => {
         // Trouver le stand correspondant
@@ -145,6 +162,34 @@ export default {
         });
         this.polygons.push(polygon);
       });
+
+      const logisticLocations = this.mergeLogisticLocations();
+
+      logisticLocations.forEach(location => {
+        console.log('Icon URL:', '/assets/Logos/' + location.image); // pour le débogage
+        const iconUrl = require('@/assets/Logos/' + location.image);
+
+        const customIcon = L.icon({
+          iconUrl: iconUrl,
+          iconSize: [20, 20], // taille de l'icône
+          iconAnchor: [20, 20] // point d'ancrage au bas du centre de l'icône
+        });
+
+        const marker = L.marker(location.coordonnes, {
+          icon: customIcon,
+          title: location.libelle // Le libellé s'affiche au survol du curseur
+        }).addTo(this.map);
+
+        // Personnaliser le contenu de la popup ici
+        marker.bindPopup(`
+        <b>${location.libelle}</b><br>
+        Type: ${location.libelle_type_emplacement_logistique}<br>
+        ID: ${location.id_emplacement_logistique}<br>
+        Type ID: ${location.id_type_emplacement_logistique}
+    `);
+      });
+
+
     },
 
     addArea(coordinates) {
