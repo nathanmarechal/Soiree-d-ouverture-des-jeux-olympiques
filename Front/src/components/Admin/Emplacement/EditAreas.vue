@@ -121,7 +121,7 @@ export default {
           polyline: false,
           rectangle: false,
           circle: false,
-          marker: false,
+          marker: true,
           circlemarker:false
         },
       });
@@ -132,11 +132,22 @@ export default {
       // Handle draw events
       this.map.on('draw:created', (event) => {
         const layer = event.layer;
-        this.newArea = {
-          coordinates: [],
-          surface: 0,
-        };
-        this.addArea(layer.getLatLngs());
+        const layerType = event.layerType;
+
+        if (layerType === 'polygon') {
+          // Handle polygon creation
+          this.newArea = {
+            coordinates: [],
+            surface: 0,
+          };
+          this.addArea(layer.getLatLngs());
+        } else if (layerType === 'marker') {
+          // Handle marker creation
+          this.addEmplacementLogistique(layer.getLatLng());
+        }
+
+        // For any common operations after adding the layer to the map
+        // this.map.addLayer(layer);
       });
 
       this.updateMap();
@@ -189,6 +200,11 @@ export default {
     `);
       });
 
+
+    },
+    addEmplacementLogistique(latLng){
+      const coordinates = [latLng.lat, latLng.lng];
+      alert(coordinates)
 
     },
 
