@@ -30,10 +30,10 @@
                   </td>
                   <td>
                     <ul style="display: inline-block;">
-                      <li v-for="(droit, index) in role.droits" :key="index">
-                        {{ getDroitLibelleById(droit) }}
+                      <li v-for="droitId in getRoleDroits(role)" :key="droitId">
+                        {{ getDroitLibelleById(droitId) }}
                       </li>
-                      <li v-if="role.droits.length === 0">
+                      <li v-if="getRoleDroits(role).length === 0">
                         {{ translate("roleList_noDroit") }}
                       </li>
                     </ul>
@@ -82,21 +82,18 @@ export default {
         await this.getRolesStore();
         await this.getDroitsStore();
         await this.getAllRoleDroitAssociationStore();
-      
-        // Associate droits with roles
-        await this.getAllRoles.forEach((role) => {
-          const roleAssociations = this.getAllRoleDroitAssociation.filter(
-            (association) => association.id_role === role.id_role
-          );
-        
-          // Ensure droits array exists
-          role.droits = roleAssociations.map((association) => association.id_droit) || [];
-        });
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
 
+    getRoleDroits(role) {
+      const roleAssociations = this.getAllRoleDroitAssociation.filter(
+        (association) => association.id_role === role.id_role
+      );
+      const result = roleAssociations.map((association) => association.id_droit) || []
+      return result;
+    },
 
     getDroitLibelleById(droitId) {
       const droit = this.getAllDroits.find(d => d.id === Number(droitId));

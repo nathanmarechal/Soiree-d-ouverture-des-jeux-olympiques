@@ -85,17 +85,14 @@ export default {
     },
     async submitForm() {
       try {
-        // Generate a new ID for the role
-        const maxId = Math.max(...this.getAllRoles.map(role => role.id_role), 0);
-        this.role.id_role = maxId + 1;
-
         // Create the role
-        await this.createRoleStore(this.role);
+        let result = await this.createRoleStore(this.role);
+        console.log('Résultat de la création du rôle :', result);
 
         // Save the selected droits for the role
         for (const droitId of this.roleDroits) {
           await this.createRoleDroitAssociationStore({
-            id_role: this.role.id_role,
+            id_role: result.id_role,
             id_droit: droitId,
           });
         }

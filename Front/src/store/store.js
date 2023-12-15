@@ -591,10 +591,11 @@ export default new Vuex.Store({
 
         async createRoleStore({ commit }, body) {
             try {
-                console.log("createRoleStore: ", body)
+                //console.log("createRoleStore: ", body)
                 const data = await createRole(body);
-                console.log("data: ", data);
-                commit('CREATE_ROLE', data);
+                console.log("datacreate: ", data.rows[0]);
+                commit('CREATE_ROLE', data.rows[0]);
+                return data.rows[0];
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
             }
@@ -603,7 +604,8 @@ export default new Vuex.Store({
         async deleteRoleStore({ commit }, id) {
             try {
                 const data = await deleteRole(id);
-                commit('DELETE_ROLE', data);
+                //console.log("datadelete: ", data.rows[0].id_role);
+                commit('DELETE_ROLE', data.rows[0].id_role);
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }
@@ -612,7 +614,7 @@ export default new Vuex.Store({
         async updateRoleStore({ commit }, id, body) {
             try {
                 const data = await updateRole(id, body);
-                commit('UPDATE_ROLE', data.id_role, data);
+                commit('UPDATE_ROLE', data.rows[0].id_role, data.rows[0]);
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
             }
@@ -651,10 +653,10 @@ export default new Vuex.Store({
         
         async createRoleDroitAssociationStore({ commit }, body) {
             try {
-                console.log("createRoleDroitAssociationStore: ", body)
+                //console.log("createRoleDroitAssociationStore: ", body)
                 const data = await createRoleDroitAssociation(body);
-                console.log("data: ", data);
-                commit('CREATE_ROLE_DROIT_ASSOCIATION', data);
+                console.log("datcreatea: ", data[0]);
+                commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
             }
@@ -662,9 +664,10 @@ export default new Vuex.Store({
 
         async deleteRoleDroitAssociationStore({ commit }, body) {
             try {
-                console.log("deleteRoleDroitAssociationStore: ", body)
+                //console.log("deleteRoleDroitAssociationStore: ", body)
                 const data = await deleteRoleDroitAssociation(body);
-                commit('DELETE_ROLE_DROIT_ASSOCIATION', data);
+                console.log("datdeletea: ", data[0]);
+                commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationStore():", err);
             }

@@ -3,7 +3,6 @@ const pool = require("../database/db");
 const getAllRoles = (callback) => {
     getAllRolesAsync()
         .then(res => {
-            //console.log('Roles:', res);
             callback(null, res);
         })
         .catch(error => {
@@ -24,10 +23,10 @@ async function getAllRolesAsync() {
     }
 }
 
-const createRole = (body, callback) => {
-    try{
-        createRoleAsync(body)
-        callback(null, "success");
+const createRole = async (body, callback) => {
+    try {
+        let data = await createRoleAsync(body);
+        callback(null, data);
     } catch (error) {
         console.log(error);
         callback(error, null);
@@ -38,7 +37,7 @@ async function createRoleAsync(body) {
     try {
         const libelle = body.libelle;
         const conn = await pool.connect();
-        const result = await conn.query("INSERT INTO role (libelle) VALUES ($1)", [libelle]);
+        const result = await conn.query("INSERT INTO role (libelle) VALUES ($1) RETURNING *", [libelle]);
         conn.release();
 
         return result;
@@ -48,11 +47,11 @@ async function createRoleAsync(body) {
     }
 }
 
-const updateRole = (body, callback) => {
-    try{
-        console.log("updateRole1",body);
-        updateRoleAsync(body)
-        callback(null, "success");
+const updateRole = async (body, callback) => {
+    try {
+        console.log("updateRole1", body);
+        let data = await updateRoleAsync(body);
+        callback(null, data);
     } catch (error) {
         console.log(error);
         callback(error, null);
@@ -64,7 +63,7 @@ async function updateRoleAsync(body) {
         const id_role = body.id_role;
         const libelle = body.libelle;
         const conn = await pool.connect();
-        const result = await conn.query("UPDATE role SET libelle = $1 WHERE id_role = $2", [libelle, id_role]);
+        const result = await conn.query("UPDATE role SET libelle = $1 WHERE id_role = $2 RETURNING *", [libelle, id_role]);
         conn.release();
         return result;
     } catch (error) {
@@ -73,25 +72,24 @@ async function updateRoleAsync(body) {
     }
 }
 
-const deleteRole = (body, callback) => {
-    try{
-        console.log("deleteRole1",body);
-        deleteRoleAsync(body);
-        callback(null,"Deleted successfully")
-    }
-    catch (error)
-    {
+const deleteRole = async (body, callback) => {
+    try {
+        console.log("deleteRole1", body);
+        let data = await deleteRoleAsync(body);
+        callback(null, data);
+    } catch (error) {
         console.log(error);
-        callback(error,null)
+        callback(error, null);
     }
 }
 
 async function deleteRoleAsync(id_role) {
     try {
         const conn = await pool.connect();
-        await conn.query('DELETE FROM role WHERE id_role = $1', [id_role]);
+        data = await conn.query('DELETE FROM role WHERE id_role = $1 RETURNING *', [id_role]);
         conn.release();
         console.log('Records deleted successfully');
+        return data;
     } catch (error) {
         console.error('Error deleting records:', error);
         throw error;
@@ -99,8 +97,8 @@ async function deleteRoleAsync(id_role) {
 }
 
 module.exports = {
-    getAllRoles: getAllRoles
-    , createRole: createRole
-    , updateRole: updateRole
-    , deleteRole: deleteRole
+    getAllRoles: getAllRoles,
+    createRole: createRole,
+    updateRole: updateRole,
+    deleteRole: deleteRole
 }

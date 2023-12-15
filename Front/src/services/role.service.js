@@ -14,22 +14,27 @@ async function createRoleFromAPI(body) {
 
 async function deleteRole(id) {
     let answer = await deleteRolefromAPI(id)
+    console.log("deleteRole: ", answer)
     return answer
 }
 
 async function deleteRolefromAPI(id) {
-    return deleteRequest('/roles/delete/' + id, 'DELETEROLE')
+    let answer = deleteRequest('/roles/delete/' + id, 'DELETEROLE')
+    console.log("deleteRolefromAPI: ", answer)
+    return answer
 }
 
 async function updateRole(body) {
     let answer = await updateRoleFromAPI(body)
-    //console.log("updateZone: ", answer)
+    //console.log("updateRole: ", answer)
     return answer
 }
 
 async function updateRoleFromAPI(body) {
     let id = body.id_role
-    return patchRequest('/roles/update/' + id, body, 'UPDATEROLE')
+    let answer = patchRequest('/roles/update/' + id, body, 'UPDATEROLE')
+    //console.log("updateRoleFromAPI: ", answer)
+    return answer
 }
 
 

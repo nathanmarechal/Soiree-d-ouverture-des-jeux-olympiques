@@ -1,14 +1,13 @@
 const pool = require("../database/db");
 
-const getAllRoleDroitAssociation = (callback) => {
-    getAllRoleDroitAssociationAsync()
-        .then(res => {
-            callback(null, res);
-        })
-        .catch(error => {
-            console.log(error);
-            callback(error, null);
-        });
+const getAllRoleDroitAssociation = async (callback) => {
+    try {
+        const res = await getAllRoleDroitAssociationAsync();
+        callback(null, res);
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
 }
 
 async function getAllRoleDroitAssociationAsync() {
@@ -24,15 +23,15 @@ async function getAllRoleDroitAssociationAsync() {
     }
 }
 
-const createRoleDroitAssociation = (role_droit, callback) => {
-    createRoleDroitAssociationAsync(role_droit)
-        .then(res => {
-            callback(null, res);
-        })
-        .catch(error => {
-            console.log(error);
-            callback(error, null);
-        });
+const createRoleDroitAssociation = async (role_droit, callback) => {
+    try {
+        const res = await createRoleDroitAssociationAsync(role_droit);
+        console.log("createRoleDroitAssociation", res);
+        callback(null, res);
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
 }
 
 async function createRoleDroitAssociationAsync(role_droit) {
@@ -48,15 +47,14 @@ async function createRoleDroitAssociationAsync(role_droit) {
     }
 }
 
-const deleteRoleDroitAssociation = (role_droit, callback) => {
-    deleteRoleDroitAssociationAsync(role_droit)
-        .then(res => {
-            callback(null, res);
-        })
-        .catch(error => {
-            console.log(error);
-            callback(error, null);
-        });
+const deleteRoleDroitAssociation = async (role_droit, callback) => {
+    try {
+        const res = await deleteRoleDroitAssociationAsync(role_droit);
+        callback(null, res);
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
 }
 
 async function deleteRoleDroitAssociationAsync(role_droit) {

@@ -17,7 +17,9 @@ async function createRoleDroitAssociation(role_droit) {
 }
 
 async function createRoleDroitAssociationFromApi(role_droit) {
-    return postRequest('/role-droit/add', role_droit, 'CREATEROLEDROITASSOCIATION')
+    let answer = await postRequest('/role-droit/add', role_droit, 'CREATEROLEDROITASSOCIATION')
+    console.log("createRoleDroitAssociationFromApi: ", answer)
+    return answer;
 }
 
 async function deleteRoleDroitAssociation(role_droit) {
@@ -26,7 +28,8 @@ async function deleteRoleDroitAssociation(role_droit) {
 }
 
 async function deleteRoleDroitAssociationFromApi(role_droit) {
-    return deleteRequest('/role-droit/delete', role_droit, 'DELETEROLEDROITASSOCIATION')
+    let answer = deleteRequest('/role-droit/delete', role_droit, 'DELETEROLEDROITASSOCIATION')
+    return answer;
 }
 
 
