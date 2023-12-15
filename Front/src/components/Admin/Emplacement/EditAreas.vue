@@ -38,6 +38,7 @@ export default {
       selectedArea: null,
       selectedEmplacementLogistique: null,
       polygons: [],
+      markers: [],
       newArea: null,
       newEmplacementLogistique:null,
       modalActiveEditArea: false,
