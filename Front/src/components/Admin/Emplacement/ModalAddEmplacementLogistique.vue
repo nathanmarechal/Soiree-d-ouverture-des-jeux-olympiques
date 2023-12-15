@@ -1,33 +1,17 @@
 <template>
-  <div v-if="modalActiveAddEmplacementLogistique" class="overlay">
-    <div class="modal-inner">
-      <h3>{{ translate("addEmplacementLogistique_1") }}</h3>
-      <table>
-        <tr>
-          <th>{{ translate("addEmplacementLogistique_2") }}</th>
-          <td><input v-model="emplacementLogistique.libelle" type="text" /></td>
-        </tr>
-        <tr>
-          <th>{{ translate("addEmplacementLogistique_3") }}</th>
-          <td>{{ newEmplacementLogistique.coordonnees }}</td>
-        </tr>
-        <tr>
-          <th>{{ translate("addEmplacementLogistique_4") }}</th>
-          <td>
-            <select v-model="emplacementLogistique.id_type_emplacement_logistique">
-              <option v-for="type in getAllTypeEmplacementLogistique" :key="type.id_type_emplacement_logistique" :value="type.id_type_emplacement_logistique">
-                {{ type.libelle }}
-              </option>
-            </select>
-          </td>
-        </tr>
-      </table>
-      <button @click="emplacementLogistiqueCreate()" class="btn btn-success">Ajouter</button>
-      <button @click="closeModal" class="btn btn-danger">Fermer</button>
+  <div class="d-flex flex-column gap-4">
+    <h2>{{translate("legendeMap_1")}}</h2>
+    <div v-for="(zone, index) in getAllZone" :key="`zone-${index}`" class="d-flex align-items-center gap-2">
+      <div class="cercle" :style="{ background: zone.couleur_hexa }"></div>
+      <span>{{ zone.libelle }} ({{zone.type_zone_libelle}})</span>
+    </div>
+    <h2>{{translate("legendeMap_2")}}</h2>
+    <div v-for="(typeEmplacementLogistique, index) in getAllTypeEmplacementLogistique" :key="`typeEmplacement-${index}`" class="d-flex align-items-center gap-2">
+      <img :src="getImagePath(typeEmplacementLogistique.image)" class="icon" alt="Icon">
+      <span>{{ typeEmplacementLogistique.libelle }}</span>
     </div>
   </div>
 </template>
-
 
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -49,6 +33,9 @@ export default {
   methods: {
     translate,
     ...mapActions(['createEmplacementLogistiqueStore']),
+    getImagePath(imageName) {
+      return require(`@/assets/Logos/${imageName}`);
+    },
     closeModal() {
       this.$emit('close');
     },

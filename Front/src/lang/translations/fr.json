@@ -184,8 +184,9 @@
   "editEmplacement_7": "Confirmer modification emplacement",
   "editEmplacement_8": "Supprimer",
 
-  "showColorZone_1": "Légende des zones",
-  "showColorZone_err": "Erreur lors du chargement des données :",
+  "legendeMap_1": "Légende des zones",
+  "legendeMap_2": "Légende des type emplacement logistique",
+  "legendeMap_err": "Erreur lors du chargement des données :",
 
   "roleList_id": "Id",
   "roleList_libelle":"Libellé",

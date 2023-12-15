@@ -9,7 +9,7 @@
 
 <script>
 import EditAreas from '@/components/Admin/Emplacement/EditAreas.vue'
-import ShowColorZone from '@/components/Admin/Emplacement/ShowColorZone.vue'
+import ShowColorZone from '@/components/Admin/Emplacement/LegendeMap.vue'
 
 export default {
   components: {

@@ -181,11 +181,11 @@
         FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE
     );
 
-    CREATE TABLE type_emplacement_logistique(
-        id_type_emplacement_logistique SERIAL PRIMARY KEY,
-        image VARCHAR(50),
-        libelle VARCHAR(50)
-    );
+        CREATE TABLE type_emplacement_logistique(
+            id_type_emplacement_logistique SERIAL PRIMARY KEY,
+            image VARCHAR(50),
+            libelle VARCHAR(50)
+        );
 
     CREATE TABLE emplacement_logistique(
         id_emplacement_logistique SERIAL PRIMARY KEY,

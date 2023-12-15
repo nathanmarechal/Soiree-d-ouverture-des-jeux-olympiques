@@ -178,8 +178,9 @@
   "editEmplacement_7": "Confirm emplacement modification",
   "editEmplacement_8": "Delete",
 
-  "showColorZone_1": "Zones legend",
-  "showColorZone_err": "Error while loading data :",
+  "legendeMap_1": "Zones legend",
+  "legendeMap_2": "Legend of logistic location types",
+  "legendeMap_err": "Error while loading data :",
 
   "roleList_id": "Id",
   "roleList_libelle":"Label",
