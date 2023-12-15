@@ -61,10 +61,10 @@ const createArea = (body, callback) => {
 async function createAreaAsync(body) {
     try {
         const conn = await pool.connect();
-        console.log("body.coordonnes: ", body.coordinates)
+        console.log("body.coordonnes: ", body.coordonnes)
         console.log("body.surface: ", body.surface)
         console.log("body.id_zone: ", body.id_zone)
-        const result = await conn.query("INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ($1, $2, $3);", [JSON.stringify(body.coordinates), body.surface, body.id_zone]);
+        const result = await conn.query("INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ($1, $2, $3) RETURNING * ;", [JSON.stringify(body.coordonnes), body.surface, body.id_zone]);
         conn.release();
         return result.rows;
     } catch (error) {

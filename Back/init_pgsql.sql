@@ -845,3 +845,7 @@ GROUP BY c.heure_creneau;
 
 
  */
+
+SELECT * FROM emplacement;
+
+INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ('[]', 5, 1) RETURNING *

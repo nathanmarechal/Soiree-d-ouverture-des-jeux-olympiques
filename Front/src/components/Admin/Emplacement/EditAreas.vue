@@ -67,7 +67,7 @@ export default {
           await this.getEmplacementLogistiqueStore();
         }
 
-        this.areas = this.mergeData();
+
 
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
@@ -94,7 +94,7 @@ export default {
 
         return {
           id_emplacement: area.id_emplacement,
-          id_stand: stand.id_stand || null, // Utiliser null si aucun stand n'est trouvé
+          id_stand: stand.id_stand || null,
           zone: zone.libelle || '',
           id_zone: zone.id_zone || null,
           id_type_zone: zone.id_type_zone || null,
@@ -155,6 +155,11 @@ export default {
 
     updateMap() {
       console.log('updateMAP')
+
+      const logisticLocations = this.mergeLogisticLocations();
+
+      const areas = this.mergeData();
+
       // Supprimez les polygones actuels de la carte
       this.polygons.forEach((polygon) => {
         this.map.removeLayer(polygon);
@@ -162,10 +167,9 @@ export default {
 
       //const areas = this.areas;
       // Ajoutez à nouveau les polygones filtrés à la carte
-        this.areas.forEach((area) => {
+        areas.forEach((area) => {
         const polygon = L.polygon(area.coordinates, {
-          //color: area.couleur_hexa,
-          color: this.getAllZone.find(zone => zone.id_zone === area.id_zone).couleur_hexa,
+          color: area.couleur_hexa,
           fillOpacity: 0.9,
         }).addTo(this.map);
         polygon.on('click', () => {
@@ -174,7 +178,6 @@ export default {
         this.polygons.push(polygon);
       });
 
-      const logisticLocations = this.mergeLogisticLocations();
 
       logisticLocations.forEach(location => {
         console.log('Icon URL:', '/assets/Logos/' + location.image); // pour le débogage

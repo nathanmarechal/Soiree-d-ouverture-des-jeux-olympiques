@@ -717,6 +717,8 @@ export default new Vuex.Store({
         async createPrestationStore({ commit }, body) {
             try {
                 console.log("createPrestation: ", body)
+                console.log("body : " + JSON.stringify(body, null, 2))
+
                 let response = await createPrestation(body);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
@@ -864,8 +866,8 @@ export default new Vuex.Store({
 
         async createAreasStore({ commit }, body) {
             try {
-                await createArea(body);
-                commit('CREATE_AREA', body);
+                let response =  await createArea(body);
+                commit('CREATE_AREA', response[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
             }

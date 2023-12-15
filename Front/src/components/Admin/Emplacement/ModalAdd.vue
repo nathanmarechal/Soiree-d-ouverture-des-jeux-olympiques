@@ -2,6 +2,7 @@
   <div v-if="modalActiveAdd" class="overlay">
     <div class="modal-inner">
       <h3>{{translate("addEmplacement_1")}}</h3>
+      {{newArea.coordinates}}
       <table>
         <tr>
           <th>{{translate("addEmplacement_2")}} </th>
@@ -51,14 +52,13 @@ export default {
     async areaCreated() {
       if (this.zone) {
         const areaData = {
-          coordinates: this.newArea.coordinates,
+          coordonnes: this.newArea.coordinates,
           surface: this.newArea.surface,
           id_zone: this.zone,
         };
 
         try {
           await this.createAreasStore(areaData);
-          console.log('Area created:', areaData);
           this.$emit('close');
         } catch (error) {
           console.error('Error creating area:', error);
