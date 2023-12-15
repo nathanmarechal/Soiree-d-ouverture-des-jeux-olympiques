@@ -1,56 +1,93 @@
 <template>
   <div v-if="modalActiveEditEmplacementLogistique" class="overlay">
     <div class="modal-inner">
-      {{ selectedEmplacementLogistique }}
-      <h3>{{ translate("editEmplacement_1") }}</h3>
-      <!-- Tableau pour afficher les détails de l'emplacement -->
+      <h3>{{ translate("editEmplacementLogistique_1") }}</h3>
       <table>
-        <!-- Ajouter des lignes ici pour afficher les propriétés de selectedEmplacementLogistique -->
+        <tr>
+          <td>Libellé:</td>
+          <td>
+            <input type="text" v-model="editableEmplacement.libelle"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Type d'Emplacement:</td>
+          <td>
+            <select v-model="editableEmplacement.id_type_emplacement_logistique">
+              <option v-for="type in getAllTypeEmplacementLogistique" :key="type.id_type_emplacement_logistique" :value="type.id_type_emplacement_logistique">{{ type.libelle }}</option>
+            </select>
+          </td>
+        </tr>
       </table>
-
-      <button @click="$emit('close')" type="button" class="btn btn-success">{{ translate("editEmplacement_5") }}</button>
-      <!-- Mettre à jour les autres boutons et leurs méthodes selon les besoins -->
+      <button @click="$emit('close');" type="button" class="btn btn-success">{{ translate("editEmplacementLogistique_2") }}</button>
+      <button @click="updateEmplacement" type="button" class="btn btn-primary">{{ translate("editEmplacementLogistique_3") }}</button>
+      <button @click="deleteEmplacement" type="button" class="btn btn-danger">{{ translate("editEmplacementLogistique_4") }}</button>
     </div>
   </div>
 </template>
 
 <script>
-
-import {mapGetters} from "vuex";
-import {translate} from "../../../lang/translationService";
+import { mapActions, mapGetters } from "vuex";
+import { translate } from "../../../lang/translationService";
 
 export default {
   props: ['modalActiveEditEmplacementLogistique', 'selectedEmplacementLogistique'],
-  mounted() {
-    alert('chargé');
+  data() {
+    return {
+      editableEmplacement: null,
+    };
   },
   computed: {
-    ...mapGetters(['getAllZone']),
+    ...mapGetters(['getAllTypeEmplacementLogistique']),
+  },
+  watch: {
+    selectedEmplacementLogistique: {
+      handler(newVal) {
+        this.editableEmplacement = {...newVal};
+      },
+      immediate: true
+    }
   },
   methods: {
     translate,
+    ...mapActions(['updateEmplacementLogistiqueStore', 'deleteEmplacementLogistiqueStore']),
+
+    closeModal() {
+      this.$emit('close');
+    },
+
+    async updateEmplacement() {
+      try {
+        const updateBody = {
+          libelle: this.editableEmplacement.libelle,
+          id_type_emplacement_logistique: this.editableEmplacement.id_type_emplacement_logistique
+        };
+
+        await this.updateEmplacementLogistiqueStore({
+          id: this.editableEmplacement.id_emplacement_logistique,
+          body: updateBody
+        });
+        this.closeModal();
+      } catch (error) {
+        console.error('Error updating emplacement:', error);
+        alert('Error updating emplacement');
+      }
+    },
+
+    async deleteEmplacement() {
+      try {
+        await this.deleteEmplacementLogistiqueStore(this.editableEmplacement.id_emplacement_logistique);
+        this.closeModal();
+      } catch (error) {
+        console.error('Error deleting emplacement:', error);
+        alert('Error deleting emplacement');
+      }
+    },
   }
 }
 </script>
 
+
 <style scoped>
-.map-container {
-  width: 100%;
-  height: 300px;
-  border: 1px solid black;
-  margin-top: 20px;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -82,13 +119,4 @@ export default {
   margin-bottom: 20px;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
 </style>

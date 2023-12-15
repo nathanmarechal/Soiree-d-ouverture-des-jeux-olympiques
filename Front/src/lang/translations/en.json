@@ -178,6 +178,11 @@
   "editEmplacement_7": "Confirm emplacement modification",
   "editEmplacement_8": "Delete",
 
+  "editEmplacementLogistique_1": "Edit logistical placement",
+  "editEmplacementLogistique_2": "Close",
+  "editEmplacementLogistique_3": "Modify",
+  "editEmplacementLogistique_4": "Delete",
+
   "legendeMap_1": "Zones legend",
   "legendeMap_2": "Legend of logistic location types",
   "legendeMap_err": "Error while loading data :",

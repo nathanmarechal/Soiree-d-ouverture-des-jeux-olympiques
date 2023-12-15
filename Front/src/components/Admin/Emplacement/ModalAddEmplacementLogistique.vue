@@ -49,6 +49,7 @@ export default {
   methods: {
     translate,
     ...mapActions(['createEmplacementLogistiqueStore']),
+
     closeModal() {
       this.$emit('close');
     },

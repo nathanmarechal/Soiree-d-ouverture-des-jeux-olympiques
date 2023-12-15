@@ -166,20 +166,17 @@ export default {
     },
 
     updateMap() {
-      console.log('updateMAP')
+      console.log('updateMAP');
 
-      const logisticLocations = this.mergeLogisticLocations();
-
+      // Existing code to handle areas and polygons
       const areas = this.mergeData();
-
-      // Supprimez les polygones actuels de la carte
-      this.polygons.forEach((polygon) => {
+      this.polygons.forEach(polygon => {
         this.map.removeLayer(polygon);
       });
 
-      //const areas = this.areas;
-      // Ajoutez à nouveau les polygones filtrés à la carte
-        areas.forEach((area) => {
+      this.polygons = []; // Clear the polygons array
+
+      areas.forEach(area => {
         const polygon = L.polygon(area.coordinates, {
           color: area.couleur_hexa,
           fillOpacity: 0.9,
@@ -190,9 +187,20 @@ export default {
         this.polygons.push(polygon);
       });
 
+      // Handling logistic locations and markers
+      const logisticLocations = this.mergeLogisticLocations();
+
+      // Remove existing markers
+      if (this.markers) {
+        this.markers.forEach(marker => {
+          this.map.removeLayer(marker);
+        });
+      }
+
+      this.markers = []; // Clear the markers array
 
       logisticLocations.forEach(location => {
-        console.log('Icon URL:', '/assets/Logos/' + location.image); // pour le débogage
+        console.log('Icon URL:', '/assets/Logos/' + location.image);
         const iconUrl = require('@/assets/Logos/' + location.image);
 
         const customIcon = L.icon({
@@ -209,18 +217,15 @@ export default {
         marker.on('click', () => {
           this.showEmplacementLogistiqueInfo(location);
         });
+
+        this.markers.push(marker);
       });
-
-
     },
 
     addEmplacementLogistique(latLng){
-
       this.newEmplacementLogistique = { coordonnees: [latLng.lat, latLng.lng] };
-
       this.toggleModalAddEmplacementLogistique();
     },
-
 
     addArea(coordinates) {
       this.toggleModalAdd();
@@ -262,8 +267,7 @@ export default {
     },
 
     async toggleModalEditEmplacementLogistique() {
-      this.modalActiveEditEmplacementLogistique = await !this.modalActiveEditEmplacementLogistique;
-
+      this.modalActiveEditEmplacementLogistique = !this.modalActiveEditEmplacementLogistique;
       this.updateMap();
     },
 

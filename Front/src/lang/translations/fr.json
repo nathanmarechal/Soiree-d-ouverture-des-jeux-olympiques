@@ -188,6 +188,11 @@
   "legendeMap_2": "Légende des type emplacement logistique",
   "legendeMap_err": "Erreur lors du chargement des données :",
 
+  "editEmplacementLogistique_1": "Editer emplacement logisitique",
+  "editEmplacementLogistique_2": "Fermer",
+  "editEmplacementLogistique_3": "Modifier",
+  "editEmplacementLogistique_4": "Supprimer",
+
   "roleList_id": "Id",
   "roleList_libelle":"Libellé",
   "roleList_actions":"Actions",

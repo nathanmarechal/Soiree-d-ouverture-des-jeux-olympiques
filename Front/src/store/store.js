@@ -41,7 +41,7 @@ import {
 } from "@/services/role_droit.service";
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
-import {getEmplacementLogistique,createEmplacementLogistique} from "@/services/emplacementLogistique.service";
+import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
 
 Vue.use(Vuex)
 
@@ -218,6 +218,21 @@ export default new Vuex.Store({
                 return item;
             });
         },
+
+        UPDATE_EMPLACEMENT_LOGISITIQUE(state, payload) {
+            state.emplacementLogistique = state.emplacementLogistique.map(item => {
+                if (item.id_emplacement_logistique === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        DELETE_EMPLACEMENT_LOGISITIQUE(state, id) {
+            state.emplacementLogistique = state.emplacementLogistique.filter(item => item.id_emplacement_logistique !== id);
+        },
+
+
 
         DELETE_STAND(state, id) {
             state.stands = state.stands.filter(item => item.id_stand !== id);
@@ -800,6 +815,29 @@ export default new Vuex.Store({
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
                 console.error("Error in createEmplacementLogistiqueStore():", err);
+            }
+        },
+
+        async updateEmplacementLogistiqueStore({ commit }, {id,body}) {
+            try {
+                console.log(id)
+                console.log(body)
+                let response = await updateEmplacementLogistique(id, body)
+
+                console.log(response[0])
+                commit('UPDATE_EMPLACEMENT_LOGISITIQUE',{id: id, body: response[0]});
+            } catch (err) {
+                console.error("Error in updateEmplacementLogistiqueStore():", err);
+            }
+        },
+
+        async deleteEmplacementLogistiqueStore({ commit }, id) {
+            try {
+
+                await deleteEmplacementLogistique(id);
+                await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
+            } catch (err) {
+                console.error("Error in deleteUserStore():", err);
             }
         },
 

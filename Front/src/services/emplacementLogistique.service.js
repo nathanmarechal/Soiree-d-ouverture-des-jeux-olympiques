@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "@/services/axios.service";
+import {deleteRequest, getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 
 async function getEmplacementLogistique(){
@@ -21,7 +21,33 @@ async function createEmplacementLogistiqueFromAPI(body) {
     return answer
 }
 
+async function deleteEmplacementLogistique(id) {
+    let answer = await deleteEmplacementLogistiqueFromAPI(id)
+    //console.log("deleteArea: ", answer)
+    return answer
+}
+
+async function deleteEmplacementLogistiqueFromAPI(id) {
+    return deleteRequest('/emplacement-logistique/delete/' + id, 'deleteEmplacementLogistiqueFromAPI')
+}
+
+
+async function updateEmplacementLogistique(id, body) {
+    let answer = await updateEmplacementLogistiqueFromAPI(id, body)
+    //console.log("updateArea: ", answer)
+    return answer
+}
+
+async function updateEmplacementLogistiqueFromAPI(id, body) {
+    return patchRequest('/emplacement-logistique/update/' + id, body, 'UPDATEAREA')
+}
+
+
+
+
 export {
     getEmplacementLogistique,
-    createEmplacementLogistique
+    createEmplacementLogistique,
+    deleteEmplacementLogistique,
+    updateEmplacementLogistique
 }
