@@ -32,7 +32,7 @@
 import { mapGetters,mapActions } from 'vuex';
 
 import Editor from '@tinymce/tinymce-vue';
-import {uploadImageDescriptionStand,updateDescriptionStand} from '@/services/stand.service'
+import {uploadImageDescriptionStand} from '@/services/stand.service'
 
 export default {
   components: {
@@ -54,19 +54,19 @@ export default {
     this.myEditor = this.$refs.myEditor;
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getAllPrestation', 'getAllTypePrestation']),
+    ...mapGetters(['getCurrentUser', 'getAllStand']),
   },
   methods: {
-    ...mapActions(['getStandsStore', 'getPrestationsStore', 'getTypePrestationsStore']),
+    ...mapActions(['getStandsStore', 'getStandsStore','updateDescriptionStandStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)
-        if (this.getAllPrestation.length === 0){
-          await this.getPrestationsStore()
+        if (this.getAllStand.length === 0){
+          await this.getStandsStore()
         }
-        if (this.getAllTypePrestation.length === 0) {
-          await this.getTypePrestationsStore()
-        }
+        this.stand = this.getAllStand.find(stand => stand.id_stand === this.getCurrentUser.id_stand);
+        console.log(this.stand)
+        this.standDescription = this.stand.description_stand;
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -92,13 +92,16 @@ export default {
           failure('Invalid response');
         }
       } catch (error) {
-        failure('Upload failed: ' + error.message);
+        failure('Upload failed: '   + error.message);
       }
     },
     async saveContent() {
       if (this.myEditor && this.myEditor.editor) {
-        const content = this.myEditor.editor.getContent();
-        await updateDescriptionStand(this.stand.id_stand, { description_stand: content });
+        const content = await this.myEditor.editor.getContent();
+        await this.updateDescriptionStandStore({
+          id: this.stand.id_stand,
+          body: { description_stand: content, id: this.stand.id_stand  }
+        });
         console.log('Contenu à enregistrer:', content);
         // Add here the logic to save the content to your server or handle it as needed
       } else {

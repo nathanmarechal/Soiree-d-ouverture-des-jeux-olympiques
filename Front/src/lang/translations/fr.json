@@ -168,6 +168,11 @@
   "addEmplacement_2": "Surface",
   "addEmplacement_3": "Zone",
 
+  "addEmplacementLogistique_1": "Ajouter un emplacement logistique",
+  "addEmplacementLogistique_2": "Libelle emplacement logistique",
+  "addEmplacementLogistique_3": "Coordonnees",
+  "addEmplacementLogistique_4": "Type d'emplacement logistique",
+
   "oui": "Oui",
   "non": "Non",
   "editEmplacement_1": "Modifier la zone",
@@ -179,8 +184,9 @@
   "editEmplacement_7": "Confirmer modification emplacement",
   "editEmplacement_8": "Supprimer",
 
-  "showColorZone_1": "Légende des zones",
-  "showColorZone_err": "Erreur lors du chargement des données :",
+  "legendeMap_1": "Légende des zones",
+  "legendeMap_2": "Légende des type emplacement logistique",
+  "legendeMap_err": "Erreur lors du chargement des données :",
 
   "roleList_id": "Id",
   "roleList_libelle":"Libellé",

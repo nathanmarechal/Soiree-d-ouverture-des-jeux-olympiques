@@ -1,6 +1,6 @@
 <template>
   <div class="main" >
-    <show-color-zone></show-color-zone>
+    <legende></legende>
     <edit-areas style="width: 75% ; height: 100%"> </edit-areas>
   </div>
 
@@ -9,12 +9,12 @@
 
 <script>
 import EditAreas from '@/components/Admin/Emplacement/EditAreas.vue'
-import ShowColorZone from '@/components/Admin/Emplacement/ShowColorZone.vue'
+import Legende from '@/components/Admin/Emplacement/LegendeMap.vue'
 
 export default {
   components: {
     EditAreas,
-    ShowColorZone
+    Legende
   }
 }
 </script>

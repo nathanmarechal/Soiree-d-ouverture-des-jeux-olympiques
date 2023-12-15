@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalActiveEdit" class="overlay">
+  <div v-if="modalActiveEditArea" class="overlay">
     <div class="modal-inner">
       <h3>{{translate("editEmplacement_1")}}</h3>
 
@@ -10,7 +10,7 @@
           <td>{{ selectedArea.id_emplacement }}</td>
         </tr>
         <tr>
-          <th>Zone</th>
+          <th>Zone</th>zone
           <td v-if="!isEditAreaActive">{{ selectedArea.zone }}</td>
           <td v-if="isEditAreaActive">
             <select v-model="zone">
@@ -44,7 +44,7 @@ import {mapActions, mapGetters} from "vuex";
 import {translate} from "../../../lang/translationService";
 
 export default {
-  props: ['modalActiveEdit','selectedArea'],
+  props: ['modalActiveEditArea','selectedArea'],
   data() {
     return {
       zone: null,

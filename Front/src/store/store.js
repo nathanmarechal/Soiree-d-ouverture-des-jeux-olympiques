@@ -17,7 +17,7 @@ import {
 } from "@/services/role.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
-import {getAllStands, deleteStand, updateStand} from "@/services/stand.service";
+import {getAllStands, deleteStand, updateStand,updateDescriptionStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
     deletePrestationFromPanierUser,
@@ -39,6 +39,9 @@ import {
     createRoleDroitAssociation,
     deleteRoleDroitAssociation
 } from "@/services/role_droit.service";
+
+import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
+import {getEmplacementLogistique,createEmplacementLogistique} from "@/services/emplacementLogistique.service";
 
 Vue.use(Vuex)
 
@@ -63,7 +66,6 @@ export default new Vuex.Store({
         },
 
         creneau: [],
-
         users : [],
         roles : [],
         typeZone: [],
@@ -72,6 +74,8 @@ export default new Vuex.Store({
         stands: [],
         prestations: [],
         typePresations: [],
+        typeEmplacementLogistique: [],
+        emplacementLogistique: [],
 
         areaSelectedForStand: null,
         isLoginOpen: false,
@@ -100,13 +104,13 @@ export default new Vuex.Store({
         getAllStand: state => state.stands,
         getAllTypePrestation: state => state.typePresations,
         getAllPrestation: state => state.prestations,
-
+        getAllTypeEmplacementLogistique: state => state.typeEmplacementLogistique,
+        getAllEmplacementLogistique: state => state.emplacementLogistique,
 
         getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
-
 
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
@@ -167,6 +171,13 @@ export default new Vuex.Store({
             areas.forEach(p => state.areas.push(p))
         },
 
+        SET_TYPE_EMPLACEMENT_LOGISITIQUE(state, typeEmplacementLogistique) {
+            state.typeEmplacementLogistique = typeEmplacementLogistique;
+        },
+        SET_EMPLACEMENT_LOGISITIQUE(state, emplacementLogistique) {
+            state.emplacementLogistique = emplacementLogistique;
+        },
+
         UPDATE_AREA(state, data) {
             const area = state.areas.find(area => area.id_emplacement === data.id);
             if (area) {
@@ -184,6 +195,11 @@ export default new Vuex.Store({
 
         CREATE_PRESTATION(state, payload) {
             state.prestations.push(payload);
+        },
+
+
+        CREATE_EMPLACEMENT_LOGISITIQUE(state, payload) {
+            state.emplacementLogistique.push(payload);
         },
 
         SET_TYPE_ZONE(state, typeZone) {
@@ -560,7 +576,7 @@ export default new Vuex.Store({
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
-                console.error("Error in updateUserStore():", err);
+                console.error("Error in updateUserStore({ ...item, ...payload.body }):", err);
             }
         },
 
@@ -709,6 +725,8 @@ export default new Vuex.Store({
         async createPrestationStore({ commit }, body) {
             try {
                 console.log("createPrestation: ", body)
+                console.log("body : " + JSON.stringify(body, null, 2))
+
                 let response = await createPrestation(body);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
@@ -746,6 +764,45 @@ export default new Vuex.Store({
             console.error("Error in getTypeZone():", err);
           }
         },
+
+//----------------------------------------------------------------------typeEmplacementLogistique--------------------------------------------------------------------//
+
+        async getTypeEmplacementLogistiqueStore({ commit }) {
+          try {
+            const typeEmplacementLogistique = await getTypeEmplacementLogistique();
+            if (Array.isArray(typeEmplacementLogistique)) {
+              commit('SET_TYPE_EMPLACEMENT_LOGISITIQUE', typeEmplacementLogistique);
+            } else {
+              console.error("Unexpected response format:", typeEmplacementLogistique);
+            }
+          } catch (err) {
+            console.error("Error in getTypeZone():", err);
+          }
+        },
+//----------------------------------------------------------------------EmplacementLogistique--------------------------------------------------------------------//
+
+        async getEmplacementLogistiqueStore({ commit }) {
+          try {
+            const emplacementLogistique = await getEmplacementLogistique();
+            if (Array.isArray(emplacementLogistique)) {
+              commit('SET_EMPLACEMENT_LOGISITIQUE', emplacementLogistique);
+            } else {
+              console.error("Unexpected response format:", emplacementLogistique);
+            }
+          } catch (err) {
+            console.error("Error in getEmplacementLogistiqueStore():", err);
+          }
+        },
+
+        async createEmplacementLogistiqueStore({ commit }, body) {
+            try {
+                let response =  await createEmplacementLogistique(body);
+                commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
+            } catch (err) {
+                console.error("Error in createEmplacementLogistiqueStore():", err);
+            }
+        },
+
 
 //----------------------------------------------------------------------Zone--------------------------------------------------------------------//
 
@@ -827,8 +884,8 @@ export default new Vuex.Store({
 
         async createAreasStore({ commit }, body) {
             try {
-                await createArea(body);
-                commit('CREATE_AREA', body);
+                let response =  await createArea(body);
+                commit('CREATE_AREA', response[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
             }
@@ -838,8 +895,18 @@ export default new Vuex.Store({
 
         async updateStandStore({ commit }, {id, body}) {
             try {
+                console.log(id, body)
                 await updateStand(id, body);
                 commit('UPDATE_STAND', id, body);
+            } catch (err) {
+                console.error("Error in updateStandStore():", err);
+            }
+        },
+        async updateDescriptionStandStore({ commit }, {id, body}) {
+            try {
+                console.log(id, body)
+                await updateDescriptionStand(id, body);
+                commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
             }

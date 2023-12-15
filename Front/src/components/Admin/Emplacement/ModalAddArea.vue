@@ -33,7 +33,7 @@ import {mapGetters, mapActions} from "vuex";
 import {translate} from "../../../lang/translationService";
 
 export default {
-  props: ['modalActiveAdd','newArea'],
+  props: ['modalActiveAddArea','newArea'],
   data() {
     return {
       zone: null,
@@ -51,14 +51,13 @@ export default {
     async areaCreated() {
       if (this.zone) {
         const areaData = {
-          coordinates: this.newArea.coordinates,
+          coordonnes: this.newArea.coordinates,
           surface: this.newArea.surface,
           id_zone: this.zone,
         };
 
         try {
           await this.createAreasStore(areaData);
-          console.log('Area created:', areaData);
           this.$emit('close');
         } catch (error) {
           console.error('Error creating area:', error);
