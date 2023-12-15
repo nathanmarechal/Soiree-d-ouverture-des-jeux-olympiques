@@ -6,6 +6,9 @@
     <ModalEditArea :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @close="toggleModalEdit"></ModalEditArea>
     <ModalAddArea :modalActiveAddArea="modalActiveAddArea" :newArea="newArea" @close="toggleModalAdd"></ModalAddArea>
     <modal-add-emplacement-logistique :modalActiveAddEmplacementLogistique="modalActiveAddEmplacementLogistique" :newEmplacementLogistique="newEmplacementLogistique" @close="toggleModalAddEmplacementLogistique"></modal-add-emplacement-logistique>
+    <modal-edit-emplacement-logistique :modalActiveEditEmplacementLogistique="modalActiveEditEmplacementLogistique" :selectedEmplacementLogistique="selectedEmplacementLogistique" @close="toggleModalEditEmplacementLogistique">
+    </modal-edit-emplacement-logistique>
+
   </div>
 </template>
 
@@ -17,6 +20,7 @@ import 'leaflet-draw';
 import ModalEditArea from './ModalEditArea.vue'
 import ModalAddArea from './ModalAddArea.vue'
 import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/ModalAddEmplacementLogistique.vue";
+import ModalEditEmplacementLogistique from "@/components/Admin/Emplacement/ModalEditEmplacementLogistique.vue";
 
 import { mapActions, mapGetters } from 'vuex';
 
@@ -24,18 +28,21 @@ export default {
   components: {
     ModalEditArea,
     ModalAddArea,
-    ModalAddEmplacementLogistique
+    ModalAddEmplacementLogistique,
+    ModalEditEmplacementLogistique
   },
   data() {
     return {
       areas: null,
       map: null,
       selectedArea: null,
+      selectedEmplacementLogistique: null,
       polygons: [],
       newArea: null,
       newEmplacementLogistique:null,
       modalActiveEditArea: false,
       modalActiveAddArea: false,
+      modalActiveEditEmplacementLogistique: false,
       modalActiveAddEmplacementLogistique: false,
     };
   },
@@ -199,13 +206,9 @@ export default {
           title: location.libelle // Le libellé s'affiche au survol du curseur
         }).addTo(this.map);
 
-        // Personnaliser le contenu de la popup ici
-        marker.bindPopup(`
-        <b>${location.libelle}</b><br>
-        Type: ${location.libelle_type_emplacement_logistique}<br>
-        ID: ${location.id_emplacement_logistique}<br>
-        Type ID: ${location.id_type_emplacement_logistique}
-    `);
+        marker.on('click', () => {
+          this.showEmplacementLogistiqueInfo(location);
+        });
       });
 
 
@@ -238,6 +241,10 @@ export default {
       this.toggleModalEdit();
       this.selectedArea = area
     },
+    showEmplacementLogistiqueInfo(emplacementLogistique) {
+      this.selectedEmplacementLogistique = emplacementLogistique;
+      this.toggleModalEditEmplacementLogistique();
+    },
 
     async toggleModalEdit() {
       this.modalActiveEditArea = !this.modalActiveEditArea;
@@ -251,6 +258,12 @@ export default {
 
     async toggleModalAddEmplacementLogistique() {
       this.modalActiveAddEmplacementLogistique = !this.modalActiveAddEmplacementLogistique;
+      this.updateMap();
+    },
+
+    async toggleModalEditEmplacementLogistique() {
+      this.modalActiveEditEmplacementLogistique = await !this.modalActiveEditEmplacementLogistique;
+
       this.updateMap();
     },
 
