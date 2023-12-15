@@ -196,8 +196,9 @@
     );
 
     INSERT INTO type_emplacement_logistique(libelle,image) VALUES
-    ('point eau','water.svg'),
-    ('branchement éléctrique','electricity.svg');
+    ('eau','water.svg'),
+    ('éléctrcité','electricity.svg'),
+    ('internet haut débit','wifi.svg');
 
     INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique) VALUES
     ('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2),
