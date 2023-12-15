@@ -41,7 +41,7 @@ import {
 } from "@/services/role_droit.service";
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
-import {getEmplacementLogistique} from "@/services/emplacementLogistique.service";
+import {getEmplacementLogistique,createEmplacementLogistique} from "@/services/emplacementLogistique.service";
 
 Vue.use(Vuex)
 
@@ -195,6 +195,11 @@ export default new Vuex.Store({
 
         CREATE_PRESTATION(state, payload) {
             state.prestations.push(payload);
+        },
+
+
+        CREATE_EMPLACEMENT_LOGISITIQUE(state, payload) {
+            state.emplacementLogistique.push(payload);
         },
 
         SET_TYPE_ZONE(state, typeZone) {
@@ -782,9 +787,19 @@ export default new Vuex.Store({
               console.error("Unexpected response format:", emplacementLogistique);
             }
           } catch (err) {
-            console.error("Error in getTypeZone():", err);
+            console.error("Error in getEmplacementLogistiqueStore():", err);
           }
         },
+
+        async createEmplacementLogistiqueStore({ commit }, body) {
+            try {
+                let response =  await createEmplacementLogistique(body);
+                commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
+            } catch (err) {
+                console.error("Error in createEmplacementLogistiqueStore():", err);
+            }
+        },
+
 
 //----------------------------------------------------------------------Zone--------------------------------------------------------------------//
 

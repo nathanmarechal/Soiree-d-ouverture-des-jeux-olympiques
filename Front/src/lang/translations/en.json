@@ -195,6 +195,13 @@
   "addRole_confirm": "Add role",
   "addRole_annuler": "Cancel",
 
+
+  "addEmplacementLogistique_1": "Add a logistic location",
+  "addEmplacementLogistique_2": "Label of logistic location",
+  "addEmplacementLogistique_3": "Coordinates",
+  "addEmplacementLogistique_4": "Type of logistic location",
+
+
   "roleAdd": "Add role",
 
   "showZone_ConfirmDeleteMessage": "Are you sure you want to delete the zone : ",

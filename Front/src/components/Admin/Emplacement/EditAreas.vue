@@ -3,8 +3,9 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <modal-edit :modalActiveEdit="modalActiveEdit" :selectedArea="selectedArea" @close="toggleModalEdit"></modal-edit>
-    <modal-add :modalActiveAdd="modalActiveAdd" :newArea="newArea" @close="toggleModalAdd"></modal-add>
+    <ModalEditArea :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @close="toggleModalEdit"></ModalEditArea>
+    <ModalAddArea :modalActiveAddArea="modalActiveAddArea" :newArea="newArea" @close="toggleModalAdd"></ModalAddArea>
+    <modal-add-emplacement-logistique :modalActiveAddEmplacementLogistique="modalActiveAddEmplacementLogistique" :newEmplacementLogistique="newEmplacementLogistique" @close="toggleModalAddEmplacementLogistique"></modal-add-emplacement-logistique>
   </div>
 </template>
 
@@ -13,15 +14,17 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-draw';
 
-import ModalEdit from '../Emplacement/ModalEdit.vue'
-import ModalAdd from '../Emplacement/ModalAdd.vue'
+import ModalEditArea from './ModalEditArea.vue'
+import ModalAddArea from './ModalAddArea.vue'
+import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/ModalAddEmplacementLogistique.vue";
 
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
-    ModalEdit,
-    ModalAdd
+    ModalEditArea,
+    ModalAddArea,
+    ModalAddEmplacementLogistique
   },
   data() {
     return {
@@ -30,8 +33,10 @@ export default {
       selectedArea: null,
       polygons: [],
       newArea: null,
-      modalActiveEdit: false,
-      modalActiveAdd: false,
+      newEmplacementLogistique:null,
+      modalActiveEditArea: false,
+      modalActiveAddArea: false,
+      modalActiveAddEmplacementLogistique: false,
     };
   },
   async mounted() {
@@ -205,11 +210,14 @@ export default {
 
 
     },
-    addEmplacementLogistique(latLng){
-      const coordinates = [latLng.lat, latLng.lng];
-      alert(coordinates)
 
+    addEmplacementLogistique(latLng){
+
+      this.newEmplacementLogistique = { coordonnees: [latLng.lat, latLng.lng] };
+
+      this.toggleModalAddEmplacementLogistique();
     },
+
 
     addArea(coordinates) {
       this.toggleModalAdd();
@@ -232,39 +240,20 @@ export default {
     },
 
     async toggleModalEdit() {
-      this.modalActiveEdit = !this.modalActiveEdit;
-
-      // Check if the modal was just closed
-      if (!this.modalActiveEdit) {
-        // Refresh data if necessary
-        //this.areas = await this.getAreas(); // Refresh areas data
-        //this.zones = await this.getZones(); // Refresh zones data
-
-
-        // Update the map
+      this.modalActiveEditArea = !this.modalActiveEditArea;
         this.updateMap();
-      }
     },
 
     async toggleModalAdd() {
-      this.modalActiveAdd = !this.modalActiveAdd;
-
-      // Check if the modal was just closed
-
-      if (!this.modalActiveAdd) {
-        // Refresh data if necessary
-        //this.areas = await this.getAreas(); // Refresh areas data
-        //this.zones = await this.getZones(); // Refresh zones data
-
-        //await this.getAreasStore()
-        //await this.getZonesStore()
-
-        // Update the map
+      this.modalActiveAddArea = !this.modalActiveAddArea;
         this.updateMap();
-      }
-
-
     },
+
+    async toggleModalAddEmplacementLogistique() {
+      this.modalActiveAddEmplacementLogistique = !this.modalActiveAddEmplacementLogistique;
+      this.updateMap();
+    },
+
 
     calculateEarthSurfaceArea(coords) {
       if (coords.length < 3) {

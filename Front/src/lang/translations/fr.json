@@ -168,6 +168,11 @@
   "addEmplacement_2": "Surface",
   "addEmplacement_3": "Zone",
 
+  "addEmplacementLogistique_1": "Ajouter un emplacement logistique",
+  "addEmplacementLogistique_2": "Libelle emplacement logistique",
+  "addEmplacementLogistique_3": "Coordonnees",
+  "addEmplacementLogistique_4": "Type d'emplacement logistique",
+
   "oui": "Oui",
   "non": "Non",
   "editEmplacement_1": "Modifier la zone",

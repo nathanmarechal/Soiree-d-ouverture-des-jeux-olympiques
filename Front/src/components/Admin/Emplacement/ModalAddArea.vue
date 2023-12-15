@@ -2,7 +2,6 @@
   <div v-if="modalActiveAdd" class="overlay">
     <div class="modal-inner">
       <h3>{{translate("addEmplacement_1")}}</h3>
-      {{newArea.coordinates}}
       <table>
         <tr>
           <th>{{translate("addEmplacement_2")}} </th>
@@ -34,7 +33,7 @@ import {mapGetters, mapActions} from "vuex";
 import {translate} from "../../../lang/translationService";
 
 export default {
-  props: ['modalActiveAdd','newArea'],
+  props: ['modalActiveAddArea','newArea'],
   data() {
     return {
       zone: null,
