@@ -38,4 +38,19 @@ exports.deleteRoleDroitAssociation = (req, res) => {
                     }
                 });
             }
+
+exports.deleteRoleDroitAssociationForSpecificRole = (req, res) => {
+                
+                    console.log("path : " + req.path)
+                
+                    const id_role = req.params.id_role;
+                    console.log("id_role : " + id_role)
+                    role_droitService.deleteRoleDroitAssociationForSpecificRole(id_role, (error, data) => {
+                        if (error) {
+                            return res.status(500).send("Internal error");
+                        } else {
+                            return res.status(200).send(data);
+                        }
+                    });
+                }
             

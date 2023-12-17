@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12">
           <div v-if="loading">
-            Loading data...
+            <p class="text-danger">Error Loading data...</p>
           </div>
           <div v-else>
             <table class="table table-striped table-bordered">
@@ -30,8 +30,8 @@
                   </td>
                   <td>
                     <ul style="display: inline-block;">
-                      <li v-for="droitId in getRoleDroits(role)" :key="droitId">
-                        {{ getDroitLibelleById(droitId) }}
+                      <li v-for="droit in getRoleDroits(role)" :key="droit.id">
+                        {{ droit.libelle }}
                       </li>
                       <li v-if="getRoleDroits(role).length === 0">
                         {{ translate("roleList_noDroit") }}
@@ -70,7 +70,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
+    ...mapGetters(['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits']),
   },
 
   methods: {
@@ -86,20 +86,6 @@ export default {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-
-    getRoleDroits(role) {
-      const roleAssociations = this.getAllRoleDroitAssociation.filter(
-        (association) => association.id_role === role.id_role
-      );
-      const result = roleAssociations.map((association) => association.id_droit) || []
-      return result;
-    },
-
-    getDroitLibelleById(droitId) {
-      const droit = this.getAllDroits.find(d => d.id === Number(droitId));
-      return droit ? droit.libelle : 'Unknown Droit';
-    },
-
     async removeRole(id) {
       const role = this.getAllRoles.find(role => role.id_role === id);
       const confirmMessage = this.translate("roleList_ConfirmDeleteMessage") + ` ${role.libelle} ?`;

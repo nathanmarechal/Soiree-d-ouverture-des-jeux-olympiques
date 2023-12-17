@@ -37,7 +37,8 @@ import {
 import {
     getAllRoleDroitAssociation,
     createRoleDroitAssociation,
-    deleteRoleDroitAssociation
+    deleteRoleDroitAssociation,
+    deleteRoleDroitAssociationForSpecificRole
 } from "@/services/role_droit.service";
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
@@ -68,6 +69,8 @@ export default new Vuex.Store({
         creneau: [],
         users : [],
         roles : [],
+        droits : [],
+        roleDroitAssociation : [],
         typeZone: [],
         zones: [],
         areas : [],
@@ -99,6 +102,27 @@ export default new Vuex.Store({
         getAllRoles : state => state.roles,
         getAllDroits : state => state.droits,
         getAllRoleDroitAssociation : state => state.roleDroitAssociation,
+        //give me the droits that have the same id as the drotis associated to the id_role
+        getRoleDroits : (state) => (id_role) => {
+            const getThisRoleDroitsAssociation = []
+            const getThisRoleDroits = []
+            //console.log(state.roleDroitAssociation)
+            state.roleDroitAssociation.forEach(item => {
+                if (item.id_role === id_role.id_role) {
+                    getThisRoleDroitsAssociation.push(item.id_droit)
+                }
+            })
+           // console.log("getThisRoleDroitsAssociation: ", getThisRoleDroitsAssociation)
+           // console.log("state.droits: ", state.droits)
+            state.droits.forEach(item => {
+                //console.log("item.id: ", item.id)
+                if (getThisRoleDroitsAssociation.includes(item.id)) {
+                    getThisRoleDroits.push(item)
+                }
+            })
+            //console.log("getThisRoleDroits: ", getThisRoleDroits)
+            return getThisRoleDroits;
+        },
         getAllTypeZone: state => state.typeZone,
         getAllArea: state=> state.areas,
         getAllStand: state => state.stands,
@@ -158,7 +182,11 @@ export default new Vuex.Store({
         },
 
         DELETE_ROLE_DROIT_ASSOCIATION(state, payload) {
-            state.roleDroitAssociation = state.roleDroitAssociation.filter(item => item.role_id !== payload.role_id && item.droit_id !== payload.droit_id);
+            state.roleDroitAssociation = state.roleDroitAssociation.filter(item => item.id_role !== payload.id_droit && item.id_droit !== payload.id_droit);
+        },
+
+        DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE(state, payload) {
+            state.roleDroitAssociation = state.roleDroitAssociation.filter(item => item.id_role !== payload.id_role);
         },
 
         SET_ZONES(state, zones) {
@@ -624,7 +652,7 @@ export default new Vuex.Store({
             try {
                 //console.log("createRoleStore: ", body)
                 const data = await createRole(body);
-                console.log("datacreate: ", data.rows[0]);
+                //console.log("datacreate: ", data.rows[0]);
                 commit('CREATE_ROLE', data.rows[0]);
                 return data.rows[0];
             } catch (err) {
@@ -645,7 +673,9 @@ export default new Vuex.Store({
         async updateRoleStore({ commit }, id, body) {
             try {
                 const data = await updateRole(id, body);
-                commit('UPDATE_ROLE', data.rows[0].id_role, data.rows[0]);
+                //console.log("dataupdate: ", data);
+                commit('UPDATE_ROLE', data.id_role, data);
+                return data;
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
             }
@@ -670,7 +700,7 @@ export default new Vuex.Store({
             try {
                 const result = await getAllRoleDroitAssociation(); // Wait for the Promise to resolve
                 // print what kind of object is result
-                console.log("result: ", result);
+                //console.log("result: ", result);
         
                 if (Array.isArray(result)) {
                     commit('SET_ROLE_DROIT_ASSOCIATION', result);
@@ -687,7 +717,14 @@ export default new Vuex.Store({
                 //console.log("createRoleDroitAssociationStore: ", body)
                 const data = await createRoleDroitAssociation(body);
                 console.log("datcreatea: ", data[0]);
+                let statebefore = this.state.roleDroitAssociation
+                console.log("statebefore", statebefore)
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
+                let stateafter = this.state.roleDroitAssociation
+                console.log("stateafter", stateafter)
+                let newline = stateafter.filter(item => !statebefore.includes(item))
+                console.log("newline", newline)
+                return data[0];
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
             }
@@ -697,10 +734,21 @@ export default new Vuex.Store({
             try {
                 //console.log("deleteRoleDroitAssociationStore: ", body)
                 const data = await deleteRoleDroitAssociation(body);
-                console.log("datdeletea: ", data[0]);
+                //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationStore():", err);
+            }
+        },
+
+        async deleteRoleDroitAssociationForSpecificRoleStore({ commit }, id_role) {
+            try {
+                //console.log("deleteRoleDroitAssociationForSpecificRoleStore: ", id_role)
+                const data = await deleteRoleDroitAssociationForSpecificRole(id_role);
+                //console.log("datdeletea: ", data[0]);
+                commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
+            } catch (err) {
+                console.error("Error in deleteRoleDroitAssociationForSpecificRoleStore():", err);
             }
         },
 

@@ -32,12 +32,12 @@ exports.updateRole = (req, res) => {
 
     console.log("fullUrl : " + fullUrl)
 
-    const id = req.params.id;
-    const body = req.body.solde;
+    const body = req.body;
     rolesService.updateRole(body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
+            console.log("data : " + data)
             return res.status(200).send(data);
         }
     });

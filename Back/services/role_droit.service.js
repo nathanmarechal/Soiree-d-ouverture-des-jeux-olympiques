@@ -62,7 +62,7 @@ async function deleteRoleDroitAssociationAsync(role_droit) {
         console.log("role_droit", role_droit);
         console.log("deleteRoleDroitAssociationAsync");
         const conn = await pool.connect();
-        const result = await conn.query('DELETE FROM role_droits WHERE role_id = $1 AND droit_id = $2 RETURNING *;\n', [role_droit.role_id, role_droit.droit_id]);
+        const result = await conn.query('DELETE FROM role_droits WHERE id_role = $1 AND id_droit = $2 RETURNING *;\n', [role_droit.role_id, role_droit.droit_id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -71,8 +71,33 @@ async function deleteRoleDroitAssociationAsync(role_droit) {
     }
 }
 
+const deleteRoleDroitAssociationForSpecificRole = async (id_role, callback) => {
+    try {
+        console.log("deleteRoleDroitAssociationForSpecificRole");
+        const res = await deleteRoleDroitAssociationForSpecificRoleAsync(id_role);
+        callback(null, res);
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function deleteRoleDroitAssociationForSpecificRoleAsync(id_role) {
+    try {
+        console.log("deleteRoleDroitAssociationForSpecificRoleAsync");
+        const conn = await pool.connect();
+        const result = await conn.query('DELETE FROM role_droits WHERE id_role = $1 RETURNING *;\n', [id_role]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in deleteRoleDroitAssociationForSpecificRoleAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getAllRoleDroitAssociation,
     createRoleDroitAssociation,
-    deleteRoleDroitAssociation
+    deleteRoleDroitAssociation,
+    deleteRoleDroitAssociationForSpecificRole
 }

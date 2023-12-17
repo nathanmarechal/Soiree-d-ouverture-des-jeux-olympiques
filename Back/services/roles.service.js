@@ -51,6 +51,7 @@ const updateRole = async (body, callback) => {
     try {
         console.log("updateRole1", body);
         let data = await updateRoleAsync(body);
+        console.log("updateRolereturn1", data);
         callback(null, data);
     } catch (error) {
         console.log(error);
@@ -60,12 +61,14 @@ const updateRole = async (body, callback) => {
 
 async function updateRoleAsync(body) {
     try {
+        console.log("updateRoleAsync", body);
         const id_role = body.id_role;
         const libelle = body.libelle;
         const conn = await pool.connect();
         const result = await conn.query("UPDATE role SET libelle = $1 WHERE id_role = $2 RETURNING *", [libelle, id_role]);
         conn.release();
-        return result;
+        console.log('result', result.rows[0]);
+        return result.rows[0];
     } catch (error) {
         console.error('Error in updateRoleAsync:', error);
         throw error;

@@ -1,11 +1,10 @@
 <template>
-  <form @submit.prevent="submitForm()" class="d-flex gap-3 flex-column justify-content-center">
+  <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
-      <label for="libelle">{{translate("editRole_libelle")}}</label>
-      <input v-if="$store.getters.getLang==='fr'" v-model="role.libelle" id="libelle" placeholder="Libellé" class="form-control" required>
-      <input v-if="$store.getters.getLang==='en'" v-model="role.libelle" id="libelle" placeholder="Label" class="form-control" required>
+      <label for="libelle">{{ translate("editRole_libelle") }}</label>
+      <input v-model="role.libelle" id="libelle" :placeholder="translate('label_placeholder')" class="form-control" required>
     </div>
-    
+
     <div class="form-group">
       <label>{{ translate("droitCategory") }}</label>
       <select v-model="selectedCategory" class="form-control">
@@ -16,52 +15,53 @@
 
     <!-- Add checkboxes for droits based on selected category -->
     <div class="form-group">
-      <label>{{ translate("roleDroits") }}</label>
-      <div v-for="droit in filteredDroits" :key="droit.id" class="form-check">
+      <label>{{ translate("droit") }}</label>
+      <div class="form-check" v-for="droit in filteredDroits" :key="droit.id">
         <input
-          type="checkbox"
-          v-model="roleDroits"
+          v-model="selectedDroits"
           :value="droit.id"
+          :id="droit.id"
+          type="checkbox"
           class="form-check-input"
         />
-        <label class="form-check-label">{{ droit.libelle }}</label>
+        <label :for="droit.id" class="form-check-label">{{ droit.libelle }}</label>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">{{ translate("editRole_modifier") }}</button>
-    <router-link to="/admin/roles/" class="btn btn-danger">{{ translate("editRole_quitter") }}</router-link>
+
+    <button type="submit" class="btn btn-primary">{{ translate("editRole_confirm") }}</button>
+    <router-link to="/admin/roles" class="btn btn-danger">{{ translate("editRole_annuler") }}</router-link>
   </form>
 </template>
 
 <script>
-// Import the updateRole method from the service
 import { mapActions, mapGetters } from "vuex";
-import {translate} from "@/lang/translationService";
+import { translate } from "@/lang/translationService";
 
 export default {
-  props: ["selected_role"],
+  props: {
+    selected_role: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       role: {},
-      roleDroits: [],
       selectedCategory: "all",
+      selectedDroits: [],
     };
   },
   async mounted() {
     try {
       this.role = this.selected_role;
-      if (this.role.id_role === undefined) {
-        throw new Error("Le rôle n'a pas été trouvé");
-      }
-      console.log(this.role);
       await this.loadData();
-    } catch (error) {
-      console.error('Erreur lors du chargement des données :', error);
+    } catch (err) {
+      console.error("Erreur lors du chargement des données :", err);
     }
   },
   computed: {
-    ...mapGetters(["getAllRoles, getAllDroits, getAllRoleDroitAssociation"]),
+    ...mapGetters(["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits"]),
     droitCategories() {
-      // Extract unique categories from droit names
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
     },
     filteredDroits() {
@@ -72,19 +72,40 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["getDroitsStore", "updateRoleStore", "getAllRoleDroitAssociationStore", "createRoleDroitAssociationStore", "deleteRoleDroitAssociationForSpecificRoleStore"]),
     translate,
-    ...mapActions(["getRolesStore", "updateRoleStore", "getDroitsStore", "getAllRoleDroitAssociationStore"]),
-    async loadData(){
+    async loadData() {
       try {
-        if (this.getAllRoles.length === 0)
-            await this.getRolesStore();
-        if (this.getAllDroits.length === 0)
-            await this.getDroitsStore();
-        if (this.getAllRoleDroitAssociation.length === 0)
-            await this.getAllRoleDroitAssociationStore();
-      } catch (error) {
-        console.error('Erreur lors du chargement des données :', error);
+        await this.getDroitsStore();
+        await this.getAllRoleDroitAssociationStore();
+        this.selectedDroits = this.getAllSelectedDroits();
+      } catch (err) {
+        console.error("Erreur lors du chargement des données :", err);
       }
+    },
+    getAllSelectedDroits(){
+      console.log("digondsngos", this.getRoleDroits(this.role.id_role))
+      let selectedDroitsID = [];
+      let allAssociation = this.getAllRoleDroitAssociation;
+      console.log("all association", allAssociation);
+      for (let i = 0; i < allAssociation.length; i++) {
+        console.log("i", i);
+        console.log("all association id role", allAssociation[i].id_role);
+        console.log("this role id", this.role.id_role);
+        if (allAssociation[i].id_role === this.role.id_role) {
+          selectedDroitsID.push(allAssociation[i].id_droit);
+          console.log("selected droits id", selectedDroitsID);
+        }
+      }
+      console.log("all selected droits id", selectedDroitsID);
+      return selectedDroitsID;
+    },
+    getFilteredDroits() {
+      return this.selectedCategory === "all"
+        ? this.getAllDroits
+        : this.getAllDroits.filter(
+            (droit) => this.extractCategoryFromDroitName(droit.libelle) === this.selectedCategory
+          );
     },
     extractCategoryFromDroitName(droitName) {
       // Extract category from the second part of droit name after "_"
@@ -93,16 +114,23 @@ export default {
     },
     async submitForm() {
       try {
-        console.log("eee",this.role.id_role, this.role.libelle);
-        await this.updateRoleStore({
-          id_role: this.role.id_role,
-          libelle: this.role.libelle,
-        });
+        // modify the role
+        let result = await this.updateRoleStore(this.role);
+        console.log('Résultat de la modification du rôle :', result);
+        // delete all the selected droits for the role
+        await this.deleteRoleDroitAssociationForSpecificRoleStore(this.role.id_role);
+        // Save the selected droits for the role
+        for (const droitId of this.selectedDroits) {
+          await this.createRoleDroitAssociationStore({
+            id_role: result.id_role,
+            id_droit: droitId,
+          });
+        }
         this.$router.push({ name: "AdminRoles" });
       } catch (error) {
         console.error('Erreur lors de la mise à jour du rôle :', error);
       }
     },
-  },
+  }
 };
 </script>

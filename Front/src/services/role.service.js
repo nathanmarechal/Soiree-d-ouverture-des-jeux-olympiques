@@ -26,14 +26,14 @@ async function deleteRolefromAPI(id) {
 
 async function updateRole(body) {
     let answer = await updateRoleFromAPI(body)
-    //console.log("updateRole: ", answer)
+    console.log("updateRole: ", answer)
     return answer
 }
 
 async function updateRoleFromAPI(body) {
     let id = body.id_role
     let answer = patchRequest('/roles/update/' + id, body, 'UPDATEROLE')
-    //console.log("updateRoleFromAPI: ", answer)
+    console.log("updateRoleFromAPI: ", answer)
     return answer
 }
 
