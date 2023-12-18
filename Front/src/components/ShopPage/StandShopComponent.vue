@@ -44,7 +44,6 @@ export default {
     this.id_stand = this.getSelectedStands[0];
     await this.loadData();
     this.stand = this.getAllStand.find(stand => stand.id_stand === this.id_stand);
-
   },
 };
 

@@ -37,8 +37,8 @@ export default {
       //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
       //     })
 
-  async mounted() {
-    await  this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
+  async created() {
+    await this.loadData()
   },
 
 
@@ -47,6 +47,10 @@ export default {
 
     viewDetails(id_commande) {
       this.$router.push({ name: 'DetailCommande', params: { id: id_commande } });
+    },
+
+    async loadData() {
+      await this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
     },
 
     convertDateFormat(dateString) {
