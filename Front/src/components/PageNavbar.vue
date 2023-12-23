@@ -179,12 +179,17 @@ body, .b-navbar {
 
 .desktop-navbar {
   display: none;
+  border-radius: 2vh;
+  padding: 1vh;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 997;
-  background-color: transparent !important;
+  background-color: rgba(236, 240, 241, 0.9); /* Utilise la couleur #ECF0F1 avec une opacité de 0.9 */
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Fond diffus de blanc moins transparent */
 }
+
+
 
 .desktop-navbar .navbar-nav .nav-link {
   font-size: 18px;
