@@ -4,13 +4,13 @@
       <h3>{{ translate("editEmplacementLogistique_1") }}</h3>
       <table>
         <tr>
-          <td>Libellé:</td>
+          <td>{{ translate("editEmplacementLogistique_5") }}</td>
           <td>
             <input type="text" v-model="editableEmplacement.libelle"/>
           </td>
         </tr>
         <tr>
-          <td>Type d'Emplacement:</td>
+          <td>{{ translate("editEmplacementLogistique_6") }}</td>
           <td>
             <select v-model="editableEmplacement.id_type_emplacement_logistique">
               <option v-for="type in getAllTypeEmplacementLogistique" :key="type.id_type_emplacement_logistique" :value="type.id_type_emplacement_logistique">{{ type.libelle }}</option>
@@ -18,7 +18,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ translate("editEmplacementLogistique_5") }}  ({{ selectedType.libelle_unite }}):</td>
+          <td>{{ translate("editEmplacementLogistique_7") }}  ({{ selectedType.libelle_unite }}):</td>
           <td>
             <input v-model="editableEmplacement.unite" type="number" />
             <span v-if="selectedType">

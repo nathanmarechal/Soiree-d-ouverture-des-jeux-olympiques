@@ -193,6 +193,9 @@
   "editEmplacementLogistique_2": "Fermer",
   "editEmplacementLogistique_3": "Modifier",
   "editEmplacementLogistique_4": "Supprimer",
+  "editEmplacementLogistique_5": "Libelle emplacement logistique",
+  "editEmplacementLogistique_6": "Type d'emplacement logistique",
+  "editEmplacementLogistique_7": "Unité",
 
   "roleList_id": "Id",
   "roleList_libelle":"Libellé",

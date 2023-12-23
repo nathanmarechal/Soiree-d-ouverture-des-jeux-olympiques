@@ -182,6 +182,9 @@
   "editEmplacementLogistique_2": "Close",
   "editEmplacementLogistique_3": "Modify",
   "editEmplacementLogistique_4": "Delete",
+  "editEmplacementLogistique_5": "Label of logistic location",
+  "editEmplacementLogistique_6": "Type of logistic location",
+  "editEmplacementLogistique_7": "Unit",
 
   "legendeMap_1": "Zones legend",
   "legendeMap_2": "Legend of logistic location types",
@@ -207,6 +210,7 @@
   "addEmplacementLogistique_3": "Coordinates",
   "addEmplacementLogistique_4": "Type of logistic location",
   "addEmplacementLogistique_5": "Unit",
+
 
 
   "roleAdd": "Add role",
