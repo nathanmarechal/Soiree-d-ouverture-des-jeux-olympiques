@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalActiveAdd" class="overlay">
+  <div v-if="modalActiveAddArea" class="overlay">
     <div class="modal-inner">
       <h3>{{translate("addEmplacement_1")}}</h3>
       <table>
