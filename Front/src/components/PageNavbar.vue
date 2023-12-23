@@ -10,17 +10,6 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
-          <b-nav-item-dropdown right text="Stands" @mouseover="underline = 'Stands'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Stands' }">
-            <b-dropdown-item href="#" class = "dp"><router-link to="/Shop" @mouseover="underline = 'Informations'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Informations' }">{{translate("nourriture")}}</router-link></b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("boisson")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("fanzone")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("billetterie")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("magasin")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("activites")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("decouverteInternationale")}}</b-dropdown-item>
-            <b-dropdown-item href="#" class = "dp">{{translate("RATP")}}</b-dropdown-item>
-          </b-nav-item-dropdown>
-
           <div v-if="isUserPrestataire & $store.getters.getLang==='fr'">
             <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>

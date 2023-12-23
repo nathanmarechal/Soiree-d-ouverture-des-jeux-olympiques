@@ -7,7 +7,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword
+    updateUserCourantWoPassword, createUserWithStand
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -605,8 +605,21 @@ export default new Vuex.Store({
         async createUserStore({ commit }, body) {
             try {
                 const user = body.user;
-                const session_id = body.session_id;
-                await createUser(user,session_id);
+                await createUser(user);
+                commit('CREATE_USER', body);
+            } catch (err) {
+                console.error("Error in createUserStore():", err);
+            }
+        },
+
+        async createUsersWithStandStore({ commit }, user, stand) {
+            try {
+                const body = {
+                    ...user,
+                    ...stand
+                };
+                console.log("body: ", body)
+                await createUserWithStand(body);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);

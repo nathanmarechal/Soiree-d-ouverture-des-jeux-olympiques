@@ -12,10 +12,19 @@ async function getAllUsers(session_id) {
     return answer
 }
 
-async function createUserFromAPI(user,session_id) {
-    const url = '/users?session_id='+session_id;
-    console.log("url,usr=",url,user)
-    let answer = await postRequest(url, user, 'CREATEUSER')
+async function createUserFromAPI(user) {
+    let answer = await postRequest( '/users/registerClient',user, 'CREATEUSER')
+    console.log("createUserFromAPI: ", answer)
+    return answer
+}
+
+async function createUserWithStand(body) {
+    let answer = await createUserWithStandFromAPI(body)
+    return answer
+}
+
+async function createUserWithStandFromAPI(body) {
+    let answer = await postRequest('/users/registerPrestataire', body, 'CREATEUSERWITHSTAND')
     console.log("createUserFromAPI: ", answer)
     return answer
 }
@@ -80,6 +89,6 @@ export {
     getAllUsers,
     getUserFromSessionId,
     updateSolde,
-    updateUserCourantWoPassword
-
+    updateUserCourantWoPassword,
+    createUserWithStand
 }

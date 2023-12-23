@@ -2,8 +2,8 @@
 const pool = require("../database/db");
 
 
-const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
-    createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
+const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, callback) => {
+    createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role)
         .catch(
         (error)=>
         {
@@ -13,17 +13,59 @@ const createUser = (prenom, nom, email, password, adresse, code_postal, commune,
     callback(null, "success");
 }
 
-async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
+
+async function createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement) {
     try {
         const conn = await pool.connect();
-        await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
+        const result = await conn.query(
+            "INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [nom_stand, image_stand, description_stand, prix, id_emplacement]
+        );
+        conn.release();
+        return result.rows[0].id_stand;
+    } catch (error) {
+        console.error('Error in createStandAsync:', error);
+        throw error;
+    }
+}
+const createUserWithStand = (prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement, callback) => {
+    console.log(description_stand)
+    console.log(id_emplacement + "eeessees2")
+    createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement)
+        .catch(
+        (error)=>
+        {
+            console.log("threw inside createUserAsync :"+error)
+            //callback(error,null);
+        })
+    callback(null, "success");
+}
+
+async function createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement) {
+    console.log(id_emplacement + "eeessees3")
+    console.log('Parameters:', prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement); // Add this line
+    try {
+        id_stand = await createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement);
+        console.log(nom_stand, image_stand, description_stand, prix)
+        console.log("id_stand = " + id_stand)
+        const conn = await pool.connect();
+        await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
         conn.release();
     } catch (error) {
         console.error('Error in createUserAsync:', error);
         throw error;
     }
 }
+async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role) {
+    try {
+        const conn = await pool.connect();
+        await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [email, password, nom, prenom, code_postal, adresse, commune, null, id_role]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in createUserAsync:', error);
+        throw error;
+    }
+}
+
 
 const getAllUsers = (callback) => {
     getAllUsersAsync()
@@ -337,5 +379,6 @@ module.exports = {
     , updateNom: updateNom
     , updatePrenom: updatePrenom
     , updateEmail: updateEmail
-    , updateUserCourantWoPassword: updateUserCourantWoPassword
+    , updateUserCourantWPassword: updateUserCourantWoPassword
+    , createUserWithStand: createUserWithStand
 }

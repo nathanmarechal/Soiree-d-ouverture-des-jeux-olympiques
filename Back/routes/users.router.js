@@ -29,7 +29,8 @@ router.patch("/updateSolde", usersController.updateSolde);
 router.patch("/updateSolde", usersController.updateSolde);
 
 router.patch("/updateUserCourantWoPassword", usersController.updateUserCourantWoPassword);
-router.post("/", loginMiddleware.checkRight, usersController.createUser);
+router.post("/registerClient", loginMiddleware.checkRight, usersController.createUser);
+router.post("/registerPrestataire", usersController.createUserWithStand);
 
 
 
