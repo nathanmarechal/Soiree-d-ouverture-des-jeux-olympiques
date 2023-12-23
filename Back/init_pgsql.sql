@@ -184,25 +184,28 @@
         CREATE TABLE type_emplacement_logistique(
             id_type_emplacement_logistique SERIAL PRIMARY KEY,
             image VARCHAR(50),
-            libelle VARCHAR(50)
+            libelle VARCHAR(50),
+            libelle_unite  VARCHAR(50)
         );
 
     CREATE TABLE emplacement_logistique(
         id_emplacement_logistique SERIAL PRIMARY KEY,
         libelle VARCHAR(50),
         coordonnes json,
+        unite INT,
         id_type_emplacement_logistique INT,
         FOREIGN KEY(id_type_emplacement_logistique) REFERENCES type_emplacement_logistique(id_type_emplacement_logistique) ON DELETE CASCADE
     );
 
-    INSERT INTO type_emplacement_logistique(libelle,image) VALUES
-    ('eau','water.svg'),
-    ('éléctrcité','electricity.svg'),
-    ('internet haut débit','wifi.svg');
+    INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
+    ('eau','water.svg','L/h'),
+    ('éléctrcité','electricity.svg','kW'),
+    ('internet haut débit','wifi.svg','Mbp/s');
 
-    INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique) VALUES
-    ('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2),
-    ('raccordement Anatole France','[48.8575458, 2.2963378]',1);
+    INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique,unite) VALUES
+    ('raccordement du flop','[48.857572, 2.2977709]',3,50),
+    ('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2,50),
+    ('raccordement Anatole France','[48.8575458, 2.2963378]',1,25);
 
 
     -- Insert data into tables

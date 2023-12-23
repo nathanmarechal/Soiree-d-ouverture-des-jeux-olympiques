@@ -42,11 +42,11 @@ async function addEmplacementLogistiqueAsync(body) {
         console.log("Adding new emplacement logistique with body: ", body);
 
         const queryText = `
-            INSERT INTO emplacement_logistique(libelle, coordonnes, id_type_emplacement_logistique)
-            VALUES($1, $2, $3)
+            INSERT INTO emplacement_logistique(libelle, coordonnes, id_type_emplacement_logistique,unite)
+            VALUES($1, $2, $3, $4)
             RETURNING *;
         `;
-        const result = await conn.query(queryText, [body.libelle, JSON.stringify(body.coordonnes), body.id_type_emplacement_logistique]);
+        const result = await conn.query(queryText, [body.libelle, JSON.stringify(body.coordonnes), body.id_type_emplacement_logistique, body.unite]);
         conn.release();
 
         return result.rows;
@@ -102,11 +102,12 @@ async function updateEmplacementLogistiqueAsync(id, body) {
             UPDATE emplacement_logistique
             SET 
                 libelle = $1, 
-                id_type_emplacement_logistique = $2
-            WHERE id_emplacement_logistique = $3
+                id_type_emplacement_logistique = $2,
+                unite = $3
+            WHERE id_emplacement_logistique = $4
             RETURNING *;
         `;
-        const result = await conn.query(queryText, [body.libelle, body.id_type_emplacement_logistique, id]);
+        const result = await conn.query(queryText, [body.libelle, body.id_type_emplacement_logistique, body.unite, id]);
         conn.release();
 
         return result.rows;

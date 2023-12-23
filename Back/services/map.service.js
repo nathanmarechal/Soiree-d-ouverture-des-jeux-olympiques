@@ -183,8 +183,8 @@ async function createZoneAsync(body) {
         const conn = await pool.connect();
         const result = await conn.query("INSERT INTO zone (id_type_zone, libelle, couleur_hexa) VALUES ($1, $2, $3) RETURNING *;", [body.id_type_zone, body.libelle, body.couleur_hexa]);
         conn.release();
-        console.log("result.rows[0]: ", result.rows[0])
-        return result.rows[0];
+        console.log("result.rows[0]: ", result.rows)
+        return result.rows;
     } catch (error) {
         console.error('Error in createZoneAsync:', error);
         throw error;

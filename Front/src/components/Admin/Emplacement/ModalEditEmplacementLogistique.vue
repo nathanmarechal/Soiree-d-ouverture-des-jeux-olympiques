@@ -17,6 +17,15 @@
             </select>
           </td>
         </tr>
+        <tr>
+          <td>{{ translate("editEmplacementLogistique_5") }}  ({{ selectedType.libelle_unite }}):</td>
+          <td>
+            <input v-model="editableEmplacement.unite" type="number" />
+            <span v-if="selectedType">
+
+            </span>
+          </td>
+        </tr>
       </table>
       <button @click="$emit('close');" type="button" class="btn btn-success">{{ translate("editEmplacementLogistique_2") }}</button>
       <button @click="updateEmplacement" type="button" class="btn btn-primary">{{ translate("editEmplacementLogistique_3") }}</button>
@@ -38,6 +47,10 @@ export default {
   },
   computed: {
     ...mapGetters(['getAllTypeEmplacementLogistique']),
+    selectedType() {
+      // Récupérer le type d'emplacement logistique sélectionné
+      return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === this.editableEmplacement.id_type_emplacement_logistique);
+    },
   },
   watch: {
     selectedEmplacementLogistique: {
@@ -59,7 +72,8 @@ export default {
       try {
         const updateBody = {
           libelle: this.editableEmplacement.libelle,
-          id_type_emplacement_logistique: this.editableEmplacement.id_type_emplacement_logistique
+          id_type_emplacement_logistique: this.editableEmplacement.id_type_emplacement_logistique,
+          unite: this.editableEmplacement.unite,
         };
 
         await this.updateEmplacementLogistiqueStore({

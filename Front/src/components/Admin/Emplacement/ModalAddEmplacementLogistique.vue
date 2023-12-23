@@ -21,6 +21,12 @@
             </select>
           </td>
         </tr>
+        <tr v-if="selectedType">
+          <th>{{ translate("addEmplacementLogistique_5") }} ({{ selectedType.libelle_unite }})</th>
+            <td>
+              <input v-model="emplacementLogistique.unite" type="number" />
+            </td>
+        </tr>
       </table>
       <button @click="emplacementLogistiqueCreate()" class="btn btn-success">Ajouter</button>
       <button @click="closeModal" class="btn btn-danger">Fermer</button>
@@ -40,11 +46,16 @@ export default {
       emplacementLogistique: {
         libelle: '',
         id_type_emplacement_logistique: null,
+        unite: null,
       },
     };
   },
   computed: {
     ...mapGetters(['getAllTypeEmplacementLogistique']),
+    selectedType() {
+      const typeId = this.emplacementLogistique.id_type_emplacement_logistique;
+      return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === typeId);
+    },
   },
   methods: {
     translate,
@@ -58,6 +69,7 @@ export default {
         libelle: this.emplacementLogistique.libelle,
         coordonnes: this.newEmplacementLogistique.coordonnees,
         id_type_emplacement_logistique: this.emplacementLogistique.id_type_emplacement_logistique,
+        unite: this.emplacementLogistique.unite,
       };
 
       try {
