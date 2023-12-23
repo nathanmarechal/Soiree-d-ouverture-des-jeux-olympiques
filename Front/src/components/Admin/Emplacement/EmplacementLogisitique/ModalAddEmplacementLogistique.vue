@@ -37,7 +37,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { translate } from "../../../lang/translationService";
+import { translate } from "../../../../lang/translationService";
 
 export default {
   props: ['modalActiveAddEmplacementLogistique', 'newEmplacementLogistique'],

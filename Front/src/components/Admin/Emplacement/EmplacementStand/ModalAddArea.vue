@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalActiveAddArea" class="overlay">
+  <div v-if="modalActiveAddArea " class="overlay">
     <div class="modal-inner">
       <h3>{{translate("addEmplacement_1")}}</h3>
       <table>
@@ -30,7 +30,7 @@
 //import { createArea } from "@/services/map.service";
 
 import {mapGetters, mapActions} from "vuex";
-import {translate} from "../../../lang/translationService";
+import {translate} from "../../../../lang/translationService";
 
 export default {
   props: ['modalActiveAddArea','newArea'],

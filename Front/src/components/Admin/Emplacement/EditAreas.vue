@@ -17,10 +17,10 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-draw';
 
-import ModalEditArea from './ModalEditArea.vue'
-import ModalAddArea from './ModalAddArea.vue'
-import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/ModalAddEmplacementLogistique.vue";
-import ModalEditEmplacementLogistique from "@/components/Admin/Emplacement/ModalEditEmplacementLogistique.vue";
+import ModalEditArea from '@/components/Admin/Emplacement/EmplacementStand/ModalEditArea.vue'
+import ModalAddArea from '@/components/Admin/Emplacement/EmplacementStand/ModalAddArea.vue'
+import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalAddEmplacementLogistique.vue";
+import ModalEditEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalEditEmplacementLogistique.vue";
 
 import { mapActions, mapGetters } from 'vuex';
 
