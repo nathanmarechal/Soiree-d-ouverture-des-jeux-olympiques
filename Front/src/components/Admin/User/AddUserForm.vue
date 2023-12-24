@@ -2,10 +2,10 @@
   <div class="add-user-form" >
     <div v-if="isPrestataire === null">
         <h2>Qui êtes vous ?</h2>
-        <div class="form">
-          <button type="button" class="btn btn-success" @click="setPrestataire">Prestataire</button>
-          <button type="button" class="btn btn-success" @click="setClient">Client</button>
-        </div>
+      <div class="form d-flex">
+        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">Prestataire</button>
+        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">Client</button>
+      </div>
     </div>
 
     <form v-if="isPrestataire === false" @submit.prevent="submitFormClient" class="d-flex gap-3 flex-column justify-content-center" style="width: 40vh">
@@ -206,8 +206,36 @@ export default {
 </script>
 
 <style scoped>
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.bouton {
+  min-width: 300px;
+  height: 50vh;
+  font-size: 2em;
+  border: none;
+  margin-right: 5%; /* Add space to the right of each button */
+}
+
+.btn-success {
+  background-color: #5cb85c; /* Change the background color to a nice green */
+  color: white; /* Change the text color to white */
+}
+
+.btn-danger {
+  background-color: #d9534f; /* Change the background color to a nice red */
+  color: white; /* Change the text color to white */
+}
+
+
 .add-user-form {
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
 h2 {
@@ -215,11 +243,6 @@ h2 {
   margin-bottom: 10px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
 
 label {
   margin-bottom: 5px;
@@ -266,10 +289,5 @@ button[type="submit"]:hover {
   background-color: #e60000;
 }
 
-.form {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  width: 100%;
-}
+
 </style>
