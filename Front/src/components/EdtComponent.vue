@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-success" role="alert" v-if="schedule.length === 0">
+  <div class="alert alert-success" role="alert" v-if="schedule.length === 0" style="margin-top: 25%; margin-bottom: 25%">
     Il n'y a rien de prévu pour le moment
   </div>
   <div v-else class="schedule-container" style="margin-top: 10%; margin-bottom: 10%">
