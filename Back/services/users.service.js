@@ -420,6 +420,31 @@ async function acceptUserAsync(id_user) {
     }
 }
 
+const refuseUser = (id_user, callback) => {
+    try{
+        refuseUserAsync(id_user)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function refuseUserAsync(id_user) {
+    try {
+        const conn = await pool.connect();
+        const resultUser = await conn.query("SELECT * FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        const user = resultUser.rows[0];
+        await conn.query("DELETE FROM standAttente WHERE id_stand = $1", [user.id_stand])
+        await conn.query("DELETE FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in refuseUserAsync:', error);
+        throw error;
+    }
+
+}
+
 module.exports = {
     createUser: createUser
     , getAllUsers: getAllUsers
@@ -436,4 +461,5 @@ module.exports = {
     , createUserWithStand: createUserWithStand
     , getAllUsersAttente: getAllUsersAttente
     , acceptUser: acceptUser
+    , refuseUser: refuseUser
 }

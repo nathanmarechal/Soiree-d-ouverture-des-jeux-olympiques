@@ -7,7 +7,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser
+    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -174,6 +174,10 @@ export default new Vuex.Store({
             let user = state.usersAttente.find(user => user.id_user === id);
             state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
             state.users.push(user);
+        },
+
+        REFUSE_USER(state, id) {
+            state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
         },
 
         SET_ROLES(state, roles) {
@@ -631,6 +635,15 @@ export default new Vuex.Store({
                 commit('ACCEPT_USER', id);
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
+            }
+        },
+
+        async refuseUserStore({ commit }, id) {
+            try {
+                await refuseUser(id);
+                commit('REFUSE_USER', id);
+            } catch (err) {
+                console.error("Error in refuseUserStore():", err);
             }
         },
 

@@ -61,7 +61,7 @@
       ...mapGetters(['getAllUsersAttente']),
     },
     methods: {
-      ...mapActions([ 'acceptUserStore', 'refuseUserAction', 'getAllUsersAttenteStore']),
+      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore']),
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
@@ -77,12 +77,8 @@
           console.log(this.getAllUsersAttente + "iiiiiiiiiiiiiiiiiiiiii");
       },
       async refuseUser(id_user) {
-        try {
-          await this.refuseUserAction(id_user);
-          await this.getUsers();
-        } catch (error) {
-          console.error('Erreur lors du chargement des données :', error);
-        }
+          await this.refuseUserStore(id_user);
+          this.users = this.getAllUsersAttente;
       },
     },
     async mounted() {

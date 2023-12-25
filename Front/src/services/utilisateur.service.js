@@ -33,6 +33,16 @@ async function acceptUserFromAPI(id) {
     return answer
 }
 
+async function refuseUser(id) {
+    let answer = await refuseUserFromAPI(id)
+    return answer
+}
+
+async function refuseUserFromAPI(id) {
+    let answer = await postRequest('/users/refuseUser/' + id, 'REFUSEUSER')
+    return answer
+}
+
 async function createUserFromAPI(user) {
     let answer = await postRequest( '/users/registerClient',user, 'CREATEUSER')
     console.log("createUserFromAPI: ", answer)
@@ -113,5 +123,6 @@ export {
     updateUserCourantWoPassword,
     createUserWithStand,
     getAllUsersAttente,
-    acceptUser
+    acceptUser,
+    refuseUser
 }

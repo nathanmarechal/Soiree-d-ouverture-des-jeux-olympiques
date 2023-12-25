@@ -88,6 +88,20 @@ exports.acceptUser = (req, res) => {
     });
 }
 
+exports.refuseUser = (req, res) => {
+    const id_user = req.params.id;
+
+    console.log("refuseUser", id_user);
+
+    usersService.refuseUser(id_user, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send("User refused successfully");
+        }
+    });
+}
+
 exports.getUserById = (req, res) => {
     const id = req.params.id;
 

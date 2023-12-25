@@ -33,6 +33,7 @@ router.post("/registerClient", loginMiddleware.checkRight, usersController.creat
 router.post("/registerPrestataire", usersController.createUserWithStand);
 router.get("/getUserAttente", usersController.getUsersAttente);
 router.post("/acceptUser/:id", usersController.acceptUser);
+router.post("/refuseUser/:id", usersController.refuseUser);
 
 
 router.post("/", (req, res, next) => {
