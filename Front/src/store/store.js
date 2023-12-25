@@ -489,8 +489,17 @@ export default new Vuex.Store({
 
         SET_SCHEDULE(state, schedule) {
             state.userCourant.schedule = schedule;
-        }
-    },
+        },
+
+        ADD_SCHEDULE(state, schedule) {
+            const index = state.userCourant.schedule.findIndex(item => item.id_creneau > schedule.id_creneau);
+
+            if (index === -1) {
+                state.userCourant.schedule.push(schedule);
+            } else {
+                state.userCourant.schedule.splice(index, 0, schedule);
+            }
+        },    },
 
     actions: {
 

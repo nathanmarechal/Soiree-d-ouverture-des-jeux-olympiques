@@ -58,7 +58,7 @@
 
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
   data() {
@@ -69,13 +69,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getPanierUserCourant', "getCurrentUser"]),
+    ...mapGetters(['getPanierUserCourant', "getCurrentUser", 'getAllPrestation', 'getAllStand']),
     isEditModeActive() {
       return this.modifOn;
     }
   },
   methods: {
     ...mapActions(['deletePrestationFromPanierUserCourantStore']),
+    ...mapMutations(['ADD_SCHEDULE']),
     deleteLigne(id_prestation, id_creneau) {
       console.log("delete ligne :" + id_prestation + " " + id_creneau + " dans le vue");
       this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation, id_creneau: id_creneau});
@@ -116,6 +117,17 @@ export default {
         alert("Votre panier est vide")
         return;
       }
+
+      this.getPanierUserCourant.forEach(item => {
+        console.log(JSON.stringify(item) + " dans le vue");
+        this.ADD_SCHEDULE({
+          id_creneau: item.id_creneau,
+          heure_creneau: item.heure_creneau,
+          libelle: item.libelle,
+          nom_stand: this.getAllStand.find(stand => stand.id_stand === this.getAllPrestation.find(prestation => prestation.id_prestation).id_stand ).nom_stand,
+        });
+      });
+
       let newSolde = this.getCurrentUser.solde - this.calculateTotal();
       await this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: newSolde})
       await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
