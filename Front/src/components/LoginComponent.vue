@@ -16,7 +16,7 @@
           </div>
           <button type="submit" class="btn btn-primary w-100">{{translate("login_2")}}</button>
         </form>
-        <router-link to="/sign-up" @click="closeModal">{{translate("login_3")}}</router-link>
+        <button @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </button>
 
       </div>
     </div>
@@ -87,12 +87,15 @@ export default {
   methods: {
     translate,
     ...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
+
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);
     },
+
     isEmpty() {
       return this.email === '' || this.password === '';
     },
+
     isEmailValid() {
       return this.email.includes('@')
     },

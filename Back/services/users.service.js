@@ -2,8 +2,8 @@
 const pool = require("../database/db");
 
 
-const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, callback) => {
-    createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand)
+const createUser = (prenom, nom, email, password, adresse, code_postal, commune, id_role, callback) => {
+    createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role)
         .catch(
         (error)=>
         {
@@ -13,17 +13,59 @@ const createUser = (prenom, nom, email, password, adresse, code_postal, commune,
     callback(null, "success");
 }
 
-async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand) {
+
+async function createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement) {
     try {
         const conn = await pool.connect();
-        await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
+        const result = await conn.query(
+            "INSERT INTO standAttente (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [nom_stand, image_stand, description_stand, prix, id_emplacement]
+        );
+        conn.release();
+        return result.rows[0].id_stand;
+    } catch (error) {
+        console.error('Error in createStandAsync:', error);
+        throw error;
+    }
+}
+const createUserWithStand = (prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement, callback) => {
+    console.log(description_stand)
+    console.log(id_emplacement + "eeessees2")
+    createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement)
+        .catch(
+        (error)=>
+        {
+            console.log("threw inside createUserAsync :"+error)
+            //callback(error,null);
+        })
+    callback(null, "success");
+}
+
+async function createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement) {
+    console.log(id_emplacement + "eeessees3")
+    console.log('Parameters:', prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement);
+    try {
+        id_stand = await createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement);
+        console.log(nom_stand, image_stand, description_stand, prix)
+        console.log("id_stand = " + id_stand)
+        const conn = await pool.connect();
+        await conn.query("INSERT INTO utilisateurAttente (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role,solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,0)", [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
         conn.release();
     } catch (error) {
         console.error('Error in createUserAsync:', error);
         throw error;
     }
 }
+async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role) {
+    try {
+        const conn = await pool.connect();
+        await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [email, password, nom, prenom, code_postal, adresse, commune, null, id_role]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in createUserAsync:', error);
+        throw error;
+    }
+}
+
 
 const getAllUsers = (callback) => {
     getAllUsersAsync()
@@ -325,6 +367,84 @@ async function updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adr
     }
 }
 
+const getAllUsersAttente = (callback) => {
+    getAllUsersAttenteAsync()
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getAllUsersAttenteAsync() {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT * FROM utilisateurAttente");
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAllUsersAttenteAsync:', error);
+        throw error;
+    }
+}
+
+const acceptUser = (id_user, callback) => {
+    try{
+        acceptUserAsync(id_user)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function acceptUserAsync(id_user) {
+    try {
+        const conn = await pool.connect();
+        const resultUser = await conn.query("SELECT * FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        const user = resultUser.rows[0];
+        const resultStand = await conn.query("SELECT * FROM standAttente WHERE id_stand = $1", [user.id_stand]);
+        const stand = resultStand.rows[0];
+        console.log("stand : ", stand)
+        await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [stand.nom_stand, stand.image_stand, stand.description_stand, stand.prix, stand.id_emplacement]);
+        await conn.query("DELETE FROM standAttente WHERE id_stand = $1", [user.id_stand])
+        const result = await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role, solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [user.email, user.password, user.nom, user.prenom, user.code_postal, user.adresse, user.commune, user.id_stand, user.id_role, user.solde]);
+        await conn.query("DELETE FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in acceptUserAsync:', error);
+        throw error;
+    }
+}
+
+const refuseUser = (id_user, callback) => {
+    try{
+        refuseUserAsync(id_user)
+        callback(null, "success");
+    } catch (error) {
+        console.log(error);
+        callback(error, null);
+    }
+}
+
+async function refuseUserAsync(id_user) {
+    try {
+        const conn = await pool.connect();
+        const resultUser = await conn.query("SELECT * FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        const user = resultUser.rows[0];
+        await conn.query("DELETE FROM standAttente WHERE id_stand = $1", [user.id_stand])
+        await conn.query("DELETE FROM utilisateurAttente WHERE id_user = $1", [id_user]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in refuseUserAsync:', error);
+        throw error;
+    }
+
+}
+
 module.exports = {
     createUser: createUser
     , getAllUsers: getAllUsers
@@ -337,5 +457,9 @@ module.exports = {
     , updateNom: updateNom
     , updatePrenom: updatePrenom
     , updateEmail: updateEmail
-    , updateUserCourantWoPassword: updateUserCourantWoPassword
+    , updateUserCourantWPassword: updateUserCourantWoPassword
+    , createUserWithStand: createUserWithStand
+    , getAllUsersAttente: getAllUsersAttente
+    , acceptUser: acceptUser
+    , refuseUser: refuseUser
 }

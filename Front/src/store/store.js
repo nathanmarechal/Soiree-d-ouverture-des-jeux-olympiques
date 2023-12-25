@@ -7,7 +7,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword
+    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -65,7 +65,7 @@ export default new Vuex.Store({
             "id_role": null,
             "id_stand" : null
         },
-
+        usersAttente: [],
         creneau: [],
         users : [],
         roles : [],
@@ -99,6 +99,7 @@ export default new Vuex.Store({
     getters: {
         getAllZone: state => state.zones,
         getAllUsers : state => state.users,
+        getAllUsersAttente : state => state.usersAttente,
         getAllRoles : state => state.roles,
         getAllDroits : state => state.droits,
         getAllRoleDroitAssociation : state => state.roleDroitAssociation,
@@ -163,6 +164,20 @@ export default new Vuex.Store({
         SET_USERS(state, users) {
             state.users.splice(0)
             users.forEach(p => state.users.push(p))
+        },
+
+        SET_USERS_ATTENTE(state, usersAttente) {
+            state.usersAttente = usersAttente;
+        },
+
+        ACCEPT_USER(state, id) {
+            let user = state.usersAttente.find(user => user.id_user === id);
+            state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
+            state.users.push(user);
+        },
+
+        REFUSE_USER(state, id) {
+            state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
         },
 
         SET_ROLES(state, roles) {
@@ -589,6 +604,7 @@ export default new Vuex.Store({
 
 //-----------------------------------------------------------------User-----------------------------------------------------------------------//
 
+
         async getUsersStore({ commit }) {
             try {
                 const result = await getAllUsers();
@@ -602,11 +618,53 @@ export default new Vuex.Store({
             }
         },
 
+        async getAllUsersAttenteStore({ commit }) {
+            try {
+                const usersAttente = await getAllUsersAttente();
+                commit('SET_USERS_ATTENTE', usersAttente);
+                console.log("usersAttente: ", usersAttente)
+                console.log("usersAttente: ", this.state.usersAttente)
+            } catch (error) {
+                console.error('Error fetching creneau:', error);
+            }
+        },
+
+        async acceptUserStore({ commit }, id) {
+            try {
+                await acceptUser(id);
+                commit('ACCEPT_USER', id);
+            } catch (err) {
+                console.error("Error in acceptUserStore():", err);
+            }
+        },
+
+        async refuseUserStore({ commit }, id) {
+            try {
+                await refuseUser(id);
+                commit('REFUSE_USER', id);
+            } catch (err) {
+                console.error("Error in refuseUserStore():", err);
+            }
+        },
+
         async createUserStore({ commit }, body) {
             try {
                 const user = body.user;
-                const session_id = body.session_id;
-                await createUser(user,session_id);
+                await createUser(user);
+                commit('CREATE_USER', body);
+            } catch (err) {
+                console.error("Error in createUserStore():", err);
+            }
+        },
+
+        async createUsersWithStandStore({ commit }, user, stand) {
+            try {
+                const body = {
+                    ...user,
+                    ...stand
+                };
+                console.log("body: ", body)
+                await createUserWithStand(body);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);

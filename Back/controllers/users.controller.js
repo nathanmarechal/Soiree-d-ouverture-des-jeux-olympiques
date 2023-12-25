@@ -8,14 +8,38 @@ exports.createUser = (req, res) => {
     const adresse = req.body.adresse;
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
-    const id_role = req.body.id_role.id_role;
-    const id_stand = req.body.id_stand;
-    //const session_id = req.body.session_id;
+    const id_role = req.body.id_role;
 
     // Log function name and data
-    console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role, id_stand });
+    console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role });
 
-    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, id_stand, (error, data) => {
+    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, (error, data) => {
+        if (error) {
+            return res.status(500).send("error");
+        } else {
+            return res.status(200).send("User created successfully");
+        }
+    });
+}
+
+exports.createUserWithStand = (req, res) => {
+    const nom = req.body.user.lastName;
+    const prenom = req.body.user.firstName;
+    const email = req.body.user.email;
+    const password = req.body.user.password;
+    const adresse = req.body.user.adresse;
+    const code_postal = req.body.user.code_postal;
+    const commune = req.body.user.commune;
+    const id_role = req.body.user.id_role;
+    const nom_stand = req.body.stand.nom_stand;
+    const image_stand = req.body.stand.image_stand;
+    const description_stand = req.body.stand.description_stand;
+    console.log(description_stand)
+    const prix_stand = 0;
+    const id_emplacement = req.body.stand.id_emplacement;
+    console.log(id_emplacement + "eeessees")
+
+    usersService.createUserWithStand(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix_stand, id_emplacement, (error, data) => {
         if (error) {
             return res.status(500).send("error");
         } else {
@@ -33,6 +57,47 @@ exports.getUsers = (req, res) => {
             return res.status(500).send("Internal error");
         } else {
             return res.status(200).send(data);
+        }
+    });
+}
+
+exports.getUsersAttente = (req, res) => {
+    // Log function name
+    console.log("getUsersAttente");
+
+    usersService.getAllUsersAttente((error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}
+
+exports.acceptUser = (req, res) => {
+    const id_user = req.params.id;
+
+    console.log("acceptUser", id_user);
+
+    usersService.acceptUser(id_user, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send("User accepted successfully");
+        }
+    });
+}
+
+exports.refuseUser = (req, res) => {
+    const id_user = req.params.id;
+
+    console.log("refuseUser", id_user);
+
+    usersService.refuseUser(id_user, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send("User refused successfully");
         }
     });
 }

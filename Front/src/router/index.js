@@ -31,6 +31,7 @@ import AdminStatistiquePage from '@/views/Admin/Statistique/AdminStatistiquePage
 import CommandeDetailClientVue from '@/components/commandeClient/detailleCommandeClient.vue'
 import UserInfo from '@/views/UserInfoView.vue'
 import ValidLignePage from "@/views/ValidLignePage.vue";
+import waitingUsersPage from "@/views/WaitingUsersPage.vue";
 
 Vue.use(VueRouter);
 
@@ -45,8 +46,6 @@ const routes = [
     name: 'userInfo',
     component: UserInfo
   },
-
-
   {
     path: '/information',
     name: 'InformationView',
@@ -165,6 +164,11 @@ const routes = [
     component: AdminStatistiquePage
   },
   {
+    path: '/admin/userWaiting',
+    name: 'UserWaitingView',
+    component: waitingUsersPage
+  },
+  {
     path: '/prestataire/prestations',
     name: 'PrestatairePrestationShowView',
     component: PrestatairePrestationShowPage
@@ -189,6 +193,7 @@ const routes = [
     name: 'PrestataireStatistiqueView',
     component: PrestataireStatistiquePage
   },
+
     //Error 404
   {
     path: '*',
