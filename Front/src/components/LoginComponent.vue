@@ -16,7 +16,7 @@
           </div>
           <button type="submit" class="btn btn-primary w-100">{{translate("login_2")}}</button>
         </form>
-        <button @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </button>
+        <a @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </a>
 
       </div>
     </div>
