@@ -8,7 +8,9 @@
     DROP TABLE IF EXISTS etat_commande CASCADE;
     DROP TABLE IF EXISTS creneau CASCADE;
     DROP TABLE IF EXISTS prestation CASCADE;
+    DROP TABLE IF EXISTS utilisateurAttente CASCADE;
     DROP TABLE IF EXISTS utilisateur CASCADE;
+    DROP TABLE IF EXISTS standAttente CASCADE;
     DROP TABLE IF EXISTS stand CASCADE;
     DROP TABLE IF EXISTS emplacement CASCADE;
     DROP TABLE IF EXISTS zone CASCADE;
@@ -75,6 +77,18 @@
        FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
     );
 
+    CREATE TABLE standAttente(
+       id_stand SERIAL PRIMARY KEY,
+       nom_stand VARCHAR(100),
+       image_stand VARCHAR(100),
+       description_stand TEXT,
+       date_achat DATE,
+       prix INT,
+       id_emplacement INT,
+       FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
+    );
+
+
     CREATE TABLE prestation(
         id_prestation SERIAL PRIMARY KEY,
         libelle VARCHAR(50),
@@ -105,6 +119,25 @@
        FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
        FOREIGN KEY(id_etat) REFERENCES etat_inscription(id_etat_inscription) ON DELETE CASCADE
     );
+
+    CREATE TABLE utilisateurAttente(
+       id_user SERIAL PRIMARY KEY,
+       email VARCHAR(50) UNIQUE,
+       password VARCHAR(50),
+       nom VARCHAR(50),
+       prenom VARCHAR(50),
+       code_postal INT,
+       adresse VARCHAR(50),
+       commune VARCHAR(50),
+       solde numeric,
+       id_stand INT,
+       id_role INT,
+       id_etat INT,
+       FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+       FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
+       FOREIGN KEY(id_etat) REFERENCES etat_inscription(id_etat_inscription) ON DELETE CASCADE
+    );
+
 
 
     CREATE TABLE session(
@@ -852,8 +885,8 @@ GROUP BY c.heure_creneau;
 
 SELECT * FROM emplacement;
 
-INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ('[]', 5, 1) RETURNING *
-
+SELECT * FROM utilisateurAttente;
 SELECT * FROM utilisateur;
+SELECT * FROM standAttente;
 SELECT * FROM stand;
 select * FROM role;

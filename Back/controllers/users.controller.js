@@ -61,6 +61,33 @@ exports.getUsers = (req, res) => {
     });
 }
 
+exports.getUsersAttente = (req, res) => {
+    // Log function name
+    console.log("getUsersAttente");
+
+    usersService.getAllUsersAttente((error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    });
+}
+
+exports.acceptUser = (req, res) => {
+    const id_user = req.params.id;
+
+    console.log("acceptUser", id_user);
+
+    usersService.acceptUser(id_user, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send("User accepted successfully");
+        }
+    });
+}
+
 exports.getUserById = (req, res) => {
     const id = req.params.id;
 

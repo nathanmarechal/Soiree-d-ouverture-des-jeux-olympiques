@@ -12,6 +12,27 @@ async function getAllUsers(session_id) {
     return answer
 }
 
+async function getAllUsersAttente(){
+    let answer = await getAllUsersAttenteFromAPI()
+    //console.log("getAllUsers: ", answer)
+    return answer
+}
+
+async function getAllUsersAttenteFromAPI() {
+    let answer = await getRequest('/users/getUserAttente', 'GETALLUSERSATTENTE')
+    return answer
+}
+
+async function acceptUser(id) {
+    let answer = await acceptUserFromAPI(id)
+    return answer
+}
+
+async function acceptUserFromAPI(id) {
+    let answer = await postRequest('/users/acceptUser/' + id, 'ACCEPTUSER')
+    return answer
+}
+
 async function createUserFromAPI(user) {
     let answer = await postRequest( '/users/registerClient',user, 'CREATEUSER')
     console.log("createUserFromAPI: ", answer)
@@ -90,5 +111,7 @@ export {
     getUserFromSessionId,
     updateSolde,
     updateUserCourantWoPassword,
-    createUserWithStand
+    createUserWithStand,
+    getAllUsersAttente,
+    acceptUser
 }
