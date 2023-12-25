@@ -32,6 +32,7 @@ import CommandeDetailClientVue from '@/components/commandeClient/detailleCommand
 import UserInfo from '@/views/UserInfoView.vue'
 import ValidLignePage from "@/views/ValidLignePage.vue";
 import waitingUsersPage from "@/views/WaitingUsersPage.vue";
+import edtPage from "@/views/EdtPage.vue";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,11 @@ const routes = [
     path: '/panier',
     name: 'panierView',
     component: PanierPage
+  },
+  {
+    path: '/schedule',
+    name: 'ScheduleView',
+    component: edtPage
   },
   {
     path: '/detail-commande/:id',

@@ -26,9 +26,9 @@
 <script>
 import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
-import {mapActions} from "vuex";
+import {mapActions, mapMutations} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
-import {getCommandeUserCourant} from "@/services/commande.service";
+import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {translate} from "../lang/translationService";
 import {getDroitsRole} from "@/services/droits.service";
 
@@ -87,6 +87,7 @@ export default {
   methods: {
     translate,
     ...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
+    ...mapMutations(['GENERATE_SCHEDULE']),
 
     closeModal() {
       this.$store.commit('SET_LOGIN_MODAL', false);
@@ -135,6 +136,11 @@ export default {
                           .then(res=>{
                             console.log("commande : ", res)
                             this.$store.commit('SET_COMMANDES_USER_COURANT', res)
+                          })
+                      getScheduleByUserId(res.id_user)
+                          .then(res=>{
+                            console.log("schedule : ", res)
+                            this.$store.commit('SET_SCHEDULE', res)
                           })
                       getDroitsRole(res.id_role)
                           .then(res=>{

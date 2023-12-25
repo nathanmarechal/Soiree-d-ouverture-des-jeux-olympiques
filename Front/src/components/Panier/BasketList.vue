@@ -7,7 +7,10 @@
         <button @click="ajouterdufric" >+ 100 balles</button>
       </div>
     </div>
-    <div class="row">
+    <div class="alert alert-success" role="alert" v-if="getPanierUserCourant.length === 0">
+        Le panier est vide
+    </div>
+    <div v-else class="row">
       <div class="col-12">
         <table class="table table-striped">
           <thead>

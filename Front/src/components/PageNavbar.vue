@@ -53,6 +53,7 @@
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/commande" class = "dp">{{translate("mesCommandes")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/userinfo" class = "dp">mes informations</router-link></b-dropdown-item>
+        <b-dropdown-item ><router-link to="/schedule" class = "dp">mon emploi du temps</router-link></b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="#" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
       <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">

@@ -35,7 +35,6 @@ router.get("/getUserAttente", usersController.getUsersAttente);
 router.post("/acceptUser/:id", usersController.acceptUser);
 router.post("/refuseUser/:id", usersController.refuseUser);
 
-
 router.post("/", (req, res, next) => {
     checkRight(req, res, next, "create_users");
 }, usersController.createUser);

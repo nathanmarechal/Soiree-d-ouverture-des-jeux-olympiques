@@ -28,11 +28,11 @@ import {
 import {
     addCommande,
     getCommandeUserCourant,
-    getLigneCommandeBycommandeId,
+    getLigneCommandeBycommandeId, getScheduleByUserId,
     setEtatLigneCommandeExterieur
 } from "@/services/commande.service";
 import {
-    getAllDroits, 
+    getAllDroits,
 } from "@/services/droit.service";
 import {
     getAllRoleDroitAssociation,
@@ -61,9 +61,10 @@ export default new Vuex.Store({
             "commune": null,
             "panier":  [],
             "droits": [],
+            "schedule": [],
             "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
             "id_role": null,
-            "id_stand" : null
+            "id_stand" : null,
         },
         usersAttente: [],
         creneau: [],
@@ -136,6 +137,7 @@ export default new Vuex.Store({
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
+        getSchedule: state => state.userCourant.schedule,
 
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
@@ -155,7 +157,8 @@ export default new Vuex.Store({
 
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
-        getLang: state=> state.lang
+        getLang: state=> state.lang,
+
 
     },
 
@@ -179,6 +182,7 @@ export default new Vuex.Store({
         REFUSE_USER(state, id) {
             state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
         },
+
 
         SET_ROLES(state, roles) {
           state.roles = roles;
@@ -351,6 +355,7 @@ export default new Vuex.Store({
             });
         },
 
+
         CREATE_ZONE(state, payload) {
             state.zones.push(payload);
         },
@@ -480,6 +485,10 @@ export default new Vuex.Store({
             state.userCourant.adresse = payload.adresse;
             state.userCourant.code_postal = payload.code_postal;
             state.userCourant.commune = payload.commune;
+        },
+
+        SET_SCHEDULE(state, schedule) {
+            state.userCourant.schedule = schedule;
         }
     },
 
@@ -565,6 +574,17 @@ export default new Vuex.Store({
             }
         },
 
+//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
+
+        async getScheduleByUserIdStore({commit}, id){
+            try {
+                const schedule = await getScheduleByUserId(id);
+                console.log("schedule envoyée au store" + JSON.stringify(schedule))
+                commit('SET_SCHEDULE', schedule);
+            } catch (error) {
+                console.error('Error fetching schedule:', error);
+            }
+        },
 
 //-----------------------------------------------------------------Commande-----------------------------------------------------------------------//
 

@@ -890,3 +890,28 @@ SELECT * FROM utilisateur;
 SELECT * FROM standAttente;
 SELECT * FROM stand;
 select * FROM role;
+
+select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande
+    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
+    JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
+    JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
+    JOIN utilisateur u on c2.id_user = u.id_user
+    JOIN stand s on p.id_stand = s.id_stand
+    WHERE c2.id_user = 1
+    ORDER BY c.id_creneau;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

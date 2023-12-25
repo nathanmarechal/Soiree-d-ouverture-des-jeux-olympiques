@@ -37,6 +37,18 @@ exports.getLigneCommandeBycommandeId = (req, res) => {
     })
 }
 
+exports.getScheduleByUserId = (req, res) => {
+    const id = req.params.id;
+    console.log("dans le controller" + id)
+    commandeService.getScheduleByUserId(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.setEtatLigneCommandeExterieur = (req, res) => {
     const id_presta = req.body.id_prestation;
     const id_creneau = req.body.id_creneau;
