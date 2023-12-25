@@ -4,6 +4,10 @@
       <div class="row">
         <div class="col-md-12">
           <h1>Waiting users</h1>
+          <div class="alert alert-success" role="alert" v-if="users.length === 0">
+            No waiting users
+          </div>
+          <div v-else>
           <table class="table table-hover">
             <thead>
             <tr>
@@ -41,6 +45,7 @@
             </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +70,6 @@
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
-          console.log(this.getAllUsersAttente + "zqdqzdqzdddzzzz 2");
           this.users = this.getAllUsersAttente;
         } catch (error) {
           console.error('Erreur lors du chargement des données :', error);
@@ -74,7 +78,6 @@
       async acceptUser(id_user) {
           await this.acceptUserStore(id_user);
           this.users = this.getAllUsersAttente;
-          console.log(this.getAllUsersAttente + "iiiiiiiiiiiiiiiiiiiiii");
       },
       async refuseUser(id_user) {
           await this.refuseUserStore(id_user);
@@ -84,7 +87,6 @@
     async mounted() {
       try {
         await this.getUsers();
-        console.log(this.users + "zqdqzdqzdddzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

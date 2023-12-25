@@ -33,6 +33,8 @@
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
             <br>
+            <router-link to="/admin/userWaiting" class = "dp">inscriptions</router-link>
+            <br>
             <router-link to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             <br>
             <router-link to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
