@@ -10,8 +10,8 @@
         <li  class="list-group-item">Adresse : {{ getCurrentUser.adresse }}</li>
         <li  class="list-group-item">Code postal : {{ getCurrentUser.code_postal }}</li>
         <li  class="list-group-item">Ville : {{ getCurrentUser.commune }}</li>
-        <li><button class="btn btn-info btn-sm" @click="editMode">editer</button></li>
       </ul>
+      <button class="btn btn-info btn-sm" @click="editMode">editer</button>
     </div>
   </div>
 </template>
