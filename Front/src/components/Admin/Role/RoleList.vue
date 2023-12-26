@@ -51,6 +51,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { translate } from "@/lang/translationService";
+import router from "@/router";
 
 export default {
   data() {
@@ -70,18 +71,19 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits']),
+    ...mapGetters(['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits', 'getAllUsers']),
   },
 
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+    ...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore', 'getUsersStore']),
 
     async loadData() {
       try {
         await this.getRolesStore();
         await this.getDroitsStore();
         await this.getAllRoleDroitAssociationStore();
+        await this.getUsersStore();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -89,12 +91,27 @@ export default {
     async removeRole(id) {
       const role = this.getAllRoles.find(role => role.id_role === id);
       const confirmMessage = this.translate("roleList_ConfirmDeleteMessage") + ` ${role.libelle} ?`;
-
       if (window.confirm(confirmMessage)) {
-        try {
-          await this.deleteRoleStore(role.id_role);
-        } catch (error) {
-          console.error('Erreur lors de la suppression du rôle :', error);
+        const ifHasUser = this.getAllUsers.find(user => user.id_role === id);
+        if (ifHasUser) {
+          window.alert('ALERTEALERTeALERT')
+          router.push(
+            {
+              name: 'AdminDeleteCascadeProtector',
+              params: {
+                dataType: 'role',
+                dataProp: role,
+              },
+            }
+          );
+          return;
+        }
+        else{
+          try {
+            await this.deleteRoleStore(role.id_role);
+          } catch (error) {
+            console.error('Erreur lors de la suppression du rôle :', error);
+          }
         }
       }
     },

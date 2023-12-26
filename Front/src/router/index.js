@@ -33,6 +33,7 @@ import UserInfo from '@/views/UserInfoView.vue'
 import ValidLignePage from "@/views/ValidLignePage.vue";
 import waitingUsersPage from "@/views/WaitingUsersPage.vue";
 import edtPage from "@/views/EdtPage.vue";
+import AdminDeleteCascadeProtector from "@/views/Admin/DeleteCascadeProtectorPage.vue";
 
 Vue.use(VueRouter);
 
@@ -142,6 +143,11 @@ const routes = [
     path: '/admin/roles/edit',
     name: 'AdminEditRoles',
     component: AdminEditRoles
+  },
+  {
+    path: '/admin/deleteCascadeProtector',
+    name: 'AdminDeleteCascadeProtector',
+    component : AdminDeleteCascadeProtector
   },
   {
     path: '/admin/areas',
