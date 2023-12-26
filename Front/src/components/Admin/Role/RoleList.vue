@@ -12,22 +12,14 @@
                 <tr>
                   <th>{{ translate("roleList_id") }}</th>
                   <th>{{ translate("roleList_libelle") }}</th>
+                  <th>{{ translate("roleList_droits") }}</th>
                   <th>{{ translate("roleList_actions") }}</th>
-                  <th>Droits</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(role, index) in getAllRoles" :key="index">
                   <td>{{ role.id_role }}</td>
                   <td>{{ role.libelle }}</td>
-                  <td>
-                    <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
-                      {{ translate("roleList_modifier") }}
-                    </router-link>
-                    <button class="btn btn-danger" @click="removeRole(role.id_role)">
-                      {{ translate("roleList_supprimer") }}
-                    </button>
-                  </td>
                   <td>
                     <ul style="display: inline-block;">
                       <li v-for="droit in getRoleDroits(role)" :key="droit.id">
@@ -37,6 +29,14 @@
                         {{ translate("roleList_noDroit") }}
                       </li>
                     </ul>
+                  </td>
+                  <td>
+                    <router-link :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
+                      {{ translate("roleList_modifier") }}
+                    </router-link>
+                    <button class="btn btn-danger" @click="removeRole(role.id_role)">
+                      {{ translate("roleList_supprimer") }}
+                    </button>
                   </td>
                 </tr>
               </tbody>
