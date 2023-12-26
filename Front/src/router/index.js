@@ -33,6 +33,7 @@ import UserInfo from '@/views/UserInfoView.vue'
 import ValidLignePage from "@/views/ValidLignePage.vue";
 import waitingUsersPage from "@/views/WaitingUsersPage.vue";
 import edtPage from "@/views/EdtPage.vue";
+import CommandePrestatairePage from "@/views/Prestataire/commandes/CommandePrestatairePage.vue";
 
 Vue.use(VueRouter);
 
@@ -199,7 +200,11 @@ const routes = [
     name: 'PrestataireStatistiqueView',
     component: PrestataireStatistiquePage
   },
-
+  {
+    path: '/prestataire/commandes',
+    name: 'PrestataireCommandesView',
+    component: CommandePrestatairePage
+  },
     //Error 404
   {
     path: '*',
