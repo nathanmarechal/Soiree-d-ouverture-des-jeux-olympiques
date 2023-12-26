@@ -26,7 +26,7 @@ import {
     updateQuantityInPanier
 } from "@/services/panier.service";
 import {
-    addCommande,
+    addCommande, getCommandesPrestataires,
     getCommandeUserCourant,
     getLigneCommandeBycommandeId, getScheduleByUserId,
     setEtatLigneCommandeExterieur
@@ -94,6 +94,8 @@ export default new Vuex.Store({
         selectedStands: [],
         provenance : null,
 
+        commandesPrestataire : [],
+
         lang:"fr"
     },
 
@@ -145,6 +147,7 @@ export default new Vuex.Store({
         getCommandeById: (state) => (id) => {
             return state.userCourant.commandes.find(commande => commande.id_commande === id);
         },
+        getCommandePrestataire : state => state.commandesPrestataire,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -499,7 +502,14 @@ export default new Vuex.Store({
             } else {
                 state.userCourant.schedule.splice(index, 0, schedule);
             }
-        },    },
+        },
+
+        SET_COMMANDS_PRESTATAIRE(state, commandesPrestataire) {
+            state.commandesPrestataire = commandesPrestataire;
+        },
+
+    },
+
 
     actions: {
 
@@ -612,6 +622,16 @@ export default new Vuex.Store({
                 console.log("dans le store" + id_user)
                 const lastinstert = await addCommande(id_user);
                 commit('ADD_COMMANDES_USER_COURANT', lastinstert);
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+        async getCommandesPrestataireStore({commit},id_user){
+            try {
+                const commandes = await getCommandesPrestataires(id_user);
+                commit('SET_COMMANDS_PRESTATAIRE', commandes);
+                console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
