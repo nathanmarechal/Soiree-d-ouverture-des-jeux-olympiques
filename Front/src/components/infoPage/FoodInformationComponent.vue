@@ -1,17 +1,18 @@
 <template>
-  <section>
-  <div v-for="type in getAllTypePrestation" :key="type">
-  <div  class="food-image-container">
-    <img :src="getImageSrc(type.image)" alt="Background" class="food-img-fluid w-100 h-100">
-    <div class="food-overlay-text">
-      <h3>{{type.page_title}}</h3>
-      <p>{{ type.description_type_prestation }}</p>
-      <button @click="goToStore(type)" class="food-overlay-button" > Réserver </button>
+  <section style="margin-top: 5%">
+    <div v-for="type in getAllTypePrestation" :key="type" class="food-container">
+      <div class="food-image-container">
+        <img :src="getImageSrc(type.image)" class="food-img-fluid" alt="food">
+      </div>
+      <div class="food-text-container">
+        <h3>{{type.page_title}}</h3>
+        <p>{{ type.description_type_prestation }}</p>
+        <button @click="goToStore(type)" class="food-overlay-button">Réserver</button>
+      </div>
     </div>
-  </div>
-  </div>
   </section>
 </template>
+
 
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
@@ -67,9 +68,9 @@ export default {
     },
 
     goToStore(type){
-      this.updateFilterI(type);  // Mettre à jour la sélection
-      this.$store.commit('SET_PROVENANCE', 0); // Autres logiques
-      this.$router.push({ name: 'shopView' }); // Naviguer vers la nouvelle route
+      this.updateFilterI(type);
+      this.$store.commit('SET_PROVENANCE', 0);
+      this.$router.push({ name: 'shopView' });
     }
   },
 
@@ -77,31 +78,61 @@ export default {
 </script>
 
 <style scoped>
-.food-image-container {
-  position: relative;
+.food-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 100vh;
+  margin-bottom: 5%;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  position: relative; /* Nécessaire pour positionner correctement le pseudo-élément */
+}
+
+.food-image-container::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%; /* Largeur du dégradé */
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  /* Ajustez les couleurs du dégradé selon vos besoins */
+}
+
+.food-image-container {
+  flex: 1;
+  position: relative;
+  height: 100%;
 }
 
 .food-img-fluid {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+
+.food-text-container {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  max-width: 45%;
+  color: black;
+  font-size: 24px;
+  text-align: justify;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .food-overlay-text {
   position: absolute;
   top: 50%;
-  right: 5%;
+  left: 55%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
   border-radius: 5px;
-  max-width: 45%;
-  color: white;
-  font-size: 24px;
   margin: 0;
-  text-align: justify;
 }
-
 
 .food-overlay-button {
   display: block;
@@ -119,3 +150,5 @@ export default {
   background-color: #a09860;
 }
 </style>
+
+

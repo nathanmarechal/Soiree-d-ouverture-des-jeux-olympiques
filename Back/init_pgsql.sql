@@ -902,8 +902,14 @@ select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande
     ORDER BY c.id_creneau;
 
 
-
-
+SELECT ligne_commande.id_creneau, c.heure_creneau, libelle, quantite, p.prix, p.prix * quantite as prix_total
+FROM ligne_commande
+    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
+    JOIN stand s on p.id_stand = s.id_stand
+    JOIN public.utilisateur u on s.id_stand = u.id_stand
+    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
+    WHERE u.id_user = 2
+    ORDER BY ligne_commande.id_creneau;
 
 
 

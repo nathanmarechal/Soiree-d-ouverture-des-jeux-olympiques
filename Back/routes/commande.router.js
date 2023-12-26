@@ -13,4 +13,6 @@ router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
 
 router.get("/getSchedule/:id", commandeController.getScheduleByUserId);
 
+router.get("/getCommandesPrestataires/:id", commandeController.getCommandesPrestataires);
+
 module.exports = router;

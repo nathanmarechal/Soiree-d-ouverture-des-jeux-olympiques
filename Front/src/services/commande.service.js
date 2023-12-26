@@ -47,10 +47,20 @@ async function setEtatLigneCommandeExterieurFromAPI({ id_commande,id_prestation,
     return patchRequest('/commande/setetatligne', {id_commande, id_prestation, id_creneau}, 'SETETATLIGNECOMMANDEEXTERIEUR')
 }
 
+async function getCommandesPrestataires(id_prestataire){
+    let answer = await getCommandesPrestatairesFromApi(id_prestataire)
+    return answer;
+}
+
+async function getCommandesPrestatairesFromApi(id_prestataire) {
+    return getRequest('/commande/getCommandesPrestataires/' + id_prestataire, 'GETCOMMANDESPRESTATAIRES')
+}
+
 export {
     getCommandeUserCourant,
     addCommande,
     getLigneCommandeBycommandeId,
     setEtatLigneCommandeExterieur,
-    getScheduleByUserId
+    getScheduleByUserId,
+    getCommandesPrestataires
 }

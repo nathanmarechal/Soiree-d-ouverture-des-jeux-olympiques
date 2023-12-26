@@ -136,10 +136,41 @@ async function getScheduleByUserIdAsync(id) {
 
 }
 
+const getCommandesPrestataires = (id, callback) => {
+    getCommandesPrestatairesAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getCommandesPrestatairesAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT ligne_commande.id_creneau, c.heure_creneau, libelle, quantite, p.prix, p.prix * quantite as prix_total\n" +
+            "FROM ligne_commande\n" +
+            "    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation\n" +
+            "    JOIN stand s on p.id_stand = s.id_stand\n" +
+            "    JOIN public.utilisateur u on s.id_stand = u.id_stand\n" +
+            "    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau\n" +
+            "    WHERE u.id_user = $1\n" +
+            "    ORDER BY ligne_commande.id_creneau;\n", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getCommandesPrestatairesAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getCommandeByUserId: getCommandeByUserId,
     addCommande: addCommande,
     getLigneCommandeBycommandeId: getLigneCommandeBycommandeId,
     setEtatLigneCommandeExterieur: setEtatLigneCommandeExterieur,
-    getScheduleByUserId: getScheduleByUserId
+    getScheduleByUserId: getScheduleByUserId,
+    getCommandesPrestataires: getCommandesPrestataires
 }
