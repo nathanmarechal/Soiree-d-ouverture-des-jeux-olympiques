@@ -2,8 +2,10 @@
 
 <template>
   <div>
-    <protected-data></protected-data>
-    <list-of-data-to-delete></list-of-data-to-delete>
+    <p>MONKE</p><br><br><br>
+    <protected-data :dataProp="dataToProtect" :dataType="dataToProtectType"></protected-data>
+    <p>-------------------------------------------------------------------------</p>
+    <list-of-data-to-delete :dataProp="dataToDelete" :dataType="dataToDeleteType"></list-of-data-to-delete>
   </div>
 </template>
 
@@ -11,6 +13,7 @@
 import ProtectedData from "./ProtectedData.vue";
 import ListOfDataToDelete from "./ListOfData.vue";
 import { mapActions, mapGetters } from "vuex";
+
 
 export default {
   components: {
@@ -30,7 +33,9 @@ export default {
   data() {
     return {
       dataToProtect: [],
+      dataToProtectType: '',
       dataToDelete: [],
+      dataToDeleteType: '',
     };
   },
   async mounted() {
@@ -41,47 +46,52 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRoles', 'getAllUsers']),
+    ...mapGetters(['getAllRoles', 'getAllUsers', 'getAllStand', 'getAllArea', 'getAllTypeZone', 'getAllZone']),
   },
   methods: {
-    ...mapActions(['getRolesStore', 'getUsersStore']),
+    ...mapActions(['getRolesStore', 'getUsersStore', 'getStandsStore', 'getAreasStore', 'getTypeZonesStore', 'getZonesStore', 'deleteRoleStore', 'deleteUserStore', 'deleteStandStore', 'deleteAreaStore', 'deleteTypeZoneStore', 'deleteZoneStore']),
     async loadData() {
       try {
+        console.log("props data", this.dataProp);
+        console.log("data type", this.dataType);
         await this.getRolesStore();
         await this.getUsersStore();
-        await this.getTypeOfDataToProtect();
-        await this.getDataToDelete();
+        await this.getStandsStore();
+        await this.getAreasStore();
+        await this.getTypeZonesStore();
+        await this.getZonesStore();
+        await this.getAllData();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-    async getTypeOfDataToProtect(){
-      switch (this.dataType) {
+    async getAllData(){
+      this.dataToProtect = this.dataProp;
+      this.dataToProtectType = this.dataType;
+      await this.getAllDataToDelete();
+    },
+    async getAllDataToDelete(){
+      let id;
+      let data;
+      switch (this.dataToProtectType) {
         case 'role':
-          this.dataToProtect = this.getAllRoles.find(role => role.id_role === this.dataToNameLater.id_role);
+          id = this.dataProp.id_role;
+          data = this.getAllUsers.filter(user => user.id_role === id);
+          console.log("all data", id, data);
+          this.dataToDelete = data;
+          this.dataToDeleteType = 'user';
           break;
         case 'user':
-          this.dataToProtect = this.getAllUsers.find(user => user.id_role === this.dataToNameLater.id_role);
+          id = this.dataProp.id_stand;
+          data = this.getAllStand.filter(stand => stand.id_stand === id);
+          this.dataToDelete = data;
+          this.dataToDeleteType = 'stand';
           break;
-        default:
+        default: 
           console.error('Erreur lors du chargement des données');
           break;
       }
       console.log("data to protect", this.dataToProtect);
-    },
-    async getDataToDelete(){
-      switch (this.dataType) {
-        case 'role':
-          this.dataToDelete = this.getAllUsers.filter(user => user.id_role === this.dataToNameLater.id_role);
-          break;
-        case 'user':
-          this.dataToDelete = this.getAllUsers.filter(user => user.id_user === this.dataToNameLater.id_user);
-          break;
-        default:
-          console.error('Erreur lors du chargement des données');
-          break;
-      }
-      console.log("data to delete", this.dataToDelete);
     },
   }
 }
