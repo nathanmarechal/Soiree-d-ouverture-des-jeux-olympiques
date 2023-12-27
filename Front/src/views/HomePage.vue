@@ -7,7 +7,7 @@
     <MainImageAndTitle_en/>
     </div>
     <PageTitle />
-    <PageDescription />
+    <PageDescription :id="1"/>
     <SlideshowTitleComponent/>
     <PageSlideshow/>
     <StandTitle/>

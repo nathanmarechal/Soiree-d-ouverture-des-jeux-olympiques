@@ -43,6 +43,7 @@ import {
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
+import {updateDescriptionHomePage} from "@/services/homePage.service";
 
 Vue.use(Vuex)
 
@@ -95,6 +96,8 @@ export default new Vuex.Store({
         provenance : null,
 
         commandesPrestataire : [],
+
+        texts_home: [{"id_text_accueil": 1, "description":"sefsefsefesfesfsefesfesfesfesfsefsef"},{"id_text_accueil": 2, "description":"azertyuiopqsdfghjklmwwxcvbnazertyuiopqsdfghjklmwxcvbn"}],
 
         lang:"fr"
     },
@@ -162,6 +165,7 @@ export default new Vuex.Store({
         getSelectedTypeZones: state=> state.selectedTypeZones,
         getLang: state=> state.lang,
 
+        getTextsHome: state => state.texts_home,
 
     },
 
@@ -263,6 +267,16 @@ export default new Vuex.Store({
         UPDATE_STAND(state, payload) {
             state.stands = state.stands.map(item => {
                 if (item.id_stand === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        UPDATE_HomePage(state, payload) {
+            state.texts_home = state.texts_home.map(item => {
+                if (item.id_text_accueil === payload.id_text_accueil) {
+                    console.log("item.id_text_accueil " + item.id_text_accueil + " payload.id_text_accueil " + payload.id_text_accueil);
                     return { ...item, ...payload.body };
                 }
                 return item;
@@ -1084,6 +1098,18 @@ export default new Vuex.Store({
             }
         },
 
+//----------------------------------------------------------------------HomePage--------------------------------------------------------------------//
+
+        async updateDescriptionHomePageStore({ commit }, {id_text_accueil, body}) {
+            try {
+                console.log(id_text_accueil, body)
+                await updateDescriptionHomePage(id_text_accueil, body);
+                commit('UPDATE_HomePage', {id_text_accueil, body});
+            } catch (err) {
+                console.error("Error in updateHomePageStore():", err);
+            }
+        },
+
 //----------------------------------------------------------------------Stand--------------------------------------------------------------------//
 
         async updateStandStore({ commit }, {id, body}) {
@@ -1095,6 +1121,7 @@ export default new Vuex.Store({
                 console.error("Error in updateStandStore():", err);
             }
         },
+
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
                 console.log(id, body)

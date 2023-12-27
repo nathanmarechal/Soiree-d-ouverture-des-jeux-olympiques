@@ -27,6 +27,14 @@
     DROP TABLE IF EXISTS creneau CASCADE;
     DROP TABLE IF EXISTS etat_inscription CASCADE;
 
+    DROP TABLE IF EXISTS text_accueil CASCADE;
+
+    -- Create the tables
+
+    CREATE TABLE text_accueil(
+        id_text_accueil SERIAL PRIMARY KEY,
+        description TEXT
+    );
 
     CREATE TABLE etat_inscription(
         id_etat_inscription SERIAL PRIMARY KEY,
