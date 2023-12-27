@@ -1,5 +1,8 @@
 <template>
- <div>
+  <div class="alert alert-success" role="alert" v-if="getCurrentUser.commandes.length === 0">
+    Il n'y a pas encore de commande
+  </div>
+  <div v-else>
    <table class="table table-striped">
      <thead>
      <tr>

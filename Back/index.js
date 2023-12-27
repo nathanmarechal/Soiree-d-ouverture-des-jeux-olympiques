@@ -14,6 +14,8 @@ const commandeRoutes = require('./routes/commande.router');
 const statistiquesRoutes = require('./routes/statistiques.router');
 const typeEmplacementLogistiqueRoutes = require('./routes/typeEmplacementLogistique.router');
 const emplacementLogistiqueRoutes = require('./routes/emplacementLogistique.router');
+const homePageRoutes = require('./routes/homePage.router');
+
 
 dotenv.config();
 const app = express();
@@ -34,6 +36,7 @@ app.use("/api/login",loginRoutes);
 app.use("/api/prestations",prestationsRoutes);
 app.use("/api/typePrestations",typePrestationsRoutes);
 app.use("/api/stands",standsRoutes);
+app.use("/api/homePage",homePageRoutes);
 app.use("/api/statistiques",statistiquesRoutes);
 app.use("/api/commande", commandeRoutes);
 app.use("/api/droits", droitsRoutes);

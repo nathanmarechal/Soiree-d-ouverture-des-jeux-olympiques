@@ -26,13 +26,13 @@ import {
     updateQuantityInPanier
 } from "@/services/panier.service";
 import {
-    addCommande,
+    addCommande, getCommandesPrestataires,
     getCommandeUserCourant,
-    getLigneCommandeBycommandeId,
+    getLigneCommandeBycommandeId, getScheduleByUserId,
     setEtatLigneCommandeExterieur
 } from "@/services/commande.service";
 import {
-    getAllDroits, 
+    getAllDroits,
 } from "@/services/droit.service";
 import {
     getAllRoleDroitAssociation,
@@ -43,6 +43,7 @@ import {
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
+import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
 
 Vue.use(Vuex)
 
@@ -61,9 +62,10 @@ export default new Vuex.Store({
             "commune": null,
             "panier":  [],
             "droits": [],
+            "schedule": [],
             "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
             "id_role": null,
-            "id_stand" : null
+            "id_stand" : null,
         },
         usersAttente: [],
         creneau: [],
@@ -92,6 +94,10 @@ export default new Vuex.Store({
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,
+
+        commandesPrestataire : [],
+
+        texts_home: [],
 
         lang:"fr"
     },
@@ -136,6 +142,7 @@ export default new Vuex.Store({
         getAllCreneau: state => state.creneau,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
+        getSchedule: state => state.userCourant.schedule,
 
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
@@ -143,6 +150,7 @@ export default new Vuex.Store({
         getCommandeById: (state) => (id) => {
             return state.userCourant.commandes.find(commande => commande.id_commande === id);
         },
+        getCommandePrestataire : state => state.commandesPrestataire,
 
         getSelectedZone: state => state.selectedZone,
         getSelectedTypePrestation: state => state.selectedTypePrestation,
@@ -155,11 +163,17 @@ export default new Vuex.Store({
 
         getAreaSelectedForStand: state=> state.areaSelectedForStand,
         getSelectedTypeZones: state=> state.selectedTypeZones,
-        getLang: state=> state.lang
+        getLang: state=> state.lang,
+
+        getTextsHome: state => state.texts_home,
 
     },
 
     mutations: {
+
+        SET_TEXTS_HOME(state, texts_home) {
+            state.texts_home = texts_home;
+        },
 
         SET_USERS(state, users) {
             state.users.splice(0)
@@ -179,6 +193,7 @@ export default new Vuex.Store({
         REFUSE_USER(state, id) {
             state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
         },
+
 
         SET_ROLES(state, roles) {
           state.roles = roles;
@@ -256,6 +271,16 @@ export default new Vuex.Store({
         UPDATE_STAND(state, payload) {
             state.stands = state.stands.map(item => {
                 if (item.id_stand === payload.id) {
+                    return { ...item, ...payload.body };
+                }
+                return item;
+            });
+        },
+
+        UPDATE_HomePage(state, payload) {
+            state.texts_home = state.texts_home.map(item => {
+                if (item.id_text_accueil === payload.id_text_accueil) {
+                    console.log("item.id_text_accueil " + item.id_text_accueil + " payload.id_text_accueil " + payload.id_text_accueil);
                     return { ...item, ...payload.body };
                 }
                 return item;
@@ -350,6 +375,7 @@ export default new Vuex.Store({
                 return item;
             });
         },
+
 
         CREATE_ZONE(state, payload) {
             state.zones.push(payload);
@@ -480,8 +506,28 @@ export default new Vuex.Store({
             state.userCourant.adresse = payload.adresse;
             state.userCourant.code_postal = payload.code_postal;
             state.userCourant.commune = payload.commune;
-        }
+        },
+
+        SET_SCHEDULE(state, schedule) {
+            state.userCourant.schedule = schedule;
+        },
+
+        ADD_SCHEDULE(state, schedule) {
+            const index = state.userCourant.schedule.findIndex(item => item.id_creneau > schedule.id_creneau);
+
+            if (index === -1) {
+                state.userCourant.schedule.push(schedule);
+            } else {
+                state.userCourant.schedule.splice(index, 0, schedule);
+            }
+        },
+
+        SET_COMMANDS_PRESTATAIRE(state, commandesPrestataire) {
+            state.commandesPrestataire = commandesPrestataire;
+        },
+
     },
+
 
     actions: {
 
@@ -565,6 +611,17 @@ export default new Vuex.Store({
             }
         },
 
+//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
+
+        async getScheduleByUserIdStore({commit}, id){
+            try {
+                const schedule = await getScheduleByUserId(id);
+                console.log("schedule envoyée au store" + JSON.stringify(schedule))
+                commit('SET_SCHEDULE', schedule);
+            } catch (error) {
+                console.error('Error fetching schedule:', error);
+            }
+        },
 
 //-----------------------------------------------------------------Commande-----------------------------------------------------------------------//
 
@@ -583,6 +640,16 @@ export default new Vuex.Store({
                 console.log("dans le store" + id_user)
                 const lastinstert = await addCommande(id_user);
                 commit('ADD_COMMANDES_USER_COURANT', lastinstert);
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+        async getCommandesPrestataireStore({commit},id_user){
+            try {
+                const commandes = await getCommandesPrestataires(id_user);
+                commit('SET_COMMANDS_PRESTATAIRE', commandes);
+                console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
@@ -1035,6 +1102,31 @@ export default new Vuex.Store({
             }
         },
 
+//----------------------------------------------------------------------HomePage--------------------------------------------------------------------//
+
+        async updateDescriptionHomePageStore({ commit }, {id_text_accueil, body}) {
+            try {
+                console.log(id_text_accueil, body)
+                await updateDescriptionHomePage(id_text_accueil, body);
+                commit('UPDATE_HomePage', {id_text_accueil, body});
+            } catch (err) {
+                console.error("Error in updateHomePageStore():", err);
+            }
+        },
+
+        async getTextsHomeStore({ commit }) {
+            try {
+                const result = await getAllDescription();
+                if (Array.isArray(result)) {
+                    commit('SET_TEXTS_HOME', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getTextsHome():", err);
+            }
+        },
+
 //----------------------------------------------------------------------Stand--------------------------------------------------------------------//
 
         async updateStandStore({ commit }, {id, body}) {
@@ -1046,6 +1138,7 @@ export default new Vuex.Store({
                 console.error("Error in updateStandStore():", err);
             }
         },
+
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
                 console.log(id, body)

@@ -1,4 +1,5 @@
 const pool = require("../database/db");
+const {as} = require("pg-promise");
 
 
 async function getCommandeByUserIdAsync(id_user) {
@@ -103,9 +104,73 @@ async function setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_c
     }
 }
 
+const getScheduleByUserId = (id, callback) => {
+    getScheduleByUserIdAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getScheduleByUserIdAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande\n" +
+            "    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation\n" +
+            "    JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation\n" +
+            "    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau\n" +
+            "    JOIN commande c2 on c2.id_commande = ligne_commande.id_commande\n" +
+            "    JOIN utilisateur u on c2.id_user = u.id_user\n" +
+            "    JOIN stand s on p.id_stand = s.id_stand\n" +
+            "    WHERE c2.id_user = $1\n" +
+            "    ORDER BY c.id_creneau;\n;", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getScheduleByUserIdAsync:', error);
+        throw error;
+    }
+
+}
+
+const getCommandesPrestataires = (id, callback) => {
+    getCommandesPrestatairesAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getCommandesPrestatairesAsync(id) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT ligne_commande.id_creneau, c.heure_creneau, libelle, quantite, p.prix, p.prix * quantite as prix_total\n" +
+            "FROM ligne_commande\n" +
+            "    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation\n" +
+            "    JOIN stand s on p.id_stand = s.id_stand\n" +
+            "    JOIN public.utilisateur u on s.id_stand = u.id_stand\n" +
+            "    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau\n" +
+            "    WHERE u.id_user = $1\n" +
+            "    ORDER BY ligne_commande.id_creneau;\n", [id]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getCommandesPrestatairesAsync:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getCommandeByUserId: getCommandeByUserId,
     addCommande: addCommande,
     getLigneCommandeBycommandeId: getLigneCommandeBycommandeId,
-    setEtatLigneCommandeExterieur: setEtatLigneCommandeExterieur
+    setEtatLigneCommandeExterieur: setEtatLigneCommandeExterieur,
+    getScheduleByUserId: getScheduleByUserId,
+    getCommandesPrestataires: getCommandesPrestataires
 }

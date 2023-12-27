@@ -37,12 +37,36 @@ exports.getLigneCommandeBycommandeId = (req, res) => {
     })
 }
 
+exports.getScheduleByUserId = (req, res) => {
+    const id = req.params.id;
+    console.log("dans le controller" + id)
+    commandeService.getScheduleByUserId(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.setEtatLigneCommandeExterieur = (req, res) => {
     const id_presta = req.body.id_prestation;
     const id_creneau = req.body.id_creneau;
     const id_commande = req.body.id_commande;
     console.log("id_presta:" + id_presta + ", id_creneau:" + id_creneau + ", id_commande:" + id_commande + " dans le controller commande.controller.js")
     commandeService.setEtatLigneCommandeExterieur({ id_presta, id_creneau, id_commande}, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.getCommandesPrestataires = (req, res) => {
+    const id = req.params.id;
+    console.log("dans le controller" + id)
+    commandeService.getCommandesPrestataires(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

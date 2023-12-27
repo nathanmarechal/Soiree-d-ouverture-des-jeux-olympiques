@@ -27,6 +27,14 @@
     DROP TABLE IF EXISTS creneau CASCADE;
     DROP TABLE IF EXISTS etat_inscription CASCADE;
 
+    DROP TABLE IF EXISTS text_accueil CASCADE;
+
+    -- Create the tables
+
+    CREATE TABLE text_accueil(
+        id_text_accueil SERIAL PRIMARY KEY,
+        description TEXT
+    );
 
     CREATE TABLE etat_inscription(
         id_etat_inscription SERIAL PRIMARY KEY,
@@ -244,54 +252,54 @@
     -- Insert data into tables
 
     INSERT INTO creneau(heure_creneau) VALUES
-    ('16h-16h15'),
+    ('16h00-16h15'),
     ('16h15-16h30'),
     ('16h30-16h45'),
-    ('16h45-17h'),
-    ('17h-17h15'),
+    ('16h45-17h00'),
+    ('17h00-17h15'),
     ('17h15-17h30'),
     ('17h30-17h45'),
-    ('17h45-18h'),
-    ('18h-18h15'),
+    ('17h45-18h00'),
+    ('18h00-18h15'),
     ('18h15-18h30'),
     ('18h30-18h45'),
-    ('18h45-19h'),
-    ('19h-19h15'),
+    ('18h45-19h00'),
+    ('19h00-19h15'),
     ('19h15-19h30'),
     ('19h30-19h45'),
-    ('19h45-20h'),
-    ('20h-20h15'),
+    ('19h45-20h00'),
+    ('20h00-20h15'),
     ('20h15-20h30'),
     ('20h30-20h45'),
-    ('20h45-21h'),
-    ('21h-21h15'),
+    ('20h45-21h00'),
+    ('21h00-21h15'),
     ('21h15-21h30'),
     ('21h30-21h45'),
-    ('21h45-22h'),
-    ('22h-22h15'),
+    ('21h45-22h00'),
+    ('22h00-22h15'),
     ('22h15-22h30'),
     ('22h30-22h45'),
-    ('22h45-23h'),
-    ('23h-23h15'),
+    ('22h45-23h00'),
+    ('23h00-23h15'),
     ('23h15-23h30'),
     ('23h30-23h45'),
-    ('23h45-00h'),
-    ('00h-00h15'),
+    ('23h45-00h00'),
+    ('00h00-00h15'),
     ('00h15-00h30'),
     ('00h30-00h45'),
-    ('00h45-01h'),
-    ('01h-01h15'),
+    ('00h45-01h00'),
+    ('01h00-01h15'),
     ('01h15-01h30'),
     ('01h30-01h45'),
-    ('01h45-02h'),
-    ('02h-02h15'),
+    ('01h45-02h00'),
+    ('02h00-02h15'),
     ('02h15-02h30'),
     ('02h30-02h45'),
-    ('02h45-03h'),
-    ('03h-03h15'),
+    ('02h45-03h00'),
+    ('03h00-03h15'),
     ('03h15-03h30'),
     ('03h30-03h45'),
-    ('03h45-04h');
+    ('03h45-04h00');
 
     INSERT INTO etat_inscription(libelle) VALUES
     ('en cours de validation'),
@@ -890,3 +898,33 @@ SELECT * FROM utilisateur;
 SELECT * FROM standAttente;
 SELECT * FROM stand;
 select * FROM role;
+
+select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande
+    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
+    JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
+    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
+    JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
+    JOIN utilisateur u on c2.id_user = u.id_user
+    JOIN stand s on p.id_stand = s.id_stand
+    WHERE c2.id_user = 1
+    ORDER BY c.id_creneau;
+
+
+SELECT ligne_commande.id_creneau, c.heure_creneau, libelle, quantite, p.prix, p.prix * quantite as prix_total
+FROM ligne_commande
+    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
+    JOIN stand s on p.id_stand = s.id_stand
+    JOIN public.utilisateur u on s.id_stand = u.id_stand
+    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
+    WHERE u.id_user = 2
+    ORDER BY ligne_commande.id_creneau;
+
+
+
+INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
+
+select * from text_accueil;
+
+
+
+

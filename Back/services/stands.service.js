@@ -142,7 +142,7 @@ async function uploadingPictureDescriptionAsync(req) {
         if (!req.file) {
             throw new Error('File upload failed');
         }
-        return { location :`${process.env.BASE_URL}/stands/picture-description/${req.file.filename}`}
+        return { location :`${process.env.BASE_URL}/homePage/picture-description/${req.file.filename}`}
     } catch (error) {
         console.error('Error in uploadingPictureDescriptionAsync:', error);
         throw error;

@@ -1,17 +1,17 @@
 <template>
   <div class="d-flex justify-content-center" style="margin-top: 10vh">
 
-    <add-user-form></add-user-form>
+    <addUserRegister></addUserRegister>
   </div>
 
 </template>
 
 <script>
-import addUserForm from "../components/Admin/User/AddUserForm.vue"
+import addUserRegister from "../components/Register/addUserRegister.vue"
 
 export default {
   components: {
-    addUserForm
+    addUserRegister
   }
 }
 </script>
