@@ -43,7 +43,7 @@ import {
 
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
-import {updateDescriptionHomePage} from "@/services/homePage.service";
+import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
 
 Vue.use(Vuex)
 
@@ -97,7 +97,7 @@ export default new Vuex.Store({
 
         commandesPrestataire : [],
 
-        texts_home: [{"id_text_accueil": 1, "description":"sefsefsefesfesfsefesfesfesfesfsefsef"},{"id_text_accueil": 2, "description":"azertyuiopqsdfghjklmwwxcvbnazertyuiopqsdfghjklmwxcvbn"}],
+        texts_home: [],
 
         lang:"fr"
     },
@@ -170,6 +170,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
+
+        SET_TEXTS_HOME(state, texts_home) {
+            state.texts_home = texts_home;
+        },
 
         SET_USERS(state, users) {
             state.users.splice(0)
@@ -1107,6 +1111,19 @@ export default new Vuex.Store({
                 commit('UPDATE_HomePage', {id_text_accueil, body});
             } catch (err) {
                 console.error("Error in updateHomePageStore():", err);
+            }
+        },
+
+        async getTextsHomeStore({ commit }) {
+            try {
+                const result = await getAllDescription();
+                if (Array.isArray(result)) {
+                    commit('SET_TEXTS_HOME', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getTextsHome():", err);
             }
         },
 

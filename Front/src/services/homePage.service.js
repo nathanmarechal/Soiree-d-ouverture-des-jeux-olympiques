@@ -1,7 +1,7 @@
-import {patchRequest, postRequestPicture} from "@/services/axios.service";
+import {getRequest, patchRequest, postRequestPicture} from "@/services/axios.service";
 
 async function uploadImageDescriptionHomePageFromAPI(image){
-    return postRequestPicture('stands/uploading/picture-description/',image, 'UPLOADPICTUREDESCRIPTIONSTAND')
+    return postRequestPicture('/homePage/uploading/picture-description/',image, 'UPLOADPICTUREDESCRIPTIONHOMEPAGE')
 }
 
 async function uploadImageDescriptionHomePage(image) {
@@ -10,7 +10,7 @@ async function uploadImageDescriptionHomePage(image) {
 }
 
 async function updateDescriptionHomePageFromAPI(id, body) {
-    return patchRequest('/stands/description/' + id, body, 'UPDATEDESCRIPTIONSTAND')
+    return patchRequest('/homePage/description/' + id, body, 'UPDATEDESCRIPTIONHOMEPAGE')
 }
 
 async function updateDescriptionHomePage(id, body) {
@@ -18,7 +18,15 @@ async function updateDescriptionHomePage(id, body) {
     return answer
 }
 
+async function getAllDescription() {
+    let answer = await getAllDescriptionFromAPI()
+    return answer
+}
+async function getAllDescriptionFromAPI() {
+    return getRequest('/homePage/getAllDescription', 'GETALLDESCRIPTION')
+}
 export {
+    getAllDescription,
     uploadImageDescriptionHomePage,
     updateDescriptionHomePage
 }

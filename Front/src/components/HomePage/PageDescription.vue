@@ -57,11 +57,11 @@ export default {
     ...mapGetters(['getCurrentUser', 'getTextsHome']),
   },
   methods: {
-    ...mapActions(['getStandsStore', 'getStandsStore','updateDescriptionHomePageStore']),
+    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore']),
     async loadData() {
       try {
         if (this.getTextsHome.length === 0){
-          await this.getStandsStore()
+          await this.getTextsHomeStore()
         }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
         console.log(this.homeText + " zazazazazazaza ")
