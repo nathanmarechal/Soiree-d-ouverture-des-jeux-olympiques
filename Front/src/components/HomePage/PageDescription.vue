@@ -1,101 +1,125 @@
 <template>
-  <div class="container-fluid h-100 customarge" >
-    <div class="row h-100">
-      <div class="col-lg-6 d-flex align-items-center justify-content-center">
-        <img class="img" :src="image" alt="image du parcours">
-      </div>
-      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center" style="font-family: Arial, sans-serif">
-        <h2 class="subtitle subMarge">{{translate("desc_1")}}</h2>
-        <div style="text-align: justify; margin-left: 7%; margin-right: 7%;">
-          <ul >
-        <li style="margin-bottom: 5px;"><b>{{translate("desc_2")}}
-        </b>{{translate("desc_3")}}</li>
-        <li style="margin-bottom: 5px"><b>{{translate("desc_4")}}</b>{{translate("desc_5")}}</li>
-        <li style="margin-bottom: 5px"><b>{{translate("desc_6")}}</b>{{translate("desc_7")}}</li>
-        <li style="margin-bottom: 5px"><b>{{translate("desc_8")}}</b>{{translate("desc_9")}}</li>
-          </ul>
-        <p style="margin-bottom: 10%"><b>{{translate("desc_10")}}</b></p>
+  <div>
+  <main id="sample">
+    <Editor
+        ref="myEditor"
+        api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+        :init="{
+      height: 500,
+      menubar: true,
+      plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar: 'undo redo | formatselect | ' +
+      'bold italic backcolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | help | image',
+      images_upload_handler: handleImageUpload
+      }"
+        :initial-value="HomeDescription"
 
-        </div>
-        <div class="table-responsive">
-          <table class="table">
-          <thead>
-          <tr>
-            <th scope="col">{{ translate("desc_horaire") }}</th>
-            <th scope="col">{{ translate("desc_prestation") }}</th>
-            <th scope="col">{{translate("desc_lieuObservation")}}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <th scope="row">{{translate("desc_19h")}}</th>
-            <td>{{translate("desc_19h_1")}}</td>
-            <td>{{translate("desc_19h_2")}}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{translate("desc_20h30")}}</th>
-            <td>{{translate("desc_20h30_1")}} </td>
-            <td>{{translate("desc_20h30_2")}}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{translate("desc_21h")}}</th>
-            <td >{{translate("desc_21h_1")}}</td>
-            <td>{{translate("desc_21h_2")}}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{translate("desc_22h30")}}</th>
-            <td>{{translate("desc_22h30_1")}}</td>
-            <td>{{translate("desc_22h30_2")}}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{ translate("desc_00h") }}</th>
-            <td>{{ translate("desc_00h_1") }}</td>
-            <td>{{ translate("desc_00h_2") }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    </div>
+    />
+  </main>
+  <button type="button" @click="saveContent" class="btn btn-success">Enregistrer les modifications</button>
   </div>
 </template>
 
 <script>
 import image from '../../assets/HomePage/parcours.jpg';
-import {translate} from "../../lang/translationService.js";
+import Editor from '@tinymce/tinymce-vue';
+import {mapActions, mapGetters} from "vuex";
+import {uploadImageDescriptionHomePage} from "@/services/homePage.service";
 
 export default {
-  methods: {translate},
+  components: {
+    Editor
+  },
+  props: ["id"],
   data() {
     return {
+      myEditor: null,
       image: image,
-      pageDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas suscipit sem eget dui blandit, eget ullamcorper odio interdum. Sed vel nunc ac sapien facilisis ultricies. Sed luctus nunc non dolor semper, non mattis felis bibendum. Nunc vitae ante eget tortor aliquet consectetur. Aliquam erat volutpat. Duis vel hendrerit lorem. Nullam aliquet felis eu nulla mattis, eget vehicula tortor ultricies. Aenean varius purus nec mauris tincidunt, non pharetra felis fringilla. Maecenas mattis consectetur mi, nec sollicitudin ipsum euismod a. Nullam in luctus nisl. Integer auctor, odio eget iaculis facilisis, lectus justo malesuada nisl, sed posuere metus neque nec nisi. Sed venenatis, libero in venenatis malesuada, nulla ligula aliquet nulla, vel consectetur tortor dolor nec justo. Vestibulum consequat elit ac tortor interdum, a consectetur sapien varius. Vivamus interdum, justo in tincidunt faucibus, urna ex viverra arcu, sit amet mattis libero turpis vel sapien"
+      homeText : null,
+      HomeDescription: null,
+      editorConfig: {
+        plugins: 'image',
+        toolbar: 'image'
+      },
     };
   },
+  async mounted() {
+    await this.loadData()
+    this.myEditor = this.$refs.myEditor;
+  },
+  computed: {
+    ...mapGetters(['getCurrentUser', 'getTextsHome']),
+  },
+  methods: {
+    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore']),
+    async loadData() {
+      try {
+        if (this.getTextsHome.length === 0){
+          await this.getTextsHomeStore()
+        }
+        this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
+        console.log(this.homeText + " zazazazazazaza ")
+        this.HomeDescription = this.homeText.description;
+        console.log(this.HomeDescription + " zouzouzouzozuzouzozuozuozu ")
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
+    async handleImageUpload(blobInfo, success, failure) {
+      // Générer un timestamp unique
+      const timestamp = Math.floor(Date.now() / 1000);
+      // Construire le nouveau nom de fichier
+      const fileName = `description_id_homeText_${this.homeText.id}_${timestamp}.jpeg`;
+      // Créer une nouvelle instance de File avec le nouveau nom
+      const fileInstance = new File([blobInfo.blob()], fileName, {
+        type: 'image/jpeg'
+      });
+      try {
+        // Appeler votre fonction d'upload
+        const response = await uploadImageDescriptionHomePage(fileInstance);
+
+        console.log(response.location)
+        // Vérifier si la réponse contient l'emplacement du fichier uploadé
+        if (response.location) {
+          success(response.location);
+        } else {
+          failure('Invalid response');
+        }
+      } catch (error) {
+        failure('Upload failed: '   + error.message);
+      }
+    },
+    async saveContent() {
+      if (this.myEditor && this.myEditor.editor) {
+        const content = await this.myEditor.editor.getContent();
+        await this.updateDescriptionHomePageStore({
+          id_text_accueil: this.id,
+          body: { description: content }
+        });
+        console.log('Contenu à enregistrer:', content);
+              // Add here the logic to save the content to your server or handle it as needed
+      } else {
+        console.error('Éditeur non initialisé ou indisponible');
+      }
+    },
+  }
+
 };
 </script>
 
 <style scoped>
-.customarge {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
-}
-
-.img {
-  max-width: 100%;
-  height: auto;
-}
-
-.row {
-  min-height: 500px;
-}
-
-.subtitle {
-  margin-bottom: 20px;
-}
-
-.table-responsive {
-  max-width: 100%;
-  overflow-x: hidden;
+@media (min-width: 1024px) {
+  #sample {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    width: 100%;
+  }
 }
 </style>

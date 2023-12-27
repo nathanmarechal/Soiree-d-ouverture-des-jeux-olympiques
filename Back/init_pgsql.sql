@@ -27,6 +27,14 @@
     DROP TABLE IF EXISTS creneau CASCADE;
     DROP TABLE IF EXISTS etat_inscription CASCADE;
 
+    DROP TABLE IF EXISTS text_accueil CASCADE;
+
+    -- Create the tables
+
+    CREATE TABLE text_accueil(
+        id_text_accueil SERIAL PRIMARY KEY,
+        description TEXT
+    );
 
     CREATE TABLE etat_inscription(
         id_etat_inscription SERIAL PRIMARY KEY,
@@ -913,10 +921,9 @@ FROM ligne_commande
 
 
 
+INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
 
-
-
-
+select * from text_accueil;
 
 
 
