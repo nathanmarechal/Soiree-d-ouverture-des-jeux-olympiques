@@ -1,5 +1,5 @@
 <template>
-  <section style="margin-top: 5%">
+  <section style="margin-top: 7%">
     <div v-for="type in getAllTypePrestation" :key="type" class="food-container">
       <div class="food-image-container">
         <img :src="getImageSrc(type.image)" class="food-img-fluid" alt="food">
@@ -83,7 +83,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   height: 100vh;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   border-radius: 50px;
   background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
@@ -96,7 +96,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 50%; /* Largeur du dégradé */
+  width: 10%; /* Largeur du dégradé */
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
   /* Ajustez les couleurs du dégradé selon vos besoins */
 }
