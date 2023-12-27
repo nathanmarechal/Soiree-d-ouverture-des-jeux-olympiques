@@ -1,31 +1,33 @@
 <template>
   <div>
-  <main id="sample">
-    <Editor
-        ref="myEditor"
-        api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
-        :init="{
-      height: 500,
-      menubar: true,
-      plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table paste code help wordcount'
-      ],
-      toolbar: 'undo redo | formatselect | ' +
-      'bold italic backcolor | alignleft aligncenter ' +
-      'alignright alignjustify | bullist numlist outdent indent | ' +
-      'removeformat | help | image',
-      images_upload_handler: handleImageUpload
-      }"
-        :initial-value="HomeDescription"
-
-    />
-  </main>
-  <button type="button" @click="saveContent" class="btn btn-success">Enregistrer les modifications</button>
+    <main id="sample">
+      <Editor
+          v-if="role === 'admin'"
+          ref="myEditor"
+          api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+          :init="{
+        height: 500,
+        menubar: true,
+        plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help | image',
+        images_upload_handler: handleImageUpload
+        }"
+          :initial-value="HomeDescription"
+      />
+      <div v-else>
+        {{ HomeDescription }}
+      </div>
+    </main>
+    <button v-if="role === 'admin'" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
   </div>
 </template>
-
 <script>
 import image from '../../assets/HomePage/parcours.jpg';
 import Editor from '@tinymce/tinymce-vue';
@@ -43,6 +45,7 @@ export default {
       image: image,
       homeText : null,
       HomeDescription: null,
+      role : null,
       editorConfig: {
         plugins: 'image',
         toolbar: 'image'
@@ -54,19 +57,23 @@ export default {
     this.myEditor = this.$refs.myEditor;
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getTextsHome']),
+    ...mapGetters(['getCurrentUser', 'getTextsHome', 'getAllRoles']),
   },
   methods: {
-    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore']),
+    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore', 'getRolesStore']),
     async loadData() {
       try {
         if (this.getTextsHome.length === 0){
           await this.getTextsHomeStore()
         }
+        if (this.getAllRoles.length === 0){
+          await this.getRolesStore()
+        }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
         console.log(this.homeText + " zazazazazazaza ")
         this.HomeDescription = this.homeText.description;
         console.log(this.HomeDescription + " zouzouzouzozuzouzozuozuozu ")
+        this.role = this.getAllRoles.find(role => role.id_role === this.getCurrentUser.id_role).libelle;
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -122,4 +129,6 @@ export default {
     width: 100%;
   }
 }
+
+
 </style>
