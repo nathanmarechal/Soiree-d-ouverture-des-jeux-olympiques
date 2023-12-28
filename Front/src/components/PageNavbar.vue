@@ -69,29 +69,6 @@
       </select>
 
     </b-navbar>
-
-    <b-sidebar id="mobile-nav" title="" width="250px" no-header v-model="isSidebarOpen">
-      <b-button class="close-button" @click="isSidebarOpen = false">×</b-button>
-      <b-nav vertical class="mt-2">
-        <b-nav-item href="#">Informations</b-nav-item>
-        <b-nav-item href="#">Carte</b-nav-item>
-        <b-nav-item-dropdown text="Stands" right>
-          <b-dropdown-item href="#">Nourriture</b-dropdown-item>
-          <b-dropdown-item href="#">Boisson</b-dropdown-item>
-          <b-dropdown-item href="#">Fanzone</b-dropdown-item>
-          <b-dropdown-item href="#">Billeterie</b-dropdown-item>
-          <b-dropdown-item href="#">Magasin</b-dropdown-item>
-          <b-dropdown-item href="#">Activités</b-dropdown-item>
-          <b-dropdown-item href="#">Découverte internationale</b-dropdown-item>
-          <b-dropdown-item href="#">RATP</b-dropdown-item>
-        </b-nav-item-dropdown>
-        <b-nav-item-dropdown v-if="isUserAdmin" text="Gestion" right>
-          <b-dropdown-item href="/AdminEditUsers">Comptes</b-dropdown-item>
-          <b-dropdown-item href="/AdminEditRoles">Rôles</b-dropdown-item>
-        </b-nav-item-dropdown>
-
-      </b-nav>
-    </b-sidebar>
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>
     <div id="loginModal" title="Login" class="centered hide-footer">
       <login-component :isLoginOpen="isLoginOpen" @closeModal="isLoginOpen = false"></login-component> <!-- pour refiler le booléen à l'enfant -->
