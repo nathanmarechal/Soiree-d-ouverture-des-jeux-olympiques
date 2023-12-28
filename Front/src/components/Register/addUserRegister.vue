@@ -98,17 +98,13 @@
           <label for="imageStand">image du stand </label>
           <input type="text" id="commune" v-model="stand.image_stand" required>
         </div>
+
   
         <div class="form-group">
           <label for="descriptionStand">descriptionStand </label>
           <input type="text" id="commune" v-model="stand.description_stand" required>
         </div>
-  
-  <!--      <div class="form-group">-->
-  <!--        <label for="emplacement">choix de l'emplacement </label>-->
-  <!--        <input type="text" id="commune" v-model="stand.id_emplacement" required>-->
-  <!--      </div>-->
-  
+
   
         <div>
           <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>

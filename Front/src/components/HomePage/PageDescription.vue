@@ -82,7 +82,9 @@ export default {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
       // Construire le nouveau nom de fichier
-      const fileName = `description_id_homeText_${this.homeText.id}_${timestamp}.jpeg`;
+
+      //const fileName = `description_id_homeText_${this.homeText.id}_${timestamp}.jpeg`;
+      const fileName = `description_home_page${timestamp}.jpeg`;
       // Créer une nouvelle instance de File avec le nouveau nom
       const fileInstance = new File([blobInfo.blob()], fileName, {
         type: 'image/jpeg'

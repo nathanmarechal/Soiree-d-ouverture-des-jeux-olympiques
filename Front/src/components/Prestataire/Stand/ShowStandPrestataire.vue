@@ -19,7 +19,7 @@
       'removeformat | help | image',
       images_upload_handler: handleImageUpload
       }"
-          :initial-value="standDescription"
+      :initial-value="standDescription"
 
       />
     </main>
@@ -92,7 +92,7 @@ export default {
           failure('Invalid response');
         }
       } catch (error) {
-        failure('Upload failed: '   + error.message);
+        failure('Upload failed: '+ error.message);
       }
     },
     async saveContent() {
