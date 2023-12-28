@@ -29,12 +29,14 @@
           <label for="password">{{translate("addUser_4")}} </label>
           <input type="password" id="password" v-model="utilisateur.password" required>
         </div>
-  
+
+
         <div class="form-group">
           <label for="code_postal">{{translate("addUser_5")}} </label>
           <input type="number" id="code_postal" v-model="utilisateur.code_postal" required>
         </div>
-  
+
+
         <div class="form-group">
           <label for="adresse">{{translate("addUser_6")}} </label>
           <input type="text" id="adresse" v-model="utilisateur.adresse" required>
@@ -105,7 +107,8 @@
           <input type="text" id="commune" v-model="stand.description_stand" required>
         </div>
 
-  
+        <!--choisir ici l'emplacement sur la map-->
+
         <div>
           <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
           <button @click="isPrestataire = null" class="btn btn-danger">{{translate("addUser_12")}}</button>
@@ -139,7 +142,7 @@
           nom_stand: "",
           image_stand: "",
           description_stand: "",
-          id_emplacement: 50,
+          id_emplacement: null, //à choisir avec la map
           id_zone: null,
           id_type_prestation: null,
         },
