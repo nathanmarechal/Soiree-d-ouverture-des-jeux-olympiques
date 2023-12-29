@@ -59,6 +59,15 @@ async function updateDescriptionStand(id, body) {
     return answer
 }
 
+async function uploadImageStandFromAPI(image){
+    return postRequestPicture('/stands/add/picture/',image, 'UPLOADPICTURESTANDS')
+}
+
+async function uploadImageStand(image) {
+    let answer = await uploadImageStandFromAPI(image);
+    return answer;
+}
+
 
 export {
     getAllStands,
@@ -66,5 +75,6 @@ export {
     getStandByUserId,
     updateDescriptionStand,
     deleteStand,
-    updateStand
+    updateStand,
+    uploadImageStand
 }

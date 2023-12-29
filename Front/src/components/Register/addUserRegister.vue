@@ -95,12 +95,18 @@
           <label for="nomStand">nom de votre stand </label>
           <input type="text" id="commune" v-model="stand.nom_stand" required>
         </div>
-  
-        <div class="form-group">
-          <label for="imageStand">image du stand </label>
-          <input type="text" id="commune" v-model="stand.image_stand" required>
-        </div>
 
+        <div class="form-group">
+          <label for="imageStand">Image du Stand :</label><br>
+          <input type="file" id="imageStand" @change="handleImageUpload" accept="image/*" required>
+        </div>
+        <div v-if="croppedImage">
+          <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
+        </div>
+        <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
+          <img ref="image" class="cropper-image" style=""/>
+          <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+        </div>
 
         <div class="form-group">
           <label for="descriptionStand">Description du Stand</label>
@@ -110,8 +116,7 @@
           :init="editorConfig"
           />
         </div>
-
-        <!--choisir ici l'emplacement sur la map-->
+        =
 
         <div>
           <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
@@ -126,6 +131,8 @@
   import {mapActions, mapGetters} from "vuex";
   import {translate} from "../../lang/translationService";
   import Editor from '@tinymce/tinymce-vue';
+  import Cropper from 'cropperjs';
+  import { uploadImageStand } from "@/services/stand.service";
   import {uploadImageDescriptionStand} from "@/services/stand.service";
 
 
@@ -135,6 +142,9 @@
     },
     data() {
       return {
+        croppedImage: null,
+        isImageInputUpload: false,
+        imageRaw: null,
         isPrestataire: null,
         utilisateur: {
           prenom: "",
@@ -164,7 +174,7 @@
             'insertdatetime media table paste code help wordcount'
           ],
           toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
-          images_upload_handler: this.handleImageUpload
+          images_upload_handler: this.handleImageUploadDescription
         },
       };
     },
@@ -178,6 +188,8 @@
     computed: {
       ...mapGetters(['getAllRoles', 'getCurrentUser'])
     },
+
+
     methods: {
       translate,
       ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
@@ -216,6 +228,15 @@
             this.stand.description_stand = descriptionContent;
           }
 
+          console.log("this.imageRaw")
+          console.log(this.imageRaw)
+
+          if (this.imageRaw) {
+
+            await uploadImageStand(this.imageRaw);
+          }
+
+
           await this.createUsersWithStandStore({
             user: this.utilisateur,
             stand: this.stand,
@@ -226,11 +247,11 @@
         }
       },
 
-      async handleImageUpload(blobInfo, success, failure) {
+      async handleImageUploadDescription(blobInfo, success, failure) {
         // Générer un timestamp unique
         const timestamp = Math.floor(Date.now() / 1000);
         // Construire le nouveau nom de fichier
-        const fileName = `description_id_stand_${this.stand.id_stand}_${timestamp}.jpeg`;
+        const fileName = `profile_${timestamp}.jpeg`;
         // Créer une nouvelle instance de File avec le nouveau nom
         const fileInstance = new File([blobInfo.blob()], fileName, {
           type: 'image/jpeg'
@@ -249,6 +270,43 @@
         } catch (error) {
           failure('Upload failed: '+ error.message);
         }
+      },
+
+      handleImageUpload(event) {
+        this.croppedImage = null;
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        this.isImageInputUpload = true;
+
+        reader.onload = (e) => {
+          this.$refs.image.src = e.target.result;
+          this.initializeCropper();
+        };
+        reader.readAsDataURL(file);
+      },
+      initializeCropper() {
+        const image = this.$refs.image;
+        this.cropper = new Cropper(image, {
+          aspectRatio: 1,
+          viewMode: 3,
+          zoomable: true,
+          scalable: true
+        });
+      },
+      cropImage() {
+        const croppedCanvas = this.cropper.getCroppedCanvas();
+        croppedCanvas.toBlob((blob) => {
+          const timestamp = Math.floor(Date.now() / 1000);
+          const fileName = `stand_${timestamp}.jpeg`;
+          this.stand.image_stand = fileName;
+          const file = new File([blob], fileName, { type: 'image/jpeg' });
+
+          const url = URL.createObjectURL(file);
+          this.croppedImage = url;
+          this.imageRaw = file;
+          this.cropper.destroy();
+          this.isImageInputUpload = false;
+        });
       },
     }
   }

@@ -57,6 +57,18 @@ exports.updateStand = (req, res) => {
     })
 }
 
+exports.uploadPictureStand = (req, res) => {
+    standsService.uploadPictureStand(req, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            console.log(data)
+            return res.status(200).send(data);
+        }
+    });
+};
+
+
 exports.uploadingPictureDescription = (req, res) => {
     standsService.uploadingPictureDescription(req, (error, data) => {
         if (error) {

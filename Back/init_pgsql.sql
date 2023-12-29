@@ -925,4 +925,5 @@ INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été 
 
 select * from text_accueil;
 
-select * FROM stand;
+select * FROM utilisateurAttente;
+select * from stand;
