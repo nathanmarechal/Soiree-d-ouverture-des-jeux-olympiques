@@ -160,38 +160,24 @@ methods: {
 
           return matchesSearch && matchesZone && matchesType;
         });
-      }
-      if (!hasSearchCriteria) {
-        // Si aucun critère de recherche spécifique n'est défini, affichez toutes les zones disponibles
+      }else {
         filteredAreas = this.areasShow
-        // Ajoutez à nouveau les polygones filtrés à la carte
       }
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
-      if (this.map == null) {
-        console.log("MAP NULL 2")
-      }
 
       this.map.setView(averageCenter)
       const bounds = L.latLngBounds();
 
       const self = this;
 
-      if (this.map == null) {
-        console.log("MAP NULL 3")
-      }
-      
       filteredAreas.forEach((zone) => {
         const polygon = L.polygon(zone.coordinates, {
           color: zone.couleur_hexa,
           fillOpacity: 0.8,
           weight: 5,
         }).addTo(this.map);
-
-        if (this.map == null) {
-          console.log("MAP NULL 4")
-        }
 
         polygon.on('mouseover', function (e) {
           L.popup()
@@ -200,10 +186,6 @@ methods: {
               .openOn(self.map); // Utilisez 'self.map' ici
         });
 
-        if (this.map == null) {
-          console.log("MAP NULL 5")
-        }
-        
         polygon.on('mouseout', function() {
           self.map.closePopup(); // Utilisez 'self.map' ici
         });
@@ -221,10 +203,6 @@ methods: {
         // Stockage des polygones
         this.polygons.push(polygon);
       });
-
-      if (this.map == null) {
-        console.log("MAP NULL 6")
-      }
 
       this.map.fitBounds(bounds);
     },

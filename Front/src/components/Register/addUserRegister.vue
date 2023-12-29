@@ -108,7 +108,9 @@
           <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
         </div>
 
-        <div class="form-group">
+
+
+        <div>
           <label for="descriptionStand">Description du Stand</label>
           <Editor
               ref="myEditor"
@@ -116,17 +118,20 @@
           :init="editorConfig"
           />
         </div>
-        =
+
+        <button @click="modalActiveAreaSelection=true" class="btn btn-success"> Choisir Emplacement</button>
+
+        <SelectArea :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
 
         <div>
           <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
           <button @click="isPrestataire = null" class="btn btn-danger">{{translate("addUser_12")}}</button>
         </div>
       </form>
-  
+
     </div>
   </template>
-  
+
   <script>
   import {mapActions, mapGetters} from "vuex";
   import {translate} from "../../lang/translationService";
@@ -135,13 +140,17 @@
   import { uploadImageStand } from "@/services/stand.service";
   import {uploadImageDescriptionStand} from "@/services/stand.service";
 
+  import SelectArea from "@/components/Register/SelectArea.vue";
+
 
   export default {
     components: {
       Editor,
+      SelectArea
     },
     data() {
       return {
+        modalActiveAreaSelection: false,
         croppedImage: null,
         isImageInputUpload: false,
         imageRaw: null,
@@ -228,11 +237,7 @@
             this.stand.description_stand = descriptionContent;
           }
 
-          console.log("this.imageRaw")
-          console.log(this.imageRaw)
-
           if (this.imageRaw) {
-
             await uploadImageStand(this.imageRaw);
           }
 
@@ -320,7 +325,10 @@
     justify-content: center;
     align-items: center;
   }
-  
+  .form-group{
+    display: flex;
+    justify-content: space-between;
+  }
   .bouton {
     min-width: 300px;
     height: 50vh;

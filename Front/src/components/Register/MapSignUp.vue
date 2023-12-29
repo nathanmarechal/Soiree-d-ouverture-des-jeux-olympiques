@@ -9,6 +9,7 @@
       <p>Zone : {{selectedStand.zone}}</p>
       <button type="button" class="btn btn-success" @click="saveSelectedArea">Valider</button>
     </div>
+
   </div>
 </template>
 
@@ -18,7 +19,6 @@ import L from 'leaflet';
 import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
-
   data() {
     return {
       map: null,
@@ -31,10 +31,6 @@ export default {
   async mounted() {
     try {
       await this.loadData()
-      /*
-      await this.$store.dispatch('getAreas');
-      await this.$store.dispatch('getZones');
-       */
       this.initializeMap();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);

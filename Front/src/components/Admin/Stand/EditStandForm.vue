@@ -37,7 +37,6 @@
 
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
-import MapSignUpPreView from '../../Map/MapSignUpPreView.vue'
 import { mapGetters } from 'vuex';
 import { translate } from "../../../lang/translationService";
 import Cropper from 'cropperjs';
@@ -53,7 +52,6 @@ export default {
   },
   components: {
     SelectEmplacement,
-    MapSignUpPreView
   },
   props: {
     selected_stand: {

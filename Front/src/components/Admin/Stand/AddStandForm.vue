@@ -14,7 +14,6 @@
       <div v-if="croppedImage">
         <img :src="croppedImage" class="cropped-image" style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;" />
       </div>
-      <map-sign-up-pre-view style="width: 100%; height: 25vh;"></map-sign-up-pre-view>
 
       <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_4") }}</button>
@@ -28,7 +27,6 @@
 
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
-import MapSignUpPreView from '../../Map/MapSignUpPreView.vue'
 import { mapGetters } from 'vuex';
 import { translate } from "../../../lang/translationService";
 import Cropper from 'cropperjs';
@@ -43,7 +41,6 @@ export default {
   },
   components: {
     SelectEmplacement,
-    MapSignUpPreView
   },
   props: {
     // No need for the selected_stand prop when creating a new stand
