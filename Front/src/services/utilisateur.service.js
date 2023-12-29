@@ -116,7 +116,6 @@ export {
     createUser,
     deleteUser,
     updateUser,
-
     getAllUsers,
     getUserFromSessionId,
     updateSolde,

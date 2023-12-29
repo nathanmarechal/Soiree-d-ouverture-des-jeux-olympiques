@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const standsController = require('../controllers/stands.controller');
 const path = require('path');
+const prestationController = require("../controllers/prestations.controller");
 
 router.get("/get", standsController.getStands);
 
@@ -13,7 +14,10 @@ router.patch("/update/:id", standsController.updateStand);
 
 router.delete("/delete/:id", standsController.deleteStand);
 
-router.post("/", standsController.createStand);
+router.post("/add", standsController.createStand);
+
+router.post("/add/picture", prestationController.uploadPicturePresatation);
+
 
 router.post("/uploading/picture-description", standsController.uploadingPictureDescription)
 

@@ -925,15 +925,4 @@ INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été 
 
 select * from text_accueil;
 
-
-
-
-
-
-
-SELECT COUNT(p.id_prestation), tp.libelle
-FROM prestation p
-JOIN type_prestation tp on p.id_type_prestation = tp.id_type_prestation
-GROUP BY tp.id_type_prestation
-ORDER BY COUNT(p.id_prestation) DESC;
-
+select * FROM stand;

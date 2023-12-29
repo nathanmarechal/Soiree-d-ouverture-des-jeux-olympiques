@@ -101,10 +101,14 @@
           <input type="text" id="commune" v-model="stand.image_stand" required>
         </div>
 
-  
+
         <div class="form-group">
-          <label for="descriptionStand">descriptionStand </label>
-          <input type="text" id="commune" v-model="stand.description_stand" required>
+          <label for="descriptionStand">Description du Stand</label>
+          <Editor
+              ref="myEditor"
+              api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+          :init="editorConfig"
+          />
         </div>
 
         <!--choisir ici l'emplacement sur la map-->
@@ -121,9 +125,14 @@
   <script>
   import {mapActions, mapGetters} from "vuex";
   import {translate} from "../../lang/translationService";
-  
-  
+  import Editor from '@tinymce/tinymce-vue';
+  import {uploadImageDescriptionStand} from "@/services/stand.service";
+
+
   export default {
+    components: {
+      Editor,
+    },
     data() {
       return {
         isPrestataire: null,
@@ -145,6 +154,17 @@
           id_emplacement: null, //à choisir avec la map
           id_zone: null,
           id_type_prestation: null,
+        },
+        editorConfig: {
+          height: 500,
+          menubar: true,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
+          images_upload_handler: this.handleImageUpload
         },
       };
     },
@@ -191,15 +211,45 @@
       },
       async submitFormPrestataire() {
         try {
+          if (this.$refs.myEditor && this.$refs.myEditor.editor) {
+            const descriptionContent = this.$refs.myEditor.editor.getContent();
+            this.stand.description_stand = descriptionContent;
+          }
+
           await this.createUsersWithStandStore({
             user: this.utilisateur,
             stand: this.stand,
           });
           this.$router.push('/');
         } catch (error) {
-          console.error('Erreur lors de la création de l\'utilisateur :', error);
+          console.error('Erreur lors de la création de l\'utilisateur avec stand :', error);
         }
-      }
+      },
+
+      async handleImageUpload(blobInfo, success, failure) {
+        // Générer un timestamp unique
+        const timestamp = Math.floor(Date.now() / 1000);
+        // Construire le nouveau nom de fichier
+        const fileName = `description_id_stand_${this.stand.id_stand}_${timestamp}.jpeg`;
+        // Créer une nouvelle instance de File avec le nouveau nom
+        const fileInstance = new File([blobInfo.blob()], fileName, {
+          type: 'image/jpeg'
+        });
+        try {
+          // Appeler votre fonction d'upload
+          const response = await uploadImageDescriptionStand(fileInstance);
+
+          console.log(response.location)
+          // Vérifier si la réponse contient l'emplacement du fichier uploadé
+          if (response.location) {
+            success(response.location);
+          } else {
+            failure('Invalid response');
+          }
+        } catch (error) {
+          failure('Upload failed: '+ error.message);
+        }
+      },
     }
   }
   </script>
