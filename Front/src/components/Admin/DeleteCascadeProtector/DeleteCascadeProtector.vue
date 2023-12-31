@@ -154,7 +154,7 @@ export default {
           this.dataToDeleteType = 'stand';
           if (this.previousDataType === 'role'){
             this.isLevel2 = true;
-          }
+          }else this.previousDataType = 'user';
           break;
         case 'zone':
           console.log("zone so the data to delete is the emplacement");
@@ -179,7 +179,7 @@ export default {
           this.dataToDeleteType = 'stand';
           if (this.previousDataType === 'zone'){
             this.isLevel2 = true;
-          }
+          }else this.previousDataType = 'area';
           break;
         default: 
           console.error('all data given', this.dataToProtectType, this.dataToProtect, this.dataToDeleteType, this.dataToDelete, this.previousDataType, this.previousDataId, this.isLevel2)

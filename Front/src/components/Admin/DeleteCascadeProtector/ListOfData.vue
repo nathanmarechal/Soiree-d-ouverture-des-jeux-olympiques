@@ -7,7 +7,6 @@
       <RoleList :isProtectorDelete="true" :filterProtector="dataProp" @NeedProtection="handleNeedProtection"/>
     </div>
     <div v-if="dataType === 'stand'">
-      {{ previousDataId }}
       <StandList :isProtectorDelete="true" :previousDataId="previousDataId" :filterProtector="dataProp" :previousDataType="previousDataType" :isLevel2="isLevel2" @goBack="handleGoBack" @NeedProtection="handleNeedProtection"/>
     </div>
     <div v-if="dataType === 'area'">
