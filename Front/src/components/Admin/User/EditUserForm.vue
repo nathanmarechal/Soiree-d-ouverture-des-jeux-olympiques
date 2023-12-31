@@ -1,5 +1,5 @@
 <template>
-    <div class="edit-user-form">
+    <div class="edit-user-form"><br><br><br>
         <h2>Modifier Utilisateur</h2>
         <form @submit.prevent="submitForm">
             <div>

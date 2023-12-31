@@ -4,7 +4,7 @@
     <table class="table table-striped table-bordered">
       <tbody>
         <tr>
-          <td v-for="data in dataProp" :key="data[0]">
+          <td v-for="data in dataProp" :key="random(data)">
             {{ data }}
           </td>
         </tr>
@@ -30,6 +30,15 @@ export default {
     return {
     };
   },
+  methods: {
+    random(data) {
+      //generate a random number to be used as key so that vue doesn't complain
+      for(var value in data)
+        if (!value.isNaN ) {
+          return Math.random() * 10000+value;}
+      return Math.random() * 10000;
+    }
+  }
 
 }
 </script>

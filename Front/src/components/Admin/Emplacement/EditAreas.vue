@@ -31,6 +31,18 @@ export default {
     ModalAddEmplacementLogistique,
     ModalEditEmplacementLogistique
   },
+  props: {
+    isProtectorDelete: {
+      type: Boolean,
+      default: false,
+    },
+    filterProtector:{
+      //contain all data that need to be shown
+      type: Array,
+      required: false,
+      default: () => null,
+    }
+  },
   data() {
     return {
       areas: null,

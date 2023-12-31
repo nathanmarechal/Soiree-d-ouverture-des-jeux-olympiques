@@ -1,5 +1,5 @@
 <template>
-  <div class="add-user-form" >
+  <div class="add-user-form" ><br><br><br>
     <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center" style="width: 40vh">
       <div class="form-group">
         <label for="first-name">{{translate("addUser_1")}}</label>

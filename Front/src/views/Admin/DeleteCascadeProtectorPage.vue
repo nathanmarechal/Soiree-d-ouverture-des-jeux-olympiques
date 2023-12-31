@@ -1,6 +1,6 @@
 <template>
     <div class="main" style="margin-top: 10vh;  width: 100%;">
-        <delete-cascade-protector :dataProp="this.$route.params.dataProp" :dataType="this.$route.params.dataType"></delete-cascade-protector>
+        <delete-cascade-protector :previousDataId="this.$route.params.previousDataId" :previousDataType="this.$route.params.previousDataType" :isLevel2="this.$route.params.isLevel2" :dataProp="this.$route.params.dataProp" :dataType="this.$route.params.dataType"></delete-cascade-protector>
     </div>
   </template>
   

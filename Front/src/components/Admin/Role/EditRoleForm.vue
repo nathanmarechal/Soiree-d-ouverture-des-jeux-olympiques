@@ -1,36 +1,38 @@
 <template>
-  <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
-    <div class="form-group">
-      <label for="libelle">{{ translate("editRole_libelle") }}</label>
-      <input v-model="role.libelle" id="libelle" :placeholder="translate('label_placeholder')" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label>{{ translate("droitCategory") }}</label>
-      <select v-model="selectedCategory" class="form-control">
-        <option value="all">{{ translate("allCategories") }}</option>
-        <option v-for="category in droitCategories" :key="category">{{ category }}</option>
-      </select>
-    </div>
-
-    <!-- Add checkboxes for droits based on selected category -->
-    <div class="form-group">
-      <label>{{ translate("droit") }}</label>
-      <div class="form-check" v-for="droit in filteredDroits" :key="droit.id">
-        <input
-          v-model="selectedDroits"
-          :value="droit.id"
-          :id="droit.id"
-          type="checkbox"
-          class="form-check-input"
-        />
-        <label :for="droit.id" class="form-check-label">{{ droit.libelle }}</label>
+  <div><br><br><br>
+      <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
+      <div class="form-group">
+        <label for="libelle">{{ translate("editRole_libelle") }}</label>
+        <input v-model="role.libelle" id="libelle" :placeholder="translate('label_placeholder')" class="form-control" required>
       </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">{{ translate("editRole_confirm") }}</button>
-    <router-link to="/admin/roles" class="btn btn-danger">{{ translate("editRole_annuler") }}</router-link>
-  </form>
+      <div class="form-group">
+        <label>{{ translate("droitCategory") }}</label>
+        <select v-model="selectedCategory" class="form-control">
+          <option value="all">{{ translate("allCategories") }}</option>
+          <option v-for="category in droitCategories" :key="category">{{ category }}</option>
+        </select>
+      </div>
+
+      <!-- Add checkboxes for droits based on selected category -->
+      <div class="form-group">
+        <label>{{ translate("droit") }}</label>
+        <div class="form-check" v-for="droit in filteredDroits" :key="droit.id">
+          <input
+            v-model="selectedDroits"
+            :value="droit.id"
+            :id="droit.id"
+            type="checkbox"
+            class="form-check-input"
+          />
+          <label :for="droit.id" class="form-check-label">{{ droit.libelle }}</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">{{ translate("editRole_confirm") }}</button>
+      <router-link to="/admin/roles" class="btn btn-danger">{{ translate("editRole_annuler") }}</router-link>
+    </form>
+  </div>
 </template>
 
 <script>

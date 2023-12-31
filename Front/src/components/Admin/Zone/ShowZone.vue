@@ -31,6 +31,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import {translate} from "../../../lang/translationService";
+import router from "@/router";
 
 export default {
   async mounted() {
@@ -41,11 +42,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllZone']),
+    ...mapGetters(['getAllZone', 'getAllArea']),
   },
   methods: {
     translate,
-    ...mapActions(['getZonesStore', 'deleteZoneStore']),
+    ...mapActions(['getZonesStore', 'deleteZoneStore', 'getAreasStore']),
     async loadData() {
       if (this.getAllZone.length === 0)
         await this.getZonesStore();
@@ -55,10 +56,31 @@ export default {
       const  confirmMessage1 = this.translate("showZone_ConfirmDeleteMessage")
       const confirmMessage = confirmMessage1+` ${zone.libelle} ?`;
       if (window.confirm(confirmMessage)) {
-        try {
-          await this.deleteZoneStore(zone.id_zone);
-        } catch (error) {
-          console.error('Erreur lors de la suppression de la zone :', error);
+        const ifHasArea = this.getAllArea.filter(area => area.id_zone === zone.id_zone);
+        if (ifHasArea != null && ifHasArea.length > 0) {
+          window.alert('ALERTEALERTeALERT')
+              if (this.$route.name !== 'AdminDeleteCascadeProtector') {
+                router.push(
+                  {
+                    name: 'AdminDeleteCascadeProtector',
+                    params: {
+                      dataType: 'zone',
+                      dataProp: zone,
+                    },
+                  }
+                );
+                return;
+              }else{
+                this.$emit('NeedProtection', {dataProp: zone, dataType: 'zone'});
+              }
+
+        }
+        else{
+          try {
+            await this.deleteZoneStore(zone.id_zone);
+          } catch (error) {
+            console.error('Erreur lors de la suppression de la zone :', error);
+          }
         }
       }
     }

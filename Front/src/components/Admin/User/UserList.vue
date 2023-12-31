@@ -19,7 +19,7 @@
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
             <td>
-              <router-link :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
+              <router-link v-if="!isProtectorDelete" :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
               <button class="red-button" @click="removeUser(user.id_user)">{{translate("userList_6")}}</button>
             </td>
           </tr>
@@ -55,19 +55,30 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllUsers', 'getAllRoles','getCurrentUser']),
+      ...mapGetters(['getAllUsers', 'getAllRoles','getCurrentUser', 'getAllPrestation', 'getAllStand']),
       filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllUsers so for each data in filterProtector, check if it is in getAllUsers or else remove it from filterProtector
-        const filteredProtector = this.filterProtector.filter(data => this.getAllUsers.find(user => user.id_user === data.id_user));
-        return filteredProtector;
+        if (this.filterProtector != null){
+          const filteredProtector = this.filterProtector.filter(data => this.getAllUsers.find(user => user.id_user === data.id_user));
+          return filteredProtector;}
+        return null;
       }
     },
     methods: {
       translate,
-      ...mapActions(['getUsersStore', 'deleteUserStore', 'getRolesStore']),
+      ...mapActions(['getUsersStore', 'deleteUserStore', 'getRolesStore', 'getPrestationsStore', 'getStandsStore', 'deletePrestationStore', 'deleteStandStore']),
       async loadData() {
         await this.getUsersStore();
         await this.getRolesStore();
+        await this.getPrestationsStore();
+        await this.getStandsStore();
+        if (this.isProtectorDelete && this.filteredProtector.length === 0){
+          router.push(
+            {
+              name: 'AdminRoles',
+            }
+          );
+        }
       },
       async removeUser(id_user, noMessage = false, force = false) {
         const connectedUser = this.getCurrentUser;
@@ -79,30 +90,48 @@
         console.log("user", user);
         const confirmMessage = `Êtes-vous sûr de vouloir supprimer l'utilisateur ${user.prenom} ${user.nom} ?`;
         if (noMessage || confirm(confirmMessage)) {
+          console.log("user before ifhasstand", user);
           const ifHasStand = user.id_stand !== null;
           console.log("ifHasStand", ifHasStand);
           if (ifHasStand) {
             if(force){
-              console.log("NEED TO IMPLEMENT THAT FUNCTIONALITY")
-
-              window.alert('NEED TO IMPLEMENT THAT FUNCTIONALITY')
+              try {
+                console.log("delete *", user.id_stand, user.id_user, user);
+                const id_stand = user.id_stand;
+                const id_user = user.id_user;
+                for (const prestation of this.getAllPrestation) {
+                  if (prestation.id_stand === id_stand) {
+                    console.log("delete prestation", prestation.id_prestation);
+                    await this.deletePrestationStore(prestation.id_prestation);
+                  }
+                }
+                await this.deleteStandStore(id_stand);
+                await this.deleteUserStore(id_user);
+              } catch (error) {
+                console.error('Error during user deletion:', error);
+              }
             }
             else{
               window.alert('ALERTEALERTeALERT')
-              router.push(
-                {
-                  name: 'AdminDeleteCascadeProtector',
-                  params: {
-                    dataType: 'user',
-                    dataProp: user,
-                  },
-                }
-              );
-              return;
+              if (this.$route.name !== 'AdminDeleteCascadeProtector') {
+                router.push(
+                  {
+                    name: 'AdminDeleteCascadeProtector',
+                    params: {
+                      dataType: 'user',
+                      dataProp: user,
+                    },
+                  }
+                );
+                return;
+              }else{
+                this.$emit('NeedProtection', {dataProp: user, dataType: 'user'});
+              }
             }
           }
           else{
             try {
+              console.log("delete user");
              await this.deleteUserStore(user.id_user);
             } catch (error) {
              console.error('Erreur lors de la suppression de l\'utilisateur :', error);
@@ -110,7 +139,7 @@
             }
           }
           console.log("this.$route.name", this.$route.name);
-              if(this.$route.name !== 'AdminRoles'){
+              if(this.$route.name !== 'AdminRoles' && this.isProtectorDelete){
                 console.log("filteredProtector", this.filteredProtector);
                 if(this.filteredProtector.length === 0){
                   console.log("push to admin users");
@@ -131,7 +160,9 @@
           const confirmMessage = `Êtes-vous sûr de vouloir supprimer tous les utilisateurs ?`;
           if (confirm(confirmMessage)) {
             try {
+              console.log("filteredProtector", this.filteredProtector);
               this.filteredProtector.forEach(async user => {
+                console.log("user", user, user.id_user);
                 this.removeUser(user.id_user, true, true);
               });
             } catch (error) {
