@@ -15,6 +15,7 @@ const statistiquesRoutes = require('./routes/statistiques.router');
 const typeEmplacementLogistiqueRoutes = require('./routes/typeEmplacementLogistique.router');
 const emplacementLogistiqueRoutes = require('./routes/emplacementLogistique.router');
 const homePageRoutes = require('./routes/homePage.router');
+const avisRoutes = require('./routes/avis.router');
 
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use("/api/commande", commandeRoutes);
 app.use("/api/droits", droitsRoutes);
 app.use("/api/type-emplacement-logistique", typeEmplacementLogistiqueRoutes);
 app.use("/api/emplacement-logistique", emplacementLogistiqueRoutes);
+app.use("/api/avis", avisRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

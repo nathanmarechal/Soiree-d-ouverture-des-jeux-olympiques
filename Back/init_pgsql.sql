@@ -1,4 +1,5 @@
                 -- Drop the tables with foreign key constraints
+    DROP TABLE IF EXISTS avis_stand_utilisateur CASCADE;
     DROP TABLE IF EXISTS type_emplacement_logistique CASCADE;
     DROP TABLE IF EXISTS emplacement_logistique CASCADE;
 
@@ -236,6 +237,16 @@
         unite INT,
         id_type_emplacement_logistique INT,
         FOREIGN KEY(id_type_emplacement_logistique) REFERENCES type_emplacement_logistique(id_type_emplacement_logistique) ON DELETE CASCADE
+    );
+
+    CREATE TABLE avis_stand_utilisateur(
+        id_avis_stand_utilisateur SERIAL PRIMARY KEY,
+        note INT,
+        commentaire TEXT,
+        id_stand INT,
+        id_user INT,
+        FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+        FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
     );
 
     INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
@@ -688,6 +699,52 @@
     ('Validée'),
     ('Annulée');
 
+    INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
+    (1,1,5,'Super stand'),
+    (1,2,4,'Bien'),
+    (1,3,3,'Moyen'),
+    (1,4,2,'Pas terrible'),
+    (1,5,1,'Nul'),
+    (1,6,5,'Super stand'),
+    (1,7,4,'Bien'),
+    (1,8,3,'Moyen'),
+    (1,8,2,'Pas terrible'),
+    (1,8,1,'Nul'),
+    (2,1,5,'Super stand'),
+    (2,2,4,'Bien'),
+    (2,3,3,'Moyen'),
+    (2,4,2,'Pas terrible'),
+    (2,5,1,'Nul'),
+    (2,6,5,'Super stand'),
+    (2,7,4,'Bien'),
+    (2,8,3,'Moyen'),
+    (2,8,2,'Pas terrible'),
+    (2,8,1,'Nul'),
+    (3,1,5,'Super stand'),
+    (3,2,4,'Bien'),
+    (3,3,3,'Moyen'),
+    (3,4,2,'Pas terrible'),
+    (3,5,1,'Nul'),
+    (3,6,5,'Super stand'),
+    (3,7,4,'Bien'),
+    (3,8,3,'Moyen'),
+    (3,8,2,'Pas terrible'),
+    (3,8,1,'Nul'),
+    (4,1,5,'Super stand'),
+    (4,2,4,'Bien'),
+    (4,3,3,'Moyen'),
+    (4,4,2,'Pas terrible'),
+    (4,5,1,'Nul'),
+    (4,6,5,'Super stand'),
+    (4,7,4,'Bien'),
+    (4,8,3,'Moyen'),
+    (4,8,2,'Pas terrible'),
+    (4,8,1,'Nul'),
+    (5,1,5,'Super stand'),
+    (5,2,4,'Bien'),
+    (5,3,3,'Moyen'),
+    (5,4,2,'Pas terrible');
+
 --     INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
 --     ('2022-02-15', 1, 1),
 --     ('2022-02-15', 1, 2),
@@ -924,3 +981,5 @@ FROM ligne_commande
 INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
 
 select * from text_accueil;
+
+select * from avis_stand_utilisateur where id_stand = 1;
