@@ -170,7 +170,7 @@
           nom_stand: "",
           image_stand: "",
           description_stand: "",
-          id_emplacement: null, //à choisir avec la map
+          id_emplacement: 50, //à choisir avec la map
           id_zone: null,
           id_type_prestation: null,
         },
