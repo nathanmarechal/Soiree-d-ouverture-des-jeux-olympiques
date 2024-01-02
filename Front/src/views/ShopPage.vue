@@ -33,7 +33,7 @@ import filterByTypeComponent from "@/components/ShopPage/FilterByTypeComponent.v
 import filterByStand from "@/components/ShopPage/FilterByStand.vue";
 import StandShopComponent from "@/components/ShopPage/StandShopComponent.vue";
 import TypePrestaShopComponent from "@/components/ShopPage/TypePrestaShopComponent.vue";
-import AvisComponent from "@/components/AvisComponent.vue";
+import AvisComponent from "@/components/Avis/AvisComponent.vue";
 import {mapGetters} from "vuex";
 //import {mapGetters, mapMutations} from "vuex";
 export default {

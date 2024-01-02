@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <div v-if="addMode===true">
-      <add-avis-component @contentSaved="validAdd"></add-avis-component>
+  <div v-if="this.size===0">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">Aucun avis</h4>
+      <p>Il n'y a pas encore d'avis sur votre stand.</p>
     </div>
-    <div v-else>
-      <div>
-        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" class="btn btn-outline-info" @click="setActiveAddMode"> ajouter un avis</button>
-        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" class="btn btn-outline-danger"  style="margin-left: 2%" @click="deleteAvis(avis[index].id_avis_stand_utilisateur)"> supprimer cet avis</button>
-      </div>
-  <div class="slideshow-container" >
+  </div>
+  <div v-else class="slideshow-container" >
     <div class="avis-container">
       <div class="avis-etoiles">
         <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
@@ -29,18 +26,14 @@
       </button>
     </div>
   </div>
-  </div>
-  </div>
 </template>
 
 <script>
 
 import {mapActions, mapGetters} from "vuex";
 import '@fortawesome/fontawesome-free/css/all.css';
-import AddAvisComponent from "@/components/AddAvisComponent.vue";
 
 export default {
-  components: {AddAvisComponent},
 
   data() {
     return {
@@ -62,27 +55,11 @@ export default {
     ...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     async loadData(){
       try {
-        await this.getAvisStore(this.getSelectedStands[0]);
+        await this.getAvisStore(this.getCurrentUser.id_stand);
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-    setActiveAddMode() {
-      this.addMode = true;
-    },
-    async validAdd() {
-      await this.getAvisStore(this.getSelectedStands[0]);
-      this.avis = this.getAvis
-      this.size = this.avis.length
-      this.addMode = false;
-    },
-
-    async deleteAvis(id){
-      console.log(id)
-      await this.deleteAvisStore(id)
-      this.avis = this.getAvis
-      this.size = this.avis.length
-    }
   },
 }
 
@@ -91,10 +68,9 @@ export default {
 
 <style scoped>
 
-
-
-
 .slideshow-container {
+  margin-top: 15%;
+  margin-bottom: 15%;
   font-family: 'Arial', sans-serif;
   color: #333;
   text-align: center;
@@ -139,5 +115,4 @@ export default {
 .etoile.active {
   color: #ffd700; /* Couleur des étoiles actives */
 }
-
 </style>

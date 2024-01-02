@@ -28,6 +28,7 @@
     <button v-if="role === 'admin'" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
   </div>
 </template>
+
 <script>
 import Editor from '@tinymce/tinymce-vue';
 import {mapActions, mapGetters} from "vuex";

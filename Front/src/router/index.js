@@ -35,6 +35,7 @@ import waitingUsersPage from "@/views/WaitingUsersPage.vue";
 import edtPage from "@/views/EdtPage.vue";
 import CommandePrestatairePage from "@/views/Prestataire/commandes/CommandePrestatairePage.vue";
 import AdminDeleteCascadeProtector from "@/views/Admin/DeleteCascadeProtectorPage.vue";
+import AvisPagePrestataire from "@/views/Prestataire/Avis/AvisPagePrestataire.vue";
 
 Vue.use(VueRouter);
 
@@ -210,6 +211,11 @@ const routes = [
     path: '/prestataire/commandes',
     name: 'PrestataireCommandesView',
     component: CommandePrestatairePage
+  },
+  {
+    path: '/prestataire/avis',
+    name: 'PrestataireAvisView',
+    component: AvisPagePrestataire
   },
     //Error 404
   {
