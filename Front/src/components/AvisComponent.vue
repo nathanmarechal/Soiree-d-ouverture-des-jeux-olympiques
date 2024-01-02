@@ -1,7 +1,11 @@
 <template>
   <div class="slideshow-container">
     <div class="avis-container">
-      <div class="avis-note">{{avis[index].note}}</div>
+      <div class="avis-etoiles">
+        <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
+          <i class="fas fa-star"></i>
+        </span>
+      </div>
       <div class="avis-commentaire">{{avis[index].commentaire}}</div>
     </div>
 
@@ -89,4 +93,18 @@ export default {
 .nav-button:hover i {
   color: #007bff;
 }
+
+.avis-etoiles {
+  color: #ccc; /* Couleur des étoiles inactives */
+}
+
+.etoile {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.etoile.active {
+  color: #ffd700; /* Couleur des étoiles actives */
+}
+
 </style>
