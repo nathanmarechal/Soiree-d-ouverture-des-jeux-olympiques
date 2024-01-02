@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="addMode===true">
-      <add-avis-component></add-avis-component>
+      <add-avis-component @contentSaved="addMode = false"></add-avis-component>
     </div>
     <div v-else>
       <div>

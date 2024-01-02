@@ -94,6 +94,7 @@ export default {
         const content = await this.myEditor.editor.getContent();
         await this.uploadAvisStore({"id_stand" : this.getSelectedStands[0], "id_user" : this.getCurrentUser.id_user, "note" : 2, "commentaire" : content});
         console.log('Contenu à enregistrer:', content);
+        this.$emit('contentSaved');
       } else {
         console.error('Éditeur non initialisé ou indisponible');
       }
