@@ -2,7 +2,7 @@
   <div>
     <main id="sample">
       <Editor
-          v-if="role === 'admin'"
+          v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1"
           ref="myEditor"
           api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
           :init="{
