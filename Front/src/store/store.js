@@ -44,7 +44,7 @@ import {
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
 import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
-import {getAvisByIdStand} from "@/services/avis.service";
+import {getAvisByIdStand, uploadAvis} from "@/services/avis.service";
 
 Vue.use(Vuex)
 
@@ -307,6 +307,10 @@ export default new Vuex.Store({
 
         SET_AVIS(state, avis) {
             state.avis = avis;
+        },
+
+        ADD_AVIS(state, avis) {
+            console.log("ADD_AVIS " + avis);
         },
 
         DELETE_STAND(state, id) {
@@ -637,6 +641,15 @@ export default new Vuex.Store({
             try {
                 const avis = await getAvisByIdStand(id_stand);
                 commit('SET_AVIS', avis);
+            } catch (error) {
+                console.error('Error fetching avis:', error);
+            }
+        },
+
+        async uploadAvisStore({ commit }, {id_stand, id_user, note, commentaire}) {
+            try {
+                const avis = await uploadAvis({id_stand, id_user, note, commentaire});
+                commit('ADD_AVIS', avis);
             } catch (error) {
                 console.error('Error fetching avis:', error);
             }

@@ -1,4 +1,5 @@
 const avisService = require("../services/avis.service");
+const homePageService = require("../services/homePage.service");
 
 
 exports.getAvisByIdStand = (req, res) => {
@@ -12,6 +13,18 @@ exports.getAvisByIdStand = (req, res) => {
         }
     })
 }
+
+exports.uploadingPictureAvis = (req, res) => {
+    avisService.uploadingPictureAvis(req, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        } else {
+            console.log(data)
+            return res.status(200).send(data);
+        }
+    });
+};
+
 
 exports.addAvis = (req, res) => {
     const avis = req.body;

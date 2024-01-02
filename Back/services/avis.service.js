@@ -1,5 +1,47 @@
 const pool = require("../database/db");
 const {as} = require("pg-promise");
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const destinationPath = path.join(__dirname, '../assets/stand/Avis');
+        cb(null, destinationPath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+async function uploadingPictureAvisAsync(req) {
+    try {
+        await new Promise((resolve, reject) => {
+            upload.single('photo')(req, {}, (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+        if (!req.file) {
+            throw new Error('File upload failed');
+        }
+        return { location :`${process.env.BASE_URL}/avis/picture-avis/${req.file.filename}`}
+    } catch (error) {
+        console.error('Error in uploadingPictureDescriptionAsync:', error);
+        throw error;
+    }
+}
+
+const uploadingPictureAvis = (req, callback) => {
+    uploadingPictureAvisAsync(req)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
 
 const getAvisByIdStand = (id, callback) => {
     getAvisByIdStandAsync(id)
@@ -77,4 +119,5 @@ module.exports = {
     getAvisByIdStand : getAvisByIdStand
     ,addAvis : addAvis
     ,deleteAvis : deleteAvis
+    ,uploadingPictureAvis : uploadingPictureAvis
 }

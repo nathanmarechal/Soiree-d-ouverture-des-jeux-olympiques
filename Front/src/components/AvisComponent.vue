@@ -1,5 +1,13 @@
 <template>
-  <div class="slideshow-container">
+  <div>
+    <div v-if="addMode===true">
+      <add-avis-component></add-avis-component>
+    </div>
+    <div v-else>
+      <div>
+        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" class="btn btn-outline-info" @click="setActiveAddMode"> ajouter un avis</button>
+      </div>
+  <div class="slideshow-container" >
     <div class="avis-container">
       <div class="avis-etoiles">
         <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
@@ -7,7 +15,7 @@
         </span>
       </div>
       <div>{{avis[index].prenom}} {{avis[index].nom}}</div>
-      <div class="avis-commentaire">{{avis[index].commentaire}}</div>
+      <div class="avis-commentaire" v-html="avis[index].commentaire"></div>
     </div>
 
     <div class="navigation">
@@ -20,39 +28,46 @@
       </button>
     </div>
   </div>
+  </div>
+  </div>
 </template>
 
 <script>
 
 import {mapActions, mapGetters} from "vuex";
 import '@fortawesome/fontawesome-free/css/all.css';
+import AddAvisComponent from "@/components/AddAvisComponent.vue";
 
 export default {
+  components: {AddAvisComponent},
 
   data() {
     return {
       avis : null,
       size : 0,
       index : 0,
+      addMode : false,
     }
   },
   async mounted() {
     await this.loadData()
     this.avis = this.getAvis
     this.size = this.avis.length
-    console.log(this.avis)
   },
   computed: {
-    ...mapGetters(['getSelectedStands', 'getAvis']),
+    ...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
   },
   methods: {
-    ...mapActions(['getAvisStore']),
+    ...mapActions(['getAvisStore', "uploadAvisStore"]),
     async loadData(){
       try {
         await this.getAvisStore(this.getSelectedStands[0]);
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
+    },
+    setActiveAddMode() {
+      this.addMode = true;
     },
 
   },
@@ -62,6 +77,10 @@ export default {
 
 
 <style scoped>
+
+
+
+
 .slideshow-container {
   font-family: 'Arial', sans-serif;
   color: #333;

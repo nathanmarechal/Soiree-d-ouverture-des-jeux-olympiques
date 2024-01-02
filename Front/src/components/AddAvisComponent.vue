@@ -1,11 +1,12 @@
+
 <template>
   <div>
-    <main id="sample">
-      <Editor
-          v-if="role === 'admin'"
-          ref="myEditor"
-          api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
-          :init="{
+    <div>
+      <main id="sample">
+        <Editor
+            ref="myEditor"
+            api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+            :init="{
         height: 500,
         menubar: true,
         plugins: [
@@ -19,63 +20,49 @@
         'removeformat | help | image',
         images_upload_handler: handleImageUpload
         }"
-          :initial-value="HomeDescription"
-      />
-      <div v-else>
-        <div v-html="this.HomeDescription" style="padding: 5%"></div>
-      </div>
-    </main>
-    <button v-if="role === 'admin'" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
+            :initial-value="tempAvis"
+        />
+      </main>
+      <button type="button" @click="saveContent" class="btn btn-success" >ajouter l'avis</button>
+    </div>
   </div>
 </template>
+
+
 <script>
-import Editor from '@tinymce/tinymce-vue';
+
 import {mapActions, mapGetters} from "vuex";
-import {uploadImageDescriptionHomePage} from "@/services/homePage.service";
+import '@fortawesome/fontawesome-free/css/all.css';
+import Editor from "@tinymce/tinymce-vue";
+import {uploadImageAvis} from "@/services/avis.service";
 
 export default {
   components: {
     Editor
   },
-  props: ["id"],
+
   data() {
     return {
       myEditor: null,
-      homeText : null,
-      HomeDescription: null,
-      role : null,
+      size : 0,
+      index : 0,
+      tempAvis : "entrez ici votre avis",
       editorConfig: {
         plugins: 'image',
         toolbar: 'image'
       },
-    };
+    }
   },
   async mounted() {
-    await this.loadData()
     this.myEditor = this.$refs.myEditor;
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getTextsHome', 'getAllRoles']),
+    ...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
   },
   methods: {
-    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore', 'getRolesStore']),
-    async loadData() {
-      try {
-        if (this.getTextsHome.length === 0){
-          await this.getTextsHomeStore()
-        }
-        if (this.getAllRoles.length === 0){
-          await this.getRolesStore()
-        }
-        this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
-        console.log(this.homeText + " zazazazazazaza ")
-        this.HomeDescription = this.homeText.description;
-        console.log(this.HomeDescription + " zouzouzouzozuzouzozuozuozu ")
-        this.role = this.getAllRoles.find(role => role.id_role === this.getCurrentUser.id_role).libelle;
-      } catch (error) {
-        console.error('Erreur lors du chargement des données :', error);
-      }
-    },
+    ...mapActions(['getAvisStore', "uploadAvisStore"]),
+
+
     async handleImageUpload(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
@@ -89,7 +76,7 @@ export default {
       });
       try {
         // Appeler votre fonction d'upload
-        const response = await uploadImageDescriptionHomePage(fileInstance);
+        const response = await uploadImageAvis(fileInstance);
 
         console.log(response.location)
         // Vérifier si la réponse contient l'emplacement du fichier uploadé
@@ -105,30 +92,18 @@ export default {
     async saveContent() {
       if (this.myEditor && this.myEditor.editor) {
         const content = await this.myEditor.editor.getContent();
-        await this.updateDescriptionHomePageStore({
-          id_text_accueil: this.id,
-          body: { description: content }
-        });
+        await this.uploadAvisStore({"id_stand" : this.getSelectedStands[0], "id_user" : this.getCurrentUser.id_user, "note" : 2, "commentaire" : content});
         console.log('Contenu à enregistrer:', content);
-              // Add here the logic to save the content to your server or handle it as needed
       } else {
         console.error('Éditeur non initialisé ou indisponible');
       }
     },
-  }
 
-};
+  },
+}
+
 </script>
 
 <style scoped>
-@media (min-width: 1024px) {
-  #sample {
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    width: 100%;
-  }
-}
-
 
 </style>
