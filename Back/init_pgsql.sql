@@ -982,7 +982,7 @@ INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été 
 
 select * from text_accueil;
 
-select * from avis_stand_utilisateur;
+select * from avis_stand_utilisateur where id_stand = 1;
 
 select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_stand, avis_stand_utilisateur.id_user as id_user, avis_stand_utilisateur.id_avis_stand_utilisateur as id_avis_stand_utilisateur
     from avis_stand_utilisateur

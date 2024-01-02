@@ -6,6 +6,7 @@
     <div v-else>
       <div>
         <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" class="btn btn-outline-info" @click="setActiveAddMode"> ajouter un avis</button>
+        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" class="btn btn-outline-danger"  style="margin-left: 2%" @click="deleteAvis(avis[index].id_avis_stand_utilisateur)"> delete un avis</button>
       </div>
   <div class="slideshow-container" >
     <div class="avis-container">
@@ -58,7 +59,7 @@ export default {
     ...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
   },
   methods: {
-    ...mapActions(['getAvisStore', "uploadAvisStore"]),
+    ...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     async loadData(){
       try {
         await this.getAvisStore(this.getSelectedStands[0]);
@@ -76,6 +77,11 @@ export default {
       this.addMode = false;
     },
 
+    async deleteAvis(id){
+      console.log(id)
+      await this.deleteAvisStore(id)
+      this.avis = this.getAvis
+    }
   },
 }
 

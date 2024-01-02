@@ -29,10 +29,19 @@ async function getAvisByIdStandAsync(id_stand) {
     return getRequest('/avis/getAvisByIdStand/' + id_stand, 'GETAVISBYIDSTAND')
 }
 
+async function deleteAvis(id) {
+    let answer = await deleteAvisFromAPI(id)
+    return answer
+}
+
+async function deleteAvisFromAPI(id) {
+    return postRequest('/avis/deleteAvisByIdStandUser/' + id, 'DELETEAVIS')
+}
 
 export {
     getAvisByIdStand,
     uploadImageAvis,
-    uploadAvis
+    uploadAvis,
+    deleteAvis
 
 }
