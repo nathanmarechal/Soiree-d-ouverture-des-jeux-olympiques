@@ -44,6 +44,7 @@ import {
 import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique.service";
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
 import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
+import {getAvisByIdStand} from "@/services/avis.service";
 
 Vue.use(Vuex)
 
@@ -94,6 +95,8 @@ export default new Vuex.Store({
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,
+
+        avis : null,
 
         commandesPrestataire : [],
 
@@ -166,6 +169,8 @@ export default new Vuex.Store({
         getLang: state=> state.lang,
 
         getTextsHome: state => state.texts_home,
+
+        getAvis : state => state.avis,
 
     },
 
@@ -300,7 +305,9 @@ export default new Vuex.Store({
             state.emplacementLogistique = state.emplacementLogistique.filter(item => item.id_emplacement_logistique !== id);
         },
 
-
+        SET_AVIS(state, avis) {
+            state.avis = avis;
+        },
 
         DELETE_STAND(state, id) {
             state.stands = state.stands.filter(item => item.id_stand !== id);
@@ -623,7 +630,21 @@ export default new Vuex.Store({
             }
         },
 
+//-----------------------------------------------------------------Avis---------------------------------------------------------------------------//
+
+
+        async getAvisStore({ commit }, id_stand) {
+            try {
+                const avis = await getAvisByIdStand(id_stand);
+                commit('SET_AVIS', avis);
+            } catch (error) {
+                console.error('Error fetching avis:', error);
+            }
+        },
+
+
 //-----------------------------------------------------------------Commande-----------------------------------------------------------------------//
+
 
         async getCommandeUserCourantStore({commit},user_id){
             try {
