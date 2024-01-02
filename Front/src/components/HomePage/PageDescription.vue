@@ -22,7 +22,7 @@
           :initial-value="HomeDescription"
       />
       <div v-else>
-        <div v-html="this.HomeDescription"></div>
+        <div v-html="this.HomeDescription" style="padding: 5%"></div>
       </div>
     </main>
     <button v-if="role === 'admin'" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
