@@ -347,6 +347,7 @@ async function deleteRoleAsync(id_role) {
 
 const updateUserCourantWoPassword = (id_user, prenom, nom, email, adresse, code_postal, commune, callback) => {
     try{
+        console.log("updateUserCourantWoPasswordServlce",id_user, prenom, nom, email, adresse, code_postal, commune)
         updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adresse, code_postal, commune)
         callback(null, "success");
     } catch (error) {
@@ -457,7 +458,7 @@ module.exports = {
     , updateNom: updateNom
     , updatePrenom: updatePrenom
     , updateEmail: updateEmail
-    , updateUserCourantWPassword: updateUserCourantWoPassword
+    , updateUserCourantWoPassword: updateUserCourantWoPassword
     , createUserWithStand: createUserWithStand
     , getAllUsersAttente: getAllUsersAttente
     , acceptUser: acceptUser
