@@ -6,6 +6,7 @@
           <i class="fas fa-star"></i>
         </span>
       </div>
+      <div>{{avis[index].prenom}} {{avis[index].nom}}</div>
       <div class="avis-commentaire">{{avis[index].commentaire}}</div>
     </div>
 

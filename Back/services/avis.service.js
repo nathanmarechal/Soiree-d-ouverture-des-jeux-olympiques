@@ -15,7 +15,10 @@ const getAvisByIdStand = (id, callback) => {
 async function getAvisByIdStandAsync(id) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("select * from avis_stand_utilisateur where id_stand = $1;", [id]);
+        const result = await conn.query("select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_stand, avis_stand_utilisateur.id_user as id_user, avis_stand_utilisateur.id_avis_stand_utilisateur as id_avis_stand_utilisateur\n" +
+            "    from avis_stand_utilisateur\n" +
+            "    JOIN utilisateur u on u.id_user = avis_stand_utilisateur.id_user\n" +
+            "    where avis_stand_utilisateur.id_stand = $1;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {
