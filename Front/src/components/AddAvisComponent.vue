@@ -72,9 +72,7 @@ export default {
     async handleImageUpload(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
-      // Construire le nouveau nom de fichier
 
-      //const fileName = `description_id_homeText_${this.homeText.id}_${timestamp}.jpeg`;
       const fileName = `description_home_page${timestamp}.jpeg`;
       // Créer une nouvelle instance de File avec le nouveau nom
       const fileInstance = new File([blobInfo.blob()], fileName, {
@@ -115,13 +113,18 @@ export default {
 
 <style scoped>
 
+.rating {
+  text-align: center;
+}
+
 .rating i {
-  color: #ccc; /* Couleur des étoiles inactives */
+  font-size: 24px;
+  color: #ccc;
   cursor: pointer;
 }
 
 .rating i.selected {
-  color: #ffd700; /* Couleur des étoiles actives */
+  color: #ffd700;
 }
 
 </style>

@@ -171,7 +171,10 @@ export default new Vuex.Store({
         getTextsHome: state => state.texts_home,
 
         getAvis : state => state.avis,
-
+        // getAvisByStandId: (state) => (id) => {
+        //     cons
+        //     return state.avis.filter(avis => avis.id_stand === id);
+        // },
     },
 
     mutations: {

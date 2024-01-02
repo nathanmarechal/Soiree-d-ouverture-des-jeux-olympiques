@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="addMode===true">
-      <add-avis-component @contentSaved="addMode = false"></add-avis-component>
+      <add-avis-component @contentSaved="validAdd"></add-avis-component>
     </div>
     <div v-else>
       <div>
@@ -68,6 +68,12 @@ export default {
     },
     setActiveAddMode() {
       this.addMode = true;
+    },
+    async validAdd() {
+      await this.getAvisStore(this.getSelectedStands[0]);
+      this.avis = this.getAvis
+      this.size = this.avis.length
+      this.addMode = false;
     },
 
   },
