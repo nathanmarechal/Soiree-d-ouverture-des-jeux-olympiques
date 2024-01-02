@@ -2,6 +2,11 @@
 <template>
   <div>
     <div>
+      <div class="rating">
+        <i class="fa fa-star" v-for="n in 5" :key="n"
+           :class="{ 'selected': n <= rating }"
+           @click="setRating(n)"></i>
+      </div>
       <main id="sample">
         <Editor
             ref="myEditor"
@@ -43,6 +48,7 @@ export default {
 
   data() {
     return {
+      rating : 0,
       myEditor: null,
       size : 0,
       index : 0,
@@ -92,19 +98,30 @@ export default {
     async saveContent() {
       if (this.myEditor && this.myEditor.editor) {
         const content = await this.myEditor.editor.getContent();
-        await this.uploadAvisStore({"id_stand" : this.getSelectedStands[0], "id_user" : this.getCurrentUser.id_user, "note" : 2, "commentaire" : content});
+        await this.uploadAvisStore({"id_stand" : this.getSelectedStands[0], "id_user" : this.getCurrentUser.id_user, "note" : this.rating, "commentaire" : content});
         console.log('Contenu à enregistrer:', content);
         this.$emit('contentSaved');
       } else {
         console.error('Éditeur non initialisé ou indisponible');
       }
     },
-
+    async setRating(rating) {
+      this.rating = rating;
+    },
   },
 }
 
 </script>
 
 <style scoped>
+
+.rating i {
+  color: #ccc; /* Couleur des étoiles inactives */
+  cursor: pointer;
+}
+
+.rating i.selected {
+  color: #ffd700; /* Couleur des étoiles actives */
+}
 
 </style>
