@@ -82,7 +82,6 @@ const updateQuantityInPanier = (id_user, id_prestation,  quantite, id_creneau, c
 }
 
 const deletePrestationFromPanierUser = (id_user,id_prestation,id_creneau, callback) => {
-
     deletePrestationFromPanierUserAsync(id_user,id_prestation, id_creneau)
         .then(res => {
             callback(null, "success");

@@ -1,7 +1,7 @@
 const pool = require("../database/db");
 const {as} = require("pg-promise");
-const getDroits = (id, callback) => {
-    getDroitsAsync(id)
+const getDroitsById = (id, callback) => {
+    getDroitsByIdAsync(id)
         .then(res => {
             let array = [res.length]
             for (let i = 0; i < res.length; i++) {
@@ -15,7 +15,7 @@ const getDroits = (id, callback) => {
         })
 }
 
-async function getDroitsAsync(id) {
+async function getDroitsByIdAsync(id) {
     try {
         const conn = await pool.connect();
         const result = await conn.query("SELECT droits.libelle\n" +
@@ -54,6 +54,6 @@ async function getAllDroitsAsync() {
 }
 
 module.exports = {
-    getDroits: getDroits,
+    getDroits: getDroitsById,
     getAllDroits: getAllDroits
 };

@@ -64,7 +64,28 @@ export default new Vuex.Store({
             "panier":  [],
             "droits": [],
             "schedule": [],
-            "commandes" : [ {"id_commande": null, "date_commande": null, "id_etat_commande": null, "prix_total": null, "nbr_presta": null, "libelle": null, "lignes_commande" : [{ "id_commande":null,"prestation_libelle" : null, "id_presta" : null,"id_creneau": null, "quantite": null, "creneau": null, "prix": null, "image": null, "id_type_prestation": null, "type_prestation_libelle": null, "id_etat_commande":null, "etat_libelle":null}] }],
+            "commandes" : [{
+                "id_commande": null,
+                "date_commande": null,
+                "id_etat_commande": null,
+                "prix_total": null,
+                "nbr_presta": null,
+                "libelle": null,
+                "lignes_commande" : [{
+                    "id_commande" : null,
+                    "prestation_libelle" : null,
+                    "id_presta" : null,
+                    "id_creneau": null,
+                    "quantite": null,
+                    "creneau": null,
+                    "prix": null,
+                    "image": null,
+                    "id_type_prestation": null,
+                    "type_prestation_libelle": null,
+                    "id_etat_commande":null,
+                    "etat_libelle":null
+                }]
+            }],
             "id_role": null,
             "id_stand" : null,
         },
@@ -150,9 +171,11 @@ export default new Vuex.Store({
         getPanierUserCourant : state => state.userCourant.panier,
         getCommandeUserCourantGetters : state => state.userCourant.commandes,
         getLigneCommandeBycommandeId : state => state.userCourant.commandes.lignes_commande,
+
         getCommandeById: (state) => (id) => {
             return state.userCourant.commandes.find(commande => commande.id_commande === id);
         },
+
         getCommandePrestataire : state => state.commandesPrestataire,
 
         getSelectedZone: state => state.selectedZone,
@@ -783,7 +806,7 @@ export default new Vuex.Store({
             }
         },
 
-        async createUsersWithStandStore({ commit }, user, stand) {
+        async createUsersWithStandStore({ commit }, {user, stand}) {
             try {
                 const body = {
                     ...user,
@@ -854,7 +877,7 @@ export default new Vuex.Store({
             }
         },
 
-        async updateRoleStore({ commit }, id, body) {
+        async updateRoleStore({ commit }, {id, body}) {
             try {
                 const data = await updateRole(id, body);
                 //console.log("dataupdate: ", data);

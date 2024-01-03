@@ -96,8 +96,8 @@ async function deleteRoleDroitAssociationForSpecificRoleAsync(id_role) {
 }
 
 module.exports = {
-    getAllRoleDroitAssociation,
-    createRoleDroitAssociation,
-    deleteRoleDroitAssociation,
-    deleteRoleDroitAssociationForSpecificRole
+    getAllRoleDroitAssociation : getAllRoleDroitAssociation,
+    createRoleDroitAssociation : createRoleDroitAssociation,
+    deleteRoleDroitAssociation : deleteRoleDroitAssociation,
+    deleteRoleDroitAssociationForSpecificRole : deleteRoleDroitAssociationForSpecificRole
 }

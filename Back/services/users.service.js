@@ -1,4 +1,3 @@
-//const {v4:uuid4} = require("uuid");
 const pool = require("../database/db");
 
 
@@ -13,48 +12,6 @@ const createUser = (prenom, nom, email, password, adresse, code_postal, commune,
     callback(null, "success");
 }
 
-
-async function createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement) {
-    try {
-        const conn = await pool.connect();
-        const result = await conn.query(
-            "INSERT INTO standAttente (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [nom_stand, image_stand, description_stand, prix, id_emplacement]
-        );
-        conn.release();
-        return result.rows[0].id_stand;
-    } catch (error) {
-        console.error('Error in createStandAsync:', error);
-        throw error;
-    }
-}
-const createUserWithStand = (prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement, callback) => {
-    console.log(description_stand)
-    console.log(id_emplacement + "eeessees2")
-    createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement)
-        .catch(
-        (error)=>
-        {
-            console.log("threw inside createUserAsync :"+error)
-            //callback(error,null);
-        })
-    callback(null, "success");
-}
-
-async function createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement) {
-    console.log(id_emplacement + "eeessees3")
-    console.log('Parameters:', prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement);
-    try {
-        id_stand = await createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement);
-        console.log(nom_stand, image_stand, description_stand, prix)
-        console.log("id_stand = " + id_stand)
-        const conn = await pool.connect();
-        await conn.query("INSERT INTO utilisateurAttente (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role,solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,0)", [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
-        conn.release();
-    } catch (error) {
-        console.error('Error in createUserAsync:', error);
-        throw error;
-    }
-}
 async function createUserAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role) {
     try {
         const conn = await pool.connect();
@@ -65,7 +22,6 @@ async function createUserAsync(prenom, nom, email, password, adresse, code_posta
         throw error;
     }
 }
-
 
 const getAllUsers = (callback) => {
     getAllUsersAsync()
@@ -144,6 +100,7 @@ async function getUserBySessionIdAsync(session_id) {
     }
 }
 
+/*
 const getUserWithLongestPrenom = (callback) => {
     getUserWithLongestPrenomAsync()
         .then(res => {
@@ -166,6 +123,7 @@ async function getUserWithLongestPrenomAsync() {
         throw error;
     }
 }
+ */
 
 const updateUser = (id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, callback) => {
     try{
@@ -190,7 +148,7 @@ async function updateUserAsync(id_user, prenom, nom, email, password, adresse, c
             result = await conn.query(
                 "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9 id_stand = $10, id_role = $11 WHERE id_user = $1",
                 [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
-            );        
+            );
         }
         conn.release();
         return result;
@@ -200,16 +158,12 @@ async function updateUserAsync(id_user, prenom, nom, email, password, adresse, c
     }
 }
 
-
-
 const deleteUser = (id, callback) => {
-    try
-    {
+    try {
         deleteUserAsync(id);
         callback(null,"Deleted successfully")
     }
-    catch (error)
-    {
+    catch (error) {
         console.log(error);
         callback(error,null)
     }
@@ -319,32 +273,6 @@ async function updateEmailAsync(id_user, email) {
     }
 }
 
-const deleteRole = (body, callback) => {
-    try{
-        console.log("deleteRole1",body);
-        deleteRoleAsync(body);
-        callback(null,"Deleted successfully")
-    }
-    catch (error)
-    {
-        console.log(error);
-        callback(error,null)
-    }
-}
-
-async function deleteRoleAsync(id_role) {
-    try {
-        console.log("deleteRole2",id_role);
-        const conn = await pool.connect();
-        await conn.query('DELETE FROM role WHERE id_role = $1', [id_role]);
-        conn.release();
-        console.log('Records deleted successfully');
-    } catch (error) {
-        console.error('Error deleting records:', error);
-        throw error;
-    }
-}
-
 const updateUserCourantWoPassword = (id_user, prenom, nom, email, adresse, code_postal, commune, callback) => {
     try{
         console.log("updateUserCourantWoPasswordServlce",id_user, prenom, nom, email, adresse, code_postal, commune)
@@ -364,6 +292,49 @@ async function updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adr
         return result.rows;
     } catch (error) {
         console.error('Error in updateUserCourantWoPasswordAsync:', error);
+        throw error;
+    }
+}
+
+const createUserWithStand =  (prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement, callback) => {
+    console.log(description_stand)
+    console.log(id_emplacement + "eeessees2")
+    createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement)
+        .catch(
+        (error)=>
+        {
+            console.log("threw inside createUserAsync :"+error)
+            //callback(error,null);
+        })
+    callback(null, "success");
+}
+
+async function createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement) {
+    console.log(id_emplacement + "eeessees3")
+    console.log('Parameters:', prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement);
+    try {
+        id_stand = await createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement);
+        console.log(nom_stand, image_stand, description_stand, prix)
+        console.log("id_stand = " + id_stand)
+        const conn = await pool.connect();
+        await conn.query("INSERT INTO utilisateurAttente (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role,solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,0)", [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
+        conn.release();
+    } catch (error) {
+        console.error('Error in createUserAsync:', error);
+        throw error;
+    }
+}
+
+async function createStandAsync(nom_stand, image_stand, description_stand, prix, id_emplacement) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query(
+            "INSERT INTO standAttente (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [nom_stand, image_stand, description_stand, prix, id_emplacement]
+        );
+        conn.release();
+        return result.rows[0].id_stand;
+    } catch (error) {
+        console.error('Error in createStandAsync:', error);
         throw error;
     }
 }
@@ -451,7 +422,7 @@ module.exports = {
     , getAllUsers: getAllUsers
     , getUserById: getUserById
     , getUserBySessionId: getUserBySessionId
-    , getUserWithLongestPrenom: getUserWithLongestPrenom
+  //, getUserWithLongestPrenom: getUserWithLongestPrenom
     , updateUser: updateUser
     , deleteUser: deleteUser
     , updateSolde: updateSolde

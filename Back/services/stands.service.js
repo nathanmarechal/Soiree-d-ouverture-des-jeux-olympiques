@@ -52,6 +52,17 @@ async function getStandByIdAsync(id) {
     }
 }
 
+const getStandById = (id, callback) => {
+    getStandByIdAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 const deleteStand = (id, callback) => {
     deleteStandAsync(id)
         .then(res => {
@@ -119,18 +130,6 @@ async function updateStandAsync(id, body) {
         console.error('Error in updateStandAsync:', error);
         throw error;
     }
-}
-
-
-const getStandById = (id, callback) => {
-    getStandByIdAsync(id)
-        .then(res => {
-            callback(null, res);
-        })
-        .catch(error => {
-            console.log(error);
-            callback(error, null);
-        });
 }
 
 async function uploadingPictureDescriptionAsync(req) {

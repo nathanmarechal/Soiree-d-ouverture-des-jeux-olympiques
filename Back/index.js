@@ -29,18 +29,21 @@ app.use(cors({
 app.use(express.json());
 app.use("/api/panier", panierRoutes);
 app.use("/api/roles", rolesRoutes);
+
 app.use("/api/droits", droitsRoutes);
 app.use("/api/role-droit", role_droitRoutes);
+
 app.use("/api/users", usersRoutes);
 app.use("/api/map", mapRoutes);
 app.use("/api/login",loginRoutes);
 app.use("/api/prestations",prestationsRoutes);
-app.use("/api/typePrestations",typePrestationsRoutes);
+
+app.use("/api/typePrestations",typePrestationsRoutes);  // a mettre en type-prestations
+
 app.use("/api/stands",standsRoutes);
 app.use("/api/homePage",homePageRoutes);
 app.use("/api/statistiques",statistiquesRoutes);
 app.use("/api/commande", commandeRoutes);
-app.use("/api/droits", droitsRoutes);
 app.use("/api/type-emplacement-logistique", typeEmplacementLogistiqueRoutes);
 app.use("/api/emplacement-logistique", emplacementLogistiqueRoutes);
 app.use("/api/avis", avisRoutes);

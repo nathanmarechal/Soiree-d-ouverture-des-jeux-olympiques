@@ -17,7 +17,6 @@ router.post("/add", standsController.createStand);
 
 router.post("/add/picture", standsController.uploadPictureStand);
 
-
 router.post("/uploading/picture-description", standsController.uploadingPictureDescription)
 
 router.use('/picture-description', express.static(path.join(__dirname,  '../assets/stand/description')))

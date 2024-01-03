@@ -164,8 +164,6 @@ const updateIsAvailablePrestation = (id, body, callback) => {
 async function updateIsAvailablePrestationAsync(id, body) {
     try {
         const conn = await pool.connect();
-        console.log("foufou")
-
         console.log("id in updateIsAvailablePrestationAsync: ", id)
         console.log("body in updateIsAvailablePrestationAsync: ", body)
         const result = await conn.query("UPDATE prestation SET is_available = NOT is_available WHERE id_prestation = $1;\n;", [id]);
@@ -217,7 +215,6 @@ async function updatePrestationAsync(id, body) {
             body.is_available,
             id
         ];
-
         const result = await conn.query(updateQuery, values);
         conn.release();
         return result.rows;
