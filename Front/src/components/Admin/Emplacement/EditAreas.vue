@@ -22,6 +22,7 @@ import ModalAddArea from '@/components/Admin/Emplacement/EmplacementStand/ModalA
 import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalAddEmplacementLogistique.vue";
 import ModalEditEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalEditEmplacementLogistique.vue";
 
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -170,6 +171,9 @@ export default {
           // Handle marker creation
           this.addEmplacementLogistique(layer.getLatLng());
         }
+
+        // For any common operations after adding the layer to the map
+        // this.map.addLayer(layer);
       });
 
       this.updateMap();

@@ -21,7 +21,7 @@
     <div v-for="(type, index) in getAllTypeEmplacementLogistique" :key="index" class="form-group">
       <label :for="'logistics' + type.id_type_emplacement_logistique">{{ type.libelle }} ({{ type.libelle_unite }})</label>
       <input type="number" :id="'logistics' + type.id_type_emplacement_logistique" class="form-control"
-             @input="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
+             @change="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
 
     </div>
   </div>

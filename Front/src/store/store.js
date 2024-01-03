@@ -92,7 +92,6 @@ export default new Vuex.Store({
         selectedTypeZones: [],
         logisticsRequirements: [],
 
-
         selectedTypePrestation: [],
         selectedStands: [],
         provenance : null,

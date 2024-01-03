@@ -146,6 +146,9 @@ export default {
 
       const hasSearchCriteria = selectedZoneIds.length > 0
 
+      console.log('data')
+      console.log()
+
       this.areasShow = this.mergeData();
       console.log( this.areasShow)
       let filteredAreas = [];
@@ -159,6 +162,14 @@ export default {
       } else {
         filteredAreas = this.areasShow
       }
+
+
+      const optimalZone = this.filterOptimalZone(filteredAreas);
+      if (optimalZone != null) {
+        filteredAreas = [optimalZone];
+      }
+      console.log('fini')
+
       const bounds = L.latLngBounds();
 
       const self = this;
@@ -233,6 +244,100 @@ export default {
       });
 
     },
+
+    filterOptimalZone(areasShow) {
+      const logisticRequirements = this.getLogisticsRequirements;
+      if (!logisticRequirements || logisticRequirements.length === 0) {
+        return null;
+      }
+
+      const logisticLocations = this.mergeLogisticLocations();
+      let optimalZone = null;
+      let bestScore = Infinity;
+
+      areasShow.forEach(zone => {
+        let totalDistance = 0;
+        let requirementsMet = 0;
+
+        logisticRequirements.forEach(req => {
+          const relevantLocations = logisticLocations.filter(location =>
+              location.id_type_emplacement_logistique === req.id && location.unite >= req.value
+          );
+
+          if (relevantLocations.length > 0) {
+            const minDistanceForReq = relevantLocations.reduce((minDistance, location) => {
+              const distance = this.calculateHaversineDistance(this.calculateCenter(zone.coordinates), location.coordonnes);
+              return distance < minDistance ? distance : minDistance;
+            }, Infinity);
+
+            totalDistance += minDistanceForReq;
+            requirementsMet++;
+          }
+        });
+
+        // Vérifier que tous les besoins logistiques sont satisfaits pour cette zone
+        if (requirementsMet === logisticRequirements.length) {
+          const averageDistance = totalDistance / requirementsMet;
+          if (averageDistance < bestScore) {
+            bestScore = averageDistance;
+            optimalZone = zone;
+          }
+        }
+      });
+
+      return optimalZone;
+    },
+
+
+    calculateCenter(coordinates) {
+      let latSum = 0, lngSum = 0;
+      coordinates.forEach(coord => {
+        latSum += coord[0]; // Assumer coord[0] est la latitude
+        lngSum += coord[1]; // Assumer coord[1] est la longitude
+      });
+      return [latSum / coordinates.length, lngSum / coordinates.length];
+    },
+
+    findOptimalLogisticsLocation(center, logisticLocations, logisticsRequirements) {
+      let relevantLocations = logisticLocations.filter(location =>
+          this.meetsLogisticsRequirements(location, logisticsRequirements)
+      );
+
+      if (relevantLocations.length === 0) return null;
+
+      let totalDistance = 0;
+      relevantLocations.forEach(location => {
+        totalDistance += this.calculateHaversineDistance(center, location.coordonnes);
+      });
+
+      return { coordonnes: center, averageDistance: totalDistance / relevantLocations.length };
+    },
+
+    meetsLogisticsRequirements(location, logisticsRequirements) {
+      return logisticsRequirements.every(req => {
+        return location.id_type_emplacement_logistique === req.id && location.unite >= req.value;
+      });
+    },
+
+    calculateHaversineDistance(coord1, coord2) {
+      const toRadian = angle => (Math.PI / 180) * angle;
+      const distance = (a, b) => (Math.PI / 180) * (a - b);
+      const RADIUS_OF_EARTH_IN_KM = 6371;
+
+      const dLat = distance(coord2[0], coord1[0]);
+      const dLon = distance(coord2[1], coord1[1]);
+
+      const lat1 = toRadian(coord1[0]);
+      const lat2 = toRadian(coord2[0]);
+
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      return RADIUS_OF_EARTH_IN_KM * c;
+    },
+
+
 
 
     ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
