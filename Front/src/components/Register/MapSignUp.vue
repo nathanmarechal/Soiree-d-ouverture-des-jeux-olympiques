@@ -21,6 +21,7 @@ export default {
       markers: [],
       map: null,
       selectedStand: null,
+      lines : [],
       polygons: [],
       modalActive: false
     };
@@ -163,10 +164,19 @@ export default {
         filteredAreas = this.areasShow
       }
 
+      if (this.lines) {
+        this.lines.forEach(line => {
+          this.map.removeLayer(line);
+        });
+      }
+      this.lines = [];
 
       const optimalZone = this.filterOptimalZone(filteredAreas);
       if (optimalZone != null) {
         filteredAreas = [optimalZone];
+        // Calculez le centre de la zone optimale et tracez des lignes vers les emplacements logistiques les plus proches
+        const center = this.calculateCenter(optimalZone.coordinates);
+        this.drawLinesToClosestLogistics(center);
       }
       console.log('fini')
 
@@ -244,6 +254,46 @@ export default {
       });
 
     },
+
+    drawLinesToClosestLogistics(center) {
+      const closestLogistics = this.findClosestLogistics(center);
+      closestLogistics.forEach(location => {
+        const line = L.polyline([center, location.coordonnes], {
+          color: 'red',
+          weight: 3,
+        }).addTo(this.map);
+        this.lines.push(line); // Gardez une référence aux lignes pour le nettoyage ultérieur
+      });
+    },
+
+    findClosestLogistics(center) {
+      const logisticLocations = this.mergeLogisticLocations();
+      const requirements = this.getLogisticsRequirements; // Obtenez les exigences logistiques
+      let closestLocation = null;
+      let minDistance = Infinity; // Initialisez la distance minimale à l'infini
+
+      logisticLocations.forEach(location => {
+        // Vérifiez si l'emplacement répond aux exigences logistiques
+        const meetsRequirements = requirements.every(req => {
+          return location.id_type_emplacement_logistique === req.id && location.unite >= req.value;
+        });
+
+        if (meetsRequirements) {
+          // Calculez la distance entre le centre et l'emplacement logistique
+          const distance = this.calculateHaversineDistance(center, location.coordonnes);
+          // Si cette distance est la plus petite trouvée et inférieure au seuil, mettez à jour closestLocation
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestLocation = location;
+          }
+        }
+      });
+
+      // Retourne l'emplacement logistique le plus proche s'il existe, sinon null
+      return closestLocation ? [closestLocation] : [];
+    },
+
+
 
     filterOptimalZone(areasShow) {
       const logisticRequirements = this.getLogisticsRequirements;
