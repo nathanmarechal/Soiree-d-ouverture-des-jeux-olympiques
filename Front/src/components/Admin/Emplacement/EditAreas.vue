@@ -170,9 +170,6 @@ export default {
           // Handle marker creation
           this.addEmplacementLogistique(layer.getLatLng());
         }
-
-        // For any common operations after adding the layer to the map
-        // this.map.addLayer(layer);
       });
 
       this.updateMap();

@@ -5,11 +5,12 @@
     <h4>{{ translate("filterMap_3") }}</h4>
     <div>
       <label for="typeZoneSelect">Select Type of Zone:</label>
-      <select id="typeZoneSelect" v-model="selectedTypeZone" @change="updateFilterZone">
+
+      <select id="typeZoneSelect" v-model="selectedTypeZone" >
         <option v-for="type in getAllTypeZone" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
       </select>
     </div>
-    <div v-for="(zone, index) in filteredZones" :key="index" class="form-check">
+    <div v-for="(zone, index) in filteredZones" :key="index" class="form-check" @change="updateFilterZone">
       <input class="form-check-input" type="checkbox" :id="'zoneCheck' + index" v-model="selectedZones" :value="zone.id_zone">
       <label class="d-flex gap-2 form-check-label" :for="'zoneCheck' + index">
         <span class="color-circle" :style="{ background: zone.couleur_hexa }"></span>{{ zone.libelle }}
@@ -19,7 +20,9 @@
     <h4>Logistics Placement Options</h4>
     <div v-for="(type, index) in getAllTypeEmplacementLogistique" :key="index" class="form-group">
       <label :for="'logistics' + type.id_type_emplacement_logistique">{{ type.libelle }} ({{ type.libelle_unite }})</label>
-      <input type="number" :id="'logistics' + type.id_type_emplacement_logistique" class="form-control" v-model="logisticsRequirements[type.id_type_emplacement_logistique]">
+      <input type="number" :id="'logistics' + type.id_type_emplacement_logistique" class="form-control"
+             @input="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
+
     </div>
   </div>
 </template>
@@ -34,7 +37,7 @@ export default {
       selectedTypePrestations: [],
       selectedZones: [],
       selectedTypeZone: null,
-      logisticsRequirements: {},
+      logisticsRequirements: [],
       searchQuery: this.$store.state.searchQuery
     };
   },
@@ -49,18 +52,53 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['getTypePrestationsStore', 'getZonesStore']),
+    ...mapActions(['getZonesStore','getTypeZonesStore', 'getTypeEmplacementLogistiqueStore']),
     async loadData() {
-      await this.getZonesStore();
+      if (this.getAllZone.length === 0){
+        await this.getZonesStore();
+      }
+      if (this.getAllTypeEmplacementLogistique.length === 0){
+        await this.getTypeEmplacementLogistiqueStore();
+      }
+      if (this.getAllTypeZone.length === 0) {
+        await this.getTypeZonesStore();
+      }
     },
+
     updateFilterZone() {
       this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
+      console.log(this.selectedZones)
+      console.log(this.$store.state.selectedZone)
     },
-    updateSearchQuery(event) {
-      const searchValue = event.target.value;
-      this.$store.commit('SET_SEARCH_QUERY', searchValue);
+    updateLogisticsRequirement(typeId, value) {
+      const intValue = value === '' ? null : parseInt(value, 10); // Convert to integer, use null for empty strings
+
+      if (isNaN(intValue)) {
+        // Handle case where value is not a valid number
+        // You might want to remove the entry, set it to null, or handle it as you see fit
+        return;
+      }
+
+      const index = this.logisticsRequirements.findIndex(req => req.id === typeId);
+
+      if (intValue === null) {
+        // Remove the entry if the value is null (empty input)
+        if (index !== -1) {
+          this.logisticsRequirements.splice(index, 1);
+        }
+      } else {
+        // Update or add the value
+        if (index !== -1) {
+          this.logisticsRequirements[index].value = intValue;
+        } else {
+          this.logisticsRequirements.push({ id: typeId, value: intValue });
+        }
+      }
+
+      this.$store.commit('SET_LOGISTICS_REQUIREMENTS', this.logisticsRequirements);
     },
-    ...mapMutations(['SET_SELECTED_TYPE_PRESTATION', 'SET_SELECTED_ZONE', 'SET_SEARCH_QUERY']),
+
+    ...mapMutations(['SET_SELECTED_ZONE','SET_LOGISTICS_REQUIREMENTS']),
   },
   async mounted() {
     try {

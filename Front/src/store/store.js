@@ -90,6 +90,7 @@ export default new Vuex.Store({
         selectedZone: [],
         searchQuery: '',
         selectedTypeZones: [],
+        logisticsRequirements: [],
 
 
         selectedTypePrestation: [],
@@ -159,6 +160,8 @@ export default new Vuex.Store({
         getSelectedTypePrestation: state => state.selectedTypePrestation,
         getSelectedStands : state => state.selectedStands,
         getSearchQuery: state => state.searchQuery,
+        getLogisticsRequirements: state => state.logisticsRequirements,
+
 
         isLoginOpen: state => state.isLoginOpen,
 
@@ -178,6 +181,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
+
+        SET_LOGISTICS_REQUIREMENTS(state, requirements) {
+            state.logisticsRequirements = requirements;
+        },
 
         SET_TEXTS_HOME(state, texts_home) {
             state.texts_home = texts_home;
@@ -996,6 +1003,8 @@ export default new Vuex.Store({
         async getTypeZonesStore({ commit }) {
           try {
             const typeZone = await getAllTypeZones();
+            console.log(typeZone);
+            console.log('type zone store')
             if (Array.isArray(typeZone)) {
               commit('SET_TYPE_ZONE', typeZone);
             } else {
