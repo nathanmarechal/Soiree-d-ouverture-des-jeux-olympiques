@@ -31,9 +31,11 @@ exports.createUserWithStand = (req, res) => {
     const code_postal = req.body.user.code_postal;
     const commune = req.body.user.commune;
     const id_role = req.body.user.id_role;
+
     const nom_stand = req.body.stand.nom_stand;
     const image_stand = req.body.stand.image_stand;
     const description_stand = req.body.stand.description_stand;
+
     console.log(description_stand)
     const prix_stand = 0;
     const id_emplacement = req.body.stand.id_emplacement;
@@ -136,37 +138,9 @@ exports.getUserBySessionId = (req, res) => {
     });
 }
 
-exports.getRoles = (req, res) => {
-    // Log function name
-    console.log("getRoles");
-
-    usersService.getAllRoles((error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.getUserWithLongestPrenom = (req, res) => {
-    // Log function name
-    console.log("getUserWithLongestPrenom");
-
-    usersService.getUserWithLongestPrenom((error, data) => {
-        if (error) {
-            return res.status(500).send("internal error");
-        }
-        if (!data || data.length === 0) {
-            return res.status(404).send("User not found");
-        }
-
-        return res.status(200).send(data);
-    });
-}
-
 exports.updateUser = (req, res) => {
-    const { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand } = req.body;
+    const id_user = req.params.id;
+    const { prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand } = req.body;
 
     // Log function name and data
     console.log("updateUser", { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand });

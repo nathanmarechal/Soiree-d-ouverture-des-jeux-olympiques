@@ -1,5 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
+
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 const usersRoutes = require('./routes/users.router');
 const rolesRoutes = require('./routes/roles.router');
 const droitsRoutes = require('./routes/droits.router');
@@ -27,6 +33,20 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'votre_secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000,  // 2 heures
+    httpOnly: true,
+  },
+}));
+
 app.use("/api/panier", panierRoutes);
 app.use("/api/roles", rolesRoutes);
 
@@ -47,6 +67,21 @@ app.use("/api/commande", commandeRoutes);
 app.use("/api/type-emplacement-logistique", typeEmplacementLogistiqueRoutes);
 app.use("/api/emplacement-logistique", emplacementLogistiqueRoutes);
 app.use("/api/avis", avisRoutes);
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API de la SAE',
+      version: '1.0.0',
+      description: 'API du site de la cérémonie d\'ouverture des jeux olympiques 2024',
+    },
+  },
+  apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
