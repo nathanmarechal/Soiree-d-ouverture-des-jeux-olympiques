@@ -42,8 +42,10 @@
         <input type="text" id="adresse" v-model="utilisateur.adresse" required>
       </div>
 
-        <SelectArea @dataEmplacement="dataEmplacement" :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
-        <div>id emplacement {{this.stand.id_emplacement}}</div>
+      <div class="form-group">
+        <label for="commune">{{translate("addUser_7")}} </label>
+        <input type="text" id="commune" v-model="utilisateur.commune" required>
+      </div>
 
 
       <div>
@@ -168,7 +170,7 @@ export default {
         nom_stand: "",
         image_stand: "",
         description_stand: "",
-        id_emplacement: 0,
+        id_emplacement: 50, //à choisir avec la map
         id_zone: null,
         id_type_prestation: null,
       },
@@ -201,48 +203,19 @@ export default {
     translate,
     ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
 
+
+    dataEmplacement(id_emplacement) {
+      this.stand.id_emplacement = id_emplacement
+      this.modalActiveAreaSelection=false;
+    },
+
     setPrestataire() {
       this.isPrestataire = true;
       this.utilisateur.id_role = 2;
     },
-    data() {
-      return {
-        modalActiveAreaSelection: false,
-        croppedImage: null,
-        isImageInputUpload: false,
-        imageRaw: null,
-        isPrestataire: null,
-        utilisateur: {
-          prenom: "",
-          nom: "",
-          email: "",
-          password: "",
-          adresse: "",
-          code_postal: "",
-          commune: "",
-          solde: 0,
-          id_role: null,
-        },
-        stand: {
-          nom_stand: "",
-          image_stand: "",
-          description_stand: "",
-          id_emplacement: 50, //à choisir avec la map
-          id_zone: null,
-          id_type_prestation: null,
-        },
-        editorConfig: {
-          height: 500,
-          menubar: true,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-          ],
-          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
-          images_upload_handler: this.handleImageUploadDescription
-        },
-      };
+    setClient() {
+      this.isPrestataire = false;
+      this.utilisateur.id_role = 3;
     },
     async loadData() {
       try {
@@ -253,18 +226,7 @@ export default {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-
-    dataEmplacement(id_emplacement){
-      alert(id_emplacement)
-      this.stand.id_emplacement= id_emplacement;
-      this.modalActiveAreaSelection=false;
-    },
-    setClient() {
-      this.isPrestataire = false;
-      this.utilisateur.id_role = 3;
-    },
-
-      async submitFormClient() {
+    async submitFormClient() {
       try {
         await this.createUserStore({
           user: this.utilisateur,
@@ -295,6 +257,7 @@ export default {
         console.error('Erreur lors de la création de l\'utilisateur avec stand :', error);
       }
     },
+
     async handleImageUploadDescription(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
