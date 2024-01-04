@@ -128,6 +128,7 @@ export default {
       this.updateMap()
     },
     showZoneInfo(zone) {
+
       console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
       this.modalActive = true;
@@ -209,7 +210,8 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
-          this.showZoneInfo(zone);
+          console.log('dans la map' + zone.id_emplacement)
+          this.$emit('dataEmplacement', zone.id_emplacement);
         });
 
         // Stockage des polygones

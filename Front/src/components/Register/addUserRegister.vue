@@ -42,10 +42,8 @@
         <input type="text" id="adresse" v-model="utilisateur.adresse" required>
       </div>
 
-      <div class="form-group">
-        <label for="commune">{{translate("addUser_7")}} </label>
-        <input type="text" id="commune" v-model="utilisateur.commune" required>
-      </div>
+        <SelectArea @dataEmplacement="dataEmplacement" :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
+        <div>id emplacement {{this.stand.id_emplacement}}</div>
 
 
       <div>
@@ -207,9 +205,44 @@ export default {
       this.isPrestataire = true;
       this.utilisateur.id_role = 2;
     },
-    setClient() {
-      this.isPrestataire = false;
-      this.utilisateur.id_role = 3;
+    data() {
+      return {
+        modalActiveAreaSelection: false,
+        croppedImage: null,
+        isImageInputUpload: false,
+        imageRaw: null,
+        isPrestataire: null,
+        utilisateur: {
+          prenom: "",
+          nom: "",
+          email: "",
+          password: "",
+          adresse: "",
+          code_postal: "",
+          commune: "",
+          solde: 0,
+          id_role: null,
+        },
+        stand: {
+          nom_stand: "",
+          image_stand: "",
+          description_stand: "",
+          id_emplacement: 50, //à choisir avec la map
+          id_zone: null,
+          id_type_prestation: null,
+        },
+        editorConfig: {
+          height: 500,
+          menubar: true,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
+          images_upload_handler: this.handleImageUploadDescription
+        },
+      };
     },
     async loadData() {
       try {
@@ -237,8 +270,30 @@ export default {
           this.stand.description_stand = descriptionContent;
         }
 
-        if (this.imageRaw) {
-          await uploadImageStand(this.imageRaw);
+
+    methods: {
+      translate,
+      ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
+
+      dataEmplacement(id_emplacement){
+        this.stand.id_emplacement= id_emplacement;
+        this.modalActiveAreaSelection=false;
+      },
+      setPrestataire() {
+        this.isPrestataire = true;
+        this.utilisateur.id_role = 2;
+      },
+      setClient() {
+        this.isPrestataire = false;
+        this.utilisateur.id_role = 3;
+      },
+      async loadData() {
+        try {
+          if (this.getAllRoles.length === 0) {
+            await this.getRolesStore();
+          }
+        } catch (error) {
+          console.error('Erreur lors du chargement des données :', error);
         }
 
 
