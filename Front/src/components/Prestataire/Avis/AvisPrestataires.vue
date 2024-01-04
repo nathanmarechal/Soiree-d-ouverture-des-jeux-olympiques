@@ -1,32 +1,28 @@
 <template>
-  <div v-if="this.size===0">
+  <div v-if="size === 0">
     <div class="alert alert-info" role="alert">
       <h4 class="alert-heading">Aucun avis</h4>
       <p>Il n'y a pas encore d'avis sur votre stand.</p>
     </div>
   </div>
-  <div v-else class="slideshow-container" >
-    <div class="avis-container">
-      <div class="avis-etoiles">
-        <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
-          <i class="fas fa-star"></i>
-        </span>
+
+  <div v-else class="container mt-4">
+    <div class="row">
+      <div class="col-md-4 mb-4" v-for="(item, index) in avis" :key="index">
+        <div class="avis-container">
+          <div class="avis-etoiles">
+            <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= item.note}">
+              <i class="fas fa-star"></i>
+            </span>
+          </div>
+          <div class="mt-2"><strong>{{ item.prenom }} {{ item.nom }}</strong></div>
+          <div class="avis-commentaire" v-html="item.commentaire"></div>
+        </div>
       </div>
-      <div>{{avis[index].prenom}} {{avis[index].nom}}</div>
-      <div class="avis-commentaire" v-html="avis[index].commentaire"></div>
-    </div>
-
-    <div class="navigation">
-      <button v-if="index > 0" @click="index = index - 1" class="nav-button">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-
-      <button v-if="index < size - 1" @click="index = index + 1" class="nav-button">
-        <i class="fas fa-arrow-right"></i>
-      </button>
     </div>
   </div>
 </template>
+
 
 <script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="main" >
+  <div class="main">
     <legende></legende>
     <edit-areas style="width: 75% ; height: 100%"> </edit-areas>
   </div>

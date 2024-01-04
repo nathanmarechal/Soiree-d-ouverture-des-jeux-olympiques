@@ -28,9 +28,15 @@ export default {
   },
   computed: {
     imagePath() {
-      return require(`@/assets/stand/${this.stand.image_stand}`);
+      try {
+        return require('./../../../../../Back/assets/stand/profile/' + this.stand.image_stand);
+      } catch {
+        // Return a default image if the specific image is not found
+        return require('@/assets/arthur-clown.png'); // Adjust the path to your default image
+      }
     }
   },
+
   methods: {
     updateFilterj(stand) {
       let newSelection = [...this.selectedStand];

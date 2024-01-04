@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main">
   <avis-prestataires></avis-prestataires>
 </div>
 </template>
@@ -20,4 +20,7 @@ export default {
 
 <style scoped>
 
+.main{
+  margin-top: 10vh;
+}
 </style>

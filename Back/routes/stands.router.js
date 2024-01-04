@@ -21,4 +21,7 @@ router.post("/uploading/picture-description", standsController.uploadingPictureD
 
 router.use('/picture-description', express.static(path.join(__dirname,  '../assets/stand/description')))
 
+router.use('/picture-profile', express.static(path.join(__dirname,  '../assets/stand/profile')))
+
+
 module.exports = router;
