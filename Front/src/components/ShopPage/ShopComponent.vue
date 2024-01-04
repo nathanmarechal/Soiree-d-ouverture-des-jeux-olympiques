@@ -64,8 +64,9 @@ export default {
 
         const typeFilter = isTypeSelected ? this.getSelectedTypePrestation.includes(prestation.id_type_prestation) : true;
         const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
+        const availabilityFilter = prestation.is_available; // Check if the service is available
 
-        return typeFilter && standFilter;
+        return typeFilter && standFilter && availabilityFilter; // Include availability in the filter conditions
       });
     },
   },
