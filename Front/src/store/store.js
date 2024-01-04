@@ -806,7 +806,7 @@ export default new Vuex.Store({
             }
         },
 
-        async createUsersWithStandStore({ commit }, {user, stand}) {
+        async createUsersWithStandStore({ commit }, user, stand) {
             try {
                 const body = {
                     ...user,
@@ -877,9 +877,10 @@ export default new Vuex.Store({
             }
         },
 
-        async updateRoleStore({ commit }, {id, body}) {
+        async updateRoleStore({ commit },body) {
             try {
-                const data = await updateRole(id, body);
+                console.log("updateRoleStore: ", body)
+                const data = await updateRole(body);
                 //console.log("dataupdate: ", data);
                 commit('UPDATE_ROLE', data.id_role, data);
                 return data;

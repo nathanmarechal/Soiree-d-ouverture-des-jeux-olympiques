@@ -117,7 +117,7 @@ export default {
     async submitForm() {
       try {
         // modify the role
-        let result = await this.updateRoleStore({id : this.role.id_role, body : this.role.libelle });
+        let result = await this.updateRoleStore(this.role);
         console.log('Résultat de la modification du rôle :', result);
         // delete all the selected droits for the role
         await this.deleteRoleDroitAssociationForSpecificRoleStore(this.role.id_role);
