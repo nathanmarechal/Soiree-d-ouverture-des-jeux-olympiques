@@ -119,7 +119,7 @@
 
       <button @click="modalActiveAreaSelection=true" class="btn btn-success"> Choisir Emplacement</button>
 
-      <SelectArea :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
+      <SelectArea @dataEmplacement="dataEmplacement" :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
 
       <div>
         <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
@@ -168,7 +168,7 @@ export default {
         nom_stand: "",
         image_stand: "",
         description_stand: "",
-        id_emplacement: 50, //à choisir avec la map
+        id_emplacement: 0,
         id_zone: null,
         id_type_prestation: null,
       },
@@ -253,7 +253,18 @@ export default {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-    async submitFormClient() {
+
+    dataEmplacement(id_emplacement){
+      alert(id_emplacement)
+      this.stand.id_emplacement= id_emplacement;
+      this.modalActiveAreaSelection=false;
+    },
+    setClient() {
+      this.isPrestataire = false;
+      this.utilisateur.id_role = 3;
+    },
+
+      async submitFormClient() {
       try {
         await this.createUserStore({
           user: this.utilisateur,
@@ -270,30 +281,8 @@ export default {
           this.stand.description_stand = descriptionContent;
         }
 
-
-    methods: {
-      translate,
-      ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
-
-      dataEmplacement(id_emplacement){
-        this.stand.id_emplacement= id_emplacement;
-        this.modalActiveAreaSelection=false;
-      },
-      setPrestataire() {
-        this.isPrestataire = true;
-        this.utilisateur.id_role = 2;
-      },
-      setClient() {
-        this.isPrestataire = false;
-        this.utilisateur.id_role = 3;
-      },
-      async loadData() {
-        try {
-          if (this.getAllRoles.length === 0) {
-            await this.getRolesStore();
-          }
-        } catch (error) {
-          console.error('Erreur lors du chargement des données :', error);
+        if (this.imageRaw) {
+          await uploadImageStand(this.imageRaw);
         }
 
 
@@ -306,7 +295,6 @@ export default {
         console.error('Erreur lors de la création de l\'utilisateur avec stand :', error);
       }
     },
-
     async handleImageUploadDescription(blobInfo, success, failure) {
       // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
