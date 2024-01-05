@@ -70,6 +70,31 @@ exports.checkUserAttenteExists = async (req, res, next) => {
     }
 }
 
+exports.checkPrestataireExists = async (req, res, next) => {
+    const id = req.params.id;
+
+    if (!id) {
+        return res.status(400).send("ID requis.");
+    }
+
+    try {
+        const conn = await pool.connect();
+        const checkResult = await conn.query("SELECT * FROM utilisateur WHERE id_user = $1 AND id_role = 2", [id]);
+
+        if (checkResult.rows.length === 0) {
+            conn.release();
+            return res.status(404).send("Prestataire non trouvé");
+        }
+
+        conn.release();
+        next();
+    } catch (error) {
+        console.error('Error in checkPrestataireExists:', error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
 exports.checkSessionExists = async (req, res, next) => {
     const id = req.query.session_id;
 
