@@ -10,14 +10,13 @@ exports.createUser = (req, res) => {
     const commune = req.body.commune;
     const id_role = req.body.id_role;
 
-    // Log function name and data
     console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role });
 
     usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, (error, data) => {
         if (error) {
-            return res.status(500).send("error");
+            return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send("User created successfully");
+            return res.status(201).send(data);
         }
     });
 }
@@ -39,19 +38,17 @@ exports.createUserWithStand = (req, res) => {
     console.log(description_stand)
     const prix_stand = 0;
     const id_emplacement = req.body.stand.id_emplacement;
-    console.log(id_emplacement + "eeessees")
 
     usersService.createUserWithStand(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix_stand, id_emplacement, (error, data) => {
         if (error) {
-            return res.status(500).send("error");
+            return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send("User created successfully");
+            return res.status(201).send(data);
         }
     });
 }
 
 exports.getUsers = (req, res) => {
-    // Log function name
     console.log("getUsers");
 
     usersService.getAllUsers((error, data) => {
@@ -147,9 +144,6 @@ exports.updateUser = (req, res) => {
 
     usersService.updateUser(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, (error, data) => {
         if (error) {
-            if (error === "User not found") {
-                return res.status(404).send("User not found");
-            }
             return res.status(500).send("internal error");
         }
         return res.status(200).send(data);
@@ -177,103 +171,16 @@ exports.deleteUser = (req, res) => {
     });
 }
 
-exports.createRole = (req, res) => {
-    const body = req.body;
-
-    // Log function name and data
-
-    usersService.createRole(body, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.updateRole = (req, res) => {
-    const id = req.params.id;
-    const body = req.body.solde;
-
-    // Log function name and data
-    console.log("updateRole", { id, body });
-
-    usersService.updateRole(body, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.deleteRole = (req, res) => {
-    const id = req.params.id;
-
-    // Log function name and data
-    console.log("deleteRole", { id });
-
-    usersService.deleteRole(id, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
 exports.updateSolde = (req, res) => {
     const id = req.body.id_user;
     const newsolde = req.body.solde;
 
     console.log("updateSolde", { id, newsolde });
 
+    console.log(typeof id);
+    console.log(typeof newsolde);
+
     usersService.updateSolde(id, newsolde, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.updateNom = (req, res) => {
-    const id = req.body.id_user;
-    const nom = req.body.nom;
-
-    console.log("updateNom", { id, nom });
-
-    usersService.updateNom(id, nom, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.updatePrenom = (req, res) => {
-    const id = req.body.id_user;
-    const prenom = req.body.prenom;
-
-    console.log("updatePrenom", { id, prenom });
-
-    usersService.updatePrenom(id, prenom, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        } else {
-            return res.status(200).send(data);
-        }
-    });
-}
-
-exports.updateEmail = (req, res) => {
-    const id = req.body.id_user;
-    const email = req.body.email;
-
-    console.log("updateEmail", { id, email });
-
-    usersService.updateEmail(id, email, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

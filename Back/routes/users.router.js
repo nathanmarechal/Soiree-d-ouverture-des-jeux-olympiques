@@ -1,36 +1,14 @@
 const express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/users.controller');
-const {checkRight} = require("../middlewares/authentication.middleware");
+
+//const {checkRight} = require("../middlewares/authentication.middleware");
+
 const loginMiddleware = require("../middlewares/authentication.middleware");
-
-/*
-router.get("/get", usersController.getUsers);
-
-router.get("/getBySessionId",usersController.getUserBySessionId)
-
-router.patch("/update/:id", usersController.updateUser);
-
-router.post("/", (req, res, next) => {
-    checkRight(req, res, next, "create_users");
-}, usersController.createUser);
-
-router.delete("/delete/:id", usersController.deleteUser);
-
-router.patch("/updateSolde", usersController.updateSolde);
-
-router.patch("/updateUserCourantWoPassword", usersController.updateUserCourantWoPassword);
-
-router.post("/registerClient", loginMiddleware.checkRight, usersController.createUser);
-
-router.post("/registerPrestataire", usersController.createUserWithStand);
-
-router.get("/getUserAttente", usersController.getUsersAttente);
-
-router.post("/acceptUser/:id", usersController.acceptUser);
-
-router.post("/refuseUser/:id", usersController.refuseUser);
- */
+const usersMiddleware = require("../middlewares/users.middleware");
+const standsMiddleware = require("../middlewares/stands.middleware");
+const rolesMiddleware = require("../middlewares/role.middleware");
+const mapMiddleware = require("../middlewares/map.middleware");
 
 /**
  * @swagger
@@ -61,13 +39,13 @@ router.get("/get", usersController.getUsers);
  *           type: string
  *     responses:
  *       '200':
- *         description: Utilisateur trouvé
+ *         description: Session trouvé
  *       '404':
- *         description: Utilisateur non trouvé
- *       '400':
- *         description: Paramètre manquant ou invalide
+ *         description: Session non trouvé
+ *       '500':
+ *         description: Internal error
  */
-router.get("/getBySessionId", usersController.getUserBySessionId);
+router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController.getUserBySessionId);
 
 
 /**
@@ -125,55 +103,19 @@ router.get("/getBySessionId", usersController.getUserBySessionId);
  *                 type: integer
  *                 format: int32
  *                 description: ID du rôle de l'utilisateur
- *               id_etat:
- *                 type: integer
- *                 format: int32
- *                 description: ID de l'état de l'utilisateur, si applicable
  *     responses:
  *       '200':
  *         description: Utilisateur mis à jour avec succès
  *       '400':
  *         description: Requête invalide
  *       '404':
- *         description: Utilisateur non trouvé
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Internal error
  */
-router.patch("/update/:id", usersController.updateUser);
-
-// ... Vous répétez ce processus pour chaque route ...
-
-/**
- * @swagger
- * /api/users/:
- *   post:
- *     summary: Crée un nouvel utilisateur
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: Nom de l'utilisateur
- *               email:
- *                 type: string
- *                 description: Email de l'utilisateur
- *               password:
- *                 type: string
- *                 description: Mot de passe de l'utilisateur
- *     responses:
- *       '201':
- *         description: Utilisateur créé
- *       '400':
- *         description: Requête invalide
- */
-router.post("/", (req, res, next) => {
-    checkRight(req, res, next, "create_users");
-}, usersController.createUser);
-
-
+router.patch("/update/:id",usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandExists, rolesMiddleware.checkRoleExists ,usersController.updateUser);
 
 /**
  * @swagger
@@ -187,14 +129,17 @@ router.post("/", (req, res, next) => {
  *         required: true
  *         description: ID de l'utilisateur à supprimer
  *         schema:
- *           type: string
+ *          type: integer
+ *          format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur supprimé
  *       '404':
- *         description: Utilisateur non trouvé
+ *         description: Non trouvé
+ *       '500':
+ *         description: Internal error
  */
-router.delete("/delete/:id", usersController.deleteUser);
+router.delete("/delete/:id", usersMiddleware.checkUserExists ,usersController.deleteUser);
 
 /**
  * @swagger
@@ -209,8 +154,9 @@ router.delete("/delete/:id", usersController.deleteUser);
  *           schema:
  *             type: object
  *             properties:
- *               userId:
- *                 type: string
+ *               id_user:
+ *                 type: integer
+ *                 format: int64
  *                 description: ID de l'utilisateur
  *               solde:
  *                 type: number
@@ -220,8 +166,12 @@ router.delete("/delete/:id", usersController.deleteUser);
  *         description: Solde mis à jour
  *       '400':
  *         description: Requête invalide
+ *       '404':
+ *         description: Non trouvé
+ *       '500':
+ *         description: Erreur interne
  */
-router.patch("/updateSolde", usersController.updateSolde);
+router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.updateSolde);
 
 /**
  * @swagger
@@ -236,19 +186,42 @@ router.patch("/updateSolde", usersController.updateSolde);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               id_user:
+ *                 type: integer
+ *                 format: int64
+ *                 description: ID de l'utilisateur
+ *               prenom:
+ *                 type: string
+ *                 description: Prénom de l'utilisateur
+ *               nom:
  *                 type: string
  *                 description: Nom de l'utilisateur
  *               email:
  *                 type: string
+ *                 format: email
  *                 description: Email de l'utilisateur
+ *               adresse:
+ *                 type: string
+ *                 description: Adresse de l'utilisateur
+ *               code_postal:
+ *                 type: integer
+ *                 description: Code postal de l'utilisateur
+ *               commune:
+ *                 type: string
+ *                 description: Commune de l'utilisateur
  *     responses:
  *       '200':
  *         description: Utilisateur mis à jour
  *       '400':
  *         description: Requête invalide
+ *       '404':
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Internal error
  */
-router.patch("/updateUserCourantWoPassword", usersController.updateUserCourantWoPassword);
+router.patch("/updateUserCourantWoPassword", usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
 
 /**
  * @swagger
@@ -263,22 +236,45 @@ router.patch("/updateUserCourantWoPassword", usersController.updateUserCourantWo
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               firstName:
+ *                 type: string
+ *                 description: Prénom du client
+ *               lastName:
  *                 type: string
  *                 description: Nom du client
  *               email:
  *                 type: string
+ *                 format: email
  *                 description: Email du client
  *               password:
  *                 type: string
  *                 description: Mot de passe du client
+ *               adresse:
+ *                 type: string
+ *                 description: Adresse du client
+ *               code_postal:
+ *                 type: integer
+ *                 description: Code postal du client
+ *               commune:
+ *                 type: string
+ *                 description: Commune du client
+ *               id_role:
+ *                 type: integer
+ *                 description: ID du rôle du client (sera toujours 3 pour les clients)
+ *                 default: 3
  *     responses:
  *       '201':
  *         description: Client créé
  *       '400':
  *         description: Requête invalide
+ *       '404':
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Internal error
  */
-router.post("/registerClient", loginMiddleware.checkRight, usersController.createUser);
+router.post("/registerClient", usersMiddleware.checkEmailExists,rolesMiddleware.checkIfClient, usersController.createUser);
 
 /**
  * @swagger
@@ -293,25 +289,64 @@ router.post("/registerClient", loginMiddleware.checkRight, usersController.creat
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *                 description: Nom du prestataire
- *               email:
- *                 type: string
- *                 description: Email du prestataire
- *               password:
- *                 type: string
- *                 description: Mot de passe du prestataire
- *               standId:
- *                 type: string
- *                 description: ID du stand associé
+ *               user:
+ *                 type: object
+ *                 properties:
+ *                   firstName:
+ *                     type: string
+ *                     description: Prénom du prestataire
+ *                   lastName:
+ *                     type: string
+ *                     description: Nom du prestataire
+ *                   email:
+ *                     type: string
+ *                     format: email
+ *                     description: Email du prestataire
+ *                   password:
+ *                     type: string
+ *                     description: Mot de passe du prestataire
+ *                   adresse:
+ *                     type: string
+ *                     description: Adresse du prestataire
+ *                   code_postal:
+ *                     type: integer
+ *                     description: Code postal du prestataire
+ *                   commune:
+ *                     type: string
+ *                     description: Commune du prestataire
+ *                   id_role:
+ *                     type: integer
+ *                     description: ID du rôle du prestataire*
+ *                     default: 2
+ *               stand:
+ *                 type: object
+ *                 properties:
+ *                   nom_stand:
+ *                     type: string
+ *                     description: Nom du stand
+ *                   image_stand:
+ *                     type: string
+ *                     description: Image du stand
+ *                   description_stand:
+ *                     type: string
+ *                     description: Description du stand
+ *                   id_emplacement:
+ *                     type: integer
+ *                     description: ID de l'emplacement du stand
  *     responses:
  *       '201':
  *         description: Prestataire créé
  *       '400':
  *         description: Requête invalide
+ *       '404':
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Internal error
  */
-router.post("/registerPrestataire", usersController.createUserWithStand);
+router.post("/registerPrestataire",usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
+
 
 /**
  * @swagger
@@ -323,7 +358,7 @@ router.post("/registerPrestataire", usersController.createUserWithStand);
  *       '200':
  *         description: Liste des utilisateurs en attente
  *       '500':
- *         description: Erreur interne
+ *         description: Internal error
  */
 router.get("/getUserAttente", usersController.getUsersAttente);
 
@@ -339,14 +374,17 @@ router.get("/getUserAttente", usersController.getUsersAttente);
  *         required: true
  *         description: ID de l'utilisateur à accepter
  *         schema:
- *           type: string
+ *          type: integer
+ *          format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur accepté
  *       '404':
  *         description: Utilisateur non trouvé
+ *       '500':
+ *         description: Internal error
  */
-router.post("/acceptUser/:id", usersController.acceptUser);
+router.post("/acceptUser/:id", usersMiddleware.checkUserAttenteExists ,usersController.acceptUser);
 
 /**
  * @swagger
@@ -360,13 +398,16 @@ router.post("/acceptUser/:id", usersController.acceptUser);
  *         required: true
  *         description: ID de l'utilisateur à refuser
  *         schema:
- *           type: string
+ *          type: integer
+ *          format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur refusé
  *       '404':
  *         description: Utilisateur non trouvé
+ *       '500':
+ *         description: Internal error
  */
-router.post("/refuseUser/:id", usersController.refuseUser);
+router.post("/refuseUser/:id", usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
 
 module.exports = router;

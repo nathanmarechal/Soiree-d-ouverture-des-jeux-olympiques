@@ -3,6 +3,18 @@ var router = express.Router();
 const standsController = require('../controllers/stands.controller');
 const path = require('path');
 
+/**
+ * @swagger
+ * /api/stands/get:
+ *   get:
+ *     summary: Renvoie tous les stands
+ *     tags: [Stands]
+ *     responses:
+ *       '200':
+ *         description: Une liste de tous les stands
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
 router.get("/get", standsController.getStands);
 
 router.get("/get/:id", standsController.getStandById);

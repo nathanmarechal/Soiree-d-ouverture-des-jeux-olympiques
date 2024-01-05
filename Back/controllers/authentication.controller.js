@@ -10,6 +10,8 @@ exports.getLoginToken = (req, res) => {
         }
         else {
             console.log("pas d'erreur")
+            if (data==null)
+                return res.status(404).send("Échec de l'authentification");
             return res.status(200).send(data);
         }
     })

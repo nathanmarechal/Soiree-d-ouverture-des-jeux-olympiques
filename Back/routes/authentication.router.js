@@ -25,8 +25,10 @@ const loginController = require('../controllers/authentication.controller');
  *     responses:
  *       '200':
  *         description: Authentification réussie
- *       '401':
+ *       '404':
  *         description: Échec de l'authentification
+ *       '500':
+ *         description: Internal error
  */
 router.get("/",loginController.getLoginToken);
 
