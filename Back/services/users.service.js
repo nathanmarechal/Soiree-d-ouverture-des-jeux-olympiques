@@ -146,7 +146,7 @@ async function updateUserAsync(id_user, prenom, nom, email, password, adresse, c
             );
         } else {
             result = await conn.query(
-                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9 id_stand = $10, id_role = $11 WHERE id_user = $1",
+                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9, id_stand = $10, id_role = $11 WHERE id_user = $1",
                 [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
             );
         }
