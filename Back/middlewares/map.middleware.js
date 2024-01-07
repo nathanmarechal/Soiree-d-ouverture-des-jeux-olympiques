@@ -1,7 +1,8 @@
 const pool = require("../database/db");
 
 exports.checkEmplacementExists = async (req, res, next) => {
-    const id = req.body.stand.id_emplacement;
+    const id = req.body.id_emplacement || (req.body.stand && req.body.stand.id_emplacement)
+    const id_stand = req.params.id
 
     if (!id) {
         return res.status(400).send("ID emplacement requis.");
@@ -16,8 +17,16 @@ exports.checkEmplacementExists = async (req, res, next) => {
             conn.release();
             return res.status(404).send("Emplacement non trouvé");
         } else if (checkResult.rows[0].id_stand != null) {
-            conn.release();
-            return res.status(409).send("Un stand est déjà présent sur cet emplacement");
+            if (id_stand){
+                if (id_stand != checkResult.rows[0].id_stand){
+                    conn.release();
+                    return res.status(409).send("Un stand est déjà présent sur cet emplacement");
+                }
+            }
+            else{
+                conn.release();
+                return res.status(409).send("Un stand est déjà présent sur cet emplacement");
+            }
         }
 
         conn.release();

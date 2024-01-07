@@ -37,13 +37,33 @@ const getAllStands = (callback) => {
         });
 }
 
+async function getAllStandsAttenteAsync() {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query("SELECT * FROM standAttente;");
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAllStandsAsync:', error);
+        throw error;
+    }
+}
+
+const getAllStandsAttente = (callback) => {
+    getAllStandsAttenteAsync()
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 async function getStandByIdAsync(id) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("SELECT s.id_stand, s.nom_stand, s.image_stand, s.description_stand, s.date_achat, s.prix, e.coordonnes FROM stand s\n" +
-            "JOIN utilisateur u on s.id_stand = u.id_stand\n" +
-            "JOIN emplacement e on s.id_emplacement = e.id_emplacement\n" +
-            "WHERE u.id_user = $1;",[id]);
+        const result = await conn.query("SELECT * FROM stand WHERE id_stand = $1;",[id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -100,7 +120,7 @@ const createStand = (body, callback) => {
 async function createStandAsync(body) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, $4, $5, $6);", [body.nom_stand, body.image_stand, body.description_stand, body.date_achat, body.prix, body.id_emplacement]);
+        const result = await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;", [body.nom_stand, body.image_stand, body.description_stand, body.date_achat, body.prix, body.id_emplacement]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -123,7 +143,7 @@ const updateStand = (id, body, callback) => {
 async function updateStandAsync(id, body) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("UPDATE stand SET nom_stand = $1, image_stand = $2, description_stand = $3, date_achat = $4, prix = $5, id_emplacement = $6 WHERE id_stand = $7;", [body.nom_stand, body.image_stand, body.description_stand, body.date_achat, body.prix, body.id_emplacement, id]);
+        const result = await conn.query("UPDATE stand SET nom_stand = $1, image_stand = $2, description_stand = $3, date_achat = $4, prix = $5, id_emplacement = $6 WHERE id_stand = $7 RETURNING *;", [body.nom_stand, body.image_stand, body.description_stand, body.date_achat, body.prix, body.id_emplacement, id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -164,7 +184,7 @@ const uploadingPictureDescription = (req, callback) => {
 async function updateStandDescriptionAsync(id, body) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("UPDATE stand SET description_stand = $1 WHERE id_stand = $2;", [body.description_stand, id]);
+        const result = await conn.query("UPDATE stand SET description_stand = $1 WHERE id_stand = $2 RETURNING *;", [body.description_stand, id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -249,6 +269,7 @@ const uploadPictureStand = (req, callback) => {
 
 module.exports = {
     getAllStands: getAllStands,
+    getAllStandsAttente: getAllStandsAttente,
     uploadingPictureDescription:uploadingPictureDescription,
     getStandById:getStandById,
     updateStandDescription:updateStandDescription,

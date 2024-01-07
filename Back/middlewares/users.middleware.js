@@ -1,43 +1,21 @@
 const validator = require('validator');
 const pool = require("../database/db");
-const {finalize} = require("swagger-jsdoc/src/specification");
 
 exports.validateUserInput = (req, res, next) => {
-    const nom = req.body.nom;
-    const prenom = req.body.prenom;
+    let password = req.body.password || (req.body.user && req.body.user.password);
 
-    if(!nom || !prenom){
-        return res.status(400).send("nom et prenom sont nulles!");
-    }
-    if (!validator.isLength(nom, {min: 3}) || !validator.isAlpha(nom,'en-US', {ignore: " "})){
-        return res.status(400).send("Format incorrect");
-    }
-    if (!validator.isLength(prenom, {min: 3}) || !validator.isAlpha(prenom,'en-US', {ignore: " "})){
-        return res.status(400).send("Format incorrect");
+    if (!validator.isLength(password, {min: 8})){
+        return res.status(400).send("Format incorrect : le mot de passe doit contenir au moins 8 caractères");
     }
     next();
 }
 
 
 exports.checkUserExists = async (req, res, next) => {
-    const id_params = req.params.id;
-    const id_query = req.query.id_user;
-    const id_body = req.body.id_user;
-    let id = null;
-    if (id_params != null) {
-        id = id_params;
-    }
-    else if (id_query != null) {
-        id = id_query;
-    }
-    else if (id_body != null) {
-        id = id_body;
-    }
-
+    let id = req.params.id || req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user);
     if (!id) {
         return res.status(400).send("ID requis.");
     }
-
     try {
         const conn = await pool.connect();
 

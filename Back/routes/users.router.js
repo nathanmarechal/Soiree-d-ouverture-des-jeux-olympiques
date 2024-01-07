@@ -274,7 +274,7 @@ router.patch("/updateUserCourantWoPassword", usersMiddleware.checkUserExists, us
  *       '500':
  *         description: Internal error
  */
-router.post("/registerClient", usersMiddleware.checkEmailExists,rolesMiddleware.checkIfClient, usersController.createUser);
+router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists,rolesMiddleware.checkIfClient, usersController.createUser);
 
 /**
  * @swagger
@@ -345,7 +345,7 @@ router.post("/registerClient", usersMiddleware.checkEmailExists,rolesMiddleware.
  *       '500':
  *         description: Internal error
  */
-router.post("/registerPrestataire",usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
+router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
 
 
 /**

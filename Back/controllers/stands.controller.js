@@ -11,6 +11,17 @@ exports.getStands = (req, res) => {
     })
 }
 
+exports.getStandsAttente = (req, res) => {
+    standsService.getAllStandsAttente((error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
 exports.getStandById = (req, res) => {
     const id = req.params.id;
     standsService.getStandById(id, (error, data) => {
