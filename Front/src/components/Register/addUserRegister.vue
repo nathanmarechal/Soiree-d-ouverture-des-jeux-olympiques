@@ -108,8 +108,6 @@
         <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
       </div>
 
-
-
       <div>
         <label for="descriptionStand">Description du Stand</label>
         <Editor
@@ -121,6 +119,8 @@
 
       <button @click.prevent="modalActiveAreaSelection = true" class="btn btn-success">{{ translate("addUser_13") }}</button>
       <SelectArea @dataEmplacement="dataEmplacement" :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
+      <div v-if="this.stand.id_emplacement != null"> Id emplacement : {{this.stand.id_emplacement}}</div>
+      
       <div>
         <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
         <button @click="isPrestataire = null" class="btn btn-danger">{{translate("addUser_12")}}</button>

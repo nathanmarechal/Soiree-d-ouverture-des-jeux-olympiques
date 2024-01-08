@@ -168,7 +168,7 @@ exports.deleteUser = (req, res) => {
             }
             return res.status(500).send("internal error");
         }
-        return res.status(200).send(data);
+        return res.status(200).send("Utilisateur supprimé avec succès");
     });
 }
 

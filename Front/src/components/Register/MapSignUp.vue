@@ -190,11 +190,12 @@ export default {
           weight: 5,
         }).addTo(this.map);
 
+
         polygon.on('mouseover', function (e) {
           L.popup()
               .setLatLng(e.latlng)
-              .setContent(zone.nom_stand)
-              .openOn(self.map); // Utilisez 'self.map' ici
+              .setContent('Surface: ' + zone.surface + 'm²') // Display only the surface information
+              .openOn(self.map);
         });
 
         polygon.on('mouseout', function () {
@@ -208,8 +209,6 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
-          console.log('poly', polygon, zone)
-          console.log('dans la map' + zone.id_emplacement)
           this.$emit('dataEmplacement', zone.id_emplacement);
         });
 
@@ -221,6 +220,7 @@ export default {
 
 
       const logisticLocations = this.mergeLogisticLocations();
+
       console.log(logisticLocations)
 
       // Remove existing markers
@@ -263,7 +263,7 @@ export default {
           color: 'red',
           weight: 3,
         }).addTo(this.map);
-        this.lines.push(line); // Gardez une référence aux lignes pour le nettoyage ultérieur
+        this.lines.push(line); // Gardez  une référence aux lignes pour le nettoyage ultérieur
       });
     },
 
