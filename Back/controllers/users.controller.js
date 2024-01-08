@@ -76,7 +76,7 @@ exports.getUsersAttente = (req, res) => {
 }
 
 exports.acceptUser = (req, res) => {
-    const id_user = req.params.id;
+    const id_user = req.query.id_user;
 
     console.log("acceptUser", id_user);
 
@@ -90,7 +90,7 @@ exports.acceptUser = (req, res) => {
 }
 
 exports.refuseUser = (req, res) => {
-    const id_user = req.params.id;
+    const id_user = req.query.id_user;
 
     console.log("refuseUser", id_user);
 

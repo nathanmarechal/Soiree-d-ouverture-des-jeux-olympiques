@@ -24,23 +24,23 @@ async function getAllUsersAttenteFromAPI() {
     return answer
 }
 
-async function acceptUser(id) {
-    let answer = await acceptUserFromAPI(id)
+async function acceptUser(id,session_id) {
+    let answer = await acceptUserFromAPI(id,session_id)
     return answer
 }
 
-async function acceptUserFromAPI(id) {
-    let answer = await postRequest('/users/acceptUser/' + id, 'ACCEPTUSER')
+async function acceptUserFromAPI(id,session_id) {
+    let answer = await postRequest('/users/acceptUser?id_user=' + id+'&session_id='+session_id, 'ACCEPTUSER')
     return answer
 }
 
-async function refuseUser(id) {
-    let answer = await refuseUserFromAPI(id)
+async function refuseUser(id,session_id) {
+    let answer = await refuseUserFromAPI(id,session_id)
     return answer
 }
 
-async function refuseUserFromAPI(id) {
-    let answer = await postRequest('/users/refuseUser/' + id, 'REFUSEUSER')
+async function refuseUserFromAPI(id,session_id) {
+    let answer = await postRequest('/users/refuseUser?id_user=' + id+"&session_id="+session_id, 'REFUSEUSER')
     return answer
 }
 

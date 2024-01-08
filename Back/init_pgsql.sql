@@ -306,6 +306,7 @@ INSERT INTO droits(libelle) VALUES
 ('create_users'),
 ('update_users'),
 ('delete_users'),
+('give_credit'),
 ('see_zones'),
 ('create_zones'),
 ('update_zones'),
