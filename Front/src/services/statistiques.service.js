@@ -30,8 +30,41 @@ async function getNbPrestationHeure(id) {
     return answer
 }
 
+async function getAveragePurchaseByStandFromAPI(id) {
+    return getRequest('/statistiques/prestataire/average-purchase/' + id, 'GETAVERAGEPURCHASEBUSTAND')
+}
+
+async function getAveragePurchaseByStand(id) {
+    let answer = await getAveragePurchaseByStandFromAPI(id)
+    console.log("getAveragePurchaseByStand: ", answer)
+    return answer
+}
+
+async function getBestClientByStandFromAPI(id) {
+    return getRequest('/statistiques/prestataire/best-client/' + id, 'BESTVLIENTBYSTAND')
+}
+
+async function getBestClientByStand(id) {
+    let answer = await getBestClientByStandFromAPI(id)
+    console.log("getBestClientByStand: ", answer)
+    return answer
+}
+
+async function getSalesRevnueByTypeByStandFromAPI(id) {
+    return getRequest('/statistiques/prestataire/sales-revenue-by-type/' + id, 'BESTSALESREVENUE')
+}
+
+async function getSalesRevnueByTypeByStand(id) {
+    let answer = await getSalesRevnueByTypeByStandFromAPI(id)
+    console.log("getSalesRevnueByTypeByStand: ", answer)
+    return answer
+}
+
 export {
     getBestSellerPrestation,
     getNewStandByMonth,
-    getNbPrestationHeure
+    getNbPrestationHeure,
+    getAveragePurchaseByStand,
+    getBestClientByStand,
+    getSalesRevnueByTypeByStand
 }

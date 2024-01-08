@@ -21,6 +21,7 @@ export default {
 
 .main{
   margin-top: 15vh;
+  margin-bottom: 5vh;
   width: 100%;
   display: flex;
   justify-content: center;

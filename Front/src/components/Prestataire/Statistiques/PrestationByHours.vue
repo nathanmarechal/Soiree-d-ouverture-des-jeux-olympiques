@@ -10,6 +10,7 @@ import * as d3 from 'd3';
 import { mapGetters } from 'vuex';
 import { getNbPrestationHeure } from '@/services/statistiques.service';
 
+
 export default {
   name: 'BarChart',
   data() {
