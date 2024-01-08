@@ -34,7 +34,6 @@
 </template>
 
 <script>
-
 import {mapActions, mapGetters} from "vuex";
 import '@fortawesome/fontawesome-free/css/all.css';
 import AddAvisComponent from "@/components/Avis/AddAvisComponent.vue";
@@ -90,9 +89,6 @@ export default {
 
 
 <style scoped>
-
-
-
 
 .slideshow-container {
   font-family: 'Arial', sans-serif;

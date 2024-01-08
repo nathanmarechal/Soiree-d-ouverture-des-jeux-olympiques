@@ -1,8 +1,12 @@
 <template>
   <div>
+    <div class="form-check form-switch" v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" style="margin-left: 5px">
+      <input class="form-check-input" type="checkbox" id="editModeSwitch" v-model="editMode">
+      <label class="form-check-label" for="editModeSwitch">Edit Mode</label>
+    </div>
     <main id="sample">
       <Editor
-          v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1"
+          v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1 && editMode === true"
           ref="myEditor"
           api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
           :init="{
@@ -25,7 +29,7 @@
         <div v-html="this.HomeDescription" style="padding: 5%"></div>
       </div>
     </main>
-    <button v-if="role === 'admin'" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
+    <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1 && editMode === true" type="button" @click="saveContent" class="btn btn-success" >Enregistrer les modifications</button>
   </div>
 </template>
 
@@ -45,6 +49,7 @@ export default {
       homeText : null,
       HomeDescription: null,
       role : null,
+      editMode : false,
       editorConfig: {
         plugins: 'image',
         toolbar: 'image'
