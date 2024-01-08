@@ -6,6 +6,7 @@
         <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && addMode === false" class="btn btn-outline-success" @click="setActiveAddMode" style="margin-left: 50%"> ajouter un avis</button>
       </div>
       <div v-if="addMode===true">
+        <template>cool</template>
         <add-avis-component @contentSaved="validAdd"></add-avis-component>
       </div>
     </div>
@@ -84,9 +85,12 @@ export default {
       this.addMode = false;
     },
 
-    async deleteAvis(id){
+    async deleteAvis(id) {
       console.log(id)
       await this.deleteAvisStore(id)
+      if(this.index === this.size - 1){
+        this.index = this.index - 1
+      }
       this.avis = this.getAvis
       this.size = this.avis.length
     }

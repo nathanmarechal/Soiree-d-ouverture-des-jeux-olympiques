@@ -143,8 +143,8 @@ export default new Vuex.Store({
                     getThisRoleDroitsAssociation.push(item.id_droit)
                 }
             })
-           // console.log("getThisRoleDroitsAssociation: ", getThisRoleDroitsAssociation)
-           // console.log("state.droits: ", state.droits)
+            // console.log("getThisRoleDroitsAssociation: ", getThisRoleDroitsAssociation)
+            // console.log("state.droits: ", state.droits)
             state.droits.forEach(item => {
                 //console.log("item.id: ", item.id)
                 if (getThisRoleDroitsAssociation.includes(item.id)) {
@@ -233,7 +233,7 @@ export default new Vuex.Store({
 
 
         SET_ROLES(state, roles) {
-          state.roles = roles;
+            state.roles = roles;
         },
 
         SET_DROITS(state, droits) {
@@ -298,7 +298,7 @@ export default new Vuex.Store({
         },
 
         SET_TYPE_ZONE(state, typeZone) {
-          state.typeZone = typeZone;
+            state.typeZone = typeZone;
         },
 
         SET_STANDS(state, stands) {
@@ -412,7 +412,7 @@ export default new Vuex.Store({
             });
         },
 
-         UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
+        UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
             console.log("nouvelleQuantite " + quantite);
             state.userCourant.panier = state.userCourant.panier.map(item => {
                 if (item.id_user === id_user && item.id_prestation === Number(id_prestation) && item.id_creneau === id_creneau) {
@@ -756,8 +756,7 @@ export default new Vuex.Store({
 
         async getUsersStore({ commit }) {
             try {
-                const session_id = this.state.userCourant.session_id;
-                const result = await getAllUsers(session_id);
+                const result = await getAllUsers();
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
@@ -823,7 +822,6 @@ export default new Vuex.Store({
 
         async updateUserStore({ commit }, {body}) {
             try {
-                body.session_id = this.state.userCourant.session_id;
                 await updateUser(body.id_user, body);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
@@ -913,7 +911,7 @@ export default new Vuex.Store({
                 const result = await getAllRoleDroitAssociation(); // Wait for the Promise to resolve
                 // print what kind of object is result
                 //console.log("result: ", result);
-        
+
                 if (Array.isArray(result)) {
                     commit('SET_ROLE_DROIT_ASSOCIATION', result);
                 } else {
@@ -922,8 +920,8 @@ export default new Vuex.Store({
             } catch (err) {
                 console.error("Error in getAllRoleDroitAssociationStore():", err);
             }
-        },      
-        
+        },
+
         async createRoleDroitAssociationStore({ commit }, body) {
             try {
                 //console.log("createRoleDroitAssociationStore: ", body)
@@ -1028,47 +1026,47 @@ export default new Vuex.Store({
 //----------------------------------------------------------------------TypeZone--------------------------------------------------------------------//
 
         async getTypeZonesStore({ commit }) {
-          try {
-            const typeZone = await getAllTypeZones();
-            console.log(typeZone);
-            console.log('type zone store')
-            if (Array.isArray(typeZone)) {
-              commit('SET_TYPE_ZONE', typeZone);
-            } else {
-              console.error("Unexpected response format:", typeZone);
+            try {
+                const typeZone = await getAllTypeZones();
+                console.log(typeZone);
+                console.log('type zone store')
+                if (Array.isArray(typeZone)) {
+                    commit('SET_TYPE_ZONE', typeZone);
+                } else {
+                    console.error("Unexpected response format:", typeZone);
+                }
+            } catch (err) {
+                console.error("Error in getTypeZone():", err);
             }
-          } catch (err) {
-            console.error("Error in getTypeZone():", err);
-          }
         },
 
 //----------------------------------------------------------------------typeEmplacementLogistique--------------------------------------------------------------------//
 
         async getTypeEmplacementLogistiqueStore({ commit }) {
-          try {
-            const typeEmplacementLogistique = await getTypeEmplacementLogistique();
-            if (Array.isArray(typeEmplacementLogistique)) {
-              commit('SET_TYPE_EMPLACEMENT_LOGISITIQUE', typeEmplacementLogistique);
-            } else {
-              console.error("Unexpected response format:", typeEmplacementLogistique);
+            try {
+                const typeEmplacementLogistique = await getTypeEmplacementLogistique();
+                if (Array.isArray(typeEmplacementLogistique)) {
+                    commit('SET_TYPE_EMPLACEMENT_LOGISITIQUE', typeEmplacementLogistique);
+                } else {
+                    console.error("Unexpected response format:", typeEmplacementLogistique);
+                }
+            } catch (err) {
+                console.error("Error in getTypeZone():", err);
             }
-          } catch (err) {
-            console.error("Error in getTypeZone():", err);
-          }
         },
 //----------------------------------------------------------------------EmplacementLogistique--------------------------------------------------------------------//
 
         async getEmplacementLogistiqueStore({ commit }) {
-          try {
-            const emplacementLogistique = await getEmplacementLogistique();
-            if (Array.isArray(emplacementLogistique)) {
-              commit('SET_EMPLACEMENT_LOGISITIQUE', emplacementLogistique);
-            } else {
-              console.error("Unexpected response format:", emplacementLogistique);
+            try {
+                const emplacementLogistique = await getEmplacementLogistique();
+                if (Array.isArray(emplacementLogistique)) {
+                    commit('SET_EMPLACEMENT_LOGISITIQUE', emplacementLogistique);
+                } else {
+                    console.error("Unexpected response format:", emplacementLogistique);
+                }
+            } catch (err) {
+                console.error("Error in getEmplacementLogistiqueStore():", err);
             }
-          } catch (err) {
-            console.error("Error in getEmplacementLogistiqueStore():", err);
-          }
         },
 
         async createEmplacementLogistiqueStore({ commit }, body) {
@@ -1095,6 +1093,7 @@ export default new Vuex.Store({
 
         async deleteEmplacementLogistiqueStore({ commit }, id) {
             try {
+
                 await deleteEmplacementLogistique(id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
@@ -1151,16 +1150,16 @@ export default new Vuex.Store({
 //----------------------------------------------------------------------Emplacement--------------------------------------------------------------------//
 
         async getAreasStore({ commit }) {
-          try {
-              const result = await getAllAreas();
-              if (Array.isArray(result)) {
-                  commit('SET_AREAS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getAreasStore():", err);
-          }
+            try {
+                const result = await getAllAreas();
+                if (Array.isArray(result)) {
+                    commit('SET_AREAS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getAreasStore():", err);
+            }
         },
 
         async updateAreasStore({ commit },{id, body}) {
@@ -1250,32 +1249,32 @@ export default new Vuex.Store({
 
 
         async getStandsStore({ commit }) {
-          try {
-              const result = await getAllStands();
-              if (Array.isArray(result)) {
-                  commit('SET_STANDS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getStands():", err);
-          }
+            try {
+                const result = await getAllStands();
+                if (Array.isArray(result)) {
+                    commit('SET_STANDS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getStands():", err);
+            }
         },
 
 //----------------------------------------------------------------------Prestations--------------------------------------------------------------------//
 
 
         async getPrestationsStore({ commit }) {
-          try {
-              const result = await getAllPrestations();
-              if (Array.isArray(result)) {
-                  commit('SET_PRESTATIONS', result);
-              } else {
-                  console.error("Unexpected response format:", result);
-              }
-          } catch (err) {
-              console.error("Error in getPrestations():", err);
-          }
+            try {
+                const result = await getAllPrestations();
+                if (Array.isArray(result)) {
+                    commit('SET_PRESTATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getPrestations():", err);
+            }
         },
 
 //------------------------------------------------------------------------------------------------------------------------------------------------//
