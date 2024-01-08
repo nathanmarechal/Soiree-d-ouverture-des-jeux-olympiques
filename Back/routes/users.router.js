@@ -9,6 +9,7 @@ const usersMiddleware = require("../middlewares/users.middleware");
 const standsMiddleware = require("../middlewares/stands.middleware");
 const rolesMiddleware = require("../middlewares/role.middleware");
 const mapMiddleware = require("../middlewares/map.middleware");
+const rightMiddleware = require("../middlewares/authentication.middleware");
 
 /**
  * @swagger
@@ -22,7 +23,7 @@ const mapMiddleware = require("../middlewares/map.middleware");
  *       '500':
  *         description: Erreur interne
  */
-router.get("/get", usersController.getUsers);
+router.get("/get",rightMiddleware.checkRight, usersController.getUsers);
 
 /**
  * @swagger
@@ -115,7 +116,7 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *       '500':
  *         description: Internal error
  */
-router.patch("/update/:id",usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandExists, rolesMiddleware.checkRoleExists ,usersController.updateUser);
+router.patch("/update/:id",rightMiddleware.checkRight,usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandExists, rolesMiddleware.checkRoleExists ,usersController.updateUser);
 
 /**
  * @swagger
@@ -139,7 +140,7 @@ router.patch("/update/:id",usersMiddleware.checkUserExists, usersMiddleware.chec
  *       '500':
  *         description: Internal error
  */
-router.delete("/delete/:id", usersMiddleware.checkUserExists ,usersController.deleteUser);
+router.delete("/delete/:id",rightMiddleware.checkRight, usersMiddleware.checkUserExists ,usersController.deleteUser);
 
 /**
  * @swagger
@@ -347,6 +348,7 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
  */
 router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
 
+router.post("/create-user",rightMiddleware.checkRight,usersController.createUser)
 
 /**
  * @swagger

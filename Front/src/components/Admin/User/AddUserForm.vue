@@ -98,6 +98,7 @@ export default {
       }
     },
     async submitForm() {
+      //console.log("in the submit form, pelooo")
       try {
         let role = this.utilisateur.id_role.id_role;
         if (role)

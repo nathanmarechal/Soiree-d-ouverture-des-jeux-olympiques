@@ -756,7 +756,8 @@ export default new Vuex.Store({
 
         async getUsersStore({ commit }) {
             try {
-                const result = await getAllUsers();
+                const session_id = this.state.userCourant.session_id;
+                const result = await getAllUsers(session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
@@ -822,6 +823,7 @@ export default new Vuex.Store({
 
         async updateUserStore({ commit }, {body}) {
             try {
+                body.session_id = this.state.userCourant.session_id;
                 await updateUser(body.id_user, body);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
@@ -832,6 +834,7 @@ export default new Vuex.Store({
 
         async deleteUserStore({ commit }, id) {
             try {
+                console.log("in delete user store")
                 await deleteUser(id);
                 commit('DELETE_USER', id);
             } catch (err) {
@@ -1091,7 +1094,6 @@ export default new Vuex.Store({
 
         async deleteEmplacementLogistiqueStore({ commit }, id) {
             try {
-
                 await deleteEmplacementLogistique(id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
