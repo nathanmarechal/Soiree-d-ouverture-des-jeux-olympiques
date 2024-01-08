@@ -10,7 +10,9 @@ exports.createUser = (req, res) => {
     const commune = req.body.commune;
     const id_role = req.body.id_role;
 
+    console.log("----------")
     console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role });
+    console.log("----------")
 
     usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, (error, data) => {
         if (error) {

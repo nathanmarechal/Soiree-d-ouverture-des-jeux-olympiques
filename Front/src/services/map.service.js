@@ -1,7 +1,7 @@
 import {deleteRequest, getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 async function getAllAreasFromAPI() {
-    let answer = await getRequest('/map/areas', 'GETALLAREAS')
+    let answer = await getRequest('/map/get-all-areas', 'GETALLAREAS')
     //console.log("getAllAreasFromAPI: ", answer)
     return answer
 }
@@ -13,7 +13,7 @@ async function getAllAreas() {
 }
 
 async function updateAreaFromAPI(id, body) {
-    return patchRequest('/map/area/' + id, body, 'UPDATEAREA')
+    return patchRequest('/map/update-area/' + id, body, 'UPDATEAREA')
 }
 
 async function updateArea(id, body) {
@@ -23,7 +23,7 @@ async function updateArea(id, body) {
 }
 
 async function createAreaFromAPI(body) {
-    let answer = await postRequest('/map/area', body, 'CREATEAREA')
+    let answer = await postRequest('/map/create-area', body, 'CREATEAREA')
     //console.log("createAreaFromAPI: ", answer)
     return answer
 }
@@ -36,7 +36,7 @@ async function createArea(body) {
 
 async function deleteAreaFromAPI(id) {
     console.log("deleteArea2: ", id)
-    return deleteRequest('/map/area/' + id, 'DELETEAREA')
+    return deleteRequest('/map/delete-area/' + id, 'DELETEAREA')
 }
 
 async function deleteArea(id) {
@@ -46,29 +46,29 @@ async function deleteArea(id) {
     return answer
 }
 
-async function getAllZonesFromAPI() {
-    return getRequest('/map/zones', 'GETALLZONES')
+async function getAllZonesFromAPI(session_id) {
+    return getRequest('/map/get-all-zones?session_id='+session_id, 'GETALLZONES')
 }
 
-async function getAllZones() {
-    let answer = await getAllZonesFromAPI()
+async function getAllZones(session_id) {
+    let answer = await getAllZonesFromAPI(session_id)
     //console.log("getAllZones: ", answer)
     return answer
 }
 
-async function getZoneByIdFromAPI(id) {
-    return getRequest('/map/zone?id_zone=' + id, 'GETZONEBYID')
+async function getZoneByIdFromAPI(id,session_id) {
+    return getRequest('/map/get-zone?id_zone=' + id+"&session_id="+session_id, 'GETZONEBYID')
 }
 
-async function getZoneById(id) {
-    let answer = await getZoneByIdFromAPI(id)
+async function getZoneById(id,session_id) {
+    let answer = await getZoneByIdFromAPI(id,session_id)
     //console.log("getZoneById: ", answer)
     return answer
 }
 
 async function updateZoneFromAPI(id, body) {
     console.log("updateZoneFromAPI: ", id, body)
-    return patchRequest('/map/zone/' + id, body, 'UPDATEZONE')
+    return patchRequest('/map/update-zone/' + id, body, 'UPDATEZONE')
 }
 
 async function updateZone(id, body) {
@@ -78,7 +78,7 @@ async function updateZone(id, body) {
 }
 
 async function createZoneFromAPI(body) {
-    return postRequest('/map/zone', body, 'CREATEZONE')
+    return postRequest('/map/create-zone', body, 'CREATEZONE')
 }
 
 async function createZone(body) {
@@ -87,19 +87,19 @@ async function createZone(body) {
     return answer
 }
 
-async function deleteZoneFromAPI(id) {
+async function deleteZoneFromAPI(id,session_id) {
     //console.log("deleteZoneFromAPI: ", id)
-    return deleteRequest('/map/zone/' + id, 'DELETEZONE')
+    return deleteRequest('/map/delete-zone?id=' + id+"&session_id="+session_id, 'DELETEZONE')
 }
 
-async function deleteZone(id) {
-    let answer = await deleteZoneFromAPI(id)
+async function deleteZone(id,session_id) {
+    let answer = await deleteZoneFromAPI(id,session_id)
     //console.log("deleteZone: ", answer)
     return answer
 }
 
 async function getAllTypeZonesFromAPI() {
-    return getRequest('/map/typeZones', 'GETALLTYPEZONE')
+    return getRequest('/map/get-all-type-zones', 'GETALLTYPEZONE')
 }
 
 async function getAllTypeZones() {

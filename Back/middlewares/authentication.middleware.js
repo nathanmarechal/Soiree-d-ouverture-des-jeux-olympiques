@@ -82,19 +82,19 @@ function getRightName(path)
         return "delete_roles";
     }
 
-    else if(path.startsWith("/api/zones/add"))
+    else if(path.startsWith("/api/map/create-zone"))
     {
         return "create_zones";
     }
-    if(path.startsWith("/api/zones/get"))
+    if(path.startsWith("/api/map/get-all-zones"))
     {
         return "see_zones";
     }
-    else if(path.startsWith("/api/zones/update"))
+    else if(path.startsWith("/api/map/update-zone"))
     {
         return "update_zones";
     }
-    else if(path.startsWith("/api/zones/delete"))
+    else if(path.startsWith("/api/map/delete-zone"))
     {
         return "delete_zones";
     }

@@ -75,7 +75,7 @@ exports.getZoneById = (req, res) => {
 }
 
 exports.updateZone = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     const body = req.body;
     console.log("updateZone: ", id, body)
     mapService.updateZone(id, body, (error, data) => {
@@ -101,7 +101,7 @@ exports.createZone = (req, res) => {
 }
 
 exports.deleteZone = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     console.log("deleteZone: ", id)
     mapService.deleteZone(id, (error, data) => {
         if (error) {

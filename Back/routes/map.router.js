@@ -1,25 +1,26 @@
 const express = require('express');
 var router = express.Router();
 const mapController = require('../controllers/map.controller');
+const rightMiddleware = require('../middlewares/authentication.middleware')
 
-router.get("/typeZones", mapController.getTypeZones);
+router.get("/get-all-type-zones", mapController.getTypeZones);
 
-router.get("/areas", mapController.getAreas);
+router.get("/get-all-areas", mapController.getAreas);
 
-router.patch("/area/:id", mapController.updateArea);
+router.patch("/update-area/:id", mapController.updateArea);
 
-router.delete("/area/:id", mapController.deleteArea);
+router.delete("/delete-area/:id", mapController.deleteArea);
 
-router.post("/area", mapController.createArea);
+router.post("/create-area", mapController.createArea);
 
-router.get("/zones", mapController.getZones);
+router.get("/get-all-zones",rightMiddleware.checkRight, mapController.getZones);
 
-router.get("/zone", mapController.getZoneById); // avec query
+router.get("/get-zone",rightMiddleware.checkRight, mapController.getZoneById); // avec query
 
-router.patch("/zone/:id", mapController.updateZone);
+router.patch("/update-zone",rightMiddleware.checkRight, mapController.updateZone);
 
-router.delete("/zone/:id", mapController.deleteZone);
+router.delete("/delete-zone",rightMiddleware.checkRight, mapController.deleteZone);
 
-router.post("/zone", mapController.createZone);
+router.post("/create-zone",rightMiddleware.checkRight, mapController.createZone);
 
 module.exports = router;

@@ -1107,7 +1107,7 @@ export default new Vuex.Store({
 
         async getZonesStore({ commit }) {
           try {
-              const result = await getAllZones();
+              const result = await getAllZones(this.state.userCourant.session_id);
               if (Array.isArray(result)) {
                   commit('SET_ZONES', result);
               } else {
@@ -1120,7 +1120,7 @@ export default new Vuex.Store({
 
         async deleteZoneStore({ commit }, id) {
             try {
-                await deleteZone(id);
+                await deleteZone(id,this.state.userCourant.session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -1129,6 +1129,7 @@ export default new Vuex.Store({
 
         async updateZoneStore({ commit }, {id, body}) {
             try {
+                body.session_id=this.userCourant.session_id
                 await updateZone(id, body);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
