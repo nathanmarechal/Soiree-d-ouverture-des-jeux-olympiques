@@ -56,4 +56,10 @@ router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
  */
 router.get('/prestataire/nb-prestation-heure/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getNbPrestationHeure)
 
+router.get('/prestataire/average-purchase/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAveragePurchaseByStand)
+
+router.get('/prestataire/best-client/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getBestClientByStand)
+
+router.get('/prestataire/sales-revenue-by-type/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getSalesRevnueByTypeByStand)
+
 module.exports = router;

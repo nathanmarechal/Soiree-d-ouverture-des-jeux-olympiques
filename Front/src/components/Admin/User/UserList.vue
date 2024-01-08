@@ -10,6 +10,8 @@
             <th>{{translate("userList_2")}}</th>
             <th>{{translate("userList_3")}}</th> 
             <th>{{translate("userList_4")}}</th>
+            <th>{{translate("userList_7")}}</th>
+
           </tr>
         </thead>
         <tbody>
