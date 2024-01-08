@@ -18,7 +18,7 @@
 export default {
   props: {
     dataProp: {
-      type: Object,
+      type: [Array, Object],
       required: true,
     },
     dataType: { 

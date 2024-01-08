@@ -8,7 +8,7 @@
       </div>
       <div class="form">
         <label for="image_stand">Image :</label><br>
-        <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
+        <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*">
       </div>
       <img v-if="!isImageInputUpload && !newImage" :src="getImageSrc(stand.image_stand)" alt="Image du stand" class="card-img-top " style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;">
       <div v-if="croppedImage">
@@ -18,10 +18,17 @@
         <img ref="image_stand" class="cropper-image" style=" max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;"/>
         <button  type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
       </div>
+      
       <div class="d-flex flex-column">
-        <label for="description_stand">{{ translate("editStand_3") }}</label>
-        <textarea id="description_stand" v-model="stand.description_stand" required class="w-100"></textarea>
+          <label for="descriptionStand">{{ translate("editStand_3") }}</label>
+          <Editor 
+              ref="myEditor"
+              api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+          :init="editorConfig" v-model="stand.description_stand"
+          />
       </div>
+
+
 
       <map-sign-up-pre-view style="width: 100%; height: 25vh;"></map-sign-up-pre-view>
 
@@ -40,6 +47,7 @@ import SelectEmplacement from './SelectEmplacement.vue';
 import { mapGetters } from 'vuex';
 import { translate } from "../../../lang/translationService";
 import Cropper from 'cropperjs';
+import Editor from '@tinymce/tinymce-vue';
 
 
 export default {
@@ -52,6 +60,7 @@ export default {
   },
   components: {
     SelectEmplacement,
+    Editor
   },
   props: {
     selected_stand: {
@@ -73,7 +82,18 @@ export default {
         date_achat: 'WIP',
         prix: 'WIP',
         id_emplacement: 'WIP'
-      }
+      },
+      editorConfig: {
+          height: 500,
+          menubar: true,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
+          images_upload_handler: this.handleImageUploadDescription
+        },
 
     };
   },

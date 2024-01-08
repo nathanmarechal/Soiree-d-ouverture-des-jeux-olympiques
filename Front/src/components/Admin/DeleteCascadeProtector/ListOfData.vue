@@ -10,7 +10,7 @@
       <StandList :isProtectorDelete="true" :previousDataId="previousDataId" :filterProtector="dataProp" :previousDataType="previousDataType" :isLevel2="isLevel2" @goBack="handleGoBack" @NeedProtection="handleNeedProtection"/>
     </div>
     <div v-if="dataType === 'area'">
-      <EditAreas :isProtectorDelete="true" :filterProtector="dataProp" @NeedProtection="handleNeedProtection"/>
+      <EditAreas style="width: 50vw; height: 50vh; margin-bottom: 10vh;" :isProtectorDelete="true" :filterProtector="dataProp" @NeedProtection="handleNeedProtection"/>
     </div>
     
   </div>

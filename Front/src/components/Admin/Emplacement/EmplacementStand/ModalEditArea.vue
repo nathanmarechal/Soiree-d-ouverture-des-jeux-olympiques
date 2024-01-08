@@ -31,8 +31,8 @@
       </table>
 
       <button @click="$emit('close'); isEditAreaActive = false" type="button" class="btn btn-success">{{translate("editEmplacement_5")}}</button>
-      <button v-if="!isEditAreaActive" @click="isEditAreaActive = true; initializeArea()" type="button" class="btn btn-warning">{{translate("editEmplacement_6")}}</button>
-      <button v-if="isEditAreaActive" @click=" areaUpdate(); isEditAreaActive = false" type="button" class="btn btn-warning">{{translate("editEmplacement_7")}}</button>
+      <button v-if="!isEditAreaActive && !isProtectorDelete" @click="isEditAreaActive = true; initializeArea()" type="button" class="btn btn-warning">{{translate("editEmplacement_6")}}</button>
+      <button v-if="isEditAreaActive && !isProtectorDelete" @click=" areaUpdate(); isEditAreaActive = false" type="button" class="btn btn-warning">{{translate("editEmplacement_7")}}</button>
       <button @click="areaDelete()" type="button" class="btn btn-danger">{{translate("editEmplacement_8")}}</button>
     </div>
   </div>
@@ -44,7 +44,21 @@ import {mapActions, mapGetters} from "vuex";
 import {translate} from "../../../../lang/translationService";
 
 export default {
-  props: ['modalActiveEditArea','selectedArea'],
+  props: {
+    modalActiveEditArea: {
+      type: Boolean,
+      required: true,
+    },
+    selectedArea: {
+      type: Object ,
+      required: false,
+    },
+    isProtectorDelete: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       zone: null,
@@ -102,7 +116,7 @@ export default {
 <style scoped>
 .map-container {
   width: 100%;
-  height: 300px;
+  height: 100%;
   border: 1px solid black;
   margin-top: 20px;
 }

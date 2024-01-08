@@ -35,10 +35,12 @@ async function createArea(body) {
 }
 
 async function deleteAreaFromAPI(id) {
+    console.log("deleteArea2: ", id)
     return deleteRequest('/map/area/' + id, 'DELETEAREA')
 }
 
 async function deleteArea(id) {
+    console.log("deleteArea1: ", id)
     let answer = await deleteAreaFromAPI(id)
     //console.log("deleteArea: ", answer)
     return answer

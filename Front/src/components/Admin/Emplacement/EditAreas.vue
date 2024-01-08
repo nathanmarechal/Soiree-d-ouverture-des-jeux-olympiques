@@ -1,15 +1,18 @@
 <template>
   <div>
+    <div>
+      <button v-if="isProtectorDelete" @click="deleteAll" class="btn btn-danger">{{ translate("EditAreas_1") }}</button>
+    </div>
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <ModalEditArea :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @close="toggleModalEdit"></ModalEditArea>
-    <ModalAddArea :modalActiveAddArea="modalActiveAddArea" :newArea="newArea" @close="toggleModalAdd"></ModalAddArea>
-    <modal-add-emplacement-logistique :modalActiveAddEmplacementLogistique="modalActiveAddEmplacementLogistique" :newEmplacementLogistique="newEmplacementLogistique" @close="toggleModalAddEmplacementLogistique"></modal-add-emplacement-logistique>
-    <modal-edit-emplacement-logistique :modalActiveEditEmplacementLogistique="modalActiveEditEmplacementLogistique" :selectedEmplacementLogistique="selectedEmplacementLogistique" @close="toggleModalEditEmplacementLogistique">
-    </modal-edit-emplacement-logistique>
-
-  </div>
+    <div>
+      <ModalEditArea :isProtectorDelete="isProtectorDelete" :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @close="toggleModalEdit"/>
+      <ModalAddArea :modalActiveAddArea="modalActiveAddArea" :newArea="newArea" @close="toggleModalAdd"/>
+      <modal-add-emplacement-logistique :modalActiveAddEmplacementLogistique="modalActiveAddEmplacementLogistique" :newEmplacementLogistique="newEmplacementLogistique" @close="toggleModalAddEmplacementLogistique"/>
+      <modal-edit-emplacement-logistique :modalActiveEditEmplacementLogistique="modalActiveEditEmplacementLogistique" :selectedEmplacementLogistique="selectedEmplacementLogistique" @close="toggleModalEditEmplacementLogistique"/>
+    </div>
+  </div> 
 </template>
 
 <script>
@@ -21,8 +24,7 @@ import ModalEditArea from '@/components/Admin/Emplacement/EmplacementStand/Modal
 import ModalAddArea from '@/components/Admin/Emplacement/EmplacementStand/ModalAddArea.vue'
 import ModalAddEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalAddEmplacementLogistique.vue";
 import ModalEditEmplacementLogistique from "@/components/Admin/Emplacement/EmplacementLogisitique/ModalEditEmplacementLogistique.vue";
-
-
+import {translate} from "@/lang/translationService";
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -72,34 +74,41 @@ export default {
   },
   computed: {
     ...mapGetters(['getAllArea', 'getAllZone','getAllStand','getAllTypeEmplacementLogistique','getAllEmplacementLogistique']),
+    filteredAreas() {
+      var data = [];
+      console.log('filteredAreasaaaaaaaaaaaa');
+      console.log("filtered protector", this.filterProtector);
+      console.log("all area", this.getAllArea);
+      if(!this.isProtectorDelete){
+        return data = this.getAllArea;
+      }else{
+        for (var i = 0; i < this.getAllArea.length; i++) {
+          for (var j = 0; j < this.filterProtector.length; j++) {
+            if (this.getAllArea[i].id_emplacement === this.filterProtector[j].id_emplacement) {
+              data.push(this.getAllArea[i]);
+            }
+        }
+      }
+    }
+    return data;
+    },
   },
   methods: {
-    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore']),
+    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore', 'deleteAreasStore', 'deleteStandStore']),
+    translate, 
     async loadData() {
       try {
-        if (this.getAllArea.length === 0) {
           await this.getAreasStore();
-        }
-        if (this.getAllZone.length === 0) {
           await this.getZonesStore();
-        }
-        if (this.getAllStand.length === 0) {
           await this.getStandsStore();
-        }
-        if (this.getAllTypeEmplacementLogistique.length === 0) {
           await this.getTypeEmplacementLogistiqueStore();
-        }
-        if (this.getAllEmplacementLogistique.length === 0) {
           await this.getEmplacementLogistiqueStore();
-        }
-
-
-
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
     mergeLogisticLocations() {
+      if(!this.isProtectorDelete){
       return this.getAllEmplacementLogistique.map(location => {
         const type = this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === location.id_type_emplacement_logistique) || {};
         return {
@@ -107,17 +116,17 @@ export default {
           image: type.image,
           libelle_type_emplacement_logistique: type.libelle // ou utilisez location.libelle si différent
         };
-      });
+      });}
     },
 
     mergeData() {
-      return this.getAllArea.map(area => {
+      const area = this.filteredAreas;
+      return area.map(area => {
         // Trouver le stand correspondant
         const stand = this.getAllStand.find(stand => stand.id_emplacement === area.id_emplacement) || {};
 
         // Trouver la zone correspondante
         const zone = this.getAllZone.find(zone => zone.id_zone === area.id_zone) || {};
-
         return {
           id_emplacement: area.id_emplacement,
           id_stand: stand.id_stand || null,
@@ -141,7 +150,8 @@ export default {
       }).addTo(this.map);
 
       // Initialize the drawing control
-      const drawControl = new L.Control.Draw({
+      if(!this.isProtectorDelete){
+        const drawControl = new L.Control.Draw({
         draw: {
           polygon: true,
           polyline: false,
@@ -149,11 +159,13 @@ export default {
           circle: false,
           marker: true,
           circlemarker:false
-        },
-      });
+          },
+        });
+              
+        // Add the drawing control to the map
+        this.map.addControl(drawControl);
+      }
 
-      // Add the drawing control to the map
-      this.map.addControl(drawControl);
 
       // Handle draw events
       this.map.on('draw:created', (event) => {
@@ -187,9 +199,8 @@ export default {
       this.polygons.forEach(polygon => {
         this.map.removeLayer(polygon);
       });
-
       this.polygons = []; // Clear the polygons array
-
+      //print true or false
       areas.forEach(area => {
         const polygon = L.polygon(area.coordinates, {
           color: area.couleur_hexa,
@@ -213,27 +224,29 @@ export default {
 
       this.markers = []; // Clear the markers array
 
-      logisticLocations.forEach(location => {
-        console.log('Icon URL:', '/assets/Logos/' + location.image);
-        const iconUrl = require('@/assets/Logos/' + location.image);
+        if (!this.isProtectorDelete){
+          logisticLocations.forEach(location => {
+          console.log('Icon URL:', '/assets/Logos/' + location.image);
+          const iconUrl = require('@/assets/Logos/' + location.image);
 
-        const customIcon = L.icon({
-          iconUrl: iconUrl,
-          iconSize: [20, 20], // taille de l'icône
-          iconAnchor: [20, 20] // point d'ancrage au bas du centre de l'icône
+          const customIcon = L.icon({
+            iconUrl: iconUrl,
+            iconSize: [20, 20], // taille de l'icône
+            iconAnchor: [20, 20] // point d'ancrage au bas du centre de l'icône
+          });
+
+          const marker = L.marker(location.coordonnes, {
+            icon: customIcon,
+            title: location.libelle // Le libellé s'affiche au survol du curseur
+          }).addTo(this.map);
+
+          marker.on('click', () => {
+            this.showEmplacementLogistiqueInfo(location);
+          });
+
+          this.markers.push(marker);
         });
-
-        const marker = L.marker(location.coordonnes, {
-          icon: customIcon,
-          title: location.libelle // Le libellé s'affiche au survol du curseur
-        }).addTo(this.map);
-
-        marker.on('click', () => {
-          this.showEmplacementLogistiqueInfo(location);
-        });
-
-        this.markers.push(marker);
-      });
+      }
     },
 
     addEmplacementLogistique(latLng){
@@ -259,6 +272,7 @@ export default {
     showAreaInfo(area){
       this.toggleModalEdit();
       this.selectedArea = area
+      console.log('selectedArea', this.selectedArea);
     },
     showEmplacementLogistiqueInfo(emplacementLogistique) {
       this.selectedEmplacementLogistique = emplacementLogistique;
@@ -268,6 +282,7 @@ export default {
     async toggleModalEdit() {
       this.modalActiveEditArea = !this.modalActiveEditArea;
         this.updateMap();
+        console.log('toggleModalEdit', this.modalActiveEditArea);
     },
 
     async toggleModalAdd() {
@@ -307,8 +322,39 @@ export default {
         area += a;
       }
       return Math.round((Math.abs(area * radius * radius)));
-    }
-},
+    },
+    async deleteAll(){
+      //delete all area
+      console.log("delete all area");
+      if (this.isProtectorDelete){  
+        var areas = this.mergeData();
+        areas.forEach(area => {
+          try {
+            //find if no stand have this id_emplacement
+            if(this.getAllStand.find(stand => stand.id_emplacement === area.id_emplacement) || false){ 
+              console.log("delete stand", area.id_stand);
+              this.deleteStandStore(area.id_stand);
+            }
+            console.log("delete area", area.id_emplacement);
+            this.deleteAreasStore(area.id_emplacement);
+            console.log("eee", this.filteredAreas.length);
+            if(this.filteredAreas.length === 0){
+              window.alert("vous pouvez dorénavant supprimer cette zone");
+              this.$router.push(
+                {
+                  name: 'AdminZones',
+                }
+              );
+            }
+          } catch (err) {
+            console.error('Error deleting area:', err);
+          }
+        });
+      }
+      //update map
+      this.updateMap();
+    },
+  },
 };
 
 

@@ -1174,6 +1174,7 @@ export default new Vuex.Store({
 
         async deleteAreasStore({ commit }, id) {
             try {
+                console.log("deleteAreasStore: ", id)
                 await deleteArea(id);
                 commit('DELETE_AREA', id);
             } catch (err) {
