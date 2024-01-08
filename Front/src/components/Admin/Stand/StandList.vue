@@ -79,7 +79,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllStand', 'getAllPrestation']),
+      ...mapGetters(['getAllStand', 'getAllPrestation', 'getAllArea']),
       filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllStand so for each data in filterProtector, check if it is in getAllStand or else remove it from filterProtector
         if(this.filterProtector != null){
@@ -92,11 +92,15 @@
     },
     methods: {
       translate,
-      ...mapActions(['getStandsStore', 'deleteStandStore', 'deletePrestationStore']),
+      ...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'deletePrestationStore']),
       async loadData() {
         if (this.getAllStand.length === 0) {
           await this.getStandsStore();
         }
+        if (this.getAllArea.length === 0) {
+          await this.getAllArea();
+        }
+
         console.log(this.getAllStand);
       },
       async removeStand(id) {

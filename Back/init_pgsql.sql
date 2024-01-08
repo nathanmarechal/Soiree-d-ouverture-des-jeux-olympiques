@@ -974,5 +974,6 @@ select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_sta
     where avis_stand_utilisateur.id_stand = 1;
 
 select * from utilisateur;
+SELECT * FROM stand;
 
 SELECT * FROM standAttente;

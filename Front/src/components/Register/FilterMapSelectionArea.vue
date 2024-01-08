@@ -19,10 +19,11 @@
 
     <h4>Logistics Placement Options</h4>
     <div v-for="(type, index) in getAllTypeEmplacementLogistique" :key="index" class="form-group">
-      <label :for="'logistics' + type.id_type_emplacement_logistique">{{ type.libelle }} ({{ type.libelle_unite }})</label>
+      <label :for="'logistics' + type.id_type_emplacement_logistique">
+        {{ type.libelle }} ({{ type.libelle_unite }}) - Max: {{ findMaxUnit(type.id_type_emplacement_logistique) }}
+      </label>
       <input type="number" :id="'logistics' + type.id_type_emplacement_logistique" class="form-control"
-             @change="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
-
+             :max="findMaxUnit(type.id_type_emplacement_logistique)" @change="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
     </div>
   </div>
 </template>
@@ -42,7 +43,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllZone', 'getAllTypeZone', 'getAllTypeEmplacementLogistique']),
+    ...mapGetters(['getAllZone', 'getAllTypeZone', 'getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
     filteredZones() {
       if (this.selectedTypeZone) {
         return this.getAllZone.filter(zone => zone.id_type_zone === this.selectedTypeZone);
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['getZonesStore','getTypeZonesStore', 'getTypeEmplacementLogistiqueStore']),
+    ...mapActions(['getZonesStore','getTypeZonesStore', 'getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
     async loadData() {
       if (this.getAllZone.length === 0){
         await this.getZonesStore();
@@ -60,11 +61,18 @@ export default {
       if (this.getAllTypeEmplacementLogistique.length === 0){
         await this.getTypeEmplacementLogistiqueStore();
       }
+      if (this.getAllEmplacementLogistique.length === 0){
+        await this.getEmplacementLogistiqueStore();
+      }
       if (this.getAllTypeZone.length === 0) {
         await this.getTypeZonesStore();
       }
     },
-
+    findMaxUnit(typeId) {
+      // Assuming emplacementLogistique is an array of all logistics placements
+      const placements = this.getAllEmplacementLogistique.filter(el => el.id_type_emplacement_logistique === typeId);
+      return Math.max(...placements.map(el => el.unite));
+    },
     updateFilterZone() {
       this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
       console.log(this.selectedZones)
