@@ -91,8 +91,109 @@ const getNbPrestationHeure = (id, callback) => {
         });
 }
 
+
+async function getAveragePurchaseByStandAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `
+            SELECT AVG(total_commande) AS average_purchase
+            FROM (
+                     SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
+                     FROM commande c
+                              JOIN ligne_commande lc ON c.id_commande = lc.id_commande
+                              JOIN prestation p ON lc.id_prestation = p.id_prestation
+                     WHERE p.id_stand = $1
+                     GROUP BY c.id_commande, c.id_user
+                 ) AS sous_requete;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAveragePurchaseByStandAsync:', error);
+        throw error;
+    }
+}
+
+const getAveragePurchaseByStand = (id, callback) => {
+    getAveragePurchaseByStandAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+
+async function getBestClientByStandAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `SELECT concat(u.prenom, ' ',u.nom) as name, SUM(lc.prix * lc.quantite) AS best_client
+                       FROM ligne_commande lc
+                                JOIN prestation p ON lc.id_prestation = p.id_prestation
+                                JOIN utilisateur u on lc.id_user = u.id_user
+                       WHERE p.id_stand = $1
+                       GROUP BY  u.prenom, u.nom
+                       ORDER BY best_client DESC
+                           LIMIT 1;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getBestClientByStandAsync:', error);
+        throw error;
+    }
+}
+
+const getBestClientByStand = (id, callback) => {
+    getBestClientByStandAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getSalesRevnueByTypeByStandAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `SELECT tp.libelle, SUM(lc.prix * lc.quantite) AS sales_revenue_by_type
+                       FROM ligne_commande lc
+                                JOIN prestation p ON lc.id_prestation = p.id_prestation
+                                JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
+                       WHERE p.id_stand = $1
+                       GROUP BY tp.libelle;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getSalesRevnueByTypeByStandAsync:', error);
+        throw error;
+    }
+}
+
+const getSalesRevnueByTypeByStand = (id, callback) => {
+    getSalesRevnueByTypeByStandAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 module.exports = {
     getBestSellerPrestation : getBestSellerPrestation,
     getNewStandByMonth : getNewStandByMonth,
-    getNbPrestationHeure:getNbPrestationHeure
+    getNbPrestationHeure:getNbPrestationHeure,
+    getAveragePurchaseByStand:getAveragePurchaseByStand,
+    getBestClientByStand:getBestClientByStand,
+    getSalesRevnueByTypeByStand:getSalesRevnueByTypeByStand
 }

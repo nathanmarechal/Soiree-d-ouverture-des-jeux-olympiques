@@ -947,7 +947,8 @@ select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande
     JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
     JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
     JOIN utilisateur u on c2.id_user = u.id_user
-    JOIN stand s on p.id_stand = s.id_stand
+    JOIN stand s on
+        p.id_stand = s.id_stand
     WHERE c2.id_user = 1
     ORDER BY c.id_creneau;
 
@@ -978,3 +979,34 @@ select * from utilisateur;
 SELECT * FROM stand;
 
 SELECT * FROM standAttente;
+
+SELECT * FROM ligne_commande;
+
+
+
+
+SELECT AVG(total_commande) AS average_purchase
+FROM (
+    SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
+    FROM commande c
+    JOIN ligne_commande lc ON c.id_commande = lc.id_commande
+    JOIN prestation p ON lc.id_prestation = p.id_prestation
+    WHERE p.id_stand = 2  -- Remplacez [Votre_Id_Stand] par l'ID de stand spécifique
+    GROUP BY c.id_commande, c.id_user
+) AS sous_requete;
+
+SELECT concat(u.prenom, ' ',u.nom) as name, SUM(lc.prix * lc.quantite) AS best_client
+FROM ligne_commande lc
+JOIN prestation p ON lc.id_prestation = p.id_prestation
+JOIN utilisateur u on lc.id_user = u.id_user
+WHERE p.id_stand = 2
+GROUP BY  u.prenom, u.nom
+ORDER BY best_client DESC
+LIMIT 1;
+
+SELECT tp.libelle, SUM(lc.prix * lc.quantite) AS sales_revenue_by_type
+FROM ligne_commande lc
+JOIN prestation p ON lc.id_prestation = p.id_prestation
+JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
+WHERE p.id_stand = 2
+GROUP BY tp.libelle;
