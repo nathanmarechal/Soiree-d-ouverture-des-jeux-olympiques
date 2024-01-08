@@ -634,7 +634,8 @@ export default new Vuex.Store({
 
         async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                await updateUserCourantWoPassword( {id_user, nom, prenom, email, adresse, code_postal, commune});
+                let session_id = this.state.userCourant.session_id
+                await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);

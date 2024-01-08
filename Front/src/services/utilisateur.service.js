@@ -96,13 +96,13 @@ async function updateSolde(body) {
     return patchRequest('/users/updateSolde', body, 'UPDATESOLDE')
 }
 
-async function updateUserCourantWoPassword(body) {
-    let answer = await updateUserCourantWoPasswordFromAPI(body)
+async function updateUserCourantWoPassword( session_id,id, body) {
+    let answer = await updateUserCourantWoPasswordFromAPI(session_id,id, body)
     return answer
 }
 
-async function updateUserCourantWoPasswordFromAPI(body) {
-    return patchRequest('/users/updateUserCourantWoPassword', body, 'UPDATEUSERCOURANTWOPASSWORD')
+async function updateUserCourantWoPasswordFromAPI(session_id, id, body) {
+    return patchRequest('/users/updateUserCourantWoPassword?session_id='+session_id + '&id_user='+id, body, 'UPDATEUSERCOURANTWOPASSWORD')
 }
 
 async function getUserFromSessionIdFromAPI(session_id) {
