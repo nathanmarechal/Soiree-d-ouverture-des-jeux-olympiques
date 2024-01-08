@@ -781,7 +781,7 @@ export default new Vuex.Store({
 
         async acceptUserStore({ commit }, id) {
             try {
-                await acceptUser(id);
+                await acceptUser(id,this.state.userCourant.session_id);
                 commit('ACCEPT_USER', id);
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
@@ -790,7 +790,7 @@ export default new Vuex.Store({
 
         async refuseUserStore({ commit }, id) {
             try {
-                await refuseUser(id);
+                await refuseUser(id,this.state.userCourant.session_id);
                 commit('REFUSE_USER', id);
             } catch (err) {
                 console.error("Error in refuseUserStore():", err);

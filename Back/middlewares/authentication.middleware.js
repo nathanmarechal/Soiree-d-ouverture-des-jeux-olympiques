@@ -65,6 +65,11 @@ function getRightName(path)
         return "create_users";
     }
 
+    else if(path.startsWith("/api/users/refuseUser") ||path.startsWith("/api/users/acceptUser"))
+    {
+        return "give_credit";
+    }
+
     else if(path.startsWith("/api/roles/add"))
     {
         return "create_roles";

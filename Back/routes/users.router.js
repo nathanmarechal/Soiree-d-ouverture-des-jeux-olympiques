@@ -419,7 +419,7 @@ router.get("/getUserAttente", usersController.getUsersAttente);
  *       '500':
  *         description: Internal error
  */
-router.post("/acceptUser/:id", usersMiddleware.checkUserAttenteExists ,usersController.acceptUser);
+router.post("/acceptUser",rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists ,usersController.acceptUser);
 
 /**
  * @swagger
@@ -443,6 +443,6 @@ router.post("/acceptUser/:id", usersMiddleware.checkUserAttenteExists ,usersCont
  *       '500':
  *         description: Internal error
  */
-router.post("/refuseUser/:id", usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
+router.post("/refuseUser",rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
 
 module.exports = router;
