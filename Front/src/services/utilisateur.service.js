@@ -80,15 +80,16 @@ async function updateUserFromAPI(id, body) {
     return patchRequest('/users/update/' + id, body, 'UPDATEUSER')
 }
 
-async function deleteUser(id) {
-    let answer = await deleteUserFromAPI(id)
+async function deleteUser(id,session_id) {
+    console.log("about to deleteUserFromAPI")
+    let answer = await deleteUserFromAPI(id,session_id)
     //console.log("deleteUser: ", answer)
     return answer
 }
 
-async function deleteUserFromAPI(id) {
-    console.log("deleteUserFromAPI: ", id)
-    return deleteRequest('/users/delete/'+ id, 'DELETEUSER')
+async function deleteUserFromAPI(id,session_id) {
+    console.log("deleteUserFromAPI my dudes: ", id,session_id)
+    return deleteRequest('/users/delete?id_user='+ id+"&session_id="+session_id, 'DELETEUSER')
 }
 
 async function updateSolde(body) {

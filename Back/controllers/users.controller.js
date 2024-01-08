@@ -151,7 +151,8 @@ exports.updateUser = (req, res) => {
 }
 
 exports.deleteUser = (req, res) => {
-    const id = req.params.id;
+    console.log("deleting the user willy nilly");
+    const id = req.query.id_user;
 
     // Log function name and data
     console.log("deleteUser", { id });

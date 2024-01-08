@@ -140,7 +140,7 @@ router.patch("/update/:id",rightMiddleware.checkRight,usersMiddleware.checkUserE
  *       '500':
  *         description: Internal error
  */
-router.delete("/delete/:id",rightMiddleware.checkRight, usersMiddleware.checkUserExists ,usersController.deleteUser);
+router.delete("/delete",rightMiddleware.checkRight, usersMiddleware.checkUserExists ,usersController.deleteUser);
 
 /**
  * @swagger

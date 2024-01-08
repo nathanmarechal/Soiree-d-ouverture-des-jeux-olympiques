@@ -2,13 +2,19 @@ const pool = require("../database/db");
 
 exports.checkRight = (req, res, next) => {
 
-    console.log("checking right at url : "+req.originalUrl)
+    //console.log("checking right at url : "+req.originalUrl)
     const session_id = req.query.session_id ? req.query.session_id : req.body.session_id;
 
 
     const right_name = getRightName(req.originalUrl)
 
-    console.log("session_id=",session_id,"right name=",right_name)
+    console.log("=========")
+    console.log("body : ",req.body)
+    console.log("query : ",req.query)
+    console.log("session_id : ",session_id)
+    console.log("right_name : ",right_name)
+    console.log("=========")
+
     checkRight_by_name(session_id,right_name)
         .then((success)=>
         {
@@ -27,6 +33,7 @@ exports.checkRight = (req, res, next) => {
         {
             return res.status(400).send("erreur:"+error);
         })
+    console.log("session_id=",session_id,"right name=",right_name)
 }
 function getRightName(path)
 {

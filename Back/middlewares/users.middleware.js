@@ -14,6 +14,7 @@ exports.validateUserInput = (req, res, next) => {
 exports.checkUserExists = async (req, res, next) => {
     let id = req.params.id || req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user);
     if (!id) {
+        console.log("checkuser reject : id");
         return res.status(400).send("ID requis.");
     }
     try {
@@ -22,11 +23,14 @@ exports.checkUserExists = async (req, res, next) => {
         const checkResult = await conn.query("SELECT * FROM utilisateur WHERE id_user = $1", [id]);
         if (checkResult.rows.length === 0) {
             conn.release();
+            console.log("checkuser reject : user");
             return res.status(404).send("Utilisateur non trouvé");
         }
+        console.log("checkuser passed");
         conn.release();
         next();
     } catch (error) {
+        console.log("checkuser reject : error");
         res.status(500).send("Internal Server Error");
     }
 }

@@ -835,7 +835,8 @@ export default new Vuex.Store({
         async deleteUserStore({ commit }, id) {
             try {
                 console.log("in delete user store")
-                await deleteUser(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteUser(id,session_id);
                 commit('DELETE_USER', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
