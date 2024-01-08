@@ -6,6 +6,14 @@
         <label for="nom_stand">{{ translate("editStand_1") }}</label>
         <input type="text" id="nom_stand" v-model="stand.nom_stand" required />
       </div>
+      
+      <div class="form">
+        <label for="id_user">Utilisateur Associe</label>
+        <select id="id_user" v-model="stand.id_user" required>
+          <option v-for="user in this.getAllUsersWithoutStand" :key="user.id_user" :value="user.id_user">{{ user.prenom }} {{ user.nom }}</option>
+        </select>
+      </div>
+
       <div class="form">
         <label for="image_stand">Image :</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
@@ -14,7 +22,14 @@
       <div v-if="croppedImage">
         <img :src="croppedImage" class="cropped-image" style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;" />
       </div>
-
+      <div class="d-flex flex-column">
+          <label for="descriptionStand">{{ translate("editStand_3") }}</label>
+          <Editor 
+              ref="myEditor"
+              api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+          :init="editorConfig" v-model="stand.description_stand"
+          />
+      </div>
       <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_4") }}</button>
       </div>
@@ -27,19 +42,21 @@
 
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { translate } from "../../../lang/translationService";
 import Cropper from 'cropperjs';
+import Editor from '@tinymce/tinymce-vue';
 
 export default {
   async mounted() {
     try {
-      // No need to load data for creating a new stand
+      await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
   },
   components: {
+    Editor,
     SelectEmplacement,
   },
   props: {
@@ -59,10 +76,32 @@ export default {
         date_achat: 'WIP',
         prix: 'WIP',
         id_emplacement: 'WIP'
-      }
+      },
+      editorConfig: {
+          height: 500,
+          menubar: true,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
+          images_upload_handler: this.handleImageUploadDescription
+        },
     };
   },
   methods: {
+    ...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+    async loadData() {
+      try {
+        await this.getUsersStore();
+        await this.getRolesStore();
+        await this.getDroitsStore();
+        await this.getAllRoleDroitAssociationStore();
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    },
     getImageSrc(imageName) {
       try {
         console.log(imageName)
@@ -131,7 +170,19 @@ export default {
   computed: {
     ...mapGetters([
       'getAreaSelectedForStand',
+      'getAllUsers',
+      'getAllRoles',
+      'getAllDroits',
+      'getAllRoleDroitAssociation',
     ]),
+    getAllUsersWithoutStand() {
+      var data;
+      data = this.getAllUsers.filter(user => user.id_stand === null);
+      //verifie si l'utilisateur peut avoir un stand
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+      return data
+    }
   },
   watch: {
     getAreaSelectedForStand: 'toggleSelectEmplacementModal',

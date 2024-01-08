@@ -30,7 +30,7 @@
 //import { createArea } from "@/services/map.service";
 
 import {mapGetters, mapActions} from "vuex";
-import {translate} from "../../../../lang/translationService";
+import {translate} from "@/lang/translationService";
 
 export default {
   props: ['modalActiveAddArea','newArea'],

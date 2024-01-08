@@ -14,7 +14,6 @@ import { mapActions, mapGetters, mapMutations} from 'vuex';
 
 
 export default {
-
   data() {
     return {
       areasShow : [],
@@ -210,6 +209,7 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
+          console.log('poly', polygon, zone)
           console.log('dans la map' + zone.id_emplacement)
           this.$emit('dataEmplacement', zone.id_emplacement);
         });

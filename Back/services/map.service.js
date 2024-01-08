@@ -74,6 +74,7 @@ async function createAreaAsync(body) {
 }
 
 const deleteArea = (id, callback) => {
+    console.log("deleteAreatruc: ", id)
     deleteAreaAsync(id)
         .then(res => {
             callback(null, res);
