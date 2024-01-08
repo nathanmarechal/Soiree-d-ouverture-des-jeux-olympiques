@@ -3,7 +3,6 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-
   </div>
 </template>
 

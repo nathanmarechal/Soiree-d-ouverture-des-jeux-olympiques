@@ -24,7 +24,6 @@
     DROP TABLE IF EXISTS droits CASCADE;
     DROP TABLE IF EXISTS messages;
     DROP TABLE IF EXISTS creneau CASCADE;
-    DROP TABLE IF EXISTS etat_inscription CASCADE;
 
     DROP TABLE IF EXISTS text_accueil CASCADE;
 
@@ -33,11 +32,6 @@
     CREATE TABLE text_accueil(
         id_text_accueil SERIAL PRIMARY KEY,
         description TEXT
-    );
-
-    CREATE TABLE etat_inscription(
-        id_etat_inscription SERIAL PRIMARY KEY,
-        libelle VARCHAR(50)
     );
 
 CREATE TABLE role(
@@ -121,10 +115,8 @@ CREATE TABLE utilisateur(
    solde FLOAT,
    id_stand INT,
    id_role INT,
-   id_etat INT,
    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
-   FOREIGN KEY(id_etat) REFERENCES etat_inscription(id_etat_inscription) ON DELETE CASCADE
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
     CREATE TABLE utilisateurAttente(
@@ -139,10 +131,8 @@ CREATE TABLE utilisateur(
        solde numeric,
        id_stand INT,
        id_role INT,
-       id_etat INT,
        FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-       FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE,
-       FOREIGN KEY(id_etat) REFERENCES etat_inscription(id_etat_inscription) ON DELETE CASCADE
+       FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
     );
 
 
@@ -310,10 +300,6 @@ CREATE TABLE Ligne_panier
     ('03h30-03h45'),
     ('03h45-04h00');
 
-INSERT INTO etat_inscription(libelle) VALUES
-('en cours de validation'),
-('valide'),
-('invalide');
 
 INSERT INTO droits(libelle) VALUES
 ('see_users'),
@@ -988,3 +974,5 @@ select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_sta
     where avis_stand_utilisateur.id_stand = 1;
 
 select * from utilisateur;
+
+SELECT * FROM standAttente;

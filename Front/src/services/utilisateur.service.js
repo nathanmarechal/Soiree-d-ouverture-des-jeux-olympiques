@@ -1,6 +1,7 @@
 import { getRequest, postRequest, deleteRequest, patchRequest } from "@/services/axios.service";
 
 async function getAllUsersFromAPI(session_id) {
+    console.log("sessionid front bg :"+session_id)
     let answer = await getRequest('/users/get?session_id='+session_id, 'GETALLUSERS')
     //console.log("getAllUsersFromAPI: ", answer)
     return answer
