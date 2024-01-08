@@ -1,38 +1,38 @@
-    -- Drop the tables with foreign key constraints
-    DROP TABLE IF EXISTS avis_stand_utilisateur CASCADE;
-    DROP TABLE IF EXISTS type_emplacement_logistique CASCADE;
-    DROP TABLE IF EXISTS emplacement_logistique CASCADE;
+-- Drop the tables with foreign key constraints
+DROP TABLE IF EXISTS avis_stand_utilisateur CASCADE;
+DROP TABLE IF EXISTS type_emplacement_logistique CASCADE;
+DROP TABLE IF EXISTS emplacement_logistique CASCADE;
 
-    DROP TABLE IF EXISTS ligne_panier CASCADE;
-    DROP TABLE IF EXISTS ligne_commande CASCADE;
-    DROP TABLE IF EXISTS commande CASCADE;
-    DROP TABLE IF EXISTS etat_commande CASCADE;
-    DROP TABLE IF EXISTS creneau CASCADE;
-    DROP TABLE IF EXISTS prestation CASCADE;
-    DROP TABLE IF EXISTS utilisateurAttente CASCADE;
-    DROP TABLE IF EXISTS utilisateur CASCADE;
-    DROP TABLE IF EXISTS standAttente CASCADE;
-    DROP TABLE IF EXISTS stand CASCADE;
-    DROP TABLE IF EXISTS emplacement CASCADE;
-    DROP TABLE IF EXISTS zone CASCADE;
-    DROP TABLE IF EXISTS type_zone CASCADE;
-    DROP TABLE IF EXISTS type_prestation CASCADE;
+DROP TABLE IF EXISTS ligne_panier CASCADE;
+DROP TABLE IF EXISTS ligne_commande CASCADE;
+DROP TABLE IF EXISTS commande CASCADE;
+DROP TABLE IF EXISTS etat_commande CASCADE;
+DROP TABLE IF EXISTS creneau CASCADE;
+DROP TABLE IF EXISTS prestation CASCADE;
+DROP TABLE IF EXISTS utilisateurAttente CASCADE;
+DROP TABLE IF EXISTS utilisateur CASCADE;
+DROP TABLE IF EXISTS standAttente CASCADE;
+DROP TABLE IF EXISTS stand CASCADE;
+DROP TABLE IF EXISTS emplacement CASCADE;
+DROP TABLE IF EXISTS zone CASCADE;
+DROP TABLE IF EXISTS type_zone CASCADE;
+DROP TABLE IF EXISTS type_prestation CASCADE;
 
-    DROP TABLE IF EXISTS session;
-    DROP TABLE IF EXISTS role_droits;
-    DROP TABLE IF EXISTS role CASCADE;
-    DROP TABLE IF EXISTS droits CASCADE;
-    DROP TABLE IF EXISTS messages;
-    DROP TABLE IF EXISTS creneau CASCADE;
+DROP TABLE IF EXISTS session CASCADE;
+DROP TABLE IF EXISTS role_droits CASCADE;
+DROP TABLE IF EXISTS role CASCADE;
+DROP TABLE IF EXISTS droits CASCADE;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS creneau CASCADE;
 
-    DROP TABLE IF EXISTS text_accueil CASCADE;
+DROP TABLE IF EXISTS text_accueil CASCADE;
 
-    -- Create the tables
+-- Create the tables
 
-    CREATE TABLE text_accueil(
-        id_text_accueil SERIAL PRIMARY KEY,
-        description TEXT
-    );
+CREATE TABLE text_accueil(
+    id_text_accueil SERIAL PRIMARY KEY,
+    description TEXT
+);
 
 CREATE TABLE role(
    id_role SERIAL PRIMARY KEY,
@@ -65,7 +65,8 @@ CREATE TABLE emplacement(
    coordonnes json,
    surface int,
    id_zone INT NOT NULL,
-   FOREIGN KEY(id_zone) REFERENCES zone(id_zone) ON DELETE CASCADE);
+   FOREIGN KEY(id_zone) REFERENCES zone(id_zone) ON DELETE CASCADE)
+;
 
 CREATE TABLE stand(
    id_stand SERIAL PRIMARY KEY,
@@ -78,30 +79,29 @@ CREATE TABLE stand(
    FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
 );
 
-    CREATE TABLE standAttente(
-       id_stand SERIAL PRIMARY KEY,
-       nom_stand VARCHAR(100),
-       image_stand VARCHAR(100),
-       description_stand TEXT,
-       date_achat DATE,
-       prix INT,
-       id_emplacement INT,
-       FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
-    );
+CREATE TABLE standAttente(
+   id_stand SERIAL PRIMARY KEY,
+   nom_stand VARCHAR(100),
+   image_stand VARCHAR(100),
+   description_stand TEXT,
+   date_achat DATE,
+   prix INT,
+   id_emplacement INT,
+   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
+);
 
-
-    CREATE TABLE prestation(
-        id_prestation SERIAL PRIMARY KEY,
-        libelle VARCHAR(50),
-        prix NUMERIC(7,2),
-        date timestamp,
-        image varchar(255),
-        id_type_prestation INT NOT NULL,
-        id_stand INT NOT NULL,
-        is_available BOOLEAN,
-        FOREIGN KEY(id_type_prestation) REFERENCES type_prestation(id_type_prestation) ON DELETE CASCADE,
-        FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE
-    );
+CREATE TABLE prestation(
+    id_prestation SERIAL PRIMARY KEY,
+    libelle VARCHAR(50),
+    prix NUMERIC(7,2),
+    date timestamp,
+    image varchar(255),
+    id_type_prestation INT NOT NULL,
+    id_stand INT NOT NULL,
+    is_available BOOLEAN,
+    FOREIGN KEY(id_type_prestation) REFERENCES type_prestation(id_type_prestation) ON DELETE CASCADE,
+    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE
+);
 
 CREATE TABLE utilisateur(
    id_user SERIAL PRIMARY KEY,
@@ -119,39 +119,35 @@ CREATE TABLE utilisateur(
    FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
 );
 
-    CREATE TABLE utilisateurAttente(
-       id_user SERIAL PRIMARY KEY,
-       email VARCHAR(50) UNIQUE,
-       password VARCHAR(50),
-       nom VARCHAR(50),
-       prenom VARCHAR(50),
-       code_postal INT,
-       adresse VARCHAR(50),
-       commune VARCHAR(50),
-       solde numeric,
-       id_stand INT,
-       id_role INT,
-       FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-       FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
-    );
+CREATE TABLE utilisateurAttente(
+   id_user SERIAL PRIMARY KEY,
+   email VARCHAR(50) UNIQUE,
+   password VARCHAR(50),
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   code_postal INT,
+   adresse VARCHAR(50),
+   commune VARCHAR(50),
+   solde numeric,
+   id_stand INT,
+   id_role INT,
+   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
+);
 
+CREATE TABLE session(
+    session_id VARCHAR(255),
+    id_user INT PRIMARY KEY ,
+    timeLimit TIMESTAMP,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
+);
 
-
-    CREATE TABLE session(
-        session_id VARCHAR(255),
-        id_user INT PRIMARY KEY ,
-        timeLimit TIMESTAMP,
-        FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
-    );
-
-CREATE TABLE droits
-(
+CREATE TABLE droits(
     id SERIAL PRIMARY KEY,
     libelle VARCHAR(255)
 );
 
-CREATE TABLE role_droits
-(
+CREATE TABLE role_droits(
     id_droit INT,
     id_role INT,
     PRIMARY KEY (id_droit, id_role),
@@ -164,15 +160,12 @@ CREATE TABLE creneau(
     heure_creneau varchar(50)
 );
 
-
-CREATE TABLE etat_commande
-(
+CREATE TABLE etat_commande(
     id_etat SERIAL PRIMARY KEY,
     libelle VARCHAR(255)
 );
 
-CREATE TABLE commande
-(
+CREATE TABLE commande(
     id_commande SERIAL PRIMARY KEY,
     date_commande varchar(50),
     id_user INT NOT NULL,
@@ -181,9 +174,7 @@ CREATE TABLE commande
     FOREIGN KEY(id_etat_commande) REFERENCES etat_commande(id_etat) ON DELETE CASCADE
 );
 
-
-CREATE TABLE ligne_commande
-(
+CREATE TABLE ligne_commande(
     id_commande INT,
     id_user INT,
     id_prestation INT,
@@ -199,8 +190,7 @@ CREATE TABLE ligne_commande
     FOREIGN KEY(id_commande) REFERENCES commande(id_commande) ON DELETE CASCADE
 );
 
-CREATE TABLE Ligne_panier
-(
+CREATE TABLE Ligne_panier(
     id_user INT,
     id_prestation INT,
     id_creneau INT,
@@ -211,118 +201,130 @@ CREATE TABLE Ligne_panier
     FOREIGN KEY(id_prestation) REFERENCES prestation(id_prestation) ON DELETE CASCADE
 );
 
-        CREATE TABLE type_emplacement_logistique(
-            id_type_emplacement_logistique SERIAL PRIMARY KEY,
-            image VARCHAR(50),
-            libelle VARCHAR(50),
-            libelle_unite  VARCHAR(50)
-        );
+CREATE TABLE type_emplacement_logistique(
+    id_type_emplacement_logistique SERIAL PRIMARY KEY,
+    image VARCHAR(50),
+    libelle VARCHAR(50),
+    libelle_unite  VARCHAR(50)
+);
 
-    CREATE TABLE emplacement_logistique(
-        id_emplacement_logistique SERIAL PRIMARY KEY,
-        libelle VARCHAR(50),
-        coordonnes json,
-        unite INT,
-        id_type_emplacement_logistique INT,
-        FOREIGN KEY(id_type_emplacement_logistique) REFERENCES type_emplacement_logistique(id_type_emplacement_logistique) ON DELETE CASCADE
-    );
+CREATE TABLE emplacement_logistique(
+    id_emplacement_logistique SERIAL PRIMARY KEY,
+    libelle VARCHAR(50),
+    coordonnes json,
+    unite INT,
+    id_type_emplacement_logistique INT,
+    FOREIGN KEY(id_type_emplacement_logistique) REFERENCES type_emplacement_logistique(id_type_emplacement_logistique) ON DELETE CASCADE
+);
 
-    CREATE TABLE avis_stand_utilisateur(
-        id_avis_stand_utilisateur SERIAL PRIMARY KEY,
-        note INT,
-        commentaire TEXT,
-        id_stand INT,
-        id_user INT,
-        FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-        FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
-    );
+CREATE TABLE avis_stand_utilisateur(
+    id_avis_stand_utilisateur SERIAL PRIMARY KEY,
+    note INT,
+    commentaire TEXT,
+    id_stand INT,
+    id_user INT,
+    FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
+);
 
-    INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
-    ('eau','water.svg','L/h'),
-    ('éléctrcité','electricity.svg','kW'),
-    ('internet haut débit','wifi.svg','Mbp/s');
+INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
+('eau','water.svg','L/h'),
+('éléctrcité','electricity.svg','kW'),
+('internet haut débit','wifi.svg','Mbp/s')
+;
 
-    INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique,unite) VALUES
-    ('raccordement du flop','[48.857572, 2.2977709]',3,50),
-    ('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2,50),
-    ('raccordement Anatole France','[48.8575458, 2.2963378]',1,25);
+INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique,unite) VALUES
+('raccordement du flop','[48.857572, 2.2977709]',3,50),
+('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2,50),
+('raccordement Anatole France','[48.8575458, 2.2963378]',1,25)
+;
 
-
-    -- Insert data into tables
-
-    INSERT INTO creneau(heure_creneau) VALUES
-    ('16h00-16h15'),
-    ('16h15-16h30'),
-    ('16h30-16h45'),
-    ('16h45-17h00'),
-    ('17h00-17h15'),
-    ('17h15-17h30'),
-    ('17h30-17h45'),
-    ('17h45-18h00'),
-    ('18h00-18h15'),
-    ('18h15-18h30'),
-    ('18h30-18h45'),
-    ('18h45-19h00'),
-    ('19h00-19h15'),
-    ('19h15-19h30'),
-    ('19h30-19h45'),
-    ('19h45-20h00'),
-    ('20h00-20h15'),
-    ('20h15-20h30'),
-    ('20h30-20h45'),
-    ('20h45-21h00'),
-    ('21h00-21h15'),
-    ('21h15-21h30'),
-    ('21h30-21h45'),
-    ('21h45-22h00'),
-    ('22h00-22h15'),
-    ('22h15-22h30'),
-    ('22h30-22h45'),
-    ('22h45-23h00'),
-    ('23h00-23h15'),
-    ('23h15-23h30'),
-    ('23h30-23h45'),
-    ('23h45-00h00'),
-    ('00h00-00h15'),
-    ('00h15-00h30'),
-    ('00h30-00h45'),
-    ('00h45-01h00'),
-    ('01h00-01h15'),
-    ('01h15-01h30'),
-    ('01h30-01h45'),
-    ('01h45-02h00'),
-    ('02h00-02h15'),
-    ('02h15-02h30'),
-    ('02h30-02h45'),
-    ('02h45-03h00'),
-    ('03h00-03h15'),
-    ('03h15-03h30'),
-    ('03h30-03h45'),
-    ('03h45-04h00');
-
+INSERT INTO creneau(heure_creneau) VALUES
+('16h00-16h15'),
+('16h15-16h30'),
+('16h30-16h45'),
+('16h45-17h00'),
+('17h00-17h15'),
+('17h15-17h30'),
+('17h30-17h45'),
+('17h45-18h00'),
+('18h00-18h15'),
+('18h15-18h30'),
+('18h30-18h45'),
+('18h45-19h00'),
+('19h00-19h15'),
+('19h15-19h30'),
+('19h30-19h45'),
+('19h45-20h00'),
+('20h00-20h15'),
+('20h15-20h30'),
+('20h30-20h45'),
+('20h45-21h00'),
+('21h00-21h15'),
+('21h15-21h30'),
+('21h30-21h45'),
+('21h45-22h00'),
+('22h00-22h15'),
+('22h15-22h30'),
+('22h30-22h45'),
+('22h45-23h00'),
+('23h00-23h15'),
+('23h15-23h30'),
+('23h30-23h45'),
+('23h45-00h00'),
+('00h00-00h15'),
+('00h15-00h30'),
+('00h30-00h45'),
+('00h45-01h00'),
+('01h00-01h15'),
+('01h15-01h30'),
+('01h30-01h45'),
+('01h45-02h00'),
+('02h00-02h15'),
+('02h15-02h30'),
+('02h30-02h45'),
+('02h45-03h00'),
+('03h00-03h15'),
+('03h15-03h30'),
+('03h30-03h45'),
+('03h45-04h00');
 
 INSERT INTO droits(libelle) VALUES
 ('see_users'),
 ('create_users'),
 ('update_users'),
 ('delete_users'),
-('give_credit'),
-('see_zones'),
+
+('see_waiting_users'),
+('accept_waiting_users'),
+('refuse_waiting_users'),
+
+('create_stands'),
+('update_stands'),
+('delete_stands'),
+
 ('create_zones'),
 ('update_zones'),
 ('delete_zones'),
-('see_roles'),
+
+('create_areas'),
+('update_areas'),
+('delete_areas'),
+
 ('create_roles'),
 ('update_roles'),
-('delete_roles')
-;
+('delete_roles'),
 
-SELECT * FROM droits;
+('create_prestations'),
+('update_prestations'),
+('delete_prestations')
+;
 
 INSERT INTO role (libelle) VALUES
 ('admin'),
 ('prestataire'),
-('utilisateur');
+('utilisateur')
+;
 
 INSERT INTO role_droits(id_droit, id_role) VALUES
 (1,1),
@@ -337,15 +339,22 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (10,1),
 (11,1),
 (12,1),
-(4,2),
-(5,2),
-(6,2),
-(9,2);
-
+(13,1),
+(14,1),
+(15,1),
+(16,1),
+(17,1),
+(18,1),
+(19,1),
+(20,1),
+(21,1),
+(22,1)
+;
 
 INSERT INTO type_zone (libelle) VALUES
 ('Fixe'),
-('Ambulant');
+('Ambulant')
+;
 
 INSERT INTO type_prestation (libelle, page_title, image , description_type_prestation) VALUES
 ('Nourriture', 'Venez découvrir les saveurs disponibles' ,'food.jpg','Envie de goûter à des plats provenant de tous les horizons ? Notre collection de mets délicieux est spécialement conçue pour vous offrir une expérience gastronomique inoubliable. De la cuisine traditionnelle aux innovations culinaires modernes, chaque bouchée est une aventure pour vos papilles.
@@ -356,14 +365,15 @@ Nous collaborons avec des stands locaux pour vous apporter le meilleur en termes
 ('Boutique', 'Partez en Mini-Tour du Monde avec Nos Magasins', 'shop.avif','À la recherche de souvenirs uniques ou d''articles qui capturent l essence des différents pays, y compris la France ? Nos magasins regorgent de trouvailles intéressantes et originales, parfaites pour se remémorer vos voyages ou pour offrir un cadeau spécial. Des objets d ailleurs aux spécialités françaises, il y a quelque chose pour chacun.'),
 ('Fanzone', 'Vivez l''Évènement en Grand dans Nos Fanzones !', 'fanzone.jpg','Envie de vivre l''évènement comme si vous y étiez ? Nos fanzones sont l''endroit parfait pour ça ! Imaginez-vous au cœur de l''action, entouré d''autres fans, tous les yeux rivés sur un écran géant qui retransmet chaque instant en direct. C''est l''expérience immersive que nous vous proposons.'),
 ('Transport','Profitez de Nos Services de Transport',  'ratp.jpg','Pour que vous profitiez pleinement de votre soirée sur notre grand espace, nous avons pensé à tout, surtout à votre confort ! Découvrez nos services de transport pratiques et fiables, conçus pour faciliter vos déplacements. Que ce soit pour arriver à l''évènement, pour vous déplacer dans celui-ci ou encore pour le retour, vous pouvez compter sur nous pour un trajet sûr et confortable.'),
-('Billeterie', 'Vivez les Jeux Olympiques en Direct !', 'billet.jpg','Les Jeux Olympiques sont à nos portes, et avec eux, l''excitation de vivre des moments historiques. Ne manquez pas cette chance unique de faire partie de l''histoire du sport. Nos billetteries vous proposent des billets pour assister aux différentes épreuves des JO qui se dérouleront dans les jours à venir.');
+('Billeterie', 'Vivez les Jeux Olympiques en Direct !', 'billet.jpg','Les Jeux Olympiques sont à nos portes, et avec eux, l''excitation de vivre des moments historiques. Ne manquez pas cette chance unique de faire partie de l''histoire du sport. Nos billetteries vous proposent des billets pour assister aux différentes épreuves des JO qui se dérouleront dans les jours à venir.')
+;
 
 INSERT INTO zone (libelle, couleur_hexa, id_type_zone) VALUES
 ('champs de mars','#4CE79E',1),
 ('tuileries','#75BD31',1),
 ('zones ambulantes','#BD7531',2),
-('jardin des plantes','#CF2525',1);
-
+('jardin des plantes','#CF2525',1)
+;
 
 INSERT INTO emplacement (coordonnes,surface,id_zone) VALUES
 ('[[48.857572, 2.2977709], [48.8575631, 2.2977724], [48.8575566, 2.2977726], [48.857554, 2.2977637], [48.8575404, 2.2976456], [48.8575318, 2.2975923], [48.8575262, 2.2975621], [48.8575281, 2.2975502], [48.8575798, 2.2975381], [48.8576294, 2.297513], [48.8576625, 2.2974845], [48.8577107, 2.297447], [48.8577602, 2.2973924], [48.8577737, 2.2973886], [48.8577838, 2.2973952], [48.8577886, 2.297414], [48.857789, 2.2974299], [48.857572, 2.2977709]]',443,1),
@@ -612,7 +622,8 @@ INSERT INTO emplacement (coordonnes,surface,id_zone) VALUES
 ('[[48.8429325, 2.3573405], [48.8429364, 2.3573563], [48.8428825, 2.3573872], [48.8428786, 2.3573714], [48.8429325, 2.3573405]]',11,4),
 ('[[48.8427081, 2.3582724], [48.842625, 2.3583214], [48.842688, 2.3585658], [48.8427715, 2.358518], [48.8427081, 2.3582724]]',289,4),
 ('[[48.8426403, 2.358011], [48.8426734, 2.358138], [48.8425908, 2.3581876], [48.8425577, 2.3580606], [48.8426403, 2.358011]]',149,4),
-('[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4);
+('[[48.8425544, 2.3576674], [48.8425433, 2.3576839], [48.842534, 2.3576954], [48.8425204, 2.3577087], [48.8425044, 2.3577169], [48.8424881, 2.3577189], [48.8424701, 2.3577185], [48.8425228, 2.3579266], [48.8426067, 2.3578778], [48.8425544, 2.3576674]]',235,4)
+;
 
 INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
 ('mma-besancon','mma-besancon.png','Venez découvrir le club de mma  de besançon','2023-12-03',2500,1),
@@ -630,7 +641,6 @@ INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, 
 ;
 
 INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_available) VALUES
-
 ('kebab frites',12,'kebab_frites.jpg',1,2,true),
 ('kebab simple',9,'kebab_simple.jpg',1,2,true),
 ('Dorum frites',15,'dorum_frites.jpg',1,2,true),
@@ -677,304 +687,54 @@ INSERT INTO utilisateur (email, password, nom, prenom,solde, code_postal, adress
 ('email6@example.com', 'password4', 'Nom4', 'Prenom4', 1000,75004, 'Adresse4', 'Commune4', 5, 2),
 ('email7@example.com', 'password4', 'Nom4', 'Prenom4', 1000,75004, 'Adresse4', 'Commune4', 6, 2),
 ('email8@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 7, 2),
-('email9@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 8, 2);
+('email9@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 8, 2)
+;
 
-INSERT INTO etat_commande (libelle) VALUES
-('En attente de validation'),
-('Validée'),
-('Annulée');
-
-    INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
-    (1,1,5,'Super stand'),
-    (1,2,4,'Bien'),
-    (1,3,3,'Moyen'),
-    (1,4,2,'Pas terrible'),
-    (1,5,1,'Nul'),
-    (1,6,5,'Super stand'),
-    (1,7,4,'Bien'),
-    (1,8,3,'Moyen'),
-    (1,8,2,'Pas terrible'),
-    (1,8,1,'Nul'),
-    (2,1,5,'Super stand'),
-    (2,2,4,'Bien'),
-    (2,3,3,'Moyen'),
-    (2,4,2,'Pas terrible'),
-    (2,5,1,'Nul'),
-    (2,6,5,'Super stand'),
-    (2,7,4,'Bien'),
-    (2,8,3,'Moyen'),
-    (2,8,2,'Pas terrible'),
-    (2,8,1,'Nul'),
-    (3,1,5,'Super stand'),
-    (3,2,4,'Bien'),
-    (3,3,3,'Moyen'),
-    (3,4,2,'Pas terrible'),
-    (3,5,1,'Nul'),
-    (3,6,5,'Super stand'),
-    (3,7,4,'Bien'),
-    (3,8,3,'Moyen'),
-    (3,8,2,'Pas terrible'),
-    (3,8,1,'Nul'),
-    (4,1,5,'Super stand'),
-    (4,2,4,'Bien'),
-    (4,3,3,'Moyen'),
-    (4,4,2,'Pas terrible'),
-    (4,5,1,'Nul'),
-    (4,6,5,'Super stand'),
-    (4,7,4,'Bien'),
-    (4,8,3,'Moyen'),
-    (4,8,2,'Pas terrible'),
-    (4,8,1,'Nul'),
-    (5,1,5,'Super stand'),
-    (5,2,4,'Bien'),
-    (5,3,3,'Moyen'),
-    (5,4,2,'Pas terrible');
-
---     INSERT INTO commande(date_commande, id_user, id_etat_commande) VALUES
---     ('2022-02-15', 1, 1),
---     ('2022-02-15', 1, 2),
---     ('2022-02-15', 2, 1);
---
---     INSERT INTO ligne_commande ( id_commande, id_user , id_prestation, id_creneau ,quantite, prix , id_etat_commande) VALUES
---     (1,1,5,1,5, 50,1),
---     (1,1,1,1,5, 50,1),
---     (2,2,2,1,10, 20,1);
---
---
---     INSERT INTO ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES
---     (1, 1, 1, 5),
---     (1, 2, 1, 8),
---     (1, 3, 1, 5),
---     (1, 4, 1, 6),
---     (1, 5, 10, 6);
-
-/*
-SELECT
-    e.id_emplacement AS "id_emplacement",
-    CONCAT(s.nom_stand, ' ', e.id_emplacement) AS "nom_emplacement",
-        s.image_stand AS "image_stand",
-        s.id_stand,
-        s.nom_stand AS "nom_stand",
-        s.description_stand AS "description_stand",
-    z.libelle AS "zone",
-    CASE WHEN s.id_emplacement IS NULL THEN true ELSE false END AS isFree,
-    z.id_zone AS "id_zone",
-    z.id_type_zone AS "id_type_zone",
-    z.couleur_hexa,
-    (
-        SELECT JSON_AGG(DISTINCT tp.id_type_prestation)
-        FROM prestation p
-        JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
-        WHERE p.id_stand = s.id_stand
-    ) AS "id_type_prestation",
-    e.coordonnes AS "coordinates",
-    e.surface AS "surface_area"
-FROM
-    emplacement e
-LEFT JOIN
-    stand s ON e.id_emplacement = s.id_emplacement
-LEFT JOIN
-    zone z ON e.id_zone = z.id_zone
-ORDER BY
-    e.id_emplacement;
-
-SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as "type_zone_libelle" FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone;
-
-SELECT id FROM droits
-WHERE libelle = 'create_user';
-
-SELECT * FROM emplacement order by id_emplacement;
-
-/*
-UPDATE zone SET id_type_zone = 2, libelle = 'champs', couleur_hexa = '#444444' WHERE id_zone = 1;
- */
-
-SELECT * FROM type_zone;
-
-SELECT * FROM prestation;
-
-SELECT z.id_zone, z.libelle, z.couleur_hexa, z.id_type_zone , tz.libelle as type_zone_libelle
-FROM zone z JOIN type_zone tz on tz.id_type_zone = z.id_type_zone ORDER BY z.id_zone;
-
-SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle as "type_prestation_libelle"
-FROM prestation p
-JOIN ligne_commande lc on p.id_prestation = lc.id_prestation
-JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation;
-
-SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, tp.libelle as "type_prestation_libelle", COUNT(lc.id_prestation) as "nb_ventes", s.id_stand, s.nom_stand
-FROM utilisateur u
-JOIN stand s on u.id_stand = s.id_stand
-JOIN prestation p on s.id_stand = p.id_stand
-JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
-LEFT JOIN ligne_commande lc on p.id_prestation = lc.id_prestation
-WHERE u.id_user = 2
-GROUP BY p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle , s.id_stand, s.nom_stand
-ORDER BY p.id_type_prestation;
-
-
-
-
-SELECT s.id_stand, s.nom_stand, s.image_stand, s.description_stand, s.date_achat, s.prix, e.coordonnes FROM stand s
-JOIN utilisateur u on s.id_stand = u.id_stand
-JOIN emplacement e on s.id_emplacement = e.id_emplacement
-WHERE u.id_user = 2;
-
-
-SELECT * FROM etat_inscription;
-SELECT * FROM utilisateur;
-
-
-SELECT *  FROM prestation;
-SELECT *  FROM stand;
-
-SELECT Ligne_panier.id_user ,p.id_prestation, c.id_creneau,p.libelle,quantite, c.heure_creneau, p.prix, p.image, tp.id_type_prestation, tp.libelle as type_prestation_libelle
-FROM ligne_panier
-JOIN prestation p on p.id_prestation = ligne_panier.id_prestation
-JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
-JOIN creneau c on c.id_creneau = ligne_panier.id_creneau
-WHERE id_user = 1;
-
--- DELETE FROM ligne_panier WHERE id_user = 1 AND id_prestation = 3 AND id_creneau = 4;
---
--- INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES (1, 2, 1, 5);
-
--- DELETE FROM zone WHERE id_zone = 1;
-
-SELECT * FROM ligne_commande WHERE id_user = 1;
-
--- UPDATE ligne_panier SET quantite = 10 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
---
--- UPDATE ligne_panier SET quantite = 5 WHERE id_user = 1 AND id_prestation = 23 AND id_creneau = 25;
-
-
-
--- vider le panier pour ajouter le tout dans les commandes
-SELECT * FROM ligne_panier WHERE id_user = 1;
-
-SELECT * FROM ligne_panier
-    LEFT JOIN prestation p on ligne_panier.id_prestation = p.id_prestation
-    WHERE id_user=1;
-
--- INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), 1, 1);
---
--- SELECT * FROM commande;
---
--- DELETE FROM ligne_panier WHERE id_user=1 AND id_prestation=2 AND id_creneau=5;
---
--- INSERT INTO ligne_commande ( id_commande , id_user , id_prestation, id_creneau ,quantite, prix ) VALUES (1, 1, 12, 12,5, 50);
-
-
-
-SELECT c.id_commande, date_commande, c.id_etat_commande, sum( ligne_commande.prix * quantite) as prix_total, sum(quantite) as nbr_presta, e.libelle
-    FROM commande c
-    LEFT JOIN ligne_commande on c.id_commande = ligne_commande.id_commande
-    JOIN etat_commande e on e.id_etat=c.id_etat_commande
-    WHERE c.id_user=1
-    GROUP BY c.date_commande, c.id_commande, c.id_user, e.libelle
-    ORDER BY date_commande desc;
-
-select * from ligne_commande where id_user=1;
-
-select * from ligne_panier where id_user=1;
---pas touchewwww les bebewwww
-
-
--- UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;
-
-SELECT * FROM commande where id_user = 1;
-
-SELECT SUM(p.prix*lc.quantite) AS "prix_total", p.libelle FROM ligne_commande lc
-JOIN prestation p on p.id_prestation = lc.id_prestation
-GROUP BY p.id_prestation
-ORDER BY SUM(p.prix*lc.quantite) DESC;
-
-SELECT
-  TO_CHAR(DATE_TRUNC('month', date_achat), 'YYYY-MM') AS mois,
-  COUNT(id_stand) AS nombre_stands
-FROM
-  stand
-GROUP BY
-  DATE_TRUNC('month', date_achat)
-ORDER BY
-  DATE_TRUNC('month', date_achat);
-
--- UPDATE prestation SET is_available = 2 WHERE id_prestation = 1;
-
-
-SELECT ligne_commande.id_etat_commande, ec.libelle ,p.libelle as prestation_libelle, p.id_prestation as id_presta, c.id_creneau as id_creneau, quantite, c.id_creneau, c.heure_creneau as creneau, p.prix as prix, p.image as image, tp.id_type_prestation as id_type_prestation, tp.libelle as type_prestation_libelle
-FROM ligne_commande
-JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
-JOIN etat_commande ec on ec.id_etat = ligne_commande.id_etat_commande
-JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
-JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
-JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
-WHERE ligne_commande.id_commande = 2;
-
-UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = 1 AND id_prestation = 1 AND id_creneau = 1;
-
-SELECT COUNT(c.heure_creneau) AS "nb_prestation_par_heure",c.heure_creneau
-FROM ligne_commande lc
-JOIN prestation p on lc.id_prestation = p.id_prestation
-JOIN creneau c on c.id_creneau = lc.id_creneau
-JOIN stand s on p.id_stand = s.id_stand
-WHERE s.id_stand= 2
-GROUP BY c.heure_creneau;
-
-    SELECT SUM(lc.quantite) AS "nb_prestation_par_heure",
-                       c.heure_creneau
-                FROM ligne_commande lc
-                         JOIN prestation p ON lc.id_prestation = p.id_prestation
-                         JOIN creneau c ON c.id_creneau = lc.id_creneau
-                         JOIN stand s ON p.id_stand = s.id_stand
-                WHERE s.id_stand = 2
-                GROUP BY c.id_creneau, c.heure_creneau
-                ORDER BY c.id_creneau, c.heure_creneau;
-
-
- */
-
-SELECT * FROM emplacement;
-
-SELECT * FROM utilisateurAttente;
-SELECT * FROM utilisateur;
-SELECT * FROM standAttente;
-SELECT * FROM stand;
-select * FROM role;
-
-select p.libelle, c.id_creneau, heure_creneau, nom_stand from ligne_commande
-    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
-    JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation
-    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
-    JOIN commande c2 on c2.id_commande = ligne_commande.id_commande
-    JOIN utilisateur u on c2.id_user = u.id_user
-    JOIN stand s on p.id_stand = s.id_stand
-    WHERE c2.id_user = 1
-    ORDER BY c.id_creneau;
-
-
-SELECT ligne_commande.id_creneau, c.heure_creneau, libelle, quantite, p.prix, p.prix * quantite as prix_total
-FROM ligne_commande
-    JOIN prestation p on p.id_prestation = ligne_commande.id_prestation
-    JOIN stand s on p.id_stand = s.id_stand
-    JOIN public.utilisateur u on s.id_stand = u.id_stand
-    JOIN creneau c on c.id_creneau = ligne_commande.id_creneau
-    WHERE u.id_user = 2
-    ORDER BY ligne_commande.id_creneau;
-
-
+INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
+(1,1,5,'Super stand'),
+(1,2,4,'Bien'),
+(1,3,3,'Moyen'),
+(1,4,2,'Pas terrible'),
+(1,5,1,'Nul'),
+(1,6,5,'Super stand'),
+(1,7,4,'Bien'),
+(1,8,3,'Moyen'),
+(1,8,2,'Pas terrible'),
+(1,8,1,'Nul'),
+(2,1,5,'Super stand'),
+(2,2,4,'Bien'),
+(2,3,3,'Moyen'),
+(2,4,2,'Pas terrible'),
+(2,5,1,'Nul'),
+(2,6,5,'Super stand'),
+(2,7,4,'Bien'),
+(2,8,3,'Moyen'),
+(2,8,2,'Pas terrible'),
+(2,8,1,'Nul'),
+(3,1,5,'Super stand'),
+(3,2,4,'Bien'),
+(3,3,3,'Moyen'),
+(3,4,2,'Pas terrible'),
+(3,5,1,'Nul'),
+(3,6,5,'Super stand'),
+(3,7,4,'Bien'),
+(3,8,3,'Moyen'),
+(3,8,2,'Pas terrible'),
+(3,8,1,'Nul'),
+(4,1,5,'Super stand'),
+(4,2,4,'Bien'),
+(4,3,3,'Moyen'),
+(4,4,2,'Pas terrible'),
+(4,5,1,'Nul'),
+(4,6,5,'Super stand'),
+(4,7,4,'Bien'),
+(4,8,3,'Moyen'),
+(4,8,2,'Pas terrible'),
+(4,8,1,'Nul'),
+(5,1,5,'Super stand'),
+(5,2,4,'Bien'),
+(5,3,3,'Moyen'),
+(5,4,2,'Pas terrible')
+;
 
 INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
-
-select * from text_accueil;
-
-select * from avis_stand_utilisateur where id_stand = 1;
-
-select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_stand, avis_stand_utilisateur.id_user as id_user, avis_stand_utilisateur.id_avis_stand_utilisateur as id_avis_stand_utilisateur
-    from avis_stand_utilisateur
-    JOIN utilisateur u on u.id_user = avis_stand_utilisateur.id_user
-    where avis_stand_utilisateur.id_stand = 1;
-
-select * from utilisateur;
-SELECT * FROM stand;
-
-SELECT * FROM standAttente;

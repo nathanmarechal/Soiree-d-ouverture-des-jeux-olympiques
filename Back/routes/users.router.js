@@ -373,15 +373,73 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
 router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
 
 
-
-
-
-
-
-
-
-
-router.post("/create-user",rightMiddleware.checkRight,usersController.createUser)
+/**
+ * @swagger
+ * /api/users/create-user:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - session_id
+ *               - lastName
+ *               - firstName
+ *               - email
+ *               - password
+ *               - adresse
+ *               - code_postal
+ *               - commune
+ *               - id_role
+ *             properties:
+ *               session_id:
+ *                 type: string
+ *                 description: L'ID de session de l'utilisateur
+ *               lastName:
+ *                 type: string
+ *                 description: Le nom de famille de l'utilisateur
+ *               firstName:
+ *                 type: string
+ *                 description: Le prénom de l'utilisateur
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: L'email de l'utilisateur
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: Le mot de passe de l'utilisateur
+ *               adresse:
+ *                 type: string
+ *                 description: L'adresse de l'utilisateur
+ *               code_postal:
+ *                 type: integer
+ *                 description: Le code postal de l'adresse de l'utilisateur
+ *               commune:
+ *                 type: string
+ *                 description: La commune de l'utilisateur
+ *               id_role:
+ *                 type: integer
+ *                 description: L'ID de rôle attribué à l'utilisateur
+ *     responses:
+ *       '201':
+ *         description: Utilisateur créé avec succès
+ *       '400':
+ *         description: Requête invalide
+ *       '403':
+ *         description: Interdiction
+ *       '404':
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Erreur interne
+ */
+router.post("/create-user", rightMiddleware.checkRight, usersMiddleware.checkEmailExists, usersMiddleware.validateUserInput, rolesMiddleware.checkRoleExists, usersController.createUser);
 
 /**
  * @swagger
