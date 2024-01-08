@@ -44,6 +44,7 @@ export default {
       role: {
         libelle: '',
         id_role: null, // Add id_role property
+        session_id:''
       },
       roleDroits: [],
       selectedCategory: 'all',
@@ -57,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllRoles", "getAllDroits"]),
+    ...mapGetters(["getAllRoles", "getAllDroits","getCurrentUser"]),
     droitCategories() {
       // Extract unique categories from droit names
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
@@ -88,6 +89,9 @@ export default {
     async submitForm() {
       try {
         // Create the role
+        this.role.session_id = this.getCurrentUser.session_id
+       // console.log("arf session_id : "+this.getCurrentUser.session_id)
+       // console.log("arf body : "+this.role.session_id)
         let result = await this.createRoleStore(this.role);
         console.log('Résultat de la création du rôle :', result);
 

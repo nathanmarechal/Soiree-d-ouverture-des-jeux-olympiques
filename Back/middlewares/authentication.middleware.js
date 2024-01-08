@@ -13,6 +13,7 @@ exports.checkRight = (req, res, next) => {
     console.log("query : ",req.query)
     console.log("session_id : ",session_id)
     console.log("right_name : ",right_name)
+    console.log("path : ",req.originalUrl)
     console.log("=========")
 
     checkRight_by_name(session_id,right_name)
@@ -59,6 +60,41 @@ function getRightName(path)
     {
         return "delete_users";
     }
+
+    else if(path.startsWith("/api/roles/add"))
+    {
+        return "create_roles";
+    }
+    if(path.startsWith("/api/roles/get"))
+    {
+        return "see_roles";
+    }
+    else if(path.startsWith("/api/roles/update"))
+    {
+        return "update_roles";
+    }
+    else if(path.startsWith("/api/roles/delete"))
+    {
+        return "delete_roles";
+    }
+
+    else if(path.startsWith("/api/zones/add"))
+    {
+        return "create_zones";
+    }
+    if(path.startsWith("/api/zones/get"))
+    {
+        return "see_zones";
+    }
+    else if(path.startsWith("/api/zones/update"))
+    {
+        return "update_zones";
+    }
+    else if(path.startsWith("/api/zones/delete"))
+    {
+        return "delete_zones";
+    }
+
     else
     {
         console.log("no right assigned to path:"+path);

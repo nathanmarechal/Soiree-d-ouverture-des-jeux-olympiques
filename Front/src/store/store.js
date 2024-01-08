@@ -861,7 +861,7 @@ export default new Vuex.Store({
 
         async createRoleStore({ commit }, body) {
             try {
-                //console.log("createRoleStore: ", body)
+                console.log("createRoleStore: ", body)
                 const data = await createRole(body);
                 //console.log("datacreate: ", data.rows[0]);
                 commit('CREATE_ROLE', data.rows[0]);
@@ -873,7 +873,7 @@ export default new Vuex.Store({
 
         async deleteRoleStore({ commit }, id) {
             try {
-                const data = await deleteRole(id);
+                const data = await deleteRole(id,this.state.userCourant.session_id);
                 //console.log("datadelete: ", data.rows[0].id_role);
                 commit('DELETE_ROLE', data.rows[0].id_role);
             } catch (err) {

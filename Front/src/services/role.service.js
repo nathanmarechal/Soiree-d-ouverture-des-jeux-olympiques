@@ -12,14 +12,14 @@ async function createRoleFromAPI(body) {
     return answer
 }
 
-async function deleteRole(id) {
-    let answer = await deleteRolefromAPI(id)
+async function deleteRole(id,session_id) {
+    let answer = await deleteRolefromAPI(id,session_id)
     console.log("deleteRole: ", answer)
     return answer
 }
 
-async function deleteRolefromAPI(id) {
-    let answer = deleteRequest('/roles/delete/' + id, 'DELETEROLE')
+async function deleteRolefromAPI(id,session_id) {
+    let answer = deleteRequest('/roles/delete?id=' + id+"&session_id="+session_id, 'DELETEROLE')
     console.log("deleteRolefromAPI: ", answer)
     return answer
 }

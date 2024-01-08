@@ -30,9 +30,9 @@ exports.updateRole = (req, res) => {
 
     var fullUrl = req.originalUrl;
 
-    console.log("fullUrl : " + fullUrl)
-
     const body = req.body;
+
+
     rolesService.updateRole(body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -44,7 +44,8 @@ exports.updateRole = (req, res) => {
 }
 
 exports.deleteRole = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
+    console.log("in delete role brother, id is : "+id)
     rolesService.deleteRole(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

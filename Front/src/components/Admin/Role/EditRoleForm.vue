@@ -51,6 +51,7 @@ export default {
       role: {},
       selectedCategory: "all",
       selectedDroits: [],
+      session_id:"",
     };
   },
   async mounted() {
@@ -62,7 +63,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits"]),
+    ...mapGetters(["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits","getCurrentUser"]),
     droitCategories() {
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
     },
@@ -117,6 +118,7 @@ export default {
     async submitForm() {
       try {
         // modify the role
+        this.role.session_id = this.getCurrentUser.session_id;
         let result = await this.updateRoleStore(this.role);
         console.log('Résultat de la modification du rôle :', result);
         // delete all the selected droits for the role

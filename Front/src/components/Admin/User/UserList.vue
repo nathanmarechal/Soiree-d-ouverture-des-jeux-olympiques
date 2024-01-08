@@ -108,7 +108,7 @@
                   }
                 }
                 await this.deleteStandStore(id_stand);
-
+                console.log("about to delete user store")
                 await this.deleteUserStore(id_user);
               } catch (error) {
                 console.error('Error during user deletion:', error);
