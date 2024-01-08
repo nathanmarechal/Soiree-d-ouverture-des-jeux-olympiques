@@ -17,13 +17,23 @@ const rightMiddleware = require("../middlewares/authentication.middleware");
  *   get:
  *     summary: Renvoie tous les utilisateurs
  *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Identifiant de la session
  *     responses:
  *       '200':
  *         description: Liste de tous les utilisateurs
+ *       '403':
+ *         description: Interdiction
  *       '500':
  *         description: Erreur interne
  */
-router.get("/get",rightMiddleware.checkRight, usersController.getUsers);
+router.get("/get", rightMiddleware.checkRight, usersController.getUsers);
+
 
 /**
  * @swagger
@@ -70,6 +80,9 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *           schema:
  *             type: object
  *             properties:
+ *               session_id:
+ *                 type: string
+ *                 description: Identifiant de la session
  *               email:
  *                 type: string
  *                 format: email
@@ -109,6 +122,8 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *         description: Utilisateur mis à jour avec succès
  *       '400':
  *         description: Requête invalide
+ *       '403':
+ *         description: Interdiction
  *       '404':
  *         description: Non trouvé
  *       '409':
@@ -116,31 +131,40 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *       '500':
  *         description: Internal error
  */
-router.patch("/update/:id",rightMiddleware.checkRight,usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandExists, rolesMiddleware.checkRoleExists ,usersController.updateUser);
+router.patch("/update/:id", rightMiddleware.checkRight,usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandAppartenance, rolesMiddleware.checkRoleExists ,usersController.updateUser);
 
 /**
  * @swagger
- * /api/users/delete/{id}:
+ * /api/users/delete:
  *   delete:
  *     summary: Supprime un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
  *         required: true
  *         description: ID de l'utilisateur à supprimer
  *         schema:
- *          type: integer
- *          format: int64
+ *           type: integer
+ *           format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur supprimé
+ *       '403':
+ *         description: Interdiction
  *       '404':
  *         description: Non trouvé
  *       '500':
  *         description: Internal error
  */
-router.delete("/delete",rightMiddleware.checkRight, usersMiddleware.checkUserExists ,usersController.deleteUser);
+router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersController.deleteUser);
+
 
 /**
  * @swagger
@@ -347,6 +371,15 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
  *         description: Internal error
  */
 router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
+
+
+
+
+
+
+
+
+
 
 router.post("/create-user",rightMiddleware.checkRight,usersController.createUser)
 

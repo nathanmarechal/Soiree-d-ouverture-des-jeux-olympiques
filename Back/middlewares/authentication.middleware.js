@@ -2,8 +2,8 @@ const pool = require("../database/db");
 
 exports.checkRight = (req, res, next) => {
 
-    //console.log("checking right at url : "+req.originalUrl)
-    const session_id = req.query.session_id ? req.query.session_id : req.body.session_id;
+    console.log("checking right at url : "+req.originalUrl)
+    const session_id = req.query.session_id || req.body.session_id;
 
 
     const right_name = getRightName(req.originalUrl)
@@ -26,7 +26,7 @@ exports.checkRight = (req, res, next) => {
             else
             {
                 //console.log("l'utilisateur courant ne dispose pas de ce droit");
-                return res.status(400).send("l'utilisateur courant ne dispose pas de ce droit");
+                return res.status(403).send("l'utilisateur courant ne dispose pas de ce droit");
             }
         })
         .catch(error=>
