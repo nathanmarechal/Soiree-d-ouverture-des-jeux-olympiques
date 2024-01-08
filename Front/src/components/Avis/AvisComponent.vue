@@ -1,38 +1,46 @@
 <template>
   <div>
-    <div v-if="addMode===true">
-      <add-avis-component @contentSaved="validAdd"></add-avis-component>
+    <div v-if="size === 0">
+      <div class="alert alert-info" role="alert" v-if="addMode===false">
+        Aucun avis pour ce prestataire
+        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && addMode === false" class="btn btn-outline-success" @click="setActiveAddMode" style="margin-left: 50%"> ajouter un avis</button>
+      </div>
+      <div v-if="addMode===true">
+        <add-avis-component @contentSaved="validAdd"></add-avis-component>
+      </div>
     </div>
     <div v-else>
-      <div>
-        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" class="btn btn-outline-info" @click="setActiveAddMode"> ajouter un avis</button>
-        <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" class="btn btn-outline-danger"  style="margin-left: 2%" @click="deleteAvis(avis[index].id_avis_stand_utilisateur)"> supprimer cet avis</button>
+      <div v-if="addMode===true">
+        <add-avis-component @contentSaved="validAdd"></add-avis-component>
       </div>
-  <div class="slideshow-container" >
-    <div class="avis-container">
-      <div class="avis-etoiles">
-        <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
-          <i class="fas fa-star"></i>
-        </span>
+      <div v-else>
+        <div>
+          <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" class="btn btn-outline-info" @click="setActiveAddMode"> ajouter un avis</button>
+          <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" class="btn btn-outline-danger"  style="margin-left: 2%" @click="deleteAvis(avis[index].id_avis_stand_utilisateur)"> supprimer cet avis</button>
+        </div>
+        <div class="slideshow-container" >
+          <div class="avis-container">
+            <div class="avis-etoiles">
+              <span v-for="n in 5" :key="n" class="etoile" :class="{'active': n <= avis[index].note}">
+                <i class="fas fa-star"></i>
+              </span>
+            </div>
+            <div>{{avis[index].prenom}} {{avis[index].nom}}</div>
+            <div class="avis-commentaire" v-html="avis[index].commentaire"></div>
+          </div>
+          <div class="navigation">
+            <button v-if="index > 0" @click="index = index - 1" class="nav-button">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button v-if="index < size - 1" @click="index = index + 1" class="nav-button">
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
       </div>
-      <div>{{avis[index].prenom}} {{avis[index].nom}}</div>
-      <div class="avis-commentaire" v-html="avis[index].commentaire"></div>
     </div>
-
-    <div class="navigation">
-      <button v-if="index > 0" @click="index = index - 1" class="nav-button">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-
-      <button v-if="index < size - 1" @click="index = index + 1" class="nav-button">
-        <i class="fas fa-arrow-right"></i>
-      </button>
-    </div>
-  </div>
-  </div>
   </div>
 </template>
-
 <script>
 import {mapActions, mapGetters} from "vuex";
 import '@fortawesome/fontawesome-free/css/all.css';

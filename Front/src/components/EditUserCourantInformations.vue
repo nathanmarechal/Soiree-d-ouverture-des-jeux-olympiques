@@ -53,8 +53,8 @@ export default {
         <li  class="list-group-item">Adresse : <input required type="text" v-model="newadresse"></li>
         <li  class="list-group-item">Code postal : <input required type="text" v-model="newcode_postal"></li>
         <li  class="list-group-item">Ville : <input required type="text" v-model="newcommune"></li>
-        <li><button class="btn btn-info btn-sm" @click="cancelEdit">Valider</button></li>
       </ul>
+      <button class="btn btn-info btn-sm" @click="cancelEdit">Valider</button>
     </div>
   </div>
 </template>
