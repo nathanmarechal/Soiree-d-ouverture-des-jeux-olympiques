@@ -59,6 +59,10 @@ function getRightName(path)
     {
         return "delete_users";
     }
+    else if(path.startsWith("/api/users/create-user"))
+    {
+        return "create_users";
+    }
     else
     {
         console.log("no right assigned to path:"+path);

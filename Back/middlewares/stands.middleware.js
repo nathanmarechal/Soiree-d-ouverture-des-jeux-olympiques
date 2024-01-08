@@ -51,7 +51,6 @@ exports.checkStandAppartenance = async (req, res, next) => {
 
         const proprio = checkResult2.rows[0];
         if (proprio.id_user != userId) {
-
             conn.release();
             return res.status(409).send("Le stand est déjà assigné à un autre utilisateur");
         }
