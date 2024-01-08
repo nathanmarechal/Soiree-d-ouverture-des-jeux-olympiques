@@ -1,10 +1,10 @@
 <template>
-  <div class="add-user-form" >
+  <div class="add-user-form" style="margin-bottom: 10%">
     <div v-if="isPrestataire === null">
       <h2>Qui êtes vous ?</h2>
       <div class="form d-flex">
-        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">Prestataire</button>
-        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">Client</button>
+        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">Prestataire<div style="font-size: 50%">votre demande sera soumise à un administrateur</div></button>
+        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">Client<div style="font-size: 50%">L'inscription est immédiate</div></button>
       </div>
     </div>
 
@@ -322,6 +322,25 @@ export default {
 </script>
 
 <style scoped>
+
+.bouton {
+  width: 40vh;
+  height: 50vh;
+  font-size: 2em;
+  border: none;
+  margin-right: 5%; /* Add space to the right of each button */
+  border-radius: 15px; /* Add rounded corners */
+  transition: box-shadow 0.3s ease; /* Smooth transition for box-shadow */
+}
+
+.bouton:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add shadow when mouse hovers over */
+}
+
+/* Remove margin from the last button */
+.bouton:last-child {
+  margin-right: 0;
+}
 
 .form {
   display: flex;
