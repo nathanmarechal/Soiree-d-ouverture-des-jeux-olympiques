@@ -1,17 +1,17 @@
 <template>
   <div class="stats-container">
     <div class="stat-box">
-      <h3>Meilleur Client</h3>
+      <h3>{{translate("statistiquesPrestataire_3")}}</h3>
       <div class="stat-content" v-if="bestClient">
-        <p class="stat-name">Nom: <span>{{ bestClient.name }}</span></p>
-        <p class="stat-value">Total Achats: <span>{{ bestClient.best_client }}€</span></p>
+        <p class="stat-name">{{translate("statistiquesPrestataire_5")}} : <span>{{ bestClient.name }}</span></p>
+        <p class="stat-value">{{translate("statistiquesPrestataire_6")}} : <span>{{ bestClient.best_client }}€</span></p>
       </div>
       <p v-else>Chargement...</p>
     </div>
     <div class="stat-box">
-      <h3>Achat Moyen</h3>
+      <h3>{{translate("statistiquesPrestataire_4")}}</h3>
       <div class="stat-content" v-if="averagePurchase">
-        <p class="stat-value">Moyenne: <span>{{ averagePurchase.average_purchase.toFixed(2) }}€</span></p>
+        <p class="stat-value"> <span>{{ averagePurchase.average_purchase.toFixed(2) }}€</span></p>
       </div>
       <p v-else>Chargement...</p>
     </div>
@@ -21,6 +21,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { getBestClientByStand, getAveragePurchaseByStand } from '@/services/statistiques.service';
+import {translate} from "../../../lang/translationService";
 
 export default {
   name: 'StandStatistics',
@@ -37,6 +38,7 @@ export default {
     await this.loadStatistics();
   },
   methods: {
+    translate,
     async loadStatistics() {
       try {
         const standId = this.getCurrentUser.id_stand;

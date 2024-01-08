@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Revenue des Ventes par Type</h4>
+    <h4>{{translate("statistiquesPrestataire_2")}}</h4>
     <div ref="circleChart"></div>
   </div>
 </template>
@@ -9,6 +9,7 @@
 import * as d3 from 'd3';
 import { mapGetters } from 'vuex';
 import { getSalesRevnueByTypeByStand } from '@/services/statistiques.service';
+import {translate} from "../../../lang/translationService";
 
 export default {
   name: 'CircleChart',
@@ -25,6 +26,7 @@ export default {
     this.drawCircleChart();
   },
   methods: {
+    translate,
     async loadSalesData() {
       try {
         this.salesData = await getSalesRevnueByTypeByStand(this.getCurrentUser.id_stand);

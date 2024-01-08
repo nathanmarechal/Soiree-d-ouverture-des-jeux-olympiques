@@ -240,5 +240,12 @@
   "addStand_3": "Description du stand : ",
   "addStand_4": "Reserver un emplacement",
   "addStand_5": "Ajouter un stand",
-  "addStand_6": "Annuler"
+  "addStand_6": "Annuler",
+
+  "statistiquesPrestataire_1": "Nombre de prestation par heure",
+  "statistiquesPrestataire_2": "Chiffre d'affaires par type",
+  "statistiquesPrestataire_3": "Meilleur client",
+  "statistiquesPrestataire_4": "Panier moyen",
+  "statistiquesPrestataire_5": "Nom",
+  "statistiquesPrestataire_6": "Argent dépensé"
 }

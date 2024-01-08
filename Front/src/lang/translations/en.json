@@ -239,5 +239,12 @@
   "addStand_3": "Stand description: ",
   "addStand_4": "Book an emplacement",
   "addStand_5": "Add a stand",
-  "addStand_6": "Cancel"
+  "addStand_6": "Cancel",
+
+  "statistiquesPrestataire_1": "Number of services per hour",
+  "statistiquesPrestataire_2": "Revenue by type",
+  "statistiquesPrestataire_3": "Best client",
+  "statistiquesPrestataire_4": "Average basket",
+  "statistiquesPrestataire_5": "Name",
+  "statistiquesPrestataire_6": "Money spent"
 }
