@@ -4,7 +4,7 @@
       <img :src="imagePath" class="food-img-fluid" alt="stand">
       <div class="food-text-container">
         <h3>{{stand.nom_stand}}</h3>
-        <p>{{ stand.description_stand }}</p>
+        <div v-html="stand.description_stand"></div>
       </div>
       <map-one-area :stand="this.stand"></map-one-area>
     </div>
