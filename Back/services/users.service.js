@@ -147,7 +147,7 @@ const deleteUser = (id, callback) => {
 
 async function deleteUserAsync(id) {
     console.log("id = "+id)
-    try {
+    try {   
         const conn = await pool.connect();
         await conn.query('DELETE FROM utilisateur WHERE id_user = $1', [id]);
         conn.release();

@@ -119,10 +119,8 @@
         />
       </div>
 
-      <button @click="modalActiveAreaSelection=true" class="btn btn-success"> Choisir Emplacement</button>
-
+      <button @click.prevent="modalActiveAreaSelection = true" class="btn btn-success">{{ translate("addUser_13") }}</button>
       <SelectArea @dataEmplacement="dataEmplacement" :modalActiveAreaSelection="modalActiveAreaSelection" ></SelectArea>
-
       <div>
         <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
         <button @click="isPrestataire = null" class="btn btn-danger">{{translate("addUser_12")}}</button>
@@ -170,7 +168,7 @@ export default {
         nom_stand: "",
         image_stand: "",
         description_stand: "",
-        id_emplacement: 50, //à choisir avec la map
+        id_emplacement: null, //à choisir avec la map
         id_zone: null,
         id_type_prestation: null,
       },
