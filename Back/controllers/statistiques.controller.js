@@ -33,3 +33,39 @@ exports.getNbPrestationHeure = (req, res) => {
         }
     })
 }
+
+exports.getAveragePurchaseByStand = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getAveragePurchaseByStand(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.getBestClientByStand = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getBestClientByStand(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.getSalesRevnueByTypeByStand = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getSalesRevnueByTypeByStand(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
