@@ -20,10 +20,11 @@
                   <td>{{ stand.id_stand }}</td>
                   <td>{{ stand.nom_stand }}</td>
                   <td>{{ stand.image_stand }}</td>
-                  <td>{{ stand.description_stand }}</td>
+
+                  <td v-html="stand.description_stand"></td>
                   <td>{{ formatDate(stand.date_achat) }}</td>
                   <td>{{ stand.prix }}</td>
-                  <td>WIP</td>
+                  <td>{{stand.id_emplacement}}</td>
                   <td>
                     <router-link v-if="!isProtectorDelete" :to="{ name: 'AdminEditStand', params: { selected_stand: stand } }" class="btn btn-primary">
                       {{ translate("Edit") }}</router-link>
