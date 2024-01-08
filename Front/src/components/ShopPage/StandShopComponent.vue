@@ -58,11 +58,11 @@ export default {
 
 <style scoped>
 .food-container {
-
+  width: 100%;
   display: flex;
   gap: 2vh;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-around;
   margin-bottom: 2%;
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -80,8 +80,9 @@ export default {
 
 
 .food-img-fluid {
-  height: 20vh;
-  width: 20vh;
+  height: 25vh;
+  width: 25vh;
+  border-radius: 20%;
 }
 
 .food-text-container {
