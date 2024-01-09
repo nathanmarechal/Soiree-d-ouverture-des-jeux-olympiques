@@ -26,11 +26,14 @@ export default {
 
 <style scoped>
 #app {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
 .content {
   flex: 1 0 auto;
 }
@@ -38,7 +41,6 @@ export default {
 footer {
   flex-shrink: 0;
 }
-
 .nav{
   position: fixed;
   top: 15px;
