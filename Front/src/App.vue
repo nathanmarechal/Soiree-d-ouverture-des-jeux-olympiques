@@ -51,6 +51,8 @@ footer {
   box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
   border-radius: 2vh;
 }
+
+
 #app::before {
   content: "";
   position: absolute;
