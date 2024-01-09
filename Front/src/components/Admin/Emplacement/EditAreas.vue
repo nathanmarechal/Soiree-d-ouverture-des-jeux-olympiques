@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <button v-if="isProtectorDelete" @click="deleteAll" class="btn btn-danger">{{ translate("EditAreas_1") }}</button>
+      <button v-if="isProtectorDelete" @click="deleteAll()" class="btn btn-danger">{{ translate("EditAreas_1") }}</button>
     </div>
     <div class="map-container">
       <div id="map"></div>
-    </div>
+    </div> 
     <div>
-      <ModalEditArea :isProtectorDelete="isProtectorDelete" :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @close="toggleModalEdit"/>
+      <ModalEditArea :isProtectorDelete="isProtectorDelete" :modalActiveEditArea="modalActiveEditArea" :selectedArea="selectedArea" @NeedProtection="handleNeedProtection" @close="toggleModalEdit"/>
       <ModalAddArea :modalActiveAddArea="modalActiveAddArea" :newArea="newArea" @close="toggleModalAdd"/>
       <modal-add-emplacement-logistique :modalActiveAddEmplacementLogistique="modalActiveAddEmplacementLogistique" :newEmplacementLogistique="newEmplacementLogistique" @close="toggleModalAddEmplacementLogistique"/>
       <modal-edit-emplacement-logistique :modalActiveEditEmplacementLogistique="modalActiveEditEmplacementLogistique" :selectedEmplacementLogistique="selectedEmplacementLogistique" @close="toggleModalEditEmplacementLogistique"/>
@@ -90,6 +90,9 @@ export default {
         }
       }
     }
+    if (data.length === 0) {
+      this.goBack();
+    }
     return data;
     },
   },
@@ -98,11 +101,26 @@ export default {
     translate, 
     async loadData() {
       try {
+        if (this.getAllArea.length === 0) {
           await this.getAreasStore();
+          console.log('getAllArea', this.getAllArea);
+        }
+        if (this.getAllZone.length === 0) {
           await this.getZonesStore();
+          console.log('getAllZone', this.getAllZone);
+        }
+        if (this.getAllStand.length === 0) {
           await this.getStandsStore();
+          console.log('getAllStand', this.getAllStand);
+        }
+        if (this.getAllTypeEmplacementLogistique.length === 0) {
           await this.getTypeEmplacementLogistiqueStore();
+          console.log('getAllTypeEmplacementLogistique', this.getAllTypeEmplacementLogistique);
+        }
+        if (this.getAllEmplacementLogistique.length === 0) {
           await this.getEmplacementLogistiqueStore();
+          console.log('getAllEmplacementLogistique', this.getAllEmplacementLogistique);
+        }
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -325,34 +343,39 @@ export default {
     },
     async deleteAll(){
       //delete all area
-      console.log("delete all area");
+      console.log("delete all area", this.isProtectorDelete);
       if (this.isProtectorDelete){  
         var areas = this.mergeData();
         areas.forEach(area => {
           try {
             //find if no stand have this id_emplacement
+            console.log(area.id_emplacement, this.getAllStand.find(stand => stand.id_emplacement === area.id_emplacement) || false);
             if(this.getAllStand.find(stand => stand.id_emplacement === area.id_emplacement) || false){ 
               console.log("delete stand", area.id_stand);
               this.deleteStandStore(area.id_stand);
             }
             console.log("delete area", area.id_emplacement);
             this.deleteAreasStore(area.id_emplacement);
-            console.log("eee", this.filteredAreas.length);
-            if(this.filteredAreas.length === 0){
-              window.alert("vous pouvez dorénavant supprimer cette zone");
-              this.$router.push(
-                {
-                  name: 'AdminZones',
-                }
-              );
-            }
           } catch (err) {
             console.error('Error deleting area:', err);
           }
         });
+        this.goBack();
       }
       //update map
       this.updateMap();
+    },
+    goBack(){
+      window.alert("vous pouvez dorénavant supprimer cette zone");
+      this.$router.push(
+        {
+          name: 'AdminZoneView',
+        }
+      );
+    },
+    handleNeedProtection(data) {
+      console.log("data: " + JSON.stringify(data, null, 2));
+      this.$emit('NeedProtection', data);
     },
   },
 };

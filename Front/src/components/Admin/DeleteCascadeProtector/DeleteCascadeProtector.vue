@@ -189,6 +189,7 @@ export default {
       console.log("data to protect", this.dataToProtect);
     },
     async handleNeedProtection(data) {
+      console.log("HandleNeedPRotection");
       this.dataToProtect = data.dataProp;
       this.dataToProtectType = data.dataType;
       this.getAllDataToDelete();

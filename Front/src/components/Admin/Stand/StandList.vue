@@ -136,7 +136,7 @@
               window.alert("Vous pouvez dorénavant supprimer cet emplacement");
               if (this.isLevel2 === false){
                 console.log("isGoingBack to map page");
-                router.push({name: 'AdminMapPage'});
+                router.push({name: 'AdminMapView'});
                 return;
               }
             }
