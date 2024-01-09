@@ -295,12 +295,22 @@ INSERT INTO droits(libelle) VALUES
 ('update_users'),
 ('delete_users'),
 
-('see_zones'),
+('see_waiting_users'),
+('accept_waiting_users'),
+('refuse_waiting_users'),
+
+('create_stands'),
+('update_stands'),
+('delete_stands'),
+
 ('create_zones'),
 ('update_zones'),
 ('delete_zones'),
 
-('see_roles'),
+('create_areas'),
+('update_areas'),
+('delete_areas'),
+
 ('create_roles'),
 ('update_roles'),
 ('delete_roles'),

@@ -1,7 +1,7 @@
 const pool = require("../database/db");
 
 exports.checkStandExists = async (req, res, next) => {
-    let id = req.query.id_stand || req.body.id_stand;
+    let id = req.query.id_stand || req.body.id_stand || req.params.id;
     try {
 
         const conn = await pool.connect();

@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const statistiquesController = require('../controllers/statistiques.controller');
 const userMiddleware = require('../middlewares/users.middleware');
+const standMiddleware = require('../middlewares/stands.middleware');
 
 /**
  * @swagger
@@ -54,7 +55,7 @@ router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/nb-prestation-heure/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getNbPrestationHeure)
+router.get('/prestataire/nb-prestation-heure/:id',standMiddleware.checkStandExists ,statistiquesController.getNbPrestationHeure)
 
 /**
  * @swagger
@@ -79,7 +80,7 @@ router.get('/prestataire/nb-prestation-heure/:id',userMiddleware.checkPrestatair
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/average-purchase/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAveragePurchaseByStand)
+router.get('/prestataire/average-purchase/:id',standMiddleware.checkStandExists ,statistiquesController.getAveragePurchaseByStand)
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.get('/prestataire/average-purchase/:id',userMiddleware.checkPrestataireEx
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/best-client/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getBestClientByStand)
+router.get('/prestataire/best-client/:id',standMiddleware.checkStandExists ,statistiquesController.getBestClientByStand)
 
 /**
  * @swagger
@@ -129,7 +130,7 @@ router.get('/prestataire/best-client/:id',userMiddleware.checkPrestataireExists 
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/sales-revenue-by-type/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getSalesRevnueByTypeByStand)
+router.get('/prestataire/sales-revenue-by-type/:id',standMiddleware.checkStandExists ,statistiquesController.getSalesRevnueByTypeByStand)
 
 /**
  * @swagger
@@ -154,7 +155,7 @@ router.get('/prestataire/sales-revenue-by-type/:id',userMiddleware.checkPrestata
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/average-rating/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAvgRatingByStand)
+router.get('/prestataire/average-rating/:id',standMiddleware.checkStandExists ,statistiquesController.getAvgRatingByStand)
 
 /**
  * @swagger
@@ -179,8 +180,7 @@ router.get('/prestataire/average-rating/:id',userMiddleware.checkPrestataireExis
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/count-rating/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getCountRatingByStand)
-
+router.get('/prestataire/count-rating/:id', standMiddleware.checkStandExists ,statistiquesController.getCountRatingByStand)
 
 router.get('/nb-stands',statistiquesController.getNbStands)
 
