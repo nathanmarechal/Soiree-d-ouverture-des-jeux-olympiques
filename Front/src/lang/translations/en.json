@@ -151,8 +151,7 @@
   "showZone_7": "Delete",
   "zone_1": "Add a zone",
 
-  "bestSellerStats_1": "Services that brought in the most money",
-  "newStandStats_1": "Evolution of the number of stands",
+
 
 
   "addUser_1":"first name",
@@ -253,5 +252,14 @@
   "statistiquesPrestataire_5": "Name",
   "statistiquesPrestataire_6": "Money spent",
   "statistiquesPrestataire_7": "Average stand rating",
-  "statistiquesPrestataire_8": "Number of reviews"
+  "statistiquesPrestataire_8": "Number of reviews",
+
+  "bestSellerStats_1": "Services that earned the most",
+  "newStandStats_1": "Evolution of the number of stands",
+  "adminStatistics_numberOfStands": "Number of stands",
+  "adminStatistics_numberOfPrestations": "Number of available services",
+  "adminStatistics_numberOfUsers": "Number of users",
+  "adminStatistics_averagePurchase": "Average basket per stand",
+  "adminStatistics_topSellerStand": "Top stand in revenue",
+  "adminStatistics_topAvisStand": "Top rated stand"
 }
