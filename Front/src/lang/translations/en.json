@@ -10,7 +10,7 @@
   "informations": "Information",
   "carte": "Map",
   "comptes": "Accounts",
-  "emplacements": "Emplacements",
+  "emplacements": "Areas",
   "zones": "Zones",
   "roles": "Roles",
   "statistiques": "Statistics",
@@ -18,7 +18,12 @@
   "prestations": "Services",
   "monPanier": "My cart",
   "mesCommandes":"My commands",
+  "mesInformations": "My informations",
+  "monEmploiDuTemps": "My time table",
   "seDeconnecter": "Log off",
+  "inscriptions": "Registrations",
+  "stands": "Stands",
+
 
   "desc_1": "26th of july 2024 : An unforgettable experience along the docks of Paris",
   "desc_2": "A journey through history and culture : ",
