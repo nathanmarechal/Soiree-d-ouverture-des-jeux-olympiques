@@ -41,13 +41,16 @@ export default {
 footer {
   flex-shrink: 0;
 }
-.nav{
+.nav {
   position: fixed;
-  top: 15px;
-  left: 15px;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1050;
+  background-color: rgba(236, 240, 241, 0.9);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  border-radius: 2vh;
 }
-
 #app::before {
   content: "";
   position: absolute;
