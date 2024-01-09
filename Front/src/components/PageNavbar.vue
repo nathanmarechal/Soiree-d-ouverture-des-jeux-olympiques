@@ -42,6 +42,7 @@
 
         </b-navbar-nav>
       </b-collapse>
+      <div style="margin-right: 10%;margin-left: 100%; display: flex">
       <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login-18.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
@@ -58,7 +59,7 @@
         <option value="fr">Français</option>
         <option value="en">English</option>
       </select>
-
+      </div>
     </b-navbar>
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>
     <div id="loginModal" title="Login" class="centered hide-footer">
@@ -139,18 +140,6 @@ body, .b-navbar {
 .navbar-svg-login {
   height: 40px;
   margin-left: auto;
-}
-
-.desktop-navbar {
-  display: none;
-  border-radius: 2vh;
-  padding: 1vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 997;
-  background-color: rgba(236, 240, 241, 0.9); /* Utilise la couleur #ECF0F1 avec une opacité de 0.9 */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Fond diffus de blanc moins transparent */
 }
 
 

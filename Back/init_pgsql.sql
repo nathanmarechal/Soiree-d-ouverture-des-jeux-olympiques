@@ -985,15 +985,6 @@ SELECT * FROM ligne_commande;
 
 
 
-SELECT AVG(total_commande) AS average_purchase
-FROM (
-    SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
-    FROM commande c
-    JOIN ligne_commande lc ON c.id_commande = lc.id_commande
-    JOIN prestation p ON lc.id_prestation = p.id_prestation
-    WHERE p.id_stand = 2  -- Remplacez [Votre_Id_Stand] par l'ID de stand spécifique
-    GROUP BY c.id_commande, c.id_user
-) AS sous_requete;
 
 SELECT concat(u.prenom, ' ',u.nom) as name, SUM(lc.prix * lc.quantite) AS best_client
 FROM ligne_commande lc
@@ -1012,5 +1003,36 @@ WHERE p.id_stand = 2
 GROUP BY tp.libelle;
 
 
-SELECT AVG(note) as avg_rating FROM avis_stand_utilisateur WHERE id_stand = 2;  
+
 SELECT COUNT(note) as nb_rating FROM avis_stand_utilisateur WHERE id_stand = 2;
+
+SELECT COUNT(*) as nb_prestataires FROM stand;
+SELECT COUNT(*) as nb_prestations_available FROM prestation where is_available=true;
+SELECT COUNT(*) as nb_users FROM utilisateur;
+
+SELECT AVG(total_commande) AS average_purchase_global
+FROM (
+    SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
+    FROM commande c
+    JOIN ligne_commande lc ON c.id_commande = lc.id_commande
+    JOIN prestation p ON lc.id_prestation = p.id_prestation
+    GROUP BY c.id_commande, c.id_user
+) AS sous_requete;
+
+
+SELECT
+    s.nom_stand,
+    s.image_stand,
+    SUM(lc.prix * lc.quantite) AS sales_revenue
+FROM
+    ligne_commande lc
+JOIN
+    prestation p ON lc.id_prestation = p.id_prestation
+JOIN
+    stand s ON p.id_stand = s.id_stand
+GROUP BY
+    s.id_stand
+ORDER BY
+    sales_revenue DESC
+LIMIT 1;
+

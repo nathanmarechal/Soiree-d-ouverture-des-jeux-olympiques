@@ -50,6 +50,8 @@ export default {
     async loadData() {
       if (this.getAllZone.length === 0)
         await this.getZonesStore();
+      if (this.getAllArea.length === 0)
+        await this.getAreasStore();
     },
     async zoneDelete(index) {
       const zone = this.getAllZone[index];

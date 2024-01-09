@@ -156,8 +156,6 @@
   "showZone_7": "Supprimer",
   "zone_1": "Ajouter une zone",
 
-  "bestSellerStats_1": "Prestations ayant rapportées le plus",
-  "newStandStats_1": "Évolution du nombre de stand",
 
   "addUserBtn_0":"Qui êtes vous ?",
   "addUserBtn_1":"Prestataire",
@@ -259,6 +257,7 @@
 
   "statistiquesPrestataire_1": "Nombre de prestation par heure",
   "statistiquesPrestataire_2": "Chiffre d'affaires par type",
+
   "statistiquesPrestataire_3": "Meilleur client",
   "statistiquesPrestataire_4": "Panier moyen",
   "statistiquesPrestataire_5": "Nom",
@@ -335,5 +334,16 @@
 
   "validLigneCommande_1": "La commande a été récupérée"
 
+
+  "statistiquesPrestataire_8": "Nombre d'avis",
+
+  "bestSellerStats_1": "Prestations ayant rapportées le plus",
+  "newStandStats_1": "Évolution du nombre de stand",
+  "adminStatistics_numberOfStands": "Nombre de stands",
+  "adminStatistics_numberOfPrestations": "Nombre prestations disponibles",
+  "adminStatistics_numberOfUsers": "Nombre d'utilisateurs",
+  "adminStatistics_averagePurchase": "Panier moyen stand",
+  "adminStatistics_topSellerStand": "Meilleur stand en chiffre d'affaires",
+  "adminStatistics_topAvisStand": "Meilleur stand en avis"
 
 }
