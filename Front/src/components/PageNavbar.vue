@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" class="desktop-navbar">
+    <b-navbar toggleable="md" class="desktop-navbar" style="display: flex; align-items: center; justify-content: space-between;">
       <router-link to="/"><b-navbar-brand ><img :src="require('@/assets/paris_2024_logo.svg')" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -42,7 +42,7 @@
 
         </b-navbar-nav>
       </b-collapse>
-      <div style="margin-right: 10%;margin-left: 100%; display: flex">
+      <div style="display: contents;">
       <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login-18.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
@@ -51,8 +51,8 @@
         <b-dropdown-item ><router-link to="/schedule" class = "dp">{{translate("monEmploiDuTemps")}}</router-link></b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
-      <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
-      <img v-if="isUserPrestataire" src="../assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
+      <img v-if="isUserAdmin" src="@/assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
+      <img v-if="isUserPrestataire" src="@/assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
 
 
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
@@ -130,7 +130,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body, .b-navbar {

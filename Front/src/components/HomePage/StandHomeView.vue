@@ -219,9 +219,10 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/stand/' + imageName);
+        console.log(imageName)
+        return require('./../../../../Back/assets/stand/profile/' + imageName)
       } catch {
-        return require('@/assets/' + "4.png");
+        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }
     },
     goToPrestations() {
