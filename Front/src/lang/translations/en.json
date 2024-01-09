@@ -271,8 +271,7 @@
   "adminStatistics_numberOfUsers": "Number of users",
   "adminStatistics_averagePurchase": "Average basket per stand",
   "adminStatistics_topSellerStand": "Top stand in revenue",
-  "adminStatistics_topAvisStand": "Top rated stand"
-  "statistiquesPrestataire_8": "Number of reviews",
+  "adminStatistics_topAvisStand": "Top rated stand",
 
   "infoPersos_1": "Personal Information",
   "infoPersos_2": "Last Name: ",

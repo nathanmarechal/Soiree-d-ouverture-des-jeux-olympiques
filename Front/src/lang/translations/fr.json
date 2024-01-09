@@ -3,7 +3,6 @@
   "boisson": "Boisson",
   "fanzone": "Fanzone",
   "billetterie": "Billetterie",
-  "magasin": "Magasin",
   "activites": "Activités",
   "decouverteInternationale" : "Découverte internationale",
   "RATP": "RATP",
@@ -332,10 +331,7 @@
   "addPrestationPrestataire_8": "Ajouter",
   "addPrestationPrestataire_9": "Quitter",
 
-  "validLigneCommande_1": "La commande a été récupérée"
-
-
-  "statistiquesPrestataire_8": "Nombre d'avis",
+  "validLigneCommande_1": "La commande a été récupérée",
 
   "bestSellerStats_1": "Prestations ayant rapportées le plus",
   "newStandStats_1": "Évolution du nombre de stand",
