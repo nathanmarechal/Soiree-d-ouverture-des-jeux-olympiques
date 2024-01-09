@@ -4,7 +4,9 @@
       <PageNavbar/>
     </div>
     <router-link to="/"></router-link>
-    <router-view></router-view>
+    <div class="content">
+      <router-view></router-view>
+    </div>
     <PageFooter />
   </div>
 </template>
@@ -28,14 +30,30 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content {
+  flex: 1 0 auto;
 }
 
-.nav{
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1050;
+footer {
+  flex-shrink: 0;
 }
+.nav {
+  position: fixed;
+  display: block;
+  margin-left: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background-color: rgba(236, 240, 241, 0.9);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  border-radius: 2vh;
+}
+
 
 #app::before {
   content: "";

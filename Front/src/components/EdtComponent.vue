@@ -1,9 +1,9 @@
 <template>
   <div class="alert alert-success" role="alert" v-if="schedule.length === 0" style="margin-top: 25%; margin-bottom: 25%">
-    Il n'y a rien de prévu pour le moment
+    {{translate("emploiDuTemps_1")}}
   </div>
   <div v-else class="schedule-container" style="margin-top: 10%; margin-bottom: 10%">
-    <h2>Emploi du temps</h2>
+    <h2>{{translate("emploiDuTemps_2")}}</h2>
     <div v-for="ligne in schedule" :key="ligne.id_creneau" class="schedule-item">
       <p class="time">{{ ligne.heure_creneau }}</p>
       <div class="event-details">
@@ -16,8 +16,10 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {translate} from "../lang/translationService";
 
 export default {
+  methods: {translate},
   computed: {
     ...mapGetters(['getCurrentUser']),
     schedule() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" class="desktop-navbar">
+    <b-navbar toggleable="md" class="desktop-navbar" style="display: flex; align-items: center; justify-content: space-between;">
       <router-link to="/"><b-navbar-brand ><img :src="require('@/assets/paris_2024_logo.svg')" alt="Logo" class="navbar-logo"></b-navbar-brand></router-link>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -10,7 +10,7 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
-          <div v-if="isUserPrestataire & $store.getters.getLang==='fr'">
+          <div v-if="isUserPrestataire">
             <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
@@ -18,30 +18,16 @@
               <br>
               <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
               <br>
-              <router-link to="/prestataire/commandes" class = "dp"> commandes</router-link>
+              <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
               <br>
-              <router-link to="/prestataire/avis" class = "dp"> avis</router-link>
-            </b-nav-item-dropdown>
-          </div>
-
-          <div v-if="isUserPrestataire & $store.getters.getLang==='en'">
-            <b-nav-item-dropdown name="prestataire" right text="Performer" @mouseover="underline = 'Provider'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Performer' }">
-              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
-              <br>
-              <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
-              <br>
-              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
-              <br>
-              <router-link to="/prestataire/commandes" class = "dp"> commandes</router-link>
-              <br>
-              <router-link to="/prestataire/avis" class = "dp"> avis</router-link>
+              <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
             <br>
-            <router-link to="/admin/userWaiting" class = "dp">inscriptions</router-link>
+            <router-link to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
             <br>
             <router-link to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             <br>
@@ -56,22 +42,24 @@
 
         </b-navbar-nav>
       </b-collapse>
+      <div style="display: contents;">
       <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login-18.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/commande" class = "dp">{{translate("mesCommandes")}}</router-link></b-dropdown-item>
-        <b-dropdown-item ><router-link to="/userinfo" class = "dp">mes informations</router-link></b-dropdown-item>
-        <b-dropdown-item ><router-link to="/schedule" class = "dp">mon emploi du temps</router-link></b-dropdown-item>
+        <b-dropdown-item ><router-link to="/userinfo" class = "dp">{{translate("mesInformations")}}</router-link></b-dropdown-item>
+        <b-dropdown-item ><router-link to="/schedule" class = "dp">{{translate("monEmploiDuTemps")}}</router-link></b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
-      <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
-      <img v-if="isUserPrestataire" src="../assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
+      <img v-if="isUserAdmin" src="@/assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
+      <img v-if="isUserPrestataire" src="@/assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
+
 
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>
       </select>
-
+      </div>
     </b-navbar>
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>
     <div id="loginModal" title="Login" class="centered hide-footer">
@@ -142,7 +130,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body, .b-navbar {
@@ -152,18 +140,6 @@ body, .b-navbar {
 .navbar-svg-login {
   height: 40px;
   margin-left: auto;
-}
-
-.desktop-navbar {
-  display: none;
-  border-radius: 2vh;
-  padding: 1vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 997;
-  background-color: rgba(236, 240, 241, 0.9); /* Utilise la couleur #ECF0F1 avec une opacité de 0.9 */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Fond diffus de blanc moins transparent */
 }
 
 

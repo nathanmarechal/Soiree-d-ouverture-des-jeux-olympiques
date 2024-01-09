@@ -1,10 +1,21 @@
 <template>
-  <div class="add-user-form" >
+  <div class="add-user-form" style="margin-bottom: 10%">
     <div v-if="isPrestataire === null">
-      <h2>Qui êtes vous ?</h2>
+      <h2>{{translate("addUserBtn_0")}}</h2>
       <div class="form d-flex">
-        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">Prestataire</button>
-        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">Client</button>
+        <button type="button" class="bouton btn-success card-choose" @click="setPrestataire">
+          <img src="@/assets/Logos/building.svg" alt="Prestataire" class="button-image">
+          {{translate("addUserBtn_1")}}
+          <div style="font-size: 50%">{{translate("addUserBtn_2")}}</div>
+        </button>
+
+        <button type="button" class="bouton btn-danger card-choose" @click="setClient">
+          <img src="@/assets/Logos/person.svg" alt="Client" class="button-image">
+          {{translate("addUserBtn_3")}}
+          <div style="font-size: 50%">{{translate("addUserBtn_4")}}</div>
+        </button>
+
+
       </div>
     </div>
 
@@ -56,8 +67,9 @@
 
     <form v-if="isPrestataire === true" @submit.prevent="submitFormPrestataire" class="d-flex gap-3 flex-column justify-content-center" style="width: 40vh">
 
+      <h3>{{translate("addUser_0")}} </h3>
       <div class="form-group">
-        <label for="first-name">prestataire : {{translate("addUser_1")}} </label>
+        <label for="first-name">{{translate("addUser_1")}} </label>
         <input type="text" id="first-name" v-model="utilisateur.firstName" required>
       </div>
 
@@ -323,6 +335,25 @@ export default {
 
 <style scoped>
 
+.bouton {
+  width: 40vh;
+  height: 50vh;
+  font-size: 2em;
+  border: none;
+  margin-right: 5%;
+  border-radius: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+.bouton:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+
+.bouton:last-child {
+  margin-right: 0;
+}
+
 .form {
   display: flex;
   flex-direction: row;
@@ -408,5 +439,17 @@ button[type="submit"]:hover {
   background-color: #e60000;
 }
 
+.button-image {
+  margin-bottom: 10px; /* espace entre l'image et le texte */
+  height: 10vh; /* ou toute autre taille appropriée */
+  width: auto;
+}
+.card-choose {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* pour centrer horizontalement */
+  justify-content: center; /* pour centrer verticalement */
+  text-align: center; /* pour centrer le texte si nécessaire */
+}
 
 </style>

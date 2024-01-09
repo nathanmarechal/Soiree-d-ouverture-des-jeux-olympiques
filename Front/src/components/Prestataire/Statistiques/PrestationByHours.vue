@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Nombre de prestations par heure</h4>
+      <h4>{{translate("statistiquesPrestataire_1")}}</h4>
     <div ref="chart"></div>
   </div>
 </template>
@@ -9,6 +9,8 @@
 import * as d3 from 'd3';
 import { mapGetters } from 'vuex';
 import { getNbPrestationHeure } from '@/services/statistiques.service';
+import {translate} from "../../../lang/translationService";
+
 
 export default {
   name: 'BarChart',
@@ -25,6 +27,7 @@ export default {
     this.drawChart();
   },
   methods: {
+    translate,
     async loadPrestationData() {
       try {
         console.log('test')

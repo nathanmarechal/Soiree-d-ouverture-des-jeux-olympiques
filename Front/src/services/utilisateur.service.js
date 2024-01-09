@@ -24,6 +24,18 @@ async function getAllUsersAttenteFromAPI() {
     return answer
 }
 
+async function getAllStandAttente(){
+    let answer = await getAllStandAttenteFromAPI()
+    //console.log("getAllUsers: ", answer)
+    return answer
+}
+
+async function getAllStandAttenteFromAPI() {
+    let answer = await getRequest('/users/get-stands-attente', 'GETALLSTANDATTENTE')
+    return answer
+
+}
+
 async function acceptUser(id,session_id) {
     let answer = await acceptUserFromAPI(id,session_id)
     return answer
@@ -56,6 +68,7 @@ async function createUserWithStand(body) {
 }
 
 async function createUserWithStandFromAPI(body) {
+    console.log("createUserWithStandFromAPI: ", JSON.stringify(body))
     let answer = await postRequest('/users/registerPrestataire', body, 'CREATEUSERWITHSTAND')
     console.log("createUserFromAPI: ", answer)
     return answer
@@ -96,13 +109,13 @@ async function updateSolde(body) {
     return patchRequest('/users/updateSolde', body, 'UPDATESOLDE')
 }
 
-async function updateUserCourantWoPassword(body) {
-    let answer = await updateUserCourantWoPasswordFromAPI(body)
+async function updateUserCourantWoPassword( session_id,id, body) {
+    let answer = await updateUserCourantWoPasswordFromAPI(session_id,id, body)
     return answer
 }
 
-async function updateUserCourantWoPasswordFromAPI(body) {
-    return patchRequest('/users/updateUserCourantWoPassword', body, 'UPDATEUSERCOURANTWOPASSWORD')
+async function updateUserCourantWoPasswordFromAPI(session_id, id, body) {
+    return patchRequest('/users/updateUserCourantWoPassword?session_id='+session_id + '&id_user='+id, body, 'UPDATEUSERCOURANTWOPASSWORD')
 }
 
 async function getUserFromSessionIdFromAPI(session_id) {
@@ -125,5 +138,6 @@ export {
     createUserWithStand,
     getAllUsersAttente,
     acceptUser,
-    refuseUser
+    refuseUser,
+    getAllStandAttente
 }

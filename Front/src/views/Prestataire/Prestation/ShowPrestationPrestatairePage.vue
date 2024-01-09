@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <router-link to="/prestataire/prestations/add" class="btn btn-success">Ajouter une prestation</router-link>
+    <router-link to="/prestataire/prestations/add" class="btn btn-success">{{translate("showPrestationPrestatairePage_1")}}</router-link>
     <show-prestation-prestataire></show-prestation-prestataire>
   </div>
 </template>
@@ -8,7 +8,9 @@
 <script>
 
 import showPrestationPrestataire from '@/components/Prestataire/Prestation/ShowPrestationPrestataire.vue'
+import {translate} from "../../../lang/translationService";
 export default {
+  methods: {translate},
   components: {
     showPrestationPrestataire
   }

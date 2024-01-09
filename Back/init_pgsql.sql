@@ -295,29 +295,17 @@ INSERT INTO droits(libelle) VALUES
 ('update_users'),
 ('delete_users'),
 
-('see_waiting_users'),
-('accept_waiting_users'),
-('refuse_waiting_users'),
-
-('create_stands'),
-('update_stands'),
-('delete_stands'),
-
+('see_zones'),
 ('create_zones'),
 ('update_zones'),
 ('delete_zones'),
 
-('create_areas'),
-('update_areas'),
-('delete_areas'),
-
+('see_roles'),
 ('create_roles'),
 ('update_roles'),
 ('delete_roles'),
 
-('create_prestations'),
-('update_prestations'),
-('delete_prestations')
+('give_credit')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -340,16 +328,10 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (11,1),
 (12,1),
 (13,1),
-(14,1),
-(15,1),
-(16,1),
-(17,1),
-(18,1),
-(19,1),
-(20,1),
-(21,1),
-(22,1)
-;
+(4,2),
+(5,2),
+(6,2),
+(9,2);
 
 INSERT INTO type_zone (libelle) VALUES
 ('Fixe'),
@@ -626,13 +608,13 @@ INSERT INTO emplacement (coordonnes,surface,id_zone) VALUES
 ;
 
 INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES
-('mma-besancon','mma-besancon.png','Venez découvrir le club de mma  de besançon','2023-12-03',2500,1),
+('fédération MMA','mma-besancon.png','Venez découvrir la fédération française de MMA','2023-12-03',2500,1),
 ('kebab du centre','kebab-semih.png','Les délices de la turquie pour vos papilles','2023-11-04',3000,2),
 ('le clown','arthur-clown.png','Venez assiter au spectacle mélangeant humour et informatique ','2023-11-04',3000,80),
 ('Boulangerie de Paris','boulangerie-paris.png','Venez les gouter spécialitées les plus populaires de France','2024-01-04',3000,247),
 ('SNCF','train-promotion.png','Découvrez Paris et la France par le train','2023-11-04',3000,144),
 ('Judo Folie','judo-combat.png','Initation au judo','2023-11-04',3000,84),
-('Les Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
+('Saucisses de Paris','saucisses-de-paris.png','Venez vous régaler avec des saucisses des quatre coins de la France','2023-11-04',3000,101),
 ('Les Glace de la Seine','vendeur-glace-de-seine.png','La qualitée des glaces italiennes à Paris !','2023-11-04',3000,107),
 ('Tour Eiffel','tour-eiffel.png','Des frissons assurés!','2023-11-04',10000,33),
 ('Traiteur asiatique','traiteur-asiatique.png','les goûts de l''Asie dans votre vie!','2024-01-10',10000,83),
@@ -738,3 +720,76 @@ INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
 ;
 
 INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
+
+select * from text_accueil;
+
+select * from avis_stand_utilisateur where id_stand = 1;
+
+select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_stand, avis_stand_utilisateur.id_user as id_user, avis_stand_utilisateur.id_avis_stand_utilisateur as id_avis_stand_utilisateur
+    from avis_stand_utilisateur
+    JOIN utilisateur u on u.id_user = avis_stand_utilisateur.id_user
+    where avis_stand_utilisateur.id_stand = 1;
+
+select * from utilisateur;
+SELECT * FROM stand;
+
+SELECT * FROM utilisateurAttente;
+
+SELECT * FROM standAttente;
+
+SELECT * FROM ligne_commande;
+
+
+
+
+
+SELECT concat(u.prenom, ' ',u.nom) as name, SUM(lc.prix * lc.quantite) AS best_client
+FROM ligne_commande lc
+JOIN prestation p ON lc.id_prestation = p.id_prestation
+JOIN utilisateur u on lc.id_user = u.id_user
+WHERE p.id_stand = 2
+GROUP BY  u.prenom, u.nom
+ORDER BY best_client DESC
+LIMIT 1;
+
+SELECT tp.libelle, SUM(lc.prix * lc.quantite) AS sales_revenue_by_type
+FROM ligne_commande lc
+JOIN prestation p ON lc.id_prestation = p.id_prestation
+JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
+WHERE p.id_stand = 2
+GROUP BY tp.libelle;
+
+
+
+SELECT COUNT(note) as nb_rating FROM avis_stand_utilisateur WHERE id_stand = 2;
+
+SELECT COUNT(*) as nb_prestataires FROM stand;
+SELECT COUNT(*) as nb_prestations_available FROM prestation where is_available=true;
+SELECT COUNT(*) as nb_users FROM utilisateur;
+
+SELECT AVG(total_commande) AS average_purchase_global
+FROM (
+    SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
+    FROM commande c
+    JOIN ligne_commande lc ON c.id_commande = lc.id_commande
+    JOIN prestation p ON lc.id_prestation = p.id_prestation
+    GROUP BY c.id_commande, c.id_user
+) AS sous_requete;
+
+
+SELECT
+    s.nom_stand,
+    s.image_stand,
+    SUM(lc.prix * lc.quantite) AS sales_revenue
+FROM
+    ligne_commande lc
+JOIN
+    prestation p ON lc.id_prestation = p.id_prestation
+JOIN
+    stand s ON p.id_stand = s.id_stand
+GROUP BY
+    s.id_stand
+ORDER BY
+    sales_revenue DESC
+LIMIT 1;
+    

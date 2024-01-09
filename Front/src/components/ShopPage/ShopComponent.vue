@@ -9,15 +9,18 @@
             <p class="card-text">Prix : {{ prestation.prix }} €</p>
             <p class="card-text">Type : {{ getTypePrestationLabel(prestation.id_type_prestation) }}</p>
             <p class="card-text">Stand : {{ getStandName(prestation.id_stand) }}</p>
-
-            <div class="buy d-flex justify-content-between align-items-center">
-              <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
-
+          </div>
+          <div class="card-footer">
+            <div class="buy d-flex justify-content-center align-items-center">
+              <div>
+                <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
+              </div>
               <modal-reservation
                   @close="selectedPrestationId = null"
                   :isReservationSelected="selectedPrestationId === prestation.id_prestation"
                   :prestation="prestation"
-                   v-if="selectedPrestationId === prestation.id_prestation">
+                  v-if="selectedPrestationId === prestation.id_prestation"
+                  class="invisible-modal">
               </modal-reservation>
             </div>
           </div>
@@ -91,9 +94,9 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/stand/' + imageName);
+        return require('./../../../../Back/assets/prestation/' + imageName)
       } catch {
-        return require('@/assets/' + "arthur-clown.png");
+        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }
     },
     getStandName(idStand) {
@@ -124,6 +127,29 @@ export default {
 
 
 <style scoped>
+.buy {
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  overflow: auto;
+  border-radius: 3vh;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1vh;
+  height: 280px; /* Ajoutez une hauteur fixe selon vos besoins */
+}
+
 .display-card {
   display: flex;
   flex-wrap: wrap;
@@ -139,13 +165,6 @@ export default {
   width: 100%;
   object-fit: cover;
   border-radius: 3vh;
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1vh;
 }
 
 .card-text {

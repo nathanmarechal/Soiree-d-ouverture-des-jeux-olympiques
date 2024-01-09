@@ -3,26 +3,26 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1>Waiting users</h1>
+          <h1>{{translate("waitingUsers_1")}}</h1>
           <div class="alert alert-success" role="alert" v-if="users.length === 0">
-            No waiting users
+            {{translate("waitingUsers_2")}}
           </div>
           <div v-else>
           <table class="table table-hover">
             <thead>
             <tr>
-              <th scope="col">id</th>
-              <th scope="col">email</th>
-              <th scope="col">password</th>
-              <th scope="col">nom</th>
-              <th scope="col">prenom</th>
-              <th scope="col">code_postal</th>
-              <th scope="col">adresse</th>
-              <th scope="col">commune</th>
-              <th scope="col">id_role</th>
-              <th scope="col">id_stand</th>
-              <th scope="col">droits</th>
-              <th scope="col">action</th>
+              <th scope="col">{{translate("waitingUsers_3")}}</th>
+              <th scope="col">{{translate("waitingUsers_4")}}</th>
+              <th scope="col">{{translate("waitingUsers_5")}}</th>
+              <th scope="col">{{translate("waitingUsers_6")}}</th>
+              <th scope="col">{{translate("waitingUsers_7")}}</th>
+              <th scope="col">{{translate("waitingUsers_8")}}</th>
+              <th scope="col">{{translate("waitingUsers_9")}}</th>
+              <th scope="col">{{translate("waitingUsers_10")}}</th>
+              <th scope="col">{{translate("waitingUsers_11")}}</th>
+              <th scope="col">{{translate("waitingUsers_12")}}</th>
+              <th scope="col">{{translate("waitingUsers_13")}}</th>
+              <th scope="col">{{translate("waitingUsers_14")}}</th>
             </tr>
             </thead>
             <tbody>
@@ -38,9 +38,11 @@
               <td>{{user.id_role}}</td>
               <td>{{user.id_stand}}</td>
               <td>{{user.droits}}</td>
+
               <td>
-                <button class="btn btn-success" @click="acceptUser(user.id_user)">Accept</button>
-                <button class="btn btn-danger" @click="refuseUser(user.id_user)">Refuse</button>
+                <span>{{user}}</span>
+                <button class="btn btn-success" @click="acceptUser(user.id_user)">{{translate("waitingUsers_15")}}</button>
+                <button class="btn btn-danger" @click="refuseUser(user.id_user)">{{translate("waitingUsers_16")}}</button>
               </td>
             </tr>
             </tbody>
@@ -55,24 +57,28 @@
 
 <script>
   import {mapActions, mapGetters} from "vuex";
+  import {translate} from "../lang/translationService";
 
   export default {
     data() {
       return {
         users: [],
+        stands: [],
+
       }
     },
     computed: {
-      ...mapGetters(['getAllUsersAttente']),
+      ...mapGetters(['getAllUsersAttente', 'getAllStandAttente']),
     },
     methods: {
-      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore']),
+      translate,
+      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
           this.users = this.getAllUsersAttente;
         } catch (error) {
-          console.error('Erreur lors du chargement des données :', error);
+          console.error('Errideur lors du chargement des données :', error);
         }
       },
       async acceptUser(id_user) {

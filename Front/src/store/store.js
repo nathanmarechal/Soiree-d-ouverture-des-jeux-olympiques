@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
 
 import {
@@ -7,7 +6,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser
+    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -45,6 +44,7 @@ import {getTypeEmplacementLogistique} from "@/services/typeEmplacementLogistique
 import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLogistique,deleteEmplacementLogistique} from "@/services/emplacementLogistique.service";
 import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
 import {deleteAvis, getAvisByIdStand, uploadAvis} from "@/services/avis.service";
+import Vue from "vue";
 
 Vue.use(Vuex)
 
@@ -89,7 +89,6 @@ export default new Vuex.Store({
             "id_role": null,
             "id_stand" : null,
         },
-        usersAttente: [],
         creneau: [],
         users : [],
         roles : [],
@@ -114,6 +113,8 @@ export default new Vuex.Store({
         logisticsRequirements: [],
 
         selectedTypePrestation: [],
+        usersAttente: [],
+        standAttente: [],
         selectedStands: [],
         provenance : null,
 
@@ -161,6 +162,8 @@ export default new Vuex.Store({
         getAllPrestation: state => state.prestations,
         getAllTypeEmplacementLogistique: state => state.typeEmplacementLogistique,
         getAllEmplacementLogistique: state => state.emplacementLogistique,
+
+        getAllStandAttente: state => state.standAttente,
 
         getIdUserCourant: state => state.userCourant.id_user,
         getAllCreneau: state => state.creneau,
@@ -221,10 +224,21 @@ export default new Vuex.Store({
             state.usersAttente = usersAttente;
         },
 
-        ACCEPT_USER(state, id) {
+        SET_STAND_ATTENTE(state, usersAttente) {
+            state.usersAttente = usersAttente;
+        },
+
+        ACCEPT_USER_DELETE(state, id) {
             let user = state.usersAttente.find(user => user.id_user === id);
+            let id_stand = state.standAttente.find(stand => stand.id_stand === user.id_user)
             state.usersAttente = state.usersAttente.filter(user => user.id_user !== id);
-            state.users.push(user);
+            state.standAttente = state.standAttente.filter(stand => stand.id_stand !== id_stand);
+        },
+
+        ACCEPT_USER_ADD(state, data) {
+            console.log("data: ", data)
+            state.users.push(data.userAccept)
+            state.stands.push(data.standAccept)
         },
 
         REFUSE_USER(state, id) {
@@ -634,7 +648,8 @@ export default new Vuex.Store({
 
         async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                await updateUserCourantWoPassword( {id_user, nom, prenom, email, adresse, code_postal, commune});
+                let session_id = this.state.userCourant.session_id
+                await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);
@@ -756,7 +771,7 @@ export default new Vuex.Store({
 
         async getUsersStore({ commit }) {
             try {
-                const result = await getAllUsers();
+                const result = await getAllUsers(this.state.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
@@ -778,10 +793,23 @@ export default new Vuex.Store({
             }
         },
 
+        async getAllStandAttenteStore({ commit }) {
+            try {
+                const standAttente = await getAllStandAttente();
+                commit('SET_STANDS_ATTENTE', standAttente);
+                console.log("standAttente: ", standAttente)
+                console.log("standAttente: ", this.state.usersAttente)
+            } catch (error) {
+                console.error('Error fetching creneau:', error);
+            }
+        },
+
         async acceptUserStore({ commit }, id) {
             try {
-                await acceptUser(id,this.state.userCourant.session_id);
-                commit('ACCEPT_USER', id);
+                let result = await acceptUser(id,this.state.userCourant.session_id);
+                console.log("result: ", result)
+                commit('ACCEPT_USER_DELETE', id);
+                commit('ACCEPT_USER_ADD', result);
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
             }
@@ -806,12 +834,12 @@ export default new Vuex.Store({
             }
         },
 
-        async createUsersWithStandStore({ commit }, user, stand) {
+        async createUsersWithStandStore({commit}, user) {
             try {
                 const body = {
                     ...user,
-                    ...stand
                 };
+                console.log("IL EST ICI LE TEST" + JSON.stringify(body))
                 console.log("body: ", body)
                 await createUserWithStand(body);
                 commit('CREATE_USER', body);

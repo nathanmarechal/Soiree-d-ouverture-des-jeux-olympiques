@@ -1,25 +1,25 @@
 <template>
   <div>
-    <h4>Liste de mes prestations</h4>
+    <h4>{{translate("showPrestationPrestataire_1")}}</h4>
     <div class="display-card">
       <div class="card-main" v-for="prestation in prestations" :key="prestation.id_prestation">
         <div class="card" style="border-radius: 3vh">
           <img :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top">
           <div class="card-body">
             <h5 class="card-text">{{ prestation.libelle }}</h5>
-            <p class="card-text">Prix : {{ prestation.prix }} €</p>
+            <p class="card-text">{{translate("showPrestationPrestataire_2")}}{{ prestation.prix }} €</p>
             <p class="card-text">{{ getTypePrestationLibelle(prestation.id_type_prestation) }}</p>
-            <p class="card-text">Disponible:
-              <span v-if="prestation.is_available">Oui</span>
-              <span v-else>Non</span>
+            <p class="card-text">{{translate("showPrestationPrestataire_3")}}
+              <span v-if="prestation.is_available">{{translate("showPrestationPrestataire_4")}}</span>
+              <span v-else>{{translate("showPrestationPrestataire_5")}}</span>
             </p>
             <button type="button" class="btn btn-warning" @click="toggleAvailability(prestation.id_prestation,!prestation.is_available); prestation.is_available=!prestation.is_available">
-              {{ prestation.is_available ? 'Rendre indisponible' : 'Rendre disponible' }}
+              {{ prestation.is_available ? translate("showPrestationPrestataire_6") : translate("showPrestationPrestataire_7") }}
             </button>
 
             <div class="d-flex justify-content-center">
-              <router-link :to="{ name: 'PrestatairePrestationEditView', params: { selected_prestation: prestation } }" class="btn btn-primary">Modifier</router-link>
-              <button class="btn btn-danger" @click="prestationDelete(prestation.id_prestation)">Supprimer</button>
+              <router-link :to="{ name: 'PrestatairePrestationEditView', params: { selected_prestation: prestation } }" class="btn btn-primary">{{translate("showPrestationPrestataire_8")}}</router-link>
+              <button class="btn btn-danger" @click="prestationDelete(prestation.id_prestation)">{{translate("showPrestationPrestataire_9")}}</button>
             </div>
           </div>
         </div>
@@ -30,6 +30,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import {translate} from "../../../lang/translationService";
 
 export default {
   data () {
@@ -45,6 +46,7 @@ export default {
     this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
+    translate,
     ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {

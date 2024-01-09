@@ -62,4 +62,20 @@ router.get('/prestataire/best-client/:id',userMiddleware.checkPrestataireExists 
 
 router.get('/prestataire/sales-revenue-by-type/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getSalesRevnueByTypeByStand)
 
+router.get('/prestataire/average-rating/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAvgRatingByStand)
+
+router.get('/prestataire/count-rating/:id' ,userMiddleware.checkPrestataireExists, statistiquesController.getCountRatingByStand)
+
+router.get('/nb-stands',statistiquesController.getNbStands)
+
+router.get('/nb-prestations-available' ,statistiquesController.getNbPrestationsAvailable)
+
+router.get('/nb-users',statistiquesController.getNbUsers)
+
+router.get('/average-purchase' ,statistiquesController.getAveragePurchase)
+
+router.get('/top-seller-stand' ,statistiquesController.getTopSellerStand)
+
+router.get('/top-avis-stand' ,statistiquesController.getTopAvisStand)
+
 module.exports = router;
