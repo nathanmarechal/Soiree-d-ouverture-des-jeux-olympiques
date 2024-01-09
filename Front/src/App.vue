@@ -4,7 +4,9 @@
       <PageNavbar/>
     </div>
     <router-link to="/"></router-link>
-    <router-view></router-view>
+    <div class="content">
+      <router-view></router-view>
+    </div>
     <PageFooter />
   </div>
 </template>
@@ -24,10 +26,17 @@ export default {
 
 <style scoped>
 #app {
-  font-family: Arial, Helvetica, sans-serif;
-  position: relative;
-  height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }
 
 .nav{
