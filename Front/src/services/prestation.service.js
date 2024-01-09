@@ -80,7 +80,6 @@ async function deletePrestationFromApi(id){
 export {
     getAllPrestations,
     getAllTypePrestations,
-    getPrestationByUserId,
     uploadImagePresation,
     createPrestation,
     updateIsAvailablePrestation,
