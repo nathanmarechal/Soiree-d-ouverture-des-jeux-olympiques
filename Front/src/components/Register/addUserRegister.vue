@@ -3,8 +3,19 @@
     <div v-if="isPrestataire === null">
       <h2>{{translate("addUserBtn_0")}}</h2>
       <div class="form d-flex">
-        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">{{translate("addUserBtn_1")}}<div style="font-size: 50%">{{translate("addUserBtn_2")}}</div></button>
-        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">{{translate("addUserBtn_3")}}<div style="font-size: 50%">{{translate("addUserBtn_4")}}</div></button>
+        <button type="button" class="bouton btn-success card-choose" @click="setPrestataire">
+          <img src="@/assets/Logos/building.svg" alt="Prestataire" class="button-image">
+          {{translate("addUserBtn_1")}}
+          <div style="font-size: 50%">{{translate("addUserBtn_2")}}</div>
+        </button>
+
+        <button type="button" class="bouton btn-danger card-choose" @click="setClient">
+          <img src="@/assets/Logos/person.svg" alt="Client" class="button-image">
+          {{translate("addUserBtn_3")}}
+          <div style="font-size: 50%">{{translate("addUserBtn_4")}}</div>
+        </button>
+
+
       </div>
     </div>
 
@@ -428,5 +439,17 @@ button[type="submit"]:hover {
   background-color: #e60000;
 }
 
+.button-image {
+  margin-bottom: 10px; /* espace entre l'image et le texte */
+  height: 10vh; /* ou toute autre taille appropriée */
+  width: auto;
+}
+.card-choose {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* pour centrer horizontalement */
+  justify-content: center; /* pour centrer verticalement */
+  text-align: center; /* pour centrer le texte si nécessaire */
+}
 
 </style>
