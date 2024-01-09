@@ -76,9 +76,7 @@
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
-          await this.getAllStandAttenteStore();
           this.users = this.getAllUsersAttente;
-          this.stands = this.getAllStandAttente;
         } catch (error) {
           console.error('Errideur lors du chargement des données :', error);
         }
