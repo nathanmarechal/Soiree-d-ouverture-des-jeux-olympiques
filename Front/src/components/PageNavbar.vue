@@ -41,7 +41,7 @@
           <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
             <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
             <br>
-            <router-link to="/admin/userWaiting" class = "dp">inscriptions</router-link>
+            <router-link to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
             <br>
             <router-link to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             <br>
@@ -60,12 +60,13 @@
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
         <b-dropdown-item><router-link to="/panier" class = "dp">{{translate("monPanier")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/commande" class = "dp">{{translate("mesCommandes")}}</router-link></b-dropdown-item>
-        <b-dropdown-item ><router-link to="/userinfo" class = "dp">mes informations</router-link></b-dropdown-item>
-        <b-dropdown-item ><router-link to="/schedule" class = "dp">mon emploi du temps</router-link></b-dropdown-item>
+        <b-dropdown-item ><router-link to="/userinfo" class = "dp">{{translate("mesInformations")}}</router-link></b-dropdown-item>
+        <b-dropdown-item ><router-link to="/schedule" class = "dp">{{translate("monEmploiDuTemps")}}</router-link></b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
       <img v-if="isUserAdmin" src="../assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
       <img v-if="isUserPrestataire" src="../assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
+
 
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
