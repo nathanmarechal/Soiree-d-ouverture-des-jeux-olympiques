@@ -55,6 +55,7 @@
       <img v-if="isUserPrestataire" src="@/assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
 
 
+
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>

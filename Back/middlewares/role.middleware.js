@@ -1,9 +1,11 @@
 const pool = require("../database/db");
 
 exports.checkRoleExists = async (req, res, next) => {
-    const id = req.body.id_role;
+    const id = req.body.id_role || req.params.idRole || req.query.id_role;
     try {
         const conn = await pool.connect();
+
+        console.log("id_role : " + id)
 
         const checkResult = await conn.query("SELECT * FROM role WHERE id_role = $1", [id]);
         if (checkResult.rows.length === 0) {

@@ -12,9 +12,9 @@ exports.validateUserInput = (req, res, next) => {
 
 
 exports.checkUserExists = async (req, res, next) => {
-    let id = req.params.id || req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user);
+    let id = req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user) || req.params.id;
     if (!id) {
-        return res.status(400).send("ID requis.");
+        return res.status(400).send("ID user requis.");
     }
     try {
         const conn = await pool.connect();
@@ -25,6 +25,7 @@ exports.checkUserExists = async (req, res, next) => {
             return res.status(404).send("Utilisateur non trouvé");
         }
         conn.release();
+        console.log("USER EXISTE")
         next();
     } catch (error) {
         res.status(500).send("Internal Server Error");
@@ -32,7 +33,7 @@ exports.checkUserExists = async (req, res, next) => {
 }
 
 exports.checkUserAttenteExists = async (req, res, next) => {
-    const id = req.params.id;
+    const id = req.query.id_user;
     try {
         const conn = await pool.connect();
 
@@ -92,39 +93,27 @@ exports.checkSessionExists = async (req, res, next) => {
 }
 
 exports.checkEmailExists = async (req, res, next) => {
-    let id = req.params.id || req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user);
+    let id = req.query.id_user || req.body.id_user || (req.body.user && req.body.user.id_user);
     let email = req.body.email || (req.body.user && req.body.user.email);
-
-    console.log("id = " + id);
-    console.log("email = " + email);
-
     if (!email) {
         return res.status(400).send("Email est requis.");
     }
-
     try {
         const conn = await pool.connect();
-
         let query = id ? "SELECT * FROM utilisateur WHERE email = $1 AND id_user != $2" : "SELECT * FROM utilisateur WHERE email = $1";
         let queryParams = id ? [email, id] : [email];
-
         let checkResult = await conn.query(query, queryParams);
-
         if (checkResult.rows.length > 0) {
             conn.release();
             return res.status(409).send("Email déjà utilisé");
         }
-
         query = id ? "SELECT * FROM utilisateurAttente WHERE email = $1 AND id_user != $2" : "SELECT * FROM utilisateurAttente WHERE email = $1";
         queryParams = id ? [email, id] : [email];
-
         checkResult = await conn.query(query, queryParams);
-
         if (checkResult.rows.length > 0) {
             conn.release();
             return res.status(409).send("Email déjà utilisé");
         }
-
         conn.release();
         next();
     } catch (error) {

@@ -37,10 +37,6 @@ const addEmplacementLogistique = (body, callback) => {
 async function addEmplacementLogistiqueAsync(body) {
     try {
         const conn = await pool.connect();
-
-        // Assuming body contains libelle, coordonnes, and id_type_emplacement_logistique
-        console.log("Adding new emplacement logistique with body: ", body);
-
         const queryText = `
             INSERT INTO emplacement_logistique(libelle, coordonnes, id_type_emplacement_logistique,unite)
             VALUES($1, $2, $3, $4)
@@ -95,9 +91,6 @@ const updateEmplacementLogistique = (id, body, callback) => {
 async function updateEmplacementLogistiqueAsync(id, body) {
     try {
         const conn = await pool.connect();
-        console.log("id in updateEmplacementLogistiqueAsync: ", id);
-        console.log("body in updateEmplacementLogistiqueAsync: ", body);
-
         const queryText = `
             UPDATE emplacement_logistique
             SET 

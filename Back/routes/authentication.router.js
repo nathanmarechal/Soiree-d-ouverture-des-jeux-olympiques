@@ -25,7 +25,7 @@ const loginController = require('../controllers/authentication.controller');
  *     responses:
  *       '200':
  *         description: Authentification réussie
- *       '404':
+ *       '401':
  *         description: Échec de l'authentification
  *       '500':
  *         description: Internal error

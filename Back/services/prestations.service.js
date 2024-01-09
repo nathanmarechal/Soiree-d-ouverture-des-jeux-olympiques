@@ -26,38 +26,6 @@ const getAllPrestations = (callback) => {
         });
 }
 
-async function getPrestationByUserIdAsync(id) {
-    try {
-        const conn = await pool.connect();
-        console.log("id depuis getPrestationasync" + id)
-        const result = await conn.query("SELECT p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.is_available, tp.libelle as \"type_prestation_libelle\", COUNT(lc.id_prestation) as \"nb_ventes\", s.id_stand, s.nom_stand\n" +
-            "FROM utilisateur u\n" +
-            "JOIN stand s on u.id_stand = s.id_stand\n" +
-            "JOIN prestation p on s.id_stand = p.id_stand\n" +
-            "JOIN type_prestation tp on tp.id_type_prestation = p.id_type_prestation\n" +
-            "LEFT JOIN ligne_commande lc on p.id_prestation = lc.id_prestation\n" +
-            "WHERE u.id_user = $1\n" +
-            "GROUP BY p.id_prestation, p.libelle, p.prix, p.image, p.id_type_prestation, p.id_stand, tp.libelle , s.id_stand, s.nom_stand\n" +
-            "ORDER BY p.id_type_prestation;", [id]);
-        conn.release();
-        return result.rows;
-    } catch (error) {
-        console.error('Error in getPrestationByUserIdAsync:', error);
-        throw error;
-    }
-}
-
-const getPrestationByUserId = (id, callback) => {
-    getPrestationByUserIdAsync(id)
-        .then(res => {
-            callback(null, res);
-        })
-        .catch(error => {
-            console.log(error);
-            callback(error, null);
-        });
-}
-
 // Fonction pour nettoyer le nom de fichier et éviter les injections de chemin de fichier
 function sanitizeFileName(fileName) {
     // Utiliser path.basename pour s'assurer que seul le nom de fichier est pris, sans chemin
@@ -150,8 +118,8 @@ async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_s
 }
 
 
-const updateIsAvailablePrestation = (id, body, callback) => {
-    updateIsAvailablePrestationAsync(id, body)
+const updateIsAvailablePrestation = (id, callback) => {
+    updateIsAvailablePrestationAsync(id)
         .then(res => {
             callback(null, res);
         })
@@ -161,12 +129,11 @@ const updateIsAvailablePrestation = (id, body, callback) => {
         });
 }
 
-async function updateIsAvailablePrestationAsync(id, body) {
+async function updateIsAvailablePrestationAsync(id) {
     try {
         const conn = await pool.connect();
         console.log("id in updateIsAvailablePrestationAsync: ", id)
-        console.log("body in updateIsAvailablePrestationAsync: ", body)
-        const result = await conn.query("UPDATE prestation SET is_available = NOT is_available WHERE id_prestation = $1;\n;", [id]);
+        const result = await conn.query("UPDATE prestation SET is_available = NOT is_available WHERE id_prestation = $1 RETURNING is_available;", [id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -190,31 +157,9 @@ const updatePrestation = (id, body, callback) => {
 async function updatePrestationAsync(id, body) {
     try {
         const conn = await pool.connect();
-        console.log('id in updatePrestationAsync: ', id);
-        console.log('body in updatePrestationAsync: ', body);
-
-        const updateQuery = `
-            UPDATE prestation 
-            SET 
-                libelle = $1, 
-                prix = $2, 
-                date = $3, 
-                image = $4, 
-                id_type_prestation = $5, 
-                id_stand = $6, 
-                is_available = $7
-            WHERE id_prestation = $8;
-        `;
-        const values = [
-            body.libelle,
-            body.prix,
-            body.date,
-            body.image,
-            body.id_type_prestation,
-            body.id_stand,
-            body.is_available,
-            id
-        ];
+        const updateQuery = `UPDATE prestation SET libelle = $1, prix = $2, date = $3, image = $4,
+            id_type_prestation = $5, id_stand = $6, is_available = $7 WHERE id_prestation = $8 RETURNING *;`;
+        const values = [body.libelle, body.prix, body.date, body.image, body.id_type_prestation, body.id_stand, body.is_available, id];
         const result = await conn.query(updateQuery, values);
         conn.release();
         return result.rows;
@@ -237,8 +182,6 @@ const deletePrestation = (id, callback) => {
 async function deletePrestationAsync(id) {
     try {
         const conn = await pool.connect();
-        console.log('id in deletePrestationAsync: ', id);
-
         const deleteQuery = `
             DELETE FROM prestation
             WHERE id_prestation = $1;
@@ -256,7 +199,6 @@ async function deletePrestationAsync(id) {
 
 module.exports = {
     getAllPrestations: getAllPrestations,
-    getPrestationByUserId: getPrestationByUserId,
     uploadPicturePresatation:uploadPicturePresatation,
     addPrestation:addPrestation,
     updateIsAvailablePrestation:updateIsAvailablePrestation,

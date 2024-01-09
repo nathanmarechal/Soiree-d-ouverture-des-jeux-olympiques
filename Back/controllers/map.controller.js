@@ -13,7 +13,7 @@ exports.getAreas = (req, res) => {
 }
 
 exports.updateArea = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_emplacement;
     const body = req.body;
     console.log("updateArea: ", id, body)
     mapService.updateArea(id, body, (error, data) => {
@@ -39,14 +39,14 @@ exports.createArea = (req, res) => {
 }
 
 exports.deleteArea = (req, res) => {
-    const id = req.params.id;
-    console.log("deleteArea: ", id)
-    mapService.deleteArea(id, (error, data) => {
+    const id_emplacement = req.query.id_emplacement;
+    console.log("deleteArea: ", id_emplacement)
+    mapService.deleteArea(id_emplacement, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
         else {
-            return res.status(200).send(data);
+            return res.status(200).send("Successfully deleted area");
         }
     })
 }
@@ -75,7 +75,7 @@ exports.getZoneById = (req, res) => {
 }
 
 exports.updateZone = (req, res) => {
-    const id = req.query.id;
+    const id = req.query.id_zone;
     const body = req.body;
     console.log("updateZone: ", id, body)
     mapService.updateZone(id, body, (error, data) => {
@@ -101,14 +101,14 @@ exports.createZone = (req, res) => {
 }
 
 exports.deleteZone = (req, res) => {
-    const id = req.query.id;
+    const id = req.query.id_zone;
     console.log("deleteZone: ", id)
     mapService.deleteZone(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
         else {
-            return res.status(200).send(data);
+            return res.status(200).send("Zone deleted successfully");
         }
     })
 }

@@ -13,7 +13,7 @@ exports.uploadingPictureHomePageDescription = (req, res) => {
 };
 
 exports.updateHomePageDescription = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_text_accueil
     const body = req.body;
     homePageService.updateHomePageDescription(id, body, (error, data) => {
         if (error) {

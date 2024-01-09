@@ -45,7 +45,7 @@ async function updateHomePageDescriptionAsync(id, body) {
     try {
         const conn = await pool.connect();
         console.log(body.description)
-        const result = await conn.query("UPDATE text_accueil SET description = $1 WHERE id_text_accueil = $2;", [body.description, id]);
+        const result = await conn.query("UPDATE text_accueil SET description = $1 WHERE id_text_accueil = $2 RETURNING *;", [body.description, id]);
         conn.release();
         return result.rows;
     } catch (error) {

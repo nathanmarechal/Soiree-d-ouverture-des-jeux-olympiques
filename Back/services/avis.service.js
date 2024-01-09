@@ -83,7 +83,7 @@ const addAvis = (avis, callback) => {
 async function addAvisAsync(avis) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("insert into avis_stand_utilisateur (id_stand, id_user, note, commentaire) values ($1, $2, $3, $4);", [avis.id_stand, avis.id_user, avis.note, avis.commentaire]);
+        const result = await conn.query("insert into avis_stand_utilisateur (id_stand, id_user, note, commentaire) values ($1, $2, $3, $4) RETURNING *;", [avis.id_stand, avis.id_user, avis.note, avis.commentaire]);
         conn.release();
         return result.rows;
     } catch (error) {
