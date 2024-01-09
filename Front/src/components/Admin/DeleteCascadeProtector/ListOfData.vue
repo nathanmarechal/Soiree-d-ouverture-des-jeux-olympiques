@@ -60,6 +60,7 @@ export default {
   },
   methods: {
     handleNeedProtection(data) {
+      console.log("data: " + JSON.stringify(data, null, 2));
       this.$emit('NeedProtection', data);
     },
     handleGoBack(data) {

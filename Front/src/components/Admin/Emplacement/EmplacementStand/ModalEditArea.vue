@@ -42,6 +42,7 @@
 
 import {mapActions, mapGetters} from "vuex";
 import {translate} from "../../../../lang/translationService";
+import router from "@/router";
 
 export default {
   props: {
@@ -59,6 +60,9 @@ export default {
       default: false,
     },
   },
+  async mounted() {
+    await this.loadData();
+  },
   data() {
     return {
       zone: null,
@@ -66,11 +70,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllZone']),
+    ...mapGetters(['getAllZone','getAllStand']),
   },
   methods: {
     translate,
-    ...mapActions(['updateAreasStore', 'deleteAreasStore']),
+    ...mapActions(['updateAreasStore', 'deleteAreasStore', 'getStandsStore']),
+    async loadData() {
+      await this.getStandsStore();
+    },
     initializeArea() {
       this.zone = this.selectedArea.id_zone;
     },
@@ -98,7 +105,31 @@ export default {
     async areaDelete() {
       if (this.selectedArea) {
         try {
-          await this.deleteAreasStore(this.selectedArea.id_emplacement);
+          console.log("selected area: " + JSON.stringify(this.selectedArea, null, 2));
+          console.log("has stand", this.getAllStand.find(stand => stand.id_emplacement === this.selectedArea.id_emplacement) != null);
+          if (this.selectedArea.id_stand != null) {
+            //Protector
+            window.alert('ALERTEALERTeALERT')
+            console.log(this.$route.name)
+            if (this.$route.name !== 'AdminDeleteCascadeProtector') {
+              router.push(
+                {
+                  name: 'AdminDeleteCascadeProtector',
+                  params: {
+                    dataType: 'area',
+                    dataProp: this.selectedArea,
+                  },
+                }
+              );
+              return;
+            }else{
+              console.log("will emit")
+              this.$emit('NeedProtection', {dataProp: this.selectedArea, dataType: 'area'});
+              console.log("dataProp: ", this.selectedArea, "dataType: ", 'area');
+            }
+          }else{
+            await this.deleteAreasStore(this.selectedArea.id_emplacement);
+          }
           //alert('Zone deleted successfully');
           this.$emit('close'); // close the modal
         } catch (error) {

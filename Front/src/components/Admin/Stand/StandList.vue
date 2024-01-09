@@ -93,7 +93,7 @@
     },
     methods: {
       translate,
-      ...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'deletePrestationStore']),
+      ...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'updatePrestationStore']),
       async loadData() {
         if (this.getAllStand.length === 0) {
           await this.getStandsStore();
@@ -114,9 +114,9 @@
             //delete all prestations that ahve the same id_stand
             const prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === stand.id_stand);
             console.log(prestations);
-            prestations.forEach(prestation => {
-              this.deletePrestationStore(prestation.id_prestation);
-            });
+            //prestations.forEach(prestation => {
+            //update the status of prestations BUT DOES NOT EXIST RIGHT NOW
+            //});
           } catch (error) {
             console.error('Erreur lors de la suppression du stand :', error);
           }
@@ -136,7 +136,7 @@
               window.alert("Vous pouvez dorénavant supprimer cet emplacement");
               if (this.isLevel2 === false){
                 console.log("isGoingBack to map page");
-                router.push({name: 'AdminMapPage'});
+                router.push({name: 'AdminMapView'});
                 return;
               }
             }
