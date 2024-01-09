@@ -94,9 +94,9 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        return require('@/assets/stand/' + imageName);
+        return require('./../../../../Back/assets/prestation/' + imageName)
       } catch {
-        return require('@/assets/' + "arthur-clown.png");
+        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
       }
     },
     getStandName(idStand) {

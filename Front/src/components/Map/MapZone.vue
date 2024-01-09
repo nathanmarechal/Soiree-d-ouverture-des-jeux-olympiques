@@ -3,7 +3,7 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <ModalStand @close="toggleModal" :modalActive="modalActive" :stand="selectedStand">
+    <ModalStand v-if="modalActive" @close="toggleModal" :modalActive="modalActive" :stand="selectedStand">
 
     </ModalStand>
   </div>
@@ -212,6 +212,7 @@ methods: {
         this.selectedStand = null; // Réinitialiser lors de la fermeture de la modal
       }
     },
+
     findAverageCenter(polygons) {
       let totalLat = 0, totalLng = 0, totalCount = 0;
 
