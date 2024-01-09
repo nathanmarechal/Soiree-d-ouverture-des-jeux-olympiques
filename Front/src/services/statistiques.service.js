@@ -161,5 +161,5 @@ export {
     getNbUsers,
     getAveragePurchase,
     getTopSellerStand,
-    getTopAvisStand
+    getTopAvisStand,
 }

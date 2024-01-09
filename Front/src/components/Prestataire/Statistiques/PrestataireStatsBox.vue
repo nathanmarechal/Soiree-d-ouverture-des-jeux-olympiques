@@ -26,6 +26,14 @@
       <p v-else>Chargement...</p>
     </div>
 
+    <div class="stat-box">
+      <h3>{{translate("statistiquesPrestataire_8")}}</h3>
+      <div class="stat-content" v-if="countRating">
+        <p class="stat-value"> <span>{{ countRating.nb_rating }}</span></p>
+      </div>
+      <p v-else>Chargement...</p>
+    </div>
+
 
 
   </div>
@@ -37,7 +45,7 @@ import {
   getBestClientByStand,
   getAveragePurchaseByStand,
   getAvgRatingByStand, // Import the new function
-   // Import the new function
+  getCountRatingByStand // Import the new function
 } from '@/services/statistiques.service';import {translate} from "../../../lang/translationService";
 
 export default {
@@ -64,6 +72,7 @@ export default {
         [this.bestClient] = await getBestClientByStand(standId);
         [this.averagePurchase] = await getAveragePurchaseByStand(standId);
         [this.avgRating] = await getAvgRatingByStand(standId);
+        [this.countRating] = await getCountRatingByStand(standId);
       } catch (error) {
         console.error('Erreur lors du chargement des statistiques :', error);
       }
@@ -74,6 +83,7 @@ export default {
 
 <style scoped>
 .stats-container {
+  margin: 2vh;
   display: flex;
   justify-content: space-around;
   gap: 2vh;
