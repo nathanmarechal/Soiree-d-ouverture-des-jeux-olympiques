@@ -26,6 +26,7 @@
   "stands": "Stands",
   "commandes": "Orders",
   "avis": "Reviews",
+  "messagerie": "Messages",
 
   "desc_1": "26th of july 2024 : An unforgettable experience along the docks of Paris",
   "desc_2": "A journey through history and culture : ",
@@ -188,8 +189,8 @@
   "editEmplacement_3": "Area",
   "editEmplacement_4": "Free",
   "editEmplacement_5": "Close",
-  "editEmplacement_6": "Edit emplacement",
-  "editEmplacement_7": "Confirm emplacement modification",
+  "editEmplacement_6": "Edit areas",
+  "editEmplacement_7": "Confirm area modification",
   "editEmplacement_8": "Delete",
 
   "editEmplacementLogistique_1": "Edit logistical placement",
@@ -243,7 +244,7 @@
   "standList_description": "Description",
   "standList_dateAchat": "Date of purchase",
   "standList_prix": "Price",
-  "standList_emplacement": "Emplacement",
+  "standList_emplacement": "Area",
 
   "Edit": "Edit",
   "Delete": "Delete",
@@ -251,7 +252,7 @@
   "addStand_1": "Stand name",
   "addStand_2": "Stand picture",
   "addStand_3": "Stand description: ",
-  "addStand_4": "Book an emplacement",
+  "addStand_4": "Book an area",
   "addStand_5": "Add a stand",
   "addStand_6": "Cancel",
 

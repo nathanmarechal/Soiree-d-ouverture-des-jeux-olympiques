@@ -26,6 +26,7 @@
   "stands": "Stands",
   "commandes": "Commandes",
   "avis": "Avis",
+  "messagerie": "Messagerie",
 
   "desc_1": "26 juillet 2024 : Une expérience inoubliable le long des quais de Paris",
   "desc_2": "Un Voyage à Travers l'Histoire et la Culture : ",
@@ -341,5 +342,4 @@
   "adminStatistics_averagePurchase": "Panier moyen stand",
   "adminStatistics_topSellerStand": "Meilleur stand en chiffre d'affaires",
   "adminStatistics_topAvisStand": "Meilleur stand en avis"
-
 }
