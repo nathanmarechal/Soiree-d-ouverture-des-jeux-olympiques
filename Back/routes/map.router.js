@@ -13,7 +13,7 @@ router.delete("/delete-area/:id", mapController.deleteArea);
 
 router.post("/create-area", mapController.createArea);
 
-router.get("/get-all-zones",rightMiddleware.checkRight, mapController.getZones);
+router.get("/get-all-zones", mapController.getZones);
 
 router.get("/get-zone",rightMiddleware.checkRight, mapController.getZoneById); // avec query
 

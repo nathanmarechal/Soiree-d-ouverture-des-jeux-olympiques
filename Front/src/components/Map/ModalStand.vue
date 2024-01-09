@@ -4,13 +4,14 @@
       <div v-if="modalActive" class="overlay">
         <transition name="modal-animation-inner">
           <div class="modal-inner" >
-            <button class="close-btn" @click="$emit('close')">×</button>
-            <img :src="imagePath" alt="Image du stand" />
+            <img :src="getImageSrc(stand.image_stand)" alt="Image du stand" />
             <div class="modal-content">
               <h1>{{ stand.nom_stand }}</h1>
               <div v-html="stand.description_stand"></div>
             </div>
             <button type="button" class="btn btn-success" @click="goToStore(stand)">Prestations</button>
+            <button type="button" class="btn btn-danger" @click="$emit('close')">Fermer</button>
+
           </div>
         </transition>
       </div>
@@ -25,16 +26,6 @@ export default {
     return {
       selectedStand: [],
     };
-  },
-  computed: {
-    imagePath() {
-      try {
-        return require('./../../../../../Back/assets/stand/profile/' + this.stand.image_stand);
-      } catch {
-        // Return a default image if the specific image is not found
-        return require('@/assets/arthur-clown.png'); // Adjust the path to your default image
-      }
-    }
   },
 
   methods: {
@@ -52,6 +43,14 @@ export default {
       this.$store.commit('SET_SELECTED_STANDS', []);
       this.$store.commit('SET_SELECTED_STANDS', newSelection);
 
+    },
+    getImageSrc(imageName) {
+      try {
+        console.log(imageName)
+        return require('./../../../../Back/assets/stand/profile/' + imageName)
+      } catch {
+        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+      }
     },
 
     goToStore(stand){
