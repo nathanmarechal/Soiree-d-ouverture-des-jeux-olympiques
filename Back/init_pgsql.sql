@@ -306,15 +306,18 @@ INSERT INTO droits(libelle) VALUES
 ('create_users'),
 ('update_users'),
 ('delete_users'),
-('give_credit'),
+
 ('see_zones'),
 ('create_zones'),
 ('update_zones'),
 ('delete_zones'),
+
 ('see_roles'),
 ('create_roles'),
 ('update_roles'),
-('delete_roles')
+('delete_roles'),
+
+('give_credit')
 ;
 
 SELECT * FROM droits;
@@ -337,6 +340,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (10,1),
 (11,1),
 (12,1),
+(13,1),
 (4,2),
 (5,2),
 (6,2),
