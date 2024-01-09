@@ -1010,3 +1010,7 @@ JOIN prestation p ON lc.id_prestation = p.id_prestation
 JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
 WHERE p.id_stand = 2
 GROUP BY tp.libelle;
+
+
+SELECT AVG(note) as avg_rating FROM avis_stand_utilisateur WHERE id_stand = 2;  
+SELECT COUNT(note) as nb_rating FROM avis_stand_utilisateur WHERE id_stand = 2;

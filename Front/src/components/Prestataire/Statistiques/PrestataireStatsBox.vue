@@ -1,5 +1,6 @@
 <template>
   <div class="stats-container">
+
     <div class="stat-box">
       <h3>{{translate("statistiquesPrestataire_3")}}</h3>
       <div class="stat-content" v-if="bestClient">
@@ -8,6 +9,7 @@
       </div>
       <p v-else>Chargement...</p>
     </div>
+
     <div class="stat-box">
       <h3>{{translate("statistiquesPrestataire_4")}}</h3>
       <div class="stat-content" v-if="averagePurchase">
@@ -15,20 +17,43 @@
       </div>
       <p v-else>Chargement...</p>
     </div>
+
+    <div class="stat-box">
+      <h3>{{translate("statistiquesPrestataire_7")}}</h3>
+      <div class="stat-content" v-if="avgRating">
+        <p class="stat-value"><span>{{ avgRating.avg_rating}}</span></p>
+      </div>
+      <p v-else>Chargement...</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>{{translate("statistiquesPrestataire_8")}}</h3>
+      <div class="stat-content" v-if="countRating">
+        <p class="stat-value"><span>{{ countRating.nb_rating }}</span></p>
+      </div>
+      <p v-else>Chargement...</p>
+    </div>
+
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { getBestClientByStand, getAveragePurchaseByStand } from '@/services/statistiques.service';
-import {translate} from "../../../lang/translationService";
+import {
+  getBestClientByStand,
+  getAveragePurchaseByStand,
+  getAvgRatingByStand, // Import the new function
+  getCountRatingByStand // Import the new function
+} from '@/services/statistiques.service';import {translate} from "../../../lang/translationService";
 
 export default {
   name: 'StandStatistics',
   data() {
     return {
       bestClient: null,
-      averagePurchase: null
+      averagePurchase: null,
+      avgRating: null,
+      countRating: null
     };
   },
   computed: {
@@ -44,6 +69,8 @@ export default {
         const standId = this.getCurrentUser.id_stand;
         [this.bestClient] = await getBestClientByStand(standId);
         [this.averagePurchase] = await getAveragePurchaseByStand(standId);
+        [this.avgRating] = await getAvgRatingByStand(standId);
+        [this.countRating] = await getCountRatingByStand(standId);
       } catch (error) {
         console.error('Erreur lors du chargement des statistiques :', error);
       }
@@ -56,7 +83,7 @@ export default {
 .stats-container {
   display: flex;
   justify-content: space-around;
-  padding: 20px;
+  gap: 2vh;
   background: #f9f9f9;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);

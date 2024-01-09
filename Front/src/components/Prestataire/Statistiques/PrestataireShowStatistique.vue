@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column gap-3">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row justify-content-center">
       <prestation-by-hours></prestation-by-hours>
       <prestation-sales-revnue-by-type></prestation-sales-revnue-by-type>
     </div>

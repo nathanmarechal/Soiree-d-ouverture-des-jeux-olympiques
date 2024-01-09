@@ -189,11 +189,63 @@ const getSalesRevnueByTypeByStand = (id, callback) => {
         });
 }
 
+async function getAvgRatingByStandAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `SELECT ROUND(AVG(note),2) as avg_rating FROM avis_stand_utilisateur WHERE id_stand = $1;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAvgRatingByStandAsync:', error);
+        throw error;
+    }
+}
+
+const getAvgRatingByStand = (id, callback) => {
+    getAvgRatingByStandAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+async function getCountRatingByStandAsync(idStand) {
+    try {
+        const conn = await pool.connect();
+        const query = `SELECT COUNT(note) as nb_rating FROM avis_stand_utilisateur WHERE id_stand = $1;`;
+
+        const result = await conn.query(query, [idStand]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getAvgRatingByStandAsync:', error);
+        throw error;
+    }
+}
+
+const getCountRatingByStand = (id, callback) => {
+    getCountRatingByStandAsync(id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 module.exports = {
     getBestSellerPrestation : getBestSellerPrestation,
     getNewStandByMonth : getNewStandByMonth,
     getNbPrestationHeure:getNbPrestationHeure,
     getAveragePurchaseByStand:getAveragePurchaseByStand,
     getBestClientByStand:getBestClientByStand,
-    getSalesRevnueByTypeByStand:getSalesRevnueByTypeByStand
+    getSalesRevnueByTypeByStand:getSalesRevnueByTypeByStand,
+    getAvgRatingByStand:getAvgRatingByStand,
+    getCountRatingByStand:getCountRatingByStand
 }

@@ -59,6 +59,24 @@ async function getSalesRevnueByTypeByStand(id) {
     console.log("getSalesRevnueByTypeByStand: ", answer)
     return answer
 }
+async function getAvgRatingByStandFromAPI(id) {
+    return getRequest('/statistiques/prestataire/average-rating/' + id, 'BESTSALESREVENUE')
+}
+
+async function getAvgRatingByStand(id) {
+    let answer = await getAvgRatingByStandFromAPI(id)
+    console.log("getSalesRevnueByTypeByStand: ", answer)
+    return answer
+}
+async function getCountRatingByStandFromAPI(id) {
+    return getRequest('/statistiques/prestataire/count-rating/' + id, 'BESTSALESREVENUE')
+}
+
+async function getCountRatingByStand(id) {
+    let answer = await getCountRatingByStandFromAPI(id)
+    console.log("getSalesRevnueByTypeByStand: ", answer)
+    return answer
+}
 
 export {
     getBestSellerPrestation,
@@ -66,5 +84,7 @@ export {
     getNbPrestationHeure,
     getAveragePurchaseByStand,
     getBestClientByStand,
-    getSalesRevnueByTypeByStand
+    getSalesRevnueByTypeByStand,
+    getAvgRatingByStand,
+    getCountRatingByStand
 }

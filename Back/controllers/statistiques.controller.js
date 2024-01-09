@@ -69,3 +69,25 @@ exports.getSalesRevnueByTypeByStand = (req, res) => {
         }
     })
 }
+exports.getAvgRatingByStand = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getAvgRatingByStand(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+exports.getCountRatingByStand = (req, res) => {
+    const id = req.params.id;
+    statistiquesService.getCountRatingByStand(id, (error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
