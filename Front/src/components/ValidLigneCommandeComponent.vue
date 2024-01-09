@@ -1,18 +1,20 @@
 <template>
   <div>
-    <h1>La commande a été récupérée</h1>
+    <h1>{{translate("validLigneCommande_1")}}</h1>
   </div>
 </template>
 
 
 <script>
 import {mapActions} from "vuex";
+import {translate} from "../lang/translationService";
 
 export default {
   name: 'ValidLigneCommandeComponent',
   props: ["id_presta", "id_creneau", "id_user", "id_commande" ],
 
   methods:{
+    translate,
     ...mapActions(['setEtatLigneCommandeExterieurStore']),
     async setData(){
       console.log({

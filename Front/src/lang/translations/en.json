@@ -16,6 +16,7 @@
   "statistiques": "Statistics",
   "monStand": "My stand",
   "prestations": "Services",
+  "mesStatistiques": "My statistics",
   "monPanier": "My cart",
   "mesCommandes":"My commands",
   "mesInformations": "My informations",
@@ -23,7 +24,8 @@
   "seDeconnecter": "Log off",
   "inscriptions": "Registrations",
   "stands": "Stands",
-
+  "commandes": "Orders",
+  "avis": "Reviews",
 
   "desc_1": "26th of july 2024 : An unforgettable experience along the docks of Paris",
   "desc_2": "A journey through history and culture : ",
@@ -108,7 +110,7 @@
 
   "filterByTypeC_title": "List of service types",
   "filterByStandC_title": "Filter by Stand",
-  "shopC_1": "Book",
+  "shopC_1": "Add to cart",
 
   "login_title": "Log in",
   "login_0": "Email : ",
@@ -124,6 +126,7 @@
   "userList_4": "Role",
   "userList_5": "Edit",
   "userList_6": "Delete",
+  "userList_7": "Actions",
 
   "filterMap_1": "Filter",
   "filterMap_2": "Company",
@@ -154,7 +157,13 @@
   "bestSellerStats_1": "Services that brought in the most money",
   "newStandStats_1": "Evolution of the number of stands",
 
+  "addUserBtn_0":"Who are you ?",
+  "addUserBtn_1": "Service Provider",
+  "addUserBtn_2": "Your request will be submitted to an administrator",
+  "addUserBtn_3": "Client",
+  "addUserBtn_4": "Registration is immediate",
 
+  "addUser_0":"service provider : ",
   "addUser_1":"first name",
   "addUser_2":"last name",
   "addUser_3":"e-mail",
@@ -167,6 +176,7 @@
   "addUser_10":"Select a role",
   "addUser_11":"Add a user",
   "addUser_12":"Go back",
+  "addUser_13":"Choose an area",
 
   "addEmplacement_1": "Add a zone",
   "addEmplacement_2": "Area",
@@ -253,5 +263,74 @@
   "statistiquesPrestataire_5": "Name",
   "statistiquesPrestataire_6": "Money spent",
   "statistiquesPrestataire_7": "Average stand rating",
-  "statistiquesPrestataire_8": "Number of reviews"
+  "statistiquesPrestataire_8": "Number of reviews",
+
+  "infoPersos_1": "Personal Information",
+  "infoPersos_2": "Last Name: ",
+  "infoPersos_3": "First Name: ",
+  "infoPersos_4": "Balance: ",
+  "infoPersos_5": "Email: ",
+  "infoPersos_6": "Address: ",
+  "infoPersos_7": "Postal Code: ",
+  "infoPersos_8": "City: ",
+  "infoPersos_9": "Edit",
+
+  "emploiDuTemps_1": "There is nothing scheduled at the moment",
+  "emploiDuTemps_2": "Schedule",
+
+  "waitingUsers_1": "Waiting users",
+  "waitingUsers_2": "No waiting users",
+  "waitingUsers_3": "id",
+  "waitingUsers_4": "email",
+  "waitingUsers_5": "password",
+  "waitingUsers_6": "last name",
+  "waitingUsers_7": "first name",
+  "waitingUsers_8": "postal code",
+  "waitingUsers_9": "address",
+  "waitingUsers_10": "city",
+  "waitingUsers_11": "role id",
+  "waitingUsers_12": "stand id",
+  "waitingUsers_13": "rights",
+  "waitingUsers_14": "action",
+  "waitingUsers_15": "Accept",
+  "waitingUsers_16": "Reject",
+
+  "commandePrestataire_1": "There is nothing scheduled at the moment",
+  "commandePrestataire_2": "My Sales : ",
+  "commandePrestataire_3": "quantity : ",
+  "commandePrestataire_4": "price : ",
+  "commandePrestataire_5": "total price : ",
+
+  "showPrestationPrestatairePage_1": "Add a service",
+  "showPrestationPrestataire_1" : "List of My Services",
+  "showPrestationPrestataire_2" : "Price : ",
+  "showPrestationPrestataire_3" : "Available : ",
+  "showPrestationPrestataire_4" : "Yes",
+  "showPrestationPrestataire_5" : "No",
+  "showPrestationPrestataire_6" : "Make Unavailable",
+  "showPrestationPrestataire_7" : "Make Available",
+  "showPrestationPrestataire_8" : "Modify",
+  "showPrestationPrestataire_9" : "Delete",
+
+  "editPrestationPrestataire_1": "Label : ",
+  "editPrestationPrestataire_2": "Price : ",
+  "editPrestationPrestataire_2.5": "Price",
+  "editPrestationPrestataire_3": "Service Type : ",
+  "editPrestationPrestataire_4": "Is Available : ",
+  "editPrestationPrestataire_5": "Change Image",
+  "editPrestationPrestataire_6": "Crop Image",
+  "editPrestationPrestataire_7": "Update",
+  "editPrestationPrestataire_8": "Exit",
+
+  "addPrestationPrestataire_1": "Label: ",
+  "addPrestationPrestataire_2": "Price: ",
+  "addPrestationPrestataire_3": "Price",
+  "addPrestationPrestataire_4": "Service Type: ",
+  "addPrestationPrestataire_5": "is available: ",
+  "addPrestationPrestataire_6": "Image: ",
+  "addPrestationPrestataire_7": "Crop Image",
+  "addPrestationPrestataire_8": "Add",
+  "addPrestationPrestataire_9": "Exit",
+
+  "validLigneCommande_1": "The order has been retrieved"
 }

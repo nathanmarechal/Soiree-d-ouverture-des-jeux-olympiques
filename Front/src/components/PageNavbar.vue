@@ -10,7 +10,7 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
-          <div v-if="isUserPrestataire & $store.getters.getLang==='fr'">
+          <div v-if="isUserPrestataire">
             <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
               <br>
@@ -18,23 +18,9 @@
               <br>
               <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
               <br>
-              <router-link to="/prestataire/commandes" class = "dp"> commandes</router-link>
+              <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
               <br>
-              <router-link to="/prestataire/avis" class = "dp"> avis</router-link>
-            </b-nav-item-dropdown>
-          </div>
-
-          <div v-if="isUserPrestataire & $store.getters.getLang==='en'">
-            <b-nav-item-dropdown name="prestataire" right text="Performer" @mouseover="underline = 'Provider'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Performer' }">
-              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
-              <br>
-              <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
-              <br>
-              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
-              <br>
-              <router-link to="/prestataire/commandes" class = "dp"> commandes</router-link>
-              <br>
-              <router-link to="/prestataire/avis" class = "dp"> avis</router-link>
+              <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
             </b-nav-item-dropdown>
           </div>
 

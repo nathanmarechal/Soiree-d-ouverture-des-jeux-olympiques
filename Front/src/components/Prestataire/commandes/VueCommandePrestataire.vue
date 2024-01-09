@@ -1,16 +1,16 @@
 <template>
   <div class="alert alert-success" role="alert" v-if="commandes.length === 0" style="margin-top: 25%; margin-bottom: 25%">
-    Il n'y a rien de prévu pour le moment
+    {{translate("commandePrestataire_1")}}
   </div>
   <div v-else class="schedule-container" style="margin-top: 10%; margin-bottom: 10%">
-    <h2>Mes ventes :</h2>
+    <h2>{{translate("commandePrestataire_2")}}</h2>
     <div v-for="ligne in commandes" :key="ligne.id_creneau" class="schedule-item">
       <p class="time">{{ ligne.heure_creneau }}</p>
       <div class="event-details">
         <p class="event-title">{{ligne.libelle }}</p>
-        <p class="stand-name">quantité : {{ ligne.quantite }}</p>
-        <p class="stand-name">prix : {{ ligne.prix }}</p>
-        <p class="stand-name">prix total : {{ ligne.prix_total }}</p>
+        <p class="stand-name">{{translate("commandePrestataire_3")}} {{ ligne.quantite }}</p>
+        <p class="stand-name">{{translate("commandePrestataire_4")}} {{ ligne.prix }}</p>
+        <p class="stand-name">{{translate("commandePrestataire_5")}} {{ ligne.prix_total }}</p>
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@
 <script>
 
 import {mapActions, mapGetters} from "vuex";
+import {translate} from "../../../lang/translationService";
 
 export default {
   data() {
@@ -38,6 +39,7 @@ export default {
     }
   },
   methods: {
+    translate,
     ...mapActions(['getCommandesPrestataireStore']),
     async loadData(){
       await this.getCommandesPrestataireStore(this.getCurrentUser.id_user);

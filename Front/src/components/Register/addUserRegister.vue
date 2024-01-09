@@ -1,10 +1,10 @@
 <template>
   <div class="add-user-form" style="margin-bottom: 10%">
     <div v-if="isPrestataire === null">
-      <h2>Qui êtes vous ?</h2>
+      <h2>{{translate("addUserBtn_0")}}</h2>
       <div class="form d-flex">
-        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">Prestataire<div style="font-size: 50%">votre demande sera soumise à un administrateur</div></button>
-        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">Client<div style="font-size: 50%">L'inscription est immédiate</div></button>
+        <button type="button" class="bouton btn-success flex-grow-1" @click="setPrestataire">{{translate("addUserBtn_1")}}<div style="font-size: 50%">{{translate("addUserBtn_2")}}</div></button>
+        <button type="button" class="bouton btn-danger flex-grow-1" @click="setClient">{{translate("addUserBtn_3")}}<div style="font-size: 50%">{{translate("addUserBtn_4")}}</div></button>
       </div>
     </div>
 
@@ -56,8 +56,9 @@
 
     <form v-if="isPrestataire === true" @submit.prevent="submitFormPrestataire" class="d-flex gap-3 flex-column justify-content-center" style="width: 40vh">
 
+      <h3>{{translate("addUser_0")}} </h3>
       <div class="form-group">
-        <label for="first-name">prestataire : {{translate("addUser_1")}} </label>
+        <label for="first-name">{{translate("addUser_1")}} </label>
         <input type="text" id="first-name" v-model="utilisateur.firstName" required>
       </div>
 

@@ -2,21 +2,21 @@
 
   <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center" style="width: 50vh;">
     <div class="form-group">
-      <label for="libelle">Libellé:</label>
+      <label for="libelle">{{ translate("editPrestationPrestataire_1") }}</label>
       <input v-model="prestation.libelle" id="libelle" placeholder="Libellé" class="form-control">
     </div>
     <div class="form-group">
-      <label for="prix">Prix:</label>
-      <input v-model="prestation.prix" id="prix" type="number" step="0.01" placeholder="Prix" class="form-control">
+      <label for="prix">{{ translate("editPrestationPrestataire_2") }}</label>
+      <input v-model="prestation.prix" id="prix" type="number" step="0.01" :placeholder="translate('editPrestationPrestataire_2.5')" class="form-control">
     </div>
     <div class="form-group">
-      <label for="type_prestation">Type de prestation:</label>
+      <label for="type_prestation">{{translate("editPrestationPrestataire_3")}}</label>
       <select v-model="prestation.id_type_prestation" id="type_prestation" class="form-control">
         <option v-for="type in getAllTypePrestation" :key="type.id_type_prestation" :value="type.id_type_prestation">{{ type.libelle }}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="isAvailable">Est disponible:</label>
+      <label for="isAvailable">{{translate("editPrestationPrestataire_4")}}</label>
       <input v-model="prestation.is_available" id="isAvailable" type="checkbox" class="form-check-input">
     </div>
     <img v-if="!isImageInputUpload" :src="getImageSrc(prestation.image)" alt="Image de la prestation" class="card-img-top" style="border-radius: 10%;">
@@ -26,19 +26,19 @@
     </div>
 
     <!-- Bouton pour l'upload d'image -->
-    <button type="button" @click="toggleImageUpload" class="btn btn-primary">Changer l'image</button>
+    <button type="button" @click="toggleImageUpload" class="btn btn-primary">{{translate("editPrestationPrestataire_5")}}</button>
 
 
     <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
 
       <img ref="image" class="cropper-image" style=""/>
       <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*">
-      <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+      <button type="button" @click="cropImage" class="btn btn-primary">{{translate("editPrestationPrestataire_6")}}</button>
     </div>
 
 
-    <button type="submit" class="btn btn-success">Mettre à jour</button>
-    <router-link to="/prestataire/prestations" class="btn btn-danger">Quitter</router-link>
+    <button type="submit" class="btn btn-success">{{translate("editPrestationPrestataire_7")}}</button>
+    <router-link to="/prestataire/prestations" class="btn btn-danger">{{translate("editPrestationPrestataire_8")}}</router-link>
   </form>
 </template>
 
@@ -46,6 +46,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import Cropper from "cropperjs";
 import {uploadImagePresation} from "@/services/prestation.service";
+import {translate} from "../../../lang/translationService";
 export default {
   props: ["selected_prestation"],
   data() {
@@ -78,6 +79,7 @@ export default {
   },
 
   methods: {
+    translate,
     ...mapActions(['updatePrestationStore','getTypePrestations']), // Ajoutez votre action Vuex pour la mise à jour
 
     async loadData() {

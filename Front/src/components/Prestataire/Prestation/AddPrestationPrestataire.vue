@@ -1,26 +1,26 @@
 <template>
   <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center" style="width: 50vh;">
     <div class="form-group">
-      <label for="libelle">Libellé:</label>
+      <label for="libelle">{{ translate("addPrestationPrestataire_1") }}</label>
       <input v-model="prestation.libelle" id="libelle" placeholder="Libellé" class="form-control">
     </div>
     <div class="form-group">
-      <label for="prix">Prix:</label>
-      <input v-model="prestation.prix" id="prix" type="number" step="0.01" placeholder="Prix" class="form-control">
+      <label for="prix">{{ translate("addPrestationPrestataire_2") }}</label>
+      <input v-model="prestation.prix" id="prix" type="number" step="0.01" :placeholder="translate('addPrestationPrestataire_3')" class="form-control">
     </div>
 
     <div class="form-group">
-      <label for="type_prestation">Type de prestation:</label>
+      <label for="type_prestation">{{ translate("addPrestationPrestataire_4") }}</label>
       <select v-model="prestation.id_type_prestation" id="type_prestation" class="form-control">
         <option v-for="type in getAllTypePrestation" :key="type.id_type_prestation" :value="type.id_type_prestation">{{ type.libelle }}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="isAvailable">est disponible:</label>
+      <label for="isAvailable">{{ translate("addPrestationPrestataire_5") }}</label>
       <input v-model="prestation.is_available" id="isAvailable" type="checkbox" class="form-check-input">
     </div>
     <div class="form">
-      <label for="image_stand">Image :</label><br>
+      <label for="image_stand">{{ translate("addPrestationPrestataire_6") }}</label><br>
       <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
     </div>
     <div>
@@ -28,10 +28,10 @@
     </div>
     <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
       <img ref="image" class="cropper-image" style=""/>
-      <button  type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+      <button  type="button" @click="cropImage" class="btn btn-primary">{{ translate("addPrestationPrestataire_7") }}</button>
     </div>
     <button type="submit" class="btn btn-success">Ajouter</button>
-    <router-link to="/prestataire/prestations" class="btn btn-danger">Quitter</router-link>
+    <router-link to="/prestataire/prestations" class="btn btn-danger">{{ translate("addPrestationPrestataire_8") }}</router-link>
   </form>
 </template>
 
@@ -41,6 +41,7 @@ import {getAllTypePrestations, uploadImagePresation} from '@/services/prestation
 import { mapActions, mapGetters } from 'vuex';
 //import { createPrestation } from "@/services/prestation.service";
 import Cropper from 'cropperjs';
+import {translate} from "../../../lang/translationService";
 
 
 export default {
@@ -74,6 +75,7 @@ export default {
     }
   },
   methods: {
+    translate,
     ...mapActions(['getTypePrestationsStore','createPrestationStore']),
     async loadData(){
         if (this.getAllTypePrestation.length === 0)

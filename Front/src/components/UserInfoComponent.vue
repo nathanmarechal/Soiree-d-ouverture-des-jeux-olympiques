@@ -1,17 +1,17 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-3">Informations personnelles</h1>
+    <h1 class="mb-3">{{translate("infoPersos_1")}}</h1>
     <div class="card">
       <ul class="list-group list-group-flush">
-        <li  class="list-group-item">Nom : {{ getCurrentUser.nom }} </li>
-        <li  class="list-group-item">Prénom : {{ getCurrentUser.prenom }} </li>
-        <li class="list-group-item">solde : {{ getCurrentUser.solde }} </li>
-        <li  class="list-group-item">Email : {{ getCurrentUser.email }} </li>
-        <li  class="list-group-item">Adresse : {{ getCurrentUser.adresse }}</li>
-        <li  class="list-group-item">Code postal : {{ getCurrentUser.code_postal }}</li>
-        <li  class="list-group-item">Ville : {{ getCurrentUser.commune }}</li>
+        <li  class="list-group-item">{{translate("infoPersos_2")}}{{ getCurrentUser.nom }} </li>
+        <li  class="list-group-item">{{translate("infoPersos_3")}}{{ getCurrentUser.prenom }} </li>
+        <li class="list-group-item">{{translate("infoPersos_4")}}{{ getCurrentUser.solde }} </li>
+        <li  class="list-group-item">{{translate("infoPersos_5")}}{{ getCurrentUser.email }} </li>
+        <li  class="list-group-item">{{translate("infoPersos_6")}}{{ getCurrentUser.adresse }}</li>
+        <li  class="list-group-item">{{translate("infoPersos_7")}}{{ getCurrentUser.code_postal }}</li>
+        <li  class="list-group-item">{{translate("infoPersos_8")}}{{ getCurrentUser.commune }}</li>
       </ul>
-      <button class="btn btn-info btn-sm" @click="editMode">editer</button>
+      <button class="btn btn-info btn-sm" @click="editMode">{{translate("infoPersos_9")}}</button>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {translate} from "../lang/translationService";
 
 export default {
   data() {
@@ -38,6 +39,7 @@ export default {
     ...mapGetters(["getCurrentUser"]),
     },
     methods: {
+      translate,
       ...mapActions(['updateSoldeStore', 'updateUserCourantWoPasswordStore']),
       editMode(){
         this.$emit('edit-initiated');

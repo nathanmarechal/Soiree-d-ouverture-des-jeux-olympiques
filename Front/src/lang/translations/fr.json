@@ -25,6 +25,8 @@
   "seDeconnecter": "Se déconnecter",
   "inscriptions": "Inscriptions",
   "stands": "Stands",
+  "commandes": "Commandes",
+  "avis": "Avis",
 
   "desc_1": "26 juillet 2024 : Une expérience inoubliable le long des quais de Paris",
   "desc_2": "Un Voyage à Travers l'Histoire et la Culture : ",
@@ -157,6 +159,15 @@
   "bestSellerStats_1": "Prestations ayant rapportées le plus",
   "newStandStats_1": "Évolution du nombre de stand",
 
+  "addUserBtn_0":"Qui êtes vous ?",
+  "addUserBtn_1":"Prestataire",
+  "addUserBtn_2":"Votre demande sera soumise à un administrateur",
+  "addUserBtn_3":"Client",
+  "addUserBtn_4":"L'inscription est immédiate",
+
+
+
+  "addUser_0":"prestataire : ",
   "addUser_1":"prénom",
   "addUser_2":"nom",
   "addUser_3":"e-mail",
@@ -253,5 +264,76 @@
   "statistiquesPrestataire_5": "Nom",
   "statistiquesPrestataire_6": "Argent dépensé",
   "statistiquesPrestataire_7": "Note moyenne du stand",
-  "statistiquesPrestataire_8": "Nombre d'avis"
+  "statistiquesPrestataire_8": "Nombre d'avis",
+
+  "infoPersos_1": "Information personelles",
+  "infoPersos_2": "Nom : ",
+  "infoPersos_3": "Prénom : ",
+  "infoPersos_4": "Solde : ",
+  "infoPersos_5": "Email : ",
+  "infoPersos_6": "Adresse : ",
+  "infoPersos_7": "Code postal : ",
+  "infoPersos_8": "Ville : ",
+  "infoPersos_9": "Éditer",
+
+  "emploiDuTemps_1": "Il n'y a rien de prévu pour le moment",
+  "emploiDuTemps_2": "Emploi du temps",
+
+  "waitingUsers_1": "Utilisateurs en attente",
+  "waitingUsers_2": "Pas d'utilisateurs en attente",
+  "waitingUsers_3": "id",
+  "waitingUsers_4": "email",
+  "waitingUsers_5": "mot de passe",
+  "waitingUsers_6": "nom",
+  "waitingUsers_7": "prénom",
+  "waitingUsers_8": "code_postal",
+  "waitingUsers_9": "adresse",
+  "waitingUsers_10": "commune",
+  "waitingUsers_11": "id_role",
+  "waitingUsers_12": "id_stand",
+  "waitingUsers_13": "droits",
+  "waitingUsers_14": "action",
+  "waitingUsers_15": "Accepter",
+  "waitingUsers_16": "Refuser",
+
+  "commandePrestataire_1": "Il n'y a rien de prévu pour le moment",
+  "commandePrestataire_2": "Mes ventes :",
+  "commandePrestataire_3": "quantité : ",
+  "commandePrestataire_4": "prix : ",
+  "commandePrestataire_5": "prix total : ",
+
+  "showPrestationPrestatairePage_1": "Ajouter une prestation",
+  "showPrestationPrestataire_1": "Liste de mes prestations",
+  "showPrestationPrestataire_2": "Prix : ",
+  "showPrestationPrestataire_3": "Disponible : ",
+  "showPrestationPrestataire_4": "Oui",
+  "showPrestationPrestataire_5": "Non",
+  "showPrestationPrestataire_6": "Rendre indisponible",
+  "showPrestationPrestataire_7": "Rendre disponible",
+  "showPrestationPrestataire_8": "Modifier",
+  "showPrestationPrestataire_9": "Supprimer",
+
+  "editPrestationPrestataire_1": "Libellé : ",
+  "editPrestationPrestataire_2":"Prix : ",
+  "editPrestationPrestataire_2.5":"Prix",
+  "editPrestationPrestataire_3": "Type de prestation:",
+  "editPrestationPrestataire_4": "Est disponible : ",
+  "editPrestationPrestataire_5": "Changer l'image",
+  "editPrestationPrestataire_6": "Recadrer l'image",
+  "editPrestationPrestataire_7": "Mettre à jour",
+  "editPrestationPrestataire_8": "Quitter",
+
+  "addPrestationPrestataire_1": "Libellé : ",
+  "addPrestationPrestataire_2": "Prix:",
+  "addPrestationPrestataire_3": "Prix",
+  "addPrestationPrestataire_4": "Type de prestation : ",
+  "addPrestationPrestataire_5": "est disponible : ",
+  "addPrestationPrestataire_6": "Image : ",
+  "addPrestationPrestataire_7": "Recadrer l'image",
+  "addPrestationPrestataire_8": "Ajouter",
+  "addPrestationPrestataire_9": "Quitter",
+
+  "validLigneCommande_1": "La commande a été récupérée"
+
+
 }
