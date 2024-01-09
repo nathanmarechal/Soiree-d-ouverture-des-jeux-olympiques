@@ -328,16 +328,16 @@ export default {
   height: 50vh;
   font-size: 2em;
   border: none;
-  margin-right: 5%; /* Add space to the right of each button */
-  border-radius: 15px; /* Add rounded corners */
-  transition: box-shadow 0.3s ease; /* Smooth transition for box-shadow */
+  margin-right: 5%;
+  border-radius: 15px;
+  transition: box-shadow 0.3s ease;
 }
 
 .bouton:hover {
-  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add shadow when mouse hovers over */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-/* Remove margin from the last button */
+
 .bouton:last-child {
   margin-right: 0;
 }
