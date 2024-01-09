@@ -37,7 +37,7 @@ exports.createUserWithStand = (req, res) => {
     const image_stand = req.body.stand.image_stand;
     const description_stand = req.body.stand.description_stand;
 
-    console.log(description_stand)
+    console.log("TEMA LA GUEULE DU STEAK "+description_stand)
     const prix_stand = 0;
     const id_emplacement = req.body.stand.id_emplacement;
 

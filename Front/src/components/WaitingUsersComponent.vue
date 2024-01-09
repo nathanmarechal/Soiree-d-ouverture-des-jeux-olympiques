@@ -38,7 +38,9 @@
               <td>{{user.id_role}}</td>
               <td>{{user.id_stand}}</td>
               <td>{{user.droits}}</td>
+
               <td>
+                <span>{{user}}</span>
                 <button class="btn btn-success" @click="acceptUser(user.id_user)">{{translate("waitingUsers_15")}}</button>
                 <button class="btn btn-danger" @click="refuseUser(user.id_user)">{{translate("waitingUsers_16")}}</button>
               </td>
@@ -61,20 +63,24 @@
     data() {
       return {
         users: [],
+        stands: [],
+
       }
     },
     computed: {
-      ...mapGetters(['getAllUsersAttente']),
+      ...mapGetters(['getAllUsersAttente', 'getAllStandAttente']),
     },
     methods: {
       translate,
-      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore']),
+      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
+          await this.getAllStandAttenteStore();
           this.users = this.getAllUsersAttente;
+          this.stands = this.getAllStandAttente;
         } catch (error) {
-          console.error('Erreur lors du chargement des données :', error);
+          console.error('Errideur lors du chargement des données :', error);
         }
       },
       async acceptUser(id_user) {
