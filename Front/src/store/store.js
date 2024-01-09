@@ -757,7 +757,7 @@ export default new Vuex.Store({
 
         async getUsersStore({ commit }) {
             try {
-                const result = await getAllUsers();
+                const result = await getAllUsers(this.state.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
