@@ -105,10 +105,8 @@
           await this.getStandsStore();
         }
         if (this.getAllArea.length === 0) {
-          await this.getAllArea();
+          await this.getAreasStore();
         }
-
-        console.log(this.getAllStand);
       },
       async removeStand(id) {
         const stand = this.getAllStand.find(stand => stand.id_stand === id);

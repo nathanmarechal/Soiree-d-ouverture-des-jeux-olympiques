@@ -14,8 +14,7 @@ export default {
     },
     mutations: {
         SET_AREAS(state, areas) {
-            state.areas.splice(0)
-            areas.forEach(p => state.areas.push(p))
+            state.areas = areas;
         },
 
         UPDATE_AREA(state, data) {
