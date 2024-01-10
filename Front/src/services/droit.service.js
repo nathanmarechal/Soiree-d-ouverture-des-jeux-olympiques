@@ -10,6 +10,6 @@ async function getAllDroitsFromApi() {
 }
 
 export {
-    getAllDroits 
+    getAllDroits
 }
 

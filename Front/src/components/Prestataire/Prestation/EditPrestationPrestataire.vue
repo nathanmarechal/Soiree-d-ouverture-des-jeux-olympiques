@@ -68,9 +68,7 @@ export default {
   },
 
   computed: {
-    //...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
-    ...mapGetters('user', ['getCurrentUser']),
-    ...mapGetters('prestationEtType', ['getAllTypePrestation'])
+    ...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
   },
   async mounted() {
     try {
@@ -82,8 +80,8 @@ export default {
 
   methods: {
     translate,
-    //...mapActions(['updatePrestationStore', 'getTypePrestationsStore']), // Ajoutez votre action Vuex pour la mise à jour
-...mapActions('prestationEtType', ['getTypePrestationsStore', "getTypePrestationsStore"]),
+    ...mapActions(['updatePrestationStore','getTypePrestations']), // Ajoutez votre action Vuex pour la mise à jour
+
     async loadData() {
       // Load selected prestation
       this.prestation = await this.selected_prestation;

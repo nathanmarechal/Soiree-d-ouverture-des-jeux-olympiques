@@ -15,8 +15,7 @@ export default {
 
   methods:{
     translate,
-    //...mapActions(['setEtatLigneCommandeExterieurStore']),
-    ...mapActions('user', ['setEtatLigneCommandeExterieurStore']),
+    ...mapActions(['setEtatLigneCommandeExterieurStore']),
     async setData(){
       console.log({
         id_commande: this.id_commande,

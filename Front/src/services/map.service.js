@@ -46,12 +46,12 @@ async function deleteArea(id) {
     return answer
 }
 
-async function getAllZonesFromAPI() {
-    return getRequest('/map/get-all-zones', 'GETALLZONES')
+async function getAllZonesFromAPI(session_id) {
+    return getRequest('/map/get-all-zones?session_id='+session_id, 'GETALLZONES')
 }
 
-async function getAllZones() {
-    let answer = await getAllZonesFromAPI()
+async function getAllZones(session_id) {
+    let answer = await getAllZonesFromAPI(session_id)
     //console.log("getAllZones: ", answer)
     return answer
 }

@@ -57,11 +57,7 @@
       }
     },
     computed: {
-      //...mapGetters(['getAllUsers', 'getAllRoles','getCurrentUser', 'getAllPrestation', 'getAllStand']),
-      ...mapGetters('roleEtDroit', ['getAllRoles']),
-      ...mapGetters('user', ['getCurrentUser','getAllUsers']),
-      ...mapGetters('prestationEtType', ['getAllPrestation']),
-      ...mapGetters('stands' , ['getAllStand']),
+      ...mapGetters(['getAllUsers', 'getAllRoles','getCurrentUser', 'getAllPrestation', 'getAllStand']),
       filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllUsers so for each data in filterProtector, check if it is in getAllUsers or else remove it from filterProtector
         if (this.filterProtector != null){
@@ -72,11 +68,7 @@
     },
     methods: {
       translate,
-      //...mapActions(['getUsersStore', 'deleteUserStore', 'getRolesStore', 'getPrestationsStore', 'getStandsStore', 'deletePrestationStore', 'deleteStandStore']),
-      ...mapActions('roleEtDroit', ['getRolesStore']),
-      ...mapActions('user', ['getUsersStore', 'deleteUserStore']),
-      ...mapActions('prestationEtType', ['getPrestationsStore','deletePrestationStore']),
-      ...mapActions('stands', ['getStandsStore','deleteStandStore']),
+      ...mapActions(['getUsersStore', 'deleteUserStore', 'getRolesStore', 'getPrestationsStore', 'getStandsStore', 'deletePrestationStore', 'deleteStandStore']),
       async loadData() {
         await this.getUsersStore();
         await this.getRolesStore();

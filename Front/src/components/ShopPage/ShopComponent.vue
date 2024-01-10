@@ -59,10 +59,7 @@ export default {
     this.equalizeCardHeights();
   },
   computed: {
-    //...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau"]),
-    ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation', 'getAllPrestation']),
-    ...mapGetters('stands', ['getAllStand', 'getSelectedStands']),
-    ...mapGetters('creneau', ['getAllCreneau']),
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau"]),
     filteredPrestations() {
       return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
@@ -78,10 +75,7 @@ export default {
   },
   methods: {
     translate,
-    //...mapActions(['getPrestationsStore', 'getTypePrestationsStore', 'getStandsStore', 'getCreneauStore']),
-    ...mapActions('prestationEtType', ['getPrestationsStore', 'getTypePrestationsStore']),
-    ...mapActions('stands', ['getStandsStore']),
-    ...mapActions('creneau', ['getCreneauStore']),
+    ...mapActions(['getPrestationsStore', 'getTypePrestationsStore', 'getStandsStore', 'getCreneauStore']),
     async loadData() {
       if (this.getAllPrestation.length === 0)
         await this.getPrestationsStore()

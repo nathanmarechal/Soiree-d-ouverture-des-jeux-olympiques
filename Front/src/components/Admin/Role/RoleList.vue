@@ -87,16 +87,12 @@ export default {
   },
 
   computed: {
-    //...mapGetters(['getCurrentUser', 'getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits', 'getAllUsers']),
-    ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits']),
-    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters(['getCurrentUser', 'getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits', 'getAllUsers']),
   },
 
   methods: {
     translate,
-    //...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore', 'getUsersStore']),
-    ...mapActions('roleEtDroit', ['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
-    ...mapActions('user', ['getUsersStore']),
+    ...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore', 'getUsersStore']),
 
     async loadData() {
       try {
@@ -155,7 +151,7 @@ export default {
     },
   },
 };
-</script> 
+</script>
 
 <style scoped>
 /* Your styles here */

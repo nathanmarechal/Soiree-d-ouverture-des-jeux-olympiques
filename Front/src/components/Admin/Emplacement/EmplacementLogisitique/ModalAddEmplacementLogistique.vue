@@ -1,4 +1,4 @@
- <template>
+<template>
   <div v-if="modalActiveAddEmplacementLogistique" class="overlay">
     <div class="modal-inner">
       <h3>{{ translate("addEmplacementLogistique_1") }}</h3>
@@ -51,8 +51,7 @@ export default {
     };
   },
   computed: {
-    //...mapGetters(['getAllTypeEmplacementLogistique']),
-    ...mapGetters('emplacementLogistiqueEtType', ['getAllEmplacementLogistique']),
+    ...mapGetters(['getAllTypeEmplacementLogistique']),
     selectedType() {
       const typeId = this.emplacementLogistique.id_type_emplacement_logistique;
       return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === typeId);
@@ -60,8 +59,7 @@ export default {
   },
   methods: {
     translate,
-    //...mapActions(['createEmplacementLogistiqueStore']),
-    ...mapActions('emplacementLogistiqueEtType', ['createEmplacementLogistiqueStore']),
+    ...mapActions(['createEmplacementLogistiqueStore']),
 
     closeModal() {
       this.$emit('close');

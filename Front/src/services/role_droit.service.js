@@ -40,7 +40,7 @@ async function deleteRoleDroitAssociationForSpecificRole(id_role) {
 }
 
 async function deleteRoleDroitAssociationForSpecificRoleFromApi(id_role) {
-    let answer = deleteRequest('/role-droit/deleteByIdRole/' + id_role, 'DELETEROLEDROITASSOCIATIONFORSPECIFICROLE')
+    let answer = deleteRequest('/role-droit/delete/' + id_role, 'DELETEROLEDROITASSOCIATIONFORSPECIFICROLE')
     return answer;
 }
 

@@ -39,12 +39,11 @@ export default {
       selectedZones: [],
       selectedTypeZone: null,
       logisticsRequirements: [],
-      searchQuery: this.$store.state.user.searchQuery    };
+      searchQuery: this.$store.state.searchQuery
+    };
   },
   computed: {
-    //...mapGetters(['getAllZone', 'getAllTypeZone', 'getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
-    ...mapGetters('ZoneEtType', ['getAllZone', 'getAllTypeZone']),
-    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
+    ...mapGetters(['getAllZone', 'getAllTypeZone', 'getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
     filteredZones() {
       if (this.selectedTypeZone) {
         return this.getAllZone.filter(zone => zone.id_type_zone === this.selectedTypeZone);
@@ -54,9 +53,7 @@ export default {
   },
   methods: {
     translate,
-    //...mapActions(['getZonesStore','getTypeZonesStore', 'getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
-    ...mapActions('ZoneEtType', ['getZonesStore','getTypeZonesStore']),
-    ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
+    ...mapActions(['getZonesStore','getTypeZonesStore', 'getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
     async loadData() {
       if (this.getAllZone.length === 0){
         await this.getZonesStore();
@@ -77,9 +74,9 @@ export default {
       return Math.max(...placements.map(el => el.unite));
     },
     updateFilterZone() {
-      this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
+      this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
       console.log(this.selectedZones)
-      console.log(this.$store.state.ZoneEtType.selectedZone)
+      console.log(this.$store.state.selectedZone)
     },
     updateLogisticsRequirement(typeId, value) {
       const intValue = value === '' ? null : parseInt(value, 10); // Convert to integer, use null for empty strings
@@ -106,12 +103,10 @@ export default {
         }
       }
 
-      this.$store.commit('emplacementLogistiqueEtType/SET_LOGISTICS_REQUIREMENTS', this.logisticsRequirements);
+      this.$store.commit('SET_LOGISTICS_REQUIREMENTS', this.logisticsRequirements);
     },
 
-    //...mapMutations(['SET_SELECTED_ZONE','SET_LOGISTICS_REQUIREMENTS']),
-    ...mapMutations('ZoneEtType', ['SET_SELECTED_ZONE']),
-    ...mapMutations('emplacementLogistiqueEtType', ['SET_LOGISTICS_REQUIREMENTS']),
+    ...mapMutations(['SET_SELECTED_ZONE','SET_LOGISTICS_REQUIREMENTS']),
   },
   async mounted() {
     try {

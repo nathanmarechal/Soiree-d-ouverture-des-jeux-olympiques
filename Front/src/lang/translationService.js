@@ -20,7 +20,7 @@ export function changeLanguage(lang) {
     console.log(this.$store.getters.getLang)
 }
 export function translate(key) {
-    const lang = this.$store.getters["user/getLang"]
+    const lang = this.$store.getters.getLang;
     if (!(lang in translations)) {
         console.error(`Language ${lang} not supported`);
         return key;

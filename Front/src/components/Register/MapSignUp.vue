@@ -26,8 +26,8 @@ export default {
   },
   async mounted() {
     try {
-      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('stands/SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_STANDS', []);
       //this.areas = await this.getAreas();
       //this.zones = await this.getZones();
       //await this.$store.dispatch('getAreas');
@@ -39,19 +39,20 @@ export default {
     }
   },
   computed: {
-    //...mapGetters(['getAllArea', 'getAllZone', 'getAllStand', 'getSelectedZone', 'getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique','getLogisticsRequirements']),
-    ...mapGetters('ZoneEtType', ['getAllZone', 'getAllTypeZone']),
-    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique','getLogisticsRequirements']),
-    ...mapGetters('prestationEtType', ['getAllTypePrestation']),
-    },
+    ...mapGetters([
+      'getAllArea',
+      'getAllZone',
+      'getAllStand',
+      'getSelectedZone',
+      'getAllTypeEmplacementLogistique',
+      'getAllEmplacementLogistique'
+      ,'getLogisticsRequirements'
+    ]),
+    //...mapState(['areas', 'zones']),
+  },
 
   methods: {
-    //...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore', 'getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore']),
-    ...mapActions('ZoneEtType', ['getZonesStore']),
-    ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
-    ...mapActions('emplacements', ['getAreasStore']),
-    ...mapActions('stands', ['getStandsStore']),
-
+    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore', 'getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore']),
     async loadData() {
       try {
         if (this.getAllArea.length === 0) {
@@ -208,7 +209,6 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
-          console.log('clicked', zone.id_emplacement);
           this.$emit('dataEmplacement', zone.id_emplacement);
         });
 
@@ -248,8 +248,7 @@ export default {
         }).addTo(this.map);
 
         marker.on('click', () => {
-          console.log('clicked');
-          //this.showEmplacementLogistiqueInfo(location);
+          this.showEmplacementLogistiqueInfo(location);
         });
 
         this.markers.push(marker);
@@ -392,9 +391,7 @@ export default {
 
 
 
-    //...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
-    ...mapMutations('ZoneEtType', ['SET_SELECTED_ZONE']),
-    ...mapMutations('prestationEtType', ['SET_SELECTED_TYPE_PRESTATION']),
+    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
   },
   watch: {
     // Surveillez les changements dans les sélections

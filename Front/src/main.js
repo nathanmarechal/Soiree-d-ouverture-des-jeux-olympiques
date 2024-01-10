@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store/index'
+import store from './store/store'
 import router from './router/index'
 import 'jquery/dist/jquery.slim.min.js';
 import BootstrapVue from 'bootstrap-vue';

@@ -29,15 +29,11 @@ export default {
     //this.typePrestations = await this.getTypePrestations();
   },
   computed: {
-    //...mapGetters(['getSelectedTypePrestation', 'getAllTypePrestation']),
-    ...mapGetters('prestationEtType', ['getAllTypePrestation','getSelectedTypePrestation']),
+    ...mapGetters(['getSelectedTypePrestation', 'getAllTypePrestation']),
   },
   methods: {
-    //...mapMutations(['SET_PROVENANCE', "SET_SELECTED_TYPE_PRESTATION"]),
-    ...mapMutations('prestationEtType', ['SET_SELECTED_TYPE_PRESTATION']),
-    ...mapMutations('user', ['SET_PROVENANCE']),
-    //...mapActions(['getTypePrestationsStore']),
-    ...mapActions('prestationEtType', ['getTypePrestationsStore']),
+    ...mapMutations(['SET_PROVENANCE', "SET_SELECTED_TYPE_PRESTATION"]),
+    ...mapActions(['getTypePrestationsStore']),
 
     async loadData(){
       try {
@@ -58,9 +54,9 @@ export default {
       } else {
         newSelection.splice(index, 1);
       }
-      this.$store.commit('stands/SET_SELECTED_STANDS', []);
-      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', newSelection);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', newSelection);
     },
 
     getImageSrc(imageName) {
@@ -73,7 +69,7 @@ export default {
 
     goToStore(type){
       this.updateFilterI(type);
-      this.$store.commit('user/SET_PROVENANCE', 0);
+      this.$store.commit('SET_PROVENANCE', 0);
       this.$router.push({ name: 'shopView' });
     }
   },

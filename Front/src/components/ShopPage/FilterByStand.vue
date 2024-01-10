@@ -35,22 +35,20 @@ export default {
     }
   },
   computed: {
-    //...mapGetters(['getAllStand']),
-    ...mapGetters('stands', ['getAllStand'])
+    ...mapGetters(['getAllStand']),
   },
   methods: {
     translate,
-    //...mapActions(['getStandsStore']),
-    ...mapActions('stands', ['getStandsStore']),
+    ...mapActions(['getStandsStore']),
     async loadData(){
       if (this.getAllStand.length === 0){
         await this.getStandsStore()
       }
     },
     updateStandFilter() {
-      this.$store.commit('stands/SET_SELECTED_STANDS', this.selectedStands);
+      this.$store.commit('SET_SELECTED_STANDS', this.selectedStands);
     },
-    ...mapMutations('stands',['SET_SELECTED_STANDS'])
+    ...mapMutations(['SET_SELECTED_STANDS'])
   }
 };
 </script>

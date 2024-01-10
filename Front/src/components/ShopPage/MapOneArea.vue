@@ -17,12 +17,10 @@ export default {
     };
   },
   computed: {
-    //...mapGetters(['getAllArea']),
-    ...mapGetters('emplacements', ['getAllArea'])
+    ...mapGetters(['getAllArea']),
   },
   methods: {
-    //...mapActions(['getAreasStore']),
-    ...mapActions('emplacements', ['getAreasStore']),
+    ...mapActions(['getAreasStore']),
     async loadData() {
       if (this.getAllArea.length === 0) {
         await this.getAreasStore();

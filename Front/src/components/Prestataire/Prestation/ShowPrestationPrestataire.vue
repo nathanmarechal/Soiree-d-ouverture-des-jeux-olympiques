@@ -39,9 +39,7 @@ export default {
     }
   },
   computed: {
-    //...mapGetters(['getCurrentUser', 'getAllPrestation','getAllTypePrestation']),
-    ...mapGetters('user', ['getCurrentUser']),
-    ...mapGetters('prestationEtType', ['getAllPrestation','getAllTypePrestation']),
+    ...mapGetters(['getCurrentUser', 'getAllPrestation','getAllTypePrestation']),
   },
   async created() {
     await this.loadData()
@@ -49,8 +47,7 @@ export default {
   },
   methods: {
     translate,
-    //...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
-    ...mapActions('prestationEtType', ['getTypePrestationsStore','getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
+    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)

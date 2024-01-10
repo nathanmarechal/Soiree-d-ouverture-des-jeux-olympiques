@@ -65,7 +65,8 @@ CREATE TABLE emplacement(
    coordonnes json,
    surface int,
    id_zone INT NOT NULL,
-   FOREIGN KEY(id_zone) REFERENCES zone(id_zone));
+   FOREIGN KEY(id_zone) REFERENCES zone(id_zone) ON DELETE CASCADE)
+;
 
 CREATE TABLE stand(
    id_stand SERIAL PRIMARY KEY,
@@ -75,7 +76,7 @@ CREATE TABLE stand(
    date_achat DATE,
    prix INT,
    id_emplacement INT,
-   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement)
+   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
 );
 
 CREATE TABLE standAttente(
@@ -114,26 +115,25 @@ CREATE TABLE utilisateur(
    solde FLOAT,
    id_stand INT,
    id_role INT,
-   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE SET NULL,
-   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE SET NULL
-	);
-    CREATE TABLE utilisateurAttente(
-       id_user SERIAL PRIMARY KEY,
-       email VARCHAR(50) UNIQUE,
-       password VARCHAR(50),
-       nom VARCHAR(50),
-       prenom VARCHAR(50),
-       code_postal INT,
-       adresse VARCHAR(50),
-       commune VARCHAR(50),
-       solde numeric,
-       id_stand INT,
-       id_role INT,
-       FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-       FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
-    );
+   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
+);
 
-
+CREATE TABLE utilisateurAttente(
+   id_user SERIAL PRIMARY KEY,
+   email VARCHAR(50) UNIQUE,
+   password VARCHAR(50),
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   code_postal INT,
+   adresse VARCHAR(50),
+   commune VARCHAR(50),
+   solde numeric,
+   id_stand INT,
+   id_role INT,
+   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
+);
 
 CREATE TABLE session(
     session_id VARCHAR(255),
@@ -170,8 +170,8 @@ CREATE TABLE commande(
     date_commande varchar(50),
     id_user INT NOT NULL,
     id_etat_commande INT NOT NULL,
-    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user),
-    FOREIGN KEY(id_etat_commande) REFERENCES etat_commande(id_etat)
+    FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_etat_commande) REFERENCES etat_commande(id_etat) ON DELETE CASCADE
 );
 
 CREATE TABLE ligne_commande(

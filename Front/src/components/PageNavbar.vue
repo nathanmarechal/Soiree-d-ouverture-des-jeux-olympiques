@@ -86,23 +86,23 @@ export default {
   },
   computed: {
     isLoginOpen() {
-      return this.$store.getters['user/isLoginOpen'];
+      return this.$store.getters.isLoginOpen;
     },
     isUserConnected() {
-      return this.$store.getters['user/isUserConnected'];
+      return this.$store.getters.isUserConnected;
     },
     isUserAdmin() {
-      const val = this.$store.getters['user/isUserConnected']
-          && this.$store.getters['user/getCurrentUser'].id_role===1;
+      const val = this.$store.getters.isUserConnected
+          && this.$store.getters.getCurrentUser.id_role===1;
       return val;
     },
       isUserPrestataire() {
-      const val = this.$store.getters['user/isUserConnected']
-          && this.$store.getters['user/getCurrentUser'].id_role===2;
+      const val = this.$store.getters.isUserConnected
+          && this.$store.getters.getCurrentUser.id_role===2;
       return val;
     },
     currentUser() {
-      return this.$store.getters['user/getCurrentUser'];
+      return this.$store.getters.getCurrentUser;
     },
   },
   components: {
@@ -114,16 +114,16 @@ export default {
 
 
     fromNav() {
-      this.$store.commit('user/SET_PROVENANCE', -1);
-      this.$store.commit('stands/SET_SELECTED_STANDS', []);
-      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_PROVENANCE', -1);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
     },
     showLoginModal() {
-      this.$store.commit('user/SET_LOGIN_MODAL', true);
+      this.$store.commit('SET_LOGIN_MODAL', true);
     },
     disconnect() {
-      this.$store.commit('user/SET_IS_USER_CONNECTED', false);
-      this.$store.commit('user/SET_CURRENT_USER', null);
+      this.$store.commit('SET_IS_USER_CONNECTED', false);
+      this.$store.commit('SET_CURRENT_USER', null);
       //this.$store.commit('SET_EMAIL', '');
       //this.$store.commit('SET_PASSWORD', '');
     },

@@ -30,15 +30,11 @@ export default {
     //this.zones = await this.getZones();
   },
   computed: {
-    //...mapGetters(['getAllZone','getAllTypeEmplacementLogistique']),
-    ...mapGetters('ZoneEtType', ['getAllZone']),
-    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique']),
+    ...mapGetters(['getAllZone','getAllTypeEmplacementLogistique']),
   },
   methods: {
     translate,
-    //...mapActions(['getZonesStore','getTypeEmplacementLogistiqueStore']),
-    ...mapActions('ZoneEtType', ['getZonesStore']),
-    ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore']),
+    ...mapActions(['getZonesStore','getTypeEmplacementLogistiqueStore']),
 
     getImagePath(imageName) {
       return require(`@/assets/Logos/${imageName}`);

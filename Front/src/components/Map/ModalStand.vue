@@ -39,9 +39,9 @@ export default {
         newSelection.splice(index, 1);
       }
 
-      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('stands/SET_SELECTED_STANDS', []);
-      this.$store.commit('stands/SET_SELECTED_STANDS', newSelection);
+      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('SET_SELECTED_STANDS', newSelection);
 
     },
     getImageSrc(imageName) {
@@ -55,7 +55,7 @@ export default {
 
     goToStore(stand){
       this.updateFilterj(stand)
-      this.$store.commit('user/SET_PROVENANCE', 1)
+      this.$store.commit('SET_PROVENANCE', 1)
       this.$router.push({ name: 'shopView'});
     },
   }

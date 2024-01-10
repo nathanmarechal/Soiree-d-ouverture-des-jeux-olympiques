@@ -80,10 +80,7 @@
       }
     },
     computed: {
-      //...mapGetters(['getAllStand', 'getAllPrestation', 'getAllArea']),
-      ...mapGetters('emplacements', ['getAllArea']),
-      ...mapGetters('prestationEtType', ['getAllPrestation']),
-      ...mapGetters('stand' , ['getAllStand']),
+      ...mapGetters(['getAllStand', 'getAllPrestation', 'getAllArea']),
       filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllStand so for each data in filterProtector, check if it is in getAllStand or else remove it from filterProtector
         if(this.filterProtector != null){
@@ -96,17 +93,16 @@
     },
     methods: {
       translate,
-      //...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'updatePrestationStore']),
-      ...mapActions('emplacements', ['getAreasStore']),
-      ...mapActions('prestationEtType', ['updatePrestationStore']),
-      ...mapActions('stands', ['getStandsStore', 'deleteStandStore']),
+      ...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'updatePrestationStore']),
       async loadData() {
         if (this.getAllStand.length === 0) {
           await this.getStandsStore();
         }
         if (this.getAllArea.length === 0) {
-          await this.getAreasStore();
+          await this.getAllArea();
         }
+
+        console.log(this.getAllStand);
       },
       async removeStand(id) {
         const stand = this.getAllStand.find(stand => stand.id_stand === id);

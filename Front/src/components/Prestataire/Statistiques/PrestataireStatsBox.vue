@@ -59,8 +59,7 @@ export default {
     };
   },
   computed: {
-    //...mapGetters(['getCurrentUser']),
-    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters(['getCurrentUser'])
   },
   async mounted() {
     await this.loadStatistics();

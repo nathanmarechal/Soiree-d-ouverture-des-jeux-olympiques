@@ -1,4 +1,4 @@
-import {postRequest,getRequest,postRequestPicture,patchRequest, deleteRequest} from "@/services/axios.service";
+import {getRequest,postRequestPicture,patchRequest, deleteRequest} from "@/services/axios.service";
 
 async function getAllStandsFromAPI() {
     let answer = await getRequest('/stands/get', 'GETALLSTANDS')
@@ -12,33 +12,22 @@ async function getAllStands() {
     return answer
 }
 
-async function updateStand(id, body, session_id) {
-    let answer = await updateStandFromAPI(id, body, session_id)
+async function updateStand(id, body) {
+    let answer = await updateStandFromAPI(id, body)
     return answer
 }
 
-async function updateStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
+async function updateStandFromAPI(id, body) {
+    return patchRequest('/stands/' + id, body, 'UPDATESTAND')
 }
 
-async function deleteStand(id, session_id) {
-    let answer = await deleteStandFromAPI(id, session_id)
+async function deleteStand(id) {
+    let answer = await deleteStandFromAPI(id)
     return answer
 }
 
-async function createStandFromAPI(body, session_id) {
-    console.log("createStandFromAPI: ", body, session_id)
-    let answer = await postRequest('/stands/add?session_id=' + session_id, body, 'CREATESTAND')
-    return answer
-}
-
-async function createStand(body, session_id) {
-    let answer = await createStandFromAPI(body, session_id)
-    return answer
-}
-
-async function deleteStandFromAPI(id, session_id) {
-    return deleteRequest('/stands/delete?session_id=' + session_id  + "&id_stand=" + id, 'DELETESTAND')
+async function deleteStandFromAPI(id) {
+    return deleteRequest('/stands/delete/' + id, 'DELETESTAND')
 }
 
 
@@ -52,7 +41,7 @@ async function uploadImageDescriptionStand(image) {
 }
 
 async function getStandByUserIdFromAPI(id) {
-    return getRequest('/stands/get?id_stand=' + id, 'GETPRESTATIONBYUSERID')
+    return getRequest('/stands/get/' + id, 'GETPRESTATIONBYUSERID')
 }
 
 async function getStandByUserId(id) {
@@ -61,12 +50,12 @@ async function getStandByUserId(id) {
     return answer
 }
 
-async function updateDescriptionStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands/description?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATEDESCRIPTIONSTAND')
+async function updateDescriptionStandFromAPI(id, body) {
+    return patchRequest('/stands/description/' + id, body, 'UPDATEDESCRIPTIONSTAND')
 }
 
-async function updateDescriptionStand(id, body, session_id) {
-    let answer = await updateDescriptionStandFromAPI(id, body, session_id)
+async function updateDescriptionStand(id, body) {
+    let answer = await updateDescriptionStandFromAPI(id, body)
     return answer
 }
 
@@ -87,6 +76,5 @@ export {
     updateDescriptionStand,
     deleteStand,
     updateStand,
-    uploadImageStand,
-    createStand
+    uploadImageStand
 }

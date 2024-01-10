@@ -63,14 +63,10 @@ export default {
     this.myEditor = this.$refs.myEditor;
   },
   computed: {
-    //...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
-    ...mapGetters('avis', ['getAvis']),
-    ...mapGetters('stands', ['getSelectedStands']),
-    ...mapGetters('user', ['getCurrentUser'])
+    ...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
   },
   methods: {
-    //...mapActions(['getAvisStore', "uploadAvisStore"]),
-    ...mapActions('avis', ['getAvisStore', "uploadAvisStore"]),
+    ...mapActions(['getAvisStore', "uploadAvisStore"]),
 
 
     async handleImageUpload(blobInfo, success, failure) {
