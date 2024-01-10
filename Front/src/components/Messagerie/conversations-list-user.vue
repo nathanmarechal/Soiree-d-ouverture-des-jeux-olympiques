@@ -95,6 +95,8 @@ export default({
 
 <style scoped>
 .create-conversation-form {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 20px;
 }
 

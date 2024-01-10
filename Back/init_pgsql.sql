@@ -941,6 +941,36 @@ FROM conversations
 LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
 WHERE id_creator = 2
 GROUP BY conversations.id_conversation
+ORDER BY
 ;
 
 select * from utilisateur ;
+
+ SELECT conversations.id_conversation, id_creator, titre, resolu, utilisateur.email AS email_creator,
+                  COUNT(*) AS nb_messages
+            FROM conversations
+            LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
+            LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user
+            GROUP BY conversations.id_conversation, utilisateur.email
+            ;
+
+SELECT
+    conversations.id_conversation,
+    id_creator,
+    titre,
+    resolu,
+    utilisateur.email AS email_creator,
+    COUNT(messages.id_conversation) AS nb_messages,
+    MAX(messages.temps_emmission) as dernier_message
+FROM
+    conversations
+LEFT JOIN
+    messages ON conversations.id_conversation = messages.id_conversation
+LEFT JOIN
+    utilisateur ON conversations.id_creator = utilisateur.id_user
+GROUP BY
+    conversations.id_conversation, utilisateur.email
+ORDER BY
+    resolu ASC, -- false (non résolu) en premier
+    CASE WHEN MAX(messages.temps_emmission) IS NULL THEN 1 ELSE 0 END, -- Conversations sans messages en dernier
+    dernier_message DESC;

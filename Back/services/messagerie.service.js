@@ -3,14 +3,26 @@ const pool = require("../database/db");
 async function getAllConversationsAsync() {
     try {
         const conn = await pool.connect();
-        const result = await conn.query(
-            "SELECT conversations.id_conversation, id_creator, titre, resolu, utilisateur.email AS email_creator,\n" +
-            "       COUNT(*) AS nb_messages\n" +
-            "FROM conversations\n" +
-            "LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation\n" +
-            "LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user\n" +
-            "GROUP BY conversations.id_conversation, utilisateur.email\n" +
-            ";");
+        const result = await conn.query(`SELECT
+    conversations.id_conversation,
+    id_creator,
+    titre,
+    resolu,
+    utilisateur.email AS email_creator,
+    COUNT(messages.id_conversation) AS nb_messages,
+    MAX(messages.temps_emmission) as dernier_message
+FROM
+    conversations
+LEFT JOIN
+    messages ON conversations.id_conversation = messages.id_conversation
+LEFT JOIN
+    utilisateur ON conversations.id_creator = utilisateur.id_user
+GROUP BY
+    conversations.id_conversation, utilisateur.email
+ORDER BY
+    resolu ASC, -- false (non résolu) en premier
+    CASE WHEN MAX(messages.temps_emmission) IS NULL THEN 1 ELSE 0 END, -- Conversations sans messages en dernier
+    dernier_message DESC;`);
         conn.release();
         return result.rows;
     } catch (error) {
