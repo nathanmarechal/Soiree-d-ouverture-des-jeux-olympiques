@@ -2,17 +2,17 @@
   <div class="user-list">
 
     <div class="create-conversation-form">
-      <input type="text" v-model="newConversationMessage" placeholder="Entrez le message de la conversation" class="form-control">
-      <button @click="createConversation" class="btn btn-success">Créer Conversation</button>
+      <input type="text" v-model="newConversationMessage" :placeholder="translate('conversationsList_creerConvoPlaceholder')" class="form-control">
+      <button @click="createConversation" class="btn btn-success">{{translate("conversationsList_creerConvo")}}</button>
     </div>
 
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th>Titre de la conversation</th>
-        <th>Nombre de messages</th>
-        <th>Résolu</th>
-        <th>Actions</th>
+        <th>{{ translate("conversationsList_titre") }}</th>
+        <th>{{ translate("conversationsList_nbMessages") }}</th>
+        <th>{{ translate("conversationsList_resolu") }}</th>
+        <th>{{ translate("conversationsList_actions") }}</th>
       </tr>
       </thead>
       <tbody>
@@ -21,7 +21,8 @@
         <td style="text-align: center">{{ conv.nb_messages }}</td>
         <td>{{ conv.resolu }}</td>
         <td>
-          <router-link :to="{ name: 'MessagesConversationUser', params: { selected_conversation: conv } }" class="btn btn-primary">Voir</router-link>
+          <router-link :to="{ name: 'MessagesConversationUser', params: { selected_conversation: conv } }" class="btn btn-primary">
+            {{ translate("conversationsList_voir") }}</router-link>
         </td>
       </tr>
       </tbody>
@@ -33,6 +34,7 @@
 
 import {mapActions, mapGetters} from "vuex";
 import {createConversation} from "@/services/messagerie.service";
+import {translate} from "@/lang/translationService";
 
 export default({
   computed: {
@@ -64,6 +66,7 @@ export default({
         console.error('Erreur lors du chargement des données :', error);
       }
     },
+    translate,
     async createConversation() {
       try {
         const body = {
