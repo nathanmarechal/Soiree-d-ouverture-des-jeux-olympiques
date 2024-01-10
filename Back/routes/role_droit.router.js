@@ -109,7 +109,7 @@ router.delete("/delete", rightsMiddleware.checkRight, roleMiddleware.checkRoleEx
 
 /**
  * @swagger
- * /api/role-droit/deleteByIdRole/:
+ * /api/role-droit/deleteByIdRole:
  *   delete:
  *     summary: Deletes role-droit association for a specific role
  *     tags: [RoleDroit]
