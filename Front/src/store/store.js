@@ -55,8 +55,8 @@ export default new Vuex.Store({
             "session_id": null,
             "id_user": null,
             "nom": null,
-            "email": null,
             "prenom": null,
+            "email": null,
             "solde": null,
             "code_postal": null,
             "adresse": null,
@@ -1156,8 +1156,8 @@ export default new Vuex.Store({
 
         async updateZoneStore({ commit }, {id, body}) {
             try {
-                body.session_id=this.userCourant.session_id
-                await updateZone(id, body);
+                const session_id = this.userCourant.session_id
+                await updateZone(id, body, session_id);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
@@ -1258,7 +1258,6 @@ export default new Vuex.Store({
 
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
-                console.log(id, body)
                 await updateDescriptionStand(id, body);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {

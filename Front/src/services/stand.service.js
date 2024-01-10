@@ -21,19 +21,18 @@ async function updateStandFromAPI(id, body, session_id) {
     return patchRequest('/stands?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
 }
 
-async function deleteStand(id, session_id) {
-    let answer = await deleteStandFromAPI(id, session_id)
-    return answer
-}
-
 async function createStandFromAPI(body, session_id) {
-    console.log("createStandFromAPI: ", body, session_id)
     let answer = await postRequest('/stands/add?session_id=' + session_id, body, 'CREATESTAND')
     return answer
 }
 
 async function createStand(body, session_id) {
     let answer = await createStandFromAPI(body, session_id)
+    return answer
+}
+
+async function deleteStand(id, session_id) {
+    let answer = await deleteStandFromAPI(id, session_id)
     return answer
 }
 
@@ -57,7 +56,6 @@ async function getStandByUserIdFromAPI(id) {
 
 async function getStandByUserId(id) {
     let answer = await getStandByUserIdFromAPI(id)
-    console.log("getPrestationByUserId: ", answer)
     return answer
 }
 
