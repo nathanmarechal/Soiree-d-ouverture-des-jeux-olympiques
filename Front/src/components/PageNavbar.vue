@@ -10,6 +10,11 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
+          <b-nav-item v-if="currentUserHasRight('messages-admin')" to="/messages-admin" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+
+          <b-nav-item v-if="currentUserHasRight('messages-user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+
+
           <div v-if="isUserPrestataire">
             <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
@@ -74,6 +79,7 @@
 <script>
 import LoginComponent from './LoginComponent.vue';
 import {changeLanguage, translate} from "@/lang/translationService.js";
+import {currentUserHasRight} from "@/droits/droitUtil";
 
 export default {
   data() {
@@ -109,6 +115,7 @@ export default {
     'login-component': LoginComponent
   },
   methods: {
+    currentUserHasRight,
     translate,
     changeLanguage,
 
