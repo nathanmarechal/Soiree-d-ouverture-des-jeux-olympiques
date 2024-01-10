@@ -42,11 +42,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllTypeZone"]),
+    //...mapGetters(["getAllTypeZone"]),
+    ...mapGetters('ZoneEtType', ['getAllTypeZone'])
   },
   methods: {
     translate,
-    ...mapActions(["getTypeZonesStore", "createZoneStore"]),
+    //...mapActions(["getTypeZonesStore", "createZoneStore"]),
+    ...mapActions('ZoneEtType', ['getTypeZonesStore', 'createZoneStore']),
     async loadData(){
       try {
         if (this.getAllTypeZone.length === 0)

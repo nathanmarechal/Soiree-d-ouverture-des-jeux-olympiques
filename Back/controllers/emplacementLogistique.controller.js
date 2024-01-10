@@ -17,29 +17,28 @@ exports.addEmplacementLogistique = (req, res) => {
             return res.status(500).send("Internal error");
         }
         else {
-            return res.status(200).send(data);
+            return res.status(201).send(data);
         }
     })
 }
 
 exports.deleteEmplacementLogistique = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_emplacement_logistique;
     console.log("deleteEmplacementLogistique: ", id)
     emplacementLogistiqueService.deleteEmplacementLogistique(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
         else {
-            return res.status(200).send(data);
+            return res.status(200).send("Emplacement logistique deleted successfully");
         }
     })
 }
 
 
 exports.updateEmplacementLogistique = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_emplacement_logistique;
     const body = req.body;
-    console.log("updateEmplacementLogistique: ", id, body)
     emplacementLogistiqueService.updateEmplacementLogistique(id, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

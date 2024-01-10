@@ -1,19 +1,7 @@
 const pool = require("../database/db");
 
 exports.checkStandExists = async (req, res, next) => {
-    let id;
-
-    if (req.body.id_stand != null){
-        id = req.body.id_stand;
-    }
-    else {
-        id = req.params.id;
-    }
-    /*
-    if (id == null){
-        next();
-    }
-     */
+    let id = req.query.id_stand || req.body.id_stand || req.params.id;
     try {
 
         const conn = await pool.connect();
@@ -31,26 +19,20 @@ exports.checkStandExists = async (req, res, next) => {
 }
 
 exports.checkStandAppartenance = async (req, res, next) => {
-    const userId = req.params.id;
+    const userId = req.query.id_user;
     const standId = req.body.id_stand;
-
-    if (!standId) {
-        return next();
-    }
 
     try {
         const conn = await pool.connect();
 
-        const checkResult1 = await conn.query("SELECT * FROM stand WHERE id_stand = $1", [standId]);
-        if (checkResult1.rows.length === 0) {
+        const checkStand = await conn.query("SELECT * FROM stand WHERE id_stand = $1;", [standId]);
+        if (checkStand.rows.length === 0) {
             conn.release();
             return res.status(404).send("Stand non trouvé");
         }
 
-        const checkResult2 = await conn.query("SELECT * FROM utilisateur WHERE id_stand = $1", [standId]);
-
-        const proprio = checkResult2.rows[0];
-        if (proprio.id_user != userId) {
+        const checkUser = await conn.query("SELECT * FROM utilisateur WHERE id_stand = $1;", [standId]);
+        if (checkUser.rows.length > 0 && checkUser.rows[0].id_user != userId) {
             conn.release();
             return res.status(409).send("Le stand est déjà assigné à un autre utilisateur");
         }
@@ -58,6 +40,8 @@ exports.checkStandAppartenance = async (req, res, next) => {
         conn.release();
         next();
     } catch (error) {
+        conn?.release();
         res.status(500).send("Internal Server Error");
     }
 };
+

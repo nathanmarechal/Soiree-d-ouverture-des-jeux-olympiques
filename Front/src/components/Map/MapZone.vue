@@ -31,8 +31,8 @@ export default {
   },
   async mounted() {
     try {
-      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('SET_SELECTED_STANDS', []);
+      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('stands/SET_SELECTED_STANDS', []);
       //this.areas = await this.getAreas();
       //this.zones = await this.getZones();
       //await this.$store.dispatch('getAreas');
@@ -44,21 +44,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'getAllArea',
-      'getAllZone',
-      'getAllStand',
-      'getAllPrestation',
-      'getSelectedZone',
-      'getSelectedTypePrestation',
-      'getAllPrestation',
-      'getSearchQuery'
-    ]),
+   // ...mapGetters(['getAllArea', 'getAllZone', 'getAllStand', 'getAllPrestation', 'getSelectedZone', 'getSelectedTypePrestation', 'getAllPrestation', 'getSearchQuery']),
+    ...mapGetters('ZoneEtType', ['getAllZone', 'getSelectedZone']),
+    ...mapGetters('stands', ['getAllStand']),
+    ...mapGetters('prestationEtType', ['getAllPrestation', 'getSelectedTypePrestation']),
+    ...mapGetters('emplacements', ['getAllArea']),
+    ...mapGetters('user', ['getSearchQuery'])
     //...mapState(['areas', 'zones']),
   },
 
 methods: {
-    ...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getPrestationsStore']),
+    //...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getPrestationsStore']),
+  ...mapActions('ZoneEtType', ['getZonesStore']),
+  ...mapActions('stands', ['getStandsStore']),
+  ...mapActions('prestationEtType', ['getPrestationsStore']),
+  ...mapActions('emplacements', ['getAreasStore']),
     async loadData() {
       try {
         if (this.getAllArea.length === 0) {
@@ -229,7 +229,7 @@ methods: {
 
       return [avgLat, avgLng];
     },
-    ...mapMutations(['SET_SELECTED_ZONE', 'SET_SELECTED_TYPE_PRESTATION']),
+    ...mapMutations(['ZoneEtType/SET_SELECTED_ZONE', 'prestationEtType/SET_TYPE_PRESTATIONS']),
   },
   watch: {
     // Surveillez les changements dans les sélections

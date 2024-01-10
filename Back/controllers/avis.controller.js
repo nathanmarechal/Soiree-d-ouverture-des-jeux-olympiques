@@ -3,8 +3,7 @@ const homePageService = require("../services/homePage.service");
 
 
 exports.getAvisByIdStand = (req, res) => {
-    const id = req.params.id;
-    console.log("dans le controller" + id)
+    const id = req.query.id_stand;
     avisService.getAvisByIdStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -32,18 +31,18 @@ exports.addAvis = (req, res) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send(data);
+            return res.status(201).send(data);
         }
     })
 }
 
 exports.deleteAvis = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_avis;
     avisService.deleteAvis(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send(data);
+            return res.status(200).send("Avis deleted successfully");
         }
     })
 }

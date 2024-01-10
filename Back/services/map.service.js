@@ -38,7 +38,7 @@ const updateArea = (id, body, callback) => {
 async function updateAreaAsync(id, body) {
     try {
         const conn = await pool.connect();
-        const result = await conn.query("UPDATE emplacement SET id_zone = $1 WHERE id_emplacement = $2;", [body.id_zone, id]);
+        const result = await conn.query("UPDATE emplacement SET id_zone = $1 WHERE id_emplacement = $2 RETURNING *;", [body.id_zone, id]);
         conn.release();
         return result.rows;
     } catch (error) {
@@ -159,7 +159,7 @@ async function updateZoneAsync(id, body) {
         const conn = await pool.connect();
         console.log("id in updateZoneAsync: ", id)
         console.log("body in updateZoneAsync: ", body)
-        const result = await conn.query("UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4;", [body.id_type_zone, body.libelle, body.couleur_hexa, id]);
+        const result = await conn.query("UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4 RETURNING *;", [body.id_type_zone, body.libelle, body.couleur_hexa, id]);
         conn.release();
         return result.rows;
     } catch (error) {

@@ -42,11 +42,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllZone', 'getAllArea']),
+    //...mapGetters(['getAllZone', 'getAllArea']),
+    ...mapGetters('ZoneEtType', ['getAllTypeZone']),
+    ...mapGetters('emplacements', ['getAllArea'])
   },
   methods: {
     translate,
-    ...mapActions(['getZonesStore', 'deleteZoneStore', 'getAreasStore']),
+    //...mapActions(['getZonesStore', 'deleteZoneStore', 'getAreasStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore', 'deleteZoneStore']),
+    ...mapActions('emplacements', ['getAreasStore']),
     async loadData() {
       if (this.getAllZone.length === 0)
         await this.getZonesStore();

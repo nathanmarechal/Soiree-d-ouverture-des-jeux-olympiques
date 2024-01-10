@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const statistiquesController = require('../controllers/statistiques.controller');
 const userMiddleware = require('../middlewares/users.middleware');
+const standMiddleware = require('../middlewares/stands.middleware');
 
 /**
  * @swagger
@@ -48,23 +49,138 @@ router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
  *       '200':
  *         description: Nombre de prestations par heure pour le prestataire
  *       '400':
- *         description: ID invalide
+ *         description: requete invalide
  *       '404':
  *         description: Prestataire non trouvé
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/nb-prestation-heure/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getNbPrestationHeure)
+router.get('/prestataire/nb-prestation-heure/:id',standMiddleware.checkStandExists ,statistiquesController.getNbPrestationHeure)
 
-router.get('/prestataire/average-purchase/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAveragePurchaseByStand)
+/**
+ * @swagger
+ * /api/statistiques/prestataire/average-purchase/{id}:
+ *   get:
+ *     summary: Renvoie la moyenne des achats pour un stand spécifique
+ *     tags: [Statistiques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du stand
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Moyenne des achats pour le stand
+ *       '400':
+ *         description: rerquete invalide
+ *       '404':
+ *         description: Stand non trouvé
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
+router.get('/prestataire/average-purchase/:id',standMiddleware.checkStandExists ,statistiquesController.getAveragePurchaseByStand)
 
-router.get('/prestataire/best-client/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getBestClientByStand)
+/**
+ * @swagger
+ * /api/statistiques/prestataire/best-client/{id}:
+ *   get:
+ *     summary: Renvoie le meilleur client pour un stand spécifique
+ *     tags: [Statistiques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du stand
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Meilleur client pour le stand
+ *       '400':
+ *         description: requete invalide
+ *       '404':
+ *         description: Stand non trouvé
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
+router.get('/prestataire/best-client/:id',standMiddleware.checkStandExists ,statistiquesController.getBestClientByStand)
 
-router.get('/prestataire/sales-revenue-by-type/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getSalesRevnueByTypeByStand)
+/**
+ * @swagger
+ * /api/statistiques/prestataire/sales-revenue-by-type/{id}:
+ *   get:
+ *     summary: Renvoie les revenus de vente par type pour un stand spécifique
+ *     tags: [Statistiques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du stand
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Revenus de vente par type pour le stand
+ *       '400':
+ *         description: requete invalide
+ *       '404':
+ *         description: Stand non trouvé
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
+router.get('/prestataire/sales-revenue-by-type/:id',standMiddleware.checkStandExists ,statistiquesController.getSalesRevnueByTypeByStand)
 
-router.get('/prestataire/average-rating/:id',userMiddleware.checkPrestataireExists ,statistiquesController.getAvgRatingByStand)
+/**
+ * @swagger
+ * /api/statistiques/prestataire/average-rating/{id}:
+ *   get:
+ *     summary: Renvoie la note moyenne pour un stand spécifique
+ *     tags: [Statistiques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du stand
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Note moyenne pour le stand
+ *       '400':
+ *         description: requete invalide
+ *       '404':
+ *         description: Stand non trouvé
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
+router.get('/prestataire/average-rating/:id',standMiddleware.checkStandExists ,statistiquesController.getAvgRatingByStand)
 
-router.get('/prestataire/count-rating/:id' ,userMiddleware.checkPrestataireExists, statistiquesController.getCountRatingByStand)
+/**
+ * @swagger
+ * /api/statistiques/prestataire/count-rating/{id}:
+ *   get:
+ *     summary: Renvoie le nombre d'évaluations pour un stand spécifique
+ *     tags: [Statistiques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du stand
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Nombre d'évaluations pour le stand
+ *       '400':
+ *         description: requete invalide
+ *       '404':
+ *         description: Stand non trouvé
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
+router.get('/prestataire/count-rating/:id', standMiddleware.checkStandExists ,statistiquesController.getCountRatingByStand)
 
 router.get('/nb-stands',statistiquesController.getNbStands)
 

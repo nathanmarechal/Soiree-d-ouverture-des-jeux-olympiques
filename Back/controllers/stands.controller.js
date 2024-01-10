@@ -23,7 +23,7 @@ exports.getStandsAttente = (req, res) => {
 }
 
 exports.getStandById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_stand;
     standsService.getStandById(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -34,12 +34,12 @@ exports.getStandById = (req, res) => {
 }
 
 exports.deleteStand = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_stand;
     standsService.deleteStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send(data);
+            return res.status(200).send("Stand deleted successfully");
         }
     })
 }
@@ -57,7 +57,7 @@ exports.createStand = (req, res) => {
 }
 
 exports.updateStand = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_stand;
     const body = req.body;
     standsService.updateStand(id, body, (error, data) => {
         if (error) {
@@ -93,7 +93,7 @@ exports.uploadingPictureDescription = (req, res) => {
 };
 
 exports.updateStandDescription = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_stand;
     const body = req.body;
     standsService.updateStandDescription(id, body, (error, data) => {
         if (error) {

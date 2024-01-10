@@ -2,14 +2,11 @@ const express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/users.controller');
 
-//const {checkRight} = require("../middlewares/authentication.middleware");
-
-const loginMiddleware = require("../middlewares/authentication.middleware");
 const usersMiddleware = require("../middlewares/users.middleware");
 const standsMiddleware = require("../middlewares/stands.middleware");
 const rolesMiddleware = require("../middlewares/role.middleware");
 const mapMiddleware = require("../middlewares/map.middleware");
-const rightMiddleware = require("../middlewares/authentication.middleware");
+const rightMiddleware = require("../middlewares/droits.middleware");
 
 /**
  * @swagger
@@ -61,13 +58,19 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
 
 /**
  * @swagger
- * /api/users/update/{id}:
+ * /api/users/update:
  *   patch:
  *     summary: Met à jour les informations d'un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: Identifiant de la session
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
  *         required: true
  *         description: ID de l'utilisateur à mettre à jour
  *         schema:
@@ -80,9 +83,6 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *           schema:
  *             type: object
  *             properties:
- *               session_id:
- *                 type: string
- *                 description: Identifiant de la session
  *               email:
  *                 type: string
  *                 format: email
@@ -131,7 +131,8 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *       '500':
  *         description: Internal error
  */
-router.patch("/update/:id", rightMiddleware.checkRight,usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists ,standsMiddleware.checkStandAppartenance, rolesMiddleware.checkRoleExists ,usersController.updateUser);
+router.patch("/update", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, standsMiddleware.checkStandAppartenance, rolesMiddleware.checkRoleExists, usersController.updateUser);
+
 
 /**
  * @swagger
@@ -172,6 +173,20 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *   patch:
  *     summary: Met à jour le solde de l'utilisateur
  *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: Identifiant de la session
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
+ *         required: true
+ *         description: ID de l'utilisateur dont le solde doit être mis à jour
+ *         schema:
+ *           type: integer
+ *           format: int64
  *     requestBody:
  *       required: true
  *       content:
@@ -179,10 +194,6 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *           schema:
  *             type: object
  *             properties:
- *               id_user:
- *                 type: integer
- *                 format: int64
- *                 description: ID de l'utilisateur
  *               solde:
  *                 type: number
  *                 description: Nouveau solde à affecter
@@ -196,7 +207,8 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *       '500':
  *         description: Erreur interne
  */
-router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.updateSolde);
+router.patch("/updateSolde", usersMiddleware.checkUserExists, usersController.updateSolde);
+
 
 /**
  * @swagger
@@ -204,6 +216,20 @@ router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.up
  *   patch:
  *     summary: Met à jour les informations de l'utilisateur courant sans changer le mot de passe
  *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
+ *         required: true
+ *         description: ID de l'utilisateur à mettre à jour
+ *         schema:
+ *           type: integer
+ *           format: int64
  *     requestBody:
  *       required: true
  *       content:
@@ -211,10 +237,6 @@ router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.up
  *           schema:
  *             type: object
  *             properties:
- *               id_user:
- *                 type: integer
- *                 format: int64
- *                 description: ID de l'utilisateur
  *               prenom:
  *                 type: string
  *                 description: Prénom de l'utilisateur
@@ -239,6 +261,8 @@ router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.up
  *         description: Utilisateur mis à jour
  *       '400':
  *         description: Requête invalide
+ *       '403':
+ *         description: Interdiction
  *       '404':
  *         description: Non trouvé
  *       '409':
@@ -247,6 +271,7 @@ router.patch("/updateSolde",usersMiddleware.checkUserExists , usersController.up
  *         description: Internal error
  */
 router.patch("/updateUserCourantWoPassword", usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
+
 
 /**
  * @swagger
@@ -373,15 +398,76 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
 router.post("/registerPrestataire",  usersController.createUserWithStand);
 
 
-
-
-
-
-
-
-
-
-router.post("/create-user",rightMiddleware.checkRight,usersController.createUser)
+/**
+ * @swagger
+ * /api/users/create-user:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: L'ID de session de l'utilisateur
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - lastName
+ *               - firstName
+ *               - email
+ *               - password
+ *               - adresse
+ *               - code_postal
+ *               - commune
+ *               - id_role
+ *             properties:
+ *               lastName:
+ *                 type: string
+ *                 description: Le nom de famille de l'utilisateur
+ *               firstName:
+ *                 type: string
+ *                 description: Le prénom de l'utilisateur
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: L'email de l'utilisateur
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: Le mot de passe de l'utilisateur
+ *               adresse:
+ *                 type: string
+ *                 description: L'adresse de l'utilisateur
+ *               code_postal:
+ *                 type: integer
+ *                 description: Le code postal de l'adresse de l'utilisateur
+ *               commune:
+ *                 type: string
+ *                 description: La commune de l'utilisateur
+ *               id_role:
+ *                 type: integer
+ *                 description: L'ID de rôle attribué à l'utilisateur
+ *     responses:
+ *       '201':
+ *         description: Utilisateur créé avec succès
+ *       '400':
+ *         description: Requête invalide
+ *       '403':
+ *         description: Interdiction
+ *       '404':
+ *         description: Non trouvé
+ *       '409':
+ *         description: Déjà utilisé
+ *       '500':
+ *         description: Erreur interne
+ */
+router.post("/create-user", rightMiddleware.checkRight, usersMiddleware.checkEmailExists, usersMiddleware.validateUserInput, rolesMiddleware.checkRoleExists, usersController.createUser);
 
 /**
  * @swagger
@@ -389,60 +475,89 @@ router.post("/create-user",rightMiddleware.checkRight,usersController.createUser
  *   get:
  *     summary: Renvoie les utilisateurs en attente d'approbation
  *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Liste des utilisateurs en attente
+ *       '403':
+ *         description: Interdiction
  *       '500':
  *         description: Internal error
  */
-router.get("/getUserAttente", usersController.getUsersAttente);
+router.get("/getUserAttente", rightMiddleware.checkRight, usersController.getUsersAttente);
+
 
 /**
+ /**
  * @swagger
- * /api/users/acceptUser/{id}:
+ * /api/users/acceptUser:
  *   post:
  *     summary: Accepte un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
  *         required: true
  *         description: ID de l'utilisateur à accepter
  *         schema:
- *          type: integer
- *          format: int64
+ *           type: integer
+ *           format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur accepté
+ *       '403':
+ *         description: Interdiction
  *       '404':
- *         description: Utilisateur non trouvé
+ *         description: Non trouvé
  *       '500':
  *         description: Internal error
  */
-router.post("/acceptUser",rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists ,usersController.acceptUser);
+router.post("/acceptUser", rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists, usersController.acceptUser);
+
 
 /**
  * @swagger
- * /api/users/refuseUser/{id}:
+ * /api/users/refuseUser:
  *   post:
  *     summary: Refuse un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_user
  *         required: true
  *         description: ID de l'utilisateur à refuser
  *         schema:
- *          type: integer
- *          format: int64
+ *           type: integer
+ *           format: int64
  *     responses:
  *       '200':
  *         description: Utilisateur refusé
+ *       '403':
+ *         description: Interdiction
  *       '404':
- *         description: Utilisateur non trouvé
+ *         description: Non trouvé
  *       '500':
  *         description: Internal error
  */
-router.post("/refuseUser",rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
+router.post("/refuseUser", rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
+
 
 module.exports = router;

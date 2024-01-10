@@ -3,6 +3,8 @@ var router = express.Router();
 const standsController = require('../controllers/stands.controller');
 const standsMiddleware = require('../middlewares/stands.middleware');
 const mapMiddleware = require('../middlewares/map.middleware');
+const rightMiddleware = require("../middlewares/droits.middleware");
+
 const path = require('path');
 
 /**
@@ -35,13 +37,13 @@ router.get("/get-stands-attente", standsController.getStandsAttente);
 
 /**
  * @swagger
- * /api/stands/get/{id}:
+ * /api/stands/get-by-id:
  *   get:
  *     summary: Renvoie un stand par son ID
  *     tags: [Stands]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: id_stand
  *         required: true
  *         description: ID du stand
  *         schema:
@@ -54,17 +56,24 @@ router.get("/get-stands-attente", standsController.getStandsAttente);
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get("/get/:id", standsMiddleware.checkStandExists ,standsController.getStandById);
+router.get("/get-by-id", standsMiddleware.checkStandExists, standsController.getStandById);
+
 
 /**
  * @swagger
- * /api/stands/description/{id}:
+ * /api/stands/description:
  *   patch:
  *     summary: Met à jour la description d'un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_stand
  *         required: true
  *         description: ID du stand à mettre à jour
  *         schema:
@@ -89,17 +98,24 @@ router.get("/get/:id", standsMiddleware.checkStandExists ,standsController.getSt
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/description/:id",standsMiddleware.checkStandExists, standsController.updateStandDescription);
+router.patch("/description", rightMiddleware.checkRight, standsMiddleware.checkStandExists, standsController.updateStandDescription);
+
 
 /**
  * @swagger
- * /api/stands/update/{id}:
+ * /api/stands/update:
  *   patch:
  *     summary: Met à jour un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_stand
  *         required: true
  *         description: ID du stand à mettre à jour
  *         schema:
@@ -141,17 +157,24 @@ router.patch("/description/:id",standsMiddleware.checkStandExists, standsControl
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/update/:id", standsMiddleware.checkStandExists, mapMiddleware.checkEmplacementExists ,standsController.updateStand);
+router.patch("/update", standsMiddleware.checkStandExists, mapMiddleware.checkEmplacementExists, standsController.updateStand);
+
 
 /**
  * @swagger
- * /api/stands/delete/{id}:
+ * /api/stands/delete:
  *   delete:
  *     summary: Supprime un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_stand
  *         required: true
  *         description: ID du stand à supprimer
  *         schema:
@@ -164,7 +187,8 @@ router.patch("/update/:id", standsMiddleware.checkStandExists, mapMiddleware.che
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.delete("/delete/:id", standsMiddleware.checkStandExists ,standsController.deleteStand);
+router.delete("/delete", rightMiddleware.checkRight, standsMiddleware.checkStandExists, standsController.deleteStand);
+
 
 /**
  * @swagger
@@ -172,6 +196,13 @@ router.delete("/delete/:id", standsMiddleware.checkStandExists ,standsController
  *   post:
  *     summary: Crée un nouveau stand
  *     tags: [Stands]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: ID de session pour l'authentification
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -211,7 +242,7 @@ router.delete("/delete/:id", standsMiddleware.checkStandExists ,standsController
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.post("/add", mapMiddleware.checkEmplacementExists,standsController.createStand);
+router.post("/add", rightMiddleware.checkRight, mapMiddleware.checkEmplacementExists, standsController.createStand);
 
 router.post("/add/picture", standsController.uploadPictureStand);
 

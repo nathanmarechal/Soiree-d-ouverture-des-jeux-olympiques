@@ -54,10 +54,13 @@ export default {
     this.myEditor = this.$refs.myEditor;
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getAllStand']),
+    //...mapGetters(['getCurrentUser', 'getAllStand']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('stands', ['getAllStand'])
   },
   methods: {
-    ...mapActions(['getStandsStore', 'getStandsStore','updateDescriptionStandStore']),
+    //...mapActions(['getStandsStore', 'getStandsStore','updateDescriptionStandStore']),
+    ...mapActions('stands', ['getStandsStore', 'updateDescriptionStandStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)

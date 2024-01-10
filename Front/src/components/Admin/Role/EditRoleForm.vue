@@ -63,7 +63,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits","getCurrentUser"]),
+    //...mapGetters(["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits","getCurrentUser"]),
+    ...mapGetters('roleEtDroit', ["getAllDroits", "getAllRoleDroitAssociation", "getRoleDroits"]),
+    ...mapGetters('user', ["getCurrentUser"]),
     droitCategories() {
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
     },
@@ -75,7 +77,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getDroitsStore", "updateRoleStore", "getAllRoleDroitAssociationStore", "createRoleDroitAssociationStore", "deleteRoleDroitAssociationForSpecificRoleStore"]),
+    //...mapActions(["getDroitsStore", "updateRoleStore", "getAllRoleDroitAssociationStore", "createRoleDroitAssociationStore", "deleteRoleDroitAssociationForSpecificRoleStore"]),
+    ...mapActions('roleEtDroit', ["getDroitsStore", "updateRoleStore", "getAllRoleDroitAssociationStore", "createRoleDroitAssociationStore", "deleteRoleDroitAssociationForSpecificRoleStore"]),
     translate,
     async loadData() {
       try {

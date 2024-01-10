@@ -10,10 +10,6 @@ exports.createUser = (req, res) => {
     const commune = req.body.commune;
     const id_role = req.body.id_role;
 
-    console.log("----------")
-    console.log("createUser", { nom, prenom, email, password, adresse, code_postal, commune, id_role });
-    console.log("----------")
-
     usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -84,7 +80,7 @@ exports.acceptUser = (req, res) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            return res.status(200).send("User accepted successfully");
+            return res.status(200).send(data);
         }
     });
 }
@@ -104,7 +100,7 @@ exports.refuseUser = (req, res) => {
 }
 
 exports.getUserById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_user;
 
     // Log function name and data
     console.log("getUserById", { id });
@@ -138,16 +134,19 @@ exports.getUserBySessionId = (req, res) => {
 }
 
 exports.updateUser = (req, res) => {
-    const id_user = req.params.id;
+    console.log("Entered updateUser");
+    const id_user = req.query.id_user;
     const { prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand } = req.body;
 
     // Log function name and data
-    console.log("updateUser", { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand });
+    console.log("Request data", { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand });
 
     usersService.updateUser(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, (error, data) => {
         if (error) {
+            console.log("Sending 500 response");
             return res.status(500).send("internal error");
         }
+        console.log("Sending 200 response");
         return res.status(200).send(data);
     });
 }
@@ -175,7 +174,7 @@ exports.deleteUser = (req, res) => {
 }
 
 exports.updateSolde = (req, res) => {
-    const id = req.body.id_user;
+    const id = req.query.id_user;
     const newsolde = req.body.solde;
 
     console.log("updateSolde", { id, newsolde });
@@ -193,7 +192,7 @@ exports.updateSolde = (req, res) => {
 }
 
 exports.updateUserCourantWoPassword = (req, res) => {
-    const id = req.body.id_user;
+    const id = req.query.id_user;
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const email = req.body.email;

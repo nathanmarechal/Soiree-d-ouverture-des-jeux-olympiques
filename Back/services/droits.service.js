@@ -11,7 +11,7 @@ const getDroitsById = (id, callback) => {
         })
         .catch(error => {
             console.log(error);
-            callback('Error in getUserById', null);
+            callback('Error in getDroitById', null);
         })
 }
 
@@ -24,6 +24,7 @@ async function getDroitsByIdAsync(id) {
             "WHERE role_droits.id_role=$1\n" +
             ";", [id]);
         conn.release();
+        console.log(result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error in getDroitsAsync:', error);

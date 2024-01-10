@@ -2,8 +2,8 @@
   <form @submit.prevent="submitForm()" class="d-flex gap-3 flex-column justify-content-center">
     <div class="form-group">
       <label for="libelle">{{translate("editZone_libelle")}}</label>
-      <input v-if="$store.getters.getLang==='fr'" v-model="zone.libelle" id="libelle" placeholder="Libellé" class="form-control">
-      <input v-if="$store.getters.getLang==='en'" v-model="zone.libelle" id="libelle" placeholder="Label" class="form-control">
+      <input v-if="$store.getters['user/getLang']==='fr'" v-model="zone.libelle" id="libelle" placeholder="Libellé" class="form-control">
+      <input v-if="$store.getters['user/getLang']==='en'" v-model="zone.libelle" id="libelle" placeholder="Label" class="form-control">
     </div>
     <div class="form-group">
       <label for="couleur_hexa">{{ translate("editZone_couleur") }}</label>
@@ -40,11 +40,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllTypeZone"]),
+    //...mapGetters(["getAllTypeZone"]),
+    ...mapGetters('ZoneEtType', ['getAllTypeZone'])
   },
   methods: {
     translate,
-    ...mapActions(["getTypeZonesStore", "updateZoneStore"]),
+    //...mapActions(["getTypeZonesStore", "updateZoneStore"]),
+    ...mapActions('ZoneEtType', ['getTypeZonesStore', 'updateZoneStore']),
     async loadData(){
       try {
         if (this.getAllTypeZone.length === 0)

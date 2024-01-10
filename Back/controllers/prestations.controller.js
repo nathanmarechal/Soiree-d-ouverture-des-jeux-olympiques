@@ -12,20 +12,6 @@ exports.getPrestations = (req, res) => {
     })
 }
 
-exports.getPrestationByUserId = (req, res) => {
-    const id = req.params.id;
-    prestationsService.getPrestationByUserId(id, (error, data) => {
-        if (error) {
-            return res.status(500).send("Internal error");
-        }
-        else {
-            return res.status(200).send(data);
-        }
-    })
-}
-
-
-
 exports.uploadPicturePresatation = (req, res) => {
     prestationsService.uploadPicturePresatation(req, (error, data) => {
         if (error) {
@@ -50,16 +36,15 @@ exports.addPrestation = (req, res) => {
         }
         else {
             console.log(data)
-            return res.status(200).send(data);
+            return res.status(201).send(data);
         }
     })
 }
 
 exports.updateIsAvailablePrestation = (req, res) => {
-    const id = req.params.id;
-    const body = req.body;
-    console.log("updateIsAvailablePrestation: ", id, body)
-    prestationsService.updateIsAvailablePrestation(id, body, (error, data) => {
+    const id = req.query.id_prestation;
+    console.log("updateIsAvailablePrestation: ", id)
+    prestationsService.updateIsAvailablePrestation(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
@@ -70,7 +55,7 @@ exports.updateIsAvailablePrestation = (req, res) => {
 }
 
 exports.updatePrestation = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_prestation;
     const body = req.body;
     prestationsService.updatePrestation(id, body, (error, data) => {
         if (error) {
@@ -84,13 +69,13 @@ exports.updatePrestation = (req, res) => {
 
 
 exports.deletePrestation = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id_prestation;
     prestationsService.deletePrestation(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
         else {
-            return res.status(200).send(data);
+            return res.status(200).send("Prestation deleted successfully");
         }
     })
 }

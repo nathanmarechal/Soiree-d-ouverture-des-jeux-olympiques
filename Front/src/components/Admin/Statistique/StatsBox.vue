@@ -95,7 +95,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentUser']) // If needed for admin validation
+    //...mapGetters(['getCurrentUser']),// If needed for admin validation
+    ...mapGetters('user',['getCurrentUser'])
   },
   async mounted() {
     await this.loadStatistics();

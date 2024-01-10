@@ -24,16 +24,6 @@ async function getAllTypePrestations() {
     return answer
 }
 
-async function getPrestationByUserIdFromAPI(id) {
-    return getRequest('/prestations/get/' + id, 'GETPRESTATIONBYUSERID')
-}
-
-async function getPrestationByUserId(id) {
-    let answer = await getPrestationByUserIdFromAPI(id)
-    console.log("getPrestationByUserId: ", answer)
-    return answer
-}
-
 async function uploadImagePresationFromAPI(image){
     return postRequestPicture('/prestations/add/picture/',image, 'UPLOADPICTUREPRESTATION')
 }
@@ -90,7 +80,6 @@ async function deletePrestationFromApi(id){
 export {
     getAllPrestations,
     getAllTypePrestations,
-    getPrestationByUserId,
     uploadImagePresation,
     createPrestation,
     updateIsAvailablePrestation,
