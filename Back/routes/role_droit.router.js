@@ -109,12 +109,12 @@ router.delete("/delete", rightsMiddleware.checkRight, roleMiddleware.checkRoleEx
 
 /**
  * @swagger
- * /api/role-droit/deleteByIdRole/:id:
+ * /api/role-droit/deleteByIdRole/:
  *   delete:
  *     summary: Deletes role-droit association for a specific role
  *     tags: [RoleDroit]
  *     parameters:
- *       - in: params
+ *       - in: query
  *         name: id_role
  *         required: true
  *         description: ID of the role for which to delete the association
@@ -138,6 +138,6 @@ router.delete("/delete", rightsMiddleware.checkRight, roleMiddleware.checkRoleEx
  *       '500':
  *         description: Internal server error
  */
-router.delete("/deleteByIdRole/:id", rightsMiddleware.checkRight, roleMiddleware.checkRoleExists, rolesController.deleteRoleDroitAssociationForSpecificRole);
+router.delete("/deleteByIdRole", rightsMiddleware.checkRight, roleMiddleware.checkRoleExists, rolesController.deleteRoleDroitAssociationForSpecificRole);
 
 module.exports = router;
