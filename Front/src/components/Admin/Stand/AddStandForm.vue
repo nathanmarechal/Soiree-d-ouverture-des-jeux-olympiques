@@ -102,7 +102,9 @@ export default {
   },
   methods: {
     //...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
-    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore', 'getUsersStore'], 'updateUserStore', 'createStandStore'),
+    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore', 'getUsersStore']),
+    ...mapActions('user', ['updateUserStore'] ),
+    ...mapActions('Stand', ['createStandStore']),
     async loadData() {
       await this.getUsersStore();
     },
