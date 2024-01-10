@@ -40,7 +40,7 @@ export default {
         async createStandStore({ commit }, body) {
             try {
                 console.log("createStandStore: ", body)
-                const data = await createStand(body);
+                const data = await createStand(body, this.state.user.userCourant.session_id);
                 console.log("datacreate: ", data.rows);
                 commit('CREATE_STAND', data.rows);
                 return data.rows[0];
@@ -52,7 +52,7 @@ export default {
         async updateStandStore({ commit }, {id, body}) {
             try {
                 console.log(id, body)
-                await updateStand(id, body);
+                await updateStand(id, body, this.state.user.userCourant.session_id);
                 commit('UPDATE_STAND', id, body);
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -62,7 +62,7 @@ export default {
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
                 console.log(id, body)
-                await updateDescriptionStand(id, body);
+                await updateDescriptionStand(id, body, this.state.user.userCourant.session_id);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -71,7 +71,7 @@ export default {
 
         async deleteStandStore({ commit }, id) {
             try {
-                await deleteStand(id);
+                await deleteStand(id, this.state.user.userCourant.session_id);
                 commit('DELETE_STAND', id);
             } catch (err) {
                 console.error("Error in deleteStandStore():", err);
