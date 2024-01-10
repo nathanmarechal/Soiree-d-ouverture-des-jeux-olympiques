@@ -31,7 +31,7 @@ export default {
     ...mapGetters(['getSelectedStands','getAllStand']),
     imagePath() {
       if (this.stand) {
-        return require(`@/assets/stand/${this.stand.image_stand}`);
+        return require(`./../../../../Back/assets/stand/profile/${this.stand.image_stand}`);
       } else {
         return require(`@/assets/arthur-clown.png`); // replace with your default image path
       }
