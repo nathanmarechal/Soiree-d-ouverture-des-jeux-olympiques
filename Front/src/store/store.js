@@ -1163,6 +1163,7 @@ export default new Vuex.Store({
         async deleteZoneStore({ commit }, id) {
             try {
                 const session_id = this.state.userCourant.session_id
+                console.log("deleteZoneStore: ", id, session_id)
                 await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
@@ -1172,7 +1173,7 @@ export default new Vuex.Store({
 
         async updateZoneStore({ commit }, {id, body}) {
             try {
-                const session_id = this.userCourant.session_id
+                const session_id = this.state.userCourant.session_id
                 await updateZone(id, body, session_id);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
