@@ -88,11 +88,6 @@ async function getUserBySessionIdAsync(session_id) {
             "LEFT JOIN utilisateur on session.id_user = utilisateur.id_user\n" +
             "WHERE session_id = $1;", [session_id]);
         client.release();
-        if(res.rows.length!=1)
-        {
-            console.log("row length : "+res.rows.length);
-            return null;
-        }
         return res.rows[0];
     } catch (error) {
         console.error('Error in getUserBySessionIdAsync:', error);
@@ -168,6 +163,7 @@ const updateSolde = (id, newsolde, callback) => {
 async function updateSoldeAsync(id_user, newsolde) {
     try {
         const conn = await pool.connect();
+        console.log("TEMA LA GUEULE DU STEAK"+newsolde + " " + id_user)
         const result = await conn.query("UPDATE utilisateur SET solde = $1 WHERE id_user = $2 RETURNING *", [newsolde, id_user]);
         conn.release();
         return result.rows;
@@ -334,6 +330,7 @@ module.exports = {
     , getAllUsers: getAllUsers
     , getUserById: getUserById
     , getUserBySessionId: getUserBySessionId
+    , getUserBySessionIdAsync: getUserBySessionIdAsync
     , updateUser: updateUser
     , deleteUser: deleteUser
     , updateSolde: updateSolde
