@@ -13,7 +13,7 @@
           <div class="card-footer">
             <div class="buy d-flex justify-content-center align-items-center">
               <div>
-                <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
+                <a v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
               </div>
               <modal-reservation
                   @close="selectedPrestationId = null"
@@ -59,7 +59,7 @@ export default {
     this.equalizeCardHeights();
   },
   computed: {
-    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau"]),
+    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau", "getCurrentUser"]),
     filteredPrestations() {
       return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
