@@ -11,7 +11,8 @@ export default {
     mutations: {
         SET_ALL_CRENEAU(state, creneau){
             state.creneau = creneau;
-        },    },
+        },
+    },
     actions: {
         async getCreneauStore({ commit }){
             try {

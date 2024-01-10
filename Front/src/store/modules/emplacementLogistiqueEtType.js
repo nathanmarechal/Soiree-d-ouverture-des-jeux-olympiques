@@ -12,6 +12,7 @@ export default {
         emplacementLogistique: [],
         logisticsRequirements: [],
     },
+
     getters: {
         getAllTypeEmplacementLogistique: state => state.typeEmplacementLogistique,
         getAllEmplacementLogistique: state => state.emplacementLogistique,
@@ -33,7 +34,7 @@ export default {
         UPDATE_EMPLACEMENT_LOGISITIQUE(state, payload) {
             state.emplacementLogistique = state.emplacementLogistique.map(item => {
                 if (item.id_emplacement_logistique === payload.id) {
-                    return { ...item, ...payload.body };
+                    return {...item, ...payload.body};
                 }
                 return item;
             });
@@ -47,7 +48,10 @@ export default {
 
     },
     actions: {
-        async getTypeEmplacementLogistiqueStore({ commit }) {
+
+//----------------------------------------------------------------------typeEmplacementLogistique--------------------------------------------------------------------//
+
+        async getTypeEmplacementLogistiqueStore({commit}) {
             try {
                 const typeEmplacementLogistique = await getTypeEmplacementLogistique();
                 if (Array.isArray(typeEmplacementLogistique)) {
@@ -61,7 +65,7 @@ export default {
         },
 //----------------------------------------------------------------------EmplacementLogistique--------------------------------------------------------------------//
 
-        async getEmplacementLogistiqueStore({ commit }) {
+        async getEmplacementLogistiqueStore({commit}) {
             try {
                 const emplacementLogistique = await getEmplacementLogistique();
                 if (Array.isArray(emplacementLogistique)) {
@@ -74,37 +78,35 @@ export default {
             }
         },
 
-        async createEmplacementLogistiqueStore({ commit }, body) {
+        async createEmplacementLogistiqueStore({commit}, body) {
             try {
-                let response =  await createEmplacementLogistique(body);
+                const session_id = this.state.userCourant.session_id
+                let response = await createEmplacementLogistique(body, session_id);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
                 console.error("Error in createEmplacementLogistiqueStore():", err);
             }
         },
 
-        async updateEmplacementLogistiqueStore({ commit }, {id,body}) {
+        async updateEmplacementLogistiqueStore({commit}, {id, body}) {
             try {
-                console.log(id)
-                console.log(body)
-                let response = await updateEmplacementLogistique(id, body)
-
-                console.log(response[0])
-                commit('UPDATE_EMPLACEMENT_LOGISITIQUE',{id: id, body: response[0]});
+                const session_id = this.state.userCourant.session_id
+                let response = await updateEmplacementLogistique(id, body, session_id);
+                commit('UPDATE_EMPLACEMENT_LOGISITIQUE', {id: id, body: response[0]});
             } catch (err) {
                 console.error("Error in updateEmplacementLogistiqueStore():", err);
             }
         },
 
-        async deleteEmplacementLogistiqueStore({ commit }, id) {
+        async deleteEmplacementLogistiqueStore({commit}, id) {
             try {
-
-                await deleteEmplacementLogistique(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteEmplacementLogistique(id, session_id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
             }
         },
-    },
 
-};
+    }
+}
