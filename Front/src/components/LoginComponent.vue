@@ -145,7 +145,7 @@ export default {
                           .then(res=>{
                             console.log("droits : ", res)
                             this.$store.commit('user/SET_DROITS_USER_COURANT', res)
-                            console.log("state droits : "+this.$store.getters.getCurrentUser.droits)
+                            console.log("state droits : "+this.$store.getters["user/getCurrentUser"].droits)
                           })
 
                       this.email=""
