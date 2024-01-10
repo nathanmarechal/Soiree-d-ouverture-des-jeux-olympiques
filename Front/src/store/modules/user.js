@@ -3,7 +3,7 @@ import {
     createUser,
     createUserWithStand, deleteUser,
     getAllStandAttente, getAllUsers, getAllUsersAttente,
-    refuseUser, updateSolde, updateUser, updateUserCourantWoPassword
+    refuseUser, registerClient, registerPrestataire, updateSolde, updateUser, updateUserCourantWoPassword
 } from "@/services/utilisateur.service";
 import {
     addCommande,
@@ -323,10 +323,9 @@ export default {
             }
         },
 
-
         async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
-                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
+                await addPrestationToPanierUser(id_user, id_prestation, quantite, id_creneau);
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -356,7 +355,6 @@ export default {
             }
         },
 
-
         async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
                 let session_id = this.state.userCourant.session_id
@@ -370,14 +368,15 @@ export default {
 
         async updateSoldeStore({ commit }, {id_user, solde}) {
             try {
-                await updateSolde({id_user, solde});
+                const session_id = this.state.userCourant.session_id
+                console.log("updateSoldeStore: ", id_user, solde)
+                await updateSolde(session_id, id_user, solde);
                 console.log("updateSoldeStore: ", id_user, solde)
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
                 console.error("Error in updateSoldeStore():", err);
             }
         },
-
 
         async getLigneCommandebyIdCommandeStore({commit}, id_commande){
             try {
@@ -401,6 +400,8 @@ export default {
                 console.error('Error fetching schedule:', error);
             }
         },
+
+
         async getCommandeUserCourantStore({commit},user_id){
             try {
                 const commandes = await getCommandeUserCourant(user_id);
@@ -410,7 +411,6 @@ export default {
                 console.error('Error fetching commandes:', error);
             }
         },
-
 
         async addCommandeFromPanierStore({commit},id_user){
             try {
@@ -422,7 +422,6 @@ export default {
             }
         },
 
-
         async getCommandesPrestataireStore({commit},id_user){
             try {
                 const commandes = await getCommandesPrestataires(id_user);
@@ -432,6 +431,7 @@ export default {
                 console.error('Error fetching commandes:', error);
             }
         },
+
 
         async getUsersStore({ commit }) {
             try {
@@ -446,10 +446,9 @@ export default {
             }
         },
 
-
         async getAllUsersAttenteStore({ commit }) {
             try {
-                const usersAttente = await getAllUsersAttente();
+                const usersAttente = await getAllUsersAttente(this.state.userCourant.session_id);
                 commit('SET_USERS_ATTENTE', usersAttente);
                 console.log("usersAttente: ", usersAttente)
                 console.log("usersAttente: ", this.state.usersAttente)
@@ -470,13 +469,12 @@ export default {
             }
         },
 
-
         async acceptUserStore({ commit }, id) {
             try {
                 let result = await acceptUser(id,this.state.userCourant.session_id);
                 console.log("result: ", result)
                 commit('ACCEPT_USER_DELETE', id);
-                commit('ACCEPT_USER_ADD', result);
+                commit('ACCEPT_USER_ADD', result[0]);
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
             }
@@ -492,11 +490,10 @@ export default {
             }
         },
 
-
         async createUserStore({ commit }, body) {
             try {
                 const user = body.user;
-                await createUser(user);
+                await createUser(user, this.state.userCourant.session_id);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -504,14 +501,20 @@ export default {
         },
 
 
-        async createUsersWithStandStore({commit}, user) {
+        async registerClientStore({ commit }, body) {
             try {
-                const body = {
-                    ...user,
-                };
-                console.log("IL EST ICI LE TEST" + JSON.stringify(body))
-                console.log("body: ", body)
-                await createUserWithStand(body);
+                const user = body.user;
+                await registerClient(user);
+                commit('CREATE_USER', body);
+            } catch (err) {
+                console.error("Error in createUserStore():", err);
+            }
+        },
+
+        async registerPrestataireStore({commit}, user) {
+            try {
+                const body = { ...user };
+                await registerPrestataire(body);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -521,14 +524,13 @@ export default {
 
         async updateUserStore({ commit }, {body}) {
             try {
-                await updateUser(body.id_user, body);
+                await updateUser(body.id_user, body, this.state.userCourant.session_id);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
                 console.error("Error in updateUserStore({ ...item, ...payload.body }):", err);
             }
         },
-
 
         async deleteUserStore({ commit }, id) {
             try {

@@ -64,48 +64,38 @@ export default {
             }
         },
 
-
         async updateIsAvailablePrestationStore({ commit }, body) {
             try {
-                console.log("id : " + body.id)
-                console.log("body : " + body.is_available)
-                console.log("body : " + JSON.stringify(body, null, 2))
-                await updateIsAvailablePrestation(body.id, body.is_available);
+                await updateIsAvailablePrestation(body.id, this.state.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-
         async updatePrestationStore({ commit }, body) {
             try {
-                console.log(body)
-                await updatePrestation(body.id_prestation, body)
+                await updatePrestation(body.id_prestation, body, this.state.userCourant.session_id)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-
         async deletePrestationStore({ commit }, id) {
             try {
-                await deletePrestation(id);
+                const session_id = this.state.userCourant.session_id
+                await deletePrestation(id, session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
             }
         },
 
-
         async createPrestationStore({ commit }, body) {
             try {
-                console.log("createPrestation: ", body)
-                console.log("body : " + JSON.stringify(body, null, 2))
-
-
-                let response = await createPrestation(body);
+                const session_id = this.state.userCourant.session_id
+                let response = await createPrestation(body, session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);
@@ -114,6 +104,7 @@ export default {
 
 
 //-----------------------------------------------------------------TypePrestation-----------------------------------------------------------------------//
+
 
 
         async getTypePrestationsStore({ commit }) {

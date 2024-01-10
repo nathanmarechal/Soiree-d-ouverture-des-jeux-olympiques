@@ -39,8 +39,8 @@ export default {
     actions: {
         async updateStandStore({ commit }, {id, body}) {
             try {
-                console.log(id, body)
-                await updateStand(id, body);
+                const session_id = this.state.userCourant.session_id
+                await updateStand(id, body, session_id);
                 commit('UPDATE_STAND', id, body);
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -49,8 +49,8 @@ export default {
 
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
-                console.log(id, body)
-                await updateDescriptionStand(id, body);
+                const session_id = this.state.userCourant.session_id
+                await updateDescriptionStand(id, body, session_id);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -59,7 +59,8 @@ export default {
 
         async deleteStandStore({ commit }, id) {
             try {
-                await deleteStand(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteStand(id, session_id);
                 commit('DELETE_STAND', id);
             } catch (err) {
                 console.error("Error in deleteStandStore():", err);
