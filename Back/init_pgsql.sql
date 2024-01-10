@@ -345,7 +345,7 @@ INSERT INTO droits(libelle) VALUES
 
 ('update_home_page'),
 
-('messages-admin'),
+('messages-admin')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -406,7 +406,6 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (23,2),
 (24,2),
 (25,2),
-(27,2),
 (1,3),
 (2,3),
 (3,3),
@@ -826,7 +825,20 @@ INSERT INTO etat_commande (libelle) VALUES
 ('Validée'),
 ('Annulée');
 
-INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
+INSERT INTO text_accueil (description) VALUES
+('<p style="padding-left: 40px; text-align: justify;">Bienvenue sur le site officiel de la c&eacute;r&eacute;monie d''ouverture des <strong>Jeux Olympiques de 2024 &agrave; Paris&nbsp; se d&eacute;roulant le 26 juillet 2024</strong>, un &eacute;v&eacute;nement qui promet d''&ecirc;tre le point culminant de l''ann&eacute;e, sinon de la d&eacute;cennie ! Pr&eacute;parez-vous &agrave; vivre une exp&eacute;rience extraordinaire qui marquera l''histoire et vous laissera des <strong>souvenirs imp&eacute;rissables</strong>.</p>
+<p style="padding-left: 40px; text-align: justify;">Imaginez-vous au c&oelig;ur de la <strong>Ville Lumi&egrave;re</strong>, entour&eacute; par l''&eacute;l&eacute;gance et le charme de Paris, alors que le monde entier se r&eacute;unit pour c&eacute;l&eacute;brer l''esprit olympique. La c&eacute;r&eacute;monie d''ouverture de Paris 2024 promet d''&eacute;blouir et d''&eacute;merveiller avec un spectacle grandiose, alliant l''art, la musique, la culture et le sport.</p>
+<p style="padding-left: 40px; text-align: justify;">Vivez la magie de la procession des athl&egrave;tes, portant fi&egrave;rement les couleurs de leurs nations, tandis que la flamme olympique s''&eacute;l&egrave;ve majestueusement. Soyez t&eacute;moin de performances artistiques &agrave; couper le souffle, de danses envo&ucirc;tantes et de feux d''artifice &agrave; couper le souffle, illuminant le ciel de Paris.</p>
+<p style="padding-left: 40px; text-align: justify;">Cette soir&eacute;e incroyable sera une c&eacute;l&eacute;bration de l''unit&eacute;, de la paix et de la diversit&eacute;, incarnant les valeurs profondes des Jeux Olympiques. C''est l''occasion de rejoindre 400 000 spectateurs venus du monde entier pour partager cet instant magique.</p>
+<p style="padding-left: 40px; text-align: justify;">Que vous soyez un passionn&eacute; de sport, un amoureux de la culture ou simplement &agrave; la recherche d''une exp&eacute;rience inoubliable &agrave; Paris, la c&eacute;r&eacute;monie d''ouverture des JO 2024 est un &eacute;v&eacute;nement &agrave; ne pas manquer. Pr&eacute;parez-vous &agrave; &ecirc;tre inspir&eacute;, &eacute;mu et &eacute;merveill&eacute;. R&eacute;servez vos billets d&egrave;s maintenant et faites partie de l''histoire olympique &agrave; Paris en 2024 en r&eacute;servant votre place sur les quais, ou profitez-en <strong>gratuitement</strong> !</p>
+<p style="padding-left: 40px; text-align: justify;">Rejoignez-nous pour une soir&eacute;e qui c&eacute;l&egrave;bre le meilleur de l''humanit&eacute;, o&ugrave; les fronti&egrave;res disparaissent, les r&ecirc;ves se r&eacute;alisent et l''espoir brille plus fort que jamais. Paris 2024, c''est bien plus qu''une c&eacute;r&eacute;monie d''ouverture, c''est une invitation &agrave; un voyage extraordinaire au c&oelig;ur de l''<strong>Olympisme</strong>. Vous retrouverez &eacute;galement un grand nombre d''activit&eacute;s et d''articles disponibles afin de vous garantir de ne jamais vous ennuyer.</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://localhost:3000/api/homePage/picture-description/description_home_page1704922284.jpeg" alt="" width="744" height="786" /></p>'),
+('<p style="text-align: justify;">Lors de la c&eacute;r&eacute;monie d''ouverture des Jeux Olympiques de 2024 &agrave; Paris, l''exp&eacute;rience va bien au-del&agrave; de la c&eacute;l&eacute;bration sportive. D&eacute;couvrez un <strong>monde d''opportunit&eacute;s &agrave; travers notre site interactif</strong>. Que vous soyez un amateur de sport, un passionn&eacute; de culture, un gourmand ou tout simplement en qu&ecirc;te de divertissement, notre &eacute;v&eacute;nement a &eacute;t&eacute; con&ccedil;u pour satisfaire tous les go&ucirc;ts.</p>
+<p style="text-align: justify;">Explorez la <strong>carte</strong> &agrave; droite pour d&eacute;couvrir une vari&eacute;t&eacute; de stands et d''attractions qui vous promettent une exp&eacute;rience inoubliable. Plongez-vous dans la culture fran&ccedil;aise &agrave; travers des expositions artistiques, des d&eacute;monstrations artisanales et des performances envo&ucirc;tantes. D&eacute;couvrez la cuisine fran&ccedil;aise et internationale dans nos stands gastronomiques, o&ugrave; <strong>des saveurs exquises vous attendent</strong>.</p>
+<p style="text-align: justify;">Pour les amateurs de sport, des zones interactives vous permettront de vivre l''excitation des comp&eacute;titions olympiques. Testez vos comp&eacute;tences dans des simulations sportives, assistez &agrave; des d&eacute;monstrations d''athl&egrave;tes renomm&eacute;s et <strong>ressentez l''adr&eacute;naline de l''Olympisme.</strong></p>
+<p style="text-align: justify;">La page "<strong>Informations</strong>" est votre source essentielle pour tout ce dont vous avez besoin pour profiter pleinement de l''&eacute;v&eacute;nement. .</p>
+<p style="text-align: justify;">Au-del&agrave; de ces &eacute;l&eacute;ments, la c&eacute;r&eacute;monie d''ouverture r&eacute;serve bien d''autres surprises, des spectacles en direct aux divertissements pour tous les &acirc;ges. Cr&eacute;ez des souvenirs m&eacute;morables en explorant tout ce que notre &eacute;v&eacute;nement a &agrave; offrir.</p>
+<p style="text-align: justify;">Rejoignez-nous pour c&eacute;l&eacute;brer l''unit&eacute;, la paix et la diversit&eacute; &agrave; travers le sport, la culture, la gastronomie et les arts. La c&eacute;r&eacute;monie d''ouverture des JO 2024 &agrave; Paris est bien plus qu''un &eacute;v&eacute;nement sportif, c''est une invitation &agrave; une aventure extraordinaire au c&oelig;ur de l''Olympisme. Venez nous rejoindre pour une soir&eacute;e qui &eacute;blouira vos sens et vous laissera des souvenirs durables.</p>');
 
 INSERT INTO conversations(id_creator, titre, resolu) VALUES
              (2,'nathan a push un truc pas fini',false),
@@ -845,3 +857,5 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 (1,1,'jdjdlqkjd',now())
 RETURNING *
 ;
+
+select * from text_accueil;
