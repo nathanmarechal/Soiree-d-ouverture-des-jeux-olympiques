@@ -31,7 +31,7 @@ export default {
         },
         async getConversationsUserStore({commit}){
             try {
-                const result = await getConversationsForUser(this.getters.getCurrentUser.id_user,this.getters.getCurrentUser.session_id);
+                const result = await getConversationsForUser(this.$store.getters['user.getUserId'],this.$store.getters['user.getSessionId']);
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
                 } else {

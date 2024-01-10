@@ -41,7 +41,7 @@ export default {
 
         async uploadAvisStore({ commit }, {id_stand, id_user, note, commentaire}) {
             try {
-                const avis = await uploadAvis({id_stand, id_user, note, commentaire}, this.state.userCourant.session_id);
+                const avis = await uploadAvis({id_stand, id_user, note, commentaire},this.$store.getters['user.getSessionId']);
                 commit('ADD_AVIS', avis);
             } catch (error) {
                 console.error('Error fetching avis:', error);
@@ -50,7 +50,7 @@ export default {
 
         async deleteAvisStore({ commit }, id) {
             try {
-                await deleteAvis(id, this.state.userCourant.session_id);
+                await deleteAvis(id, this.$store.getters['user.getSessionId']);
                 console.log("deleteAvisStore: ", id)
                 commit('DELETE_AVIS', id);
             } catch (error) {

@@ -80,7 +80,7 @@ export default {
 
         async createEmplacementLogistiqueStore({commit}, body) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 let response = await createEmplacementLogistique(body, session_id);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
@@ -90,7 +90,7 @@ export default {
 
         async updateEmplacementLogistiqueStore({commit}, {id, body}) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 let response = await updateEmplacementLogistique(id, body, session_id);
                 commit('UPDATE_EMPLACEMENT_LOGISITIQUE', {id: id, body: response[0]});
             } catch (err) {
@@ -100,7 +100,7 @@ export default {
 
         async deleteEmplacementLogistiqueStore({commit}, id) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 await deleteEmplacementLogistique(id, session_id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
