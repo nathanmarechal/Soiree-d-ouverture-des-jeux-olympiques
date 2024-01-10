@@ -6,7 +6,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
+    updateUserCourantWoPassword, registerPrestataire, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -627,7 +627,7 @@ export default new Vuex.Store({
 
         async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
-                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
+                await addPrestationToPanierUser(id_user, id_prestation, quantite, id_creneau);
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -667,7 +667,9 @@ export default new Vuex.Store({
 
         async updateSoldeStore({ commit }, {id_user, solde}) {
             try {
-                await updateSolde({id_user, solde});
+                const session_id = this.state.userCourant.session_id
+                console.log("updateSoldeStore: ", id_user, solde)
+                await updateSolde(session_id, id_user, solde);
                 console.log("updateSoldeStore: ", id_user, solde)
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
@@ -850,7 +852,7 @@ export default new Vuex.Store({
                 };
                 console.log("IL EST ICI LE TEST" + JSON.stringify(body))
                 console.log("body: ", body)
-                await createUserWithStand(body);
+                await registerPrestataire(body);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -883,7 +885,8 @@ export default new Vuex.Store({
         async getRolesStore({ commit }) {
             try {
                 const roles = await getAllRoles();
-                //if (result.error === 0) {
+                console.log("ROLEROLEROLE SANS CROCHET 0: ", roles)
+                console.log("ROLEROLEROLE [0]: ", roles[0])
                 if (Array.isArray(roles)) {
                     commit('SET_ROLES', roles);
                 } else {
@@ -898,9 +901,10 @@ export default new Vuex.Store({
             try {
                 console.log("createRoleStore: ", body)
                 const data = await createRole(body, this.state.userCourant.session_id);
-                //console.log("datacreate: ", data.rows[0]);
-                commit('CREATE_ROLE', data.rows[0]);
-                return data.rows[0];
+                console.log("datacreate: ", data);
+                console.log("datacreate: ", data[0]);
+                commit('CREATE_ROLE', data[0]);
+                return data[0];
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
             }
@@ -909,8 +913,8 @@ export default new Vuex.Store({
         async deleteRoleStore({ commit }, id) {
             try {
                 const data = await deleteRole(id,this.state.userCourant.session_id);
-                //console.log("datadelete: ", data.rows[0].id_role);
-                commit('DELETE_ROLE', data.rows[0].id_role);
+                //console.log("datadelete: ", data[0].id_role);
+                commit('DELETE_ROLE', data[0].id_role);
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }
@@ -920,8 +924,9 @@ export default new Vuex.Store({
             try {
                 console.log("updateRoleStore: ", body)
                 const data = await updateRole(body, this.state.userCourant.session_id);
-                //console.log("dataupdate: ", data);
-                commit('UPDATE_ROLE', data.id_role, data);
+                console.log("dataupdate: ", data, data[0].id_role);
+                commit('UPDATE_ROLE', data[0].id_role);
+                console.log("dataupdate2: ", data[0]);
                 return data;
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
@@ -961,16 +966,8 @@ export default new Vuex.Store({
 
         async createRoleDroitAssociationStore({ commit }, body) {
             try {
-                //console.log("createRoleDroitAssociationStore: ", body)
                 const data = await createRoleDroitAssociation(body, this.state.userCourant.session_id);
-                //console.log("datcreatea: ", data[0]);
-                //let statebefore = this.state.roleDroitAssociation
-                //console.log("statebefore", statebefore)
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
-                //let stateafter = this.state.roleDroitAssociation
-                //console.log("stateafter", stateafter)
-                //let newline = stateafter.filter(item => !statebefore.includes(item))
-                //console.log("newline", newline)
                 return data[0];
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
@@ -1161,6 +1158,7 @@ export default new Vuex.Store({
         async deleteZoneStore({ commit }, id) {
             try {
                 const session_id = this.state.userCourant.session_id
+                console.log("deleteZoneStore: ", id, session_id)
                 await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
@@ -1170,7 +1168,7 @@ export default new Vuex.Store({
 
         async updateZoneStore({ commit }, {id, body}) {
             try {
-                const session_id = this.userCourant.session_id
+                const session_id = this.state.userCourant.session_id
                 await updateZone(id, body, session_id);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
@@ -1182,6 +1180,7 @@ export default new Vuex.Store({
             try {
                 const session_id = this.state.userCourant.session_id
                 const newZone = await createZone(body, session_id);
+                console.log("newZone: ", newZone, newZone[0])
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);

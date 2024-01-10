@@ -14,8 +14,10 @@ exports.getCommandeByUserId = (req, res) => {
 }
 
 exports.addCommande = (req, res) => {
+
     const id_user = req.body.id_user;
-    console.log(id_user, "id_user dans le controlleur commande.controller.js")
+    console.log("id_user:" + id_user + " dans le controller commande.controller.js")
+
     commandeService.addCommande(id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

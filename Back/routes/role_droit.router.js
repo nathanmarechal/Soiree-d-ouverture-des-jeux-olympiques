@@ -66,7 +66,7 @@ router.post("/add", rightsMiddleware.checkRight, roleMiddleware.checkRoleExists,
 
 /**
  * @swagger
- * /delete:
+ * /api/role-droit/delete:
  *   delete:
  *     summary: Deletes a role-droit association
  *     tags: [RoleDroit]

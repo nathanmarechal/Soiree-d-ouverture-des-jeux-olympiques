@@ -126,7 +126,7 @@ export default {
         // Save the selected droits for the role
         for (const droitId of this.selectedDroits) {
           await this.createRoleDroitAssociationStore({
-            id_role: result.id_role,
+            id_role: result[0].id_role,
             id_droit: droitId,
           });
         }

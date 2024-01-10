@@ -25,7 +25,8 @@ async function getScheduleByUserIdFromApi(id_user) {
 
 }
 async function addCommandeFromApi(id_user){
-    return postRequest('/commande/add', {id_user}, 'ADDPCOMMANDEFROMPANIERUSER')
+    id_user = {id_user: id_user}
+    return postRequest('/commande/add', id_user, 'ADDCOMMANDEFROMPANIERUSER')
 }
 
 async function getLigneCommandeBycommandeId(id_commande){

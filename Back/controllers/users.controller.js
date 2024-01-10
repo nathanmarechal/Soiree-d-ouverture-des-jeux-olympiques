@@ -180,8 +180,6 @@ exports.updateSolde = (req, res) => {
 
     console.log("updateSolde", { id, newsolde });
 
-    console.log(typeof id);
-    console.log(typeof newsolde);
 
     usersService.updateSolde(id, newsolde, (error, data) => {
         if (error) {

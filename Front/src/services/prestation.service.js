@@ -56,7 +56,7 @@ async function updateIsAvailablePrestation(id, body, session_id) {
     return answer
 }
 async function updatePrestationFromAPI(id, body, session_id) {
-    return patchRequest('/prestations/update?session_id='+session_id+'&id_prestation' + id, body, 'UPDATEPRESTATION')
+    return patchRequest('/prestations/update?session_id='+session_id+'&id_prestation=' + id, body, 'UPDATEPRESTATION')
 }
 
 async function updatePrestation(id, body, session_id) {
@@ -71,7 +71,7 @@ async function deletePrestation(id, session_id){
 }
 
 async function deletePrestationFromApi(id, session_id){
-    return deleteRequest('/prestations/delete?session_id'+session_id+'&id_prestation='+id , 'DELETEPRESTATIONFROMPANIERUSER')
+    return deleteRequest('/prestations/delete?session_id='+session_id+'&id_prestation='+id , 'DELETEPRESTATIONFROMPANIERUSER')
 }
 
 

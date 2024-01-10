@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center">
+  <form @submit.prevent="submitForm" class="d-flex gap-3 flex-column justify-content-center"><br>
     <div class="form-group">
       <label for="libelle">{{translate("addZone_libelle")}}</label>
       <input v-model="zone.libelle" id="libelle" :placeholder="translate('label_placeholder')" class="form-control">
@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllTypeZone"]),
+    ...mapGetters(["getAllTypeZone", "getAllZone"]),
   },
   methods: {
     translate,
@@ -63,6 +63,7 @@ export default {
 
         console.log("Données de la zone :", this.zone);
         await this.createZoneStore(this.zone);
+        console.log(this.getAllZone);
         await this.$router.push('/admin/zones/');
       } catch (error) {
         console.error("Erreur lors de la création de la zone :", error);
