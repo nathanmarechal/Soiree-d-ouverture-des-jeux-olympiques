@@ -29,7 +29,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getAllZone', 'getAllTypeZone']),
+    //...mapGetters(['getAllZone', 'getAllTypeZone']),
+    ...mapGetters('ZoneEtType', ['getAllZone', 'getAllTypeZone']),
   },
   data() {
     return {
@@ -38,8 +39,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getZonesStore', 'getTypeZonesStore']),
-    ...mapMutations(['SET_SELECTED_TYPE_ZONES', 'SET_SELECTED_ZONE']),
+    //...mapActions(['getZonesStore', 'getTypeZonesStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore', 'getTypeZonesStore']),
+    //...mapMutations(['SET_SELECTED_TYPE_ZONES', 'SET_SELECTED_ZONE']),
+    ...mapMutations('ZoneEtType', ['SET_SELECTED_TYPE_ZONES', 'SET_SELECTED_ZONE']),
     async loadData(){
       try {
         if (this.getAllZone.length === 0)
@@ -52,11 +55,11 @@ export default {
       }
     },
   updateFilterZone() {
-    this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
+    this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
     console.log(this.selectedZones)
   },
     updateFilterTypeZone(){
-      this.$store.commit('SET_SELECTED_TYPE_ZONES', this.selectedTypeZones);
+      this.$store.commit('ZoneEtType/SET_SELECTED_TYPE_ZONES', this.selectedTypeZones);
       console.log(this.selectedTypeZones)
 
     }

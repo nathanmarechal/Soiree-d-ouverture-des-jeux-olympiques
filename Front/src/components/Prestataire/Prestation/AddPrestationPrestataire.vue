@@ -64,7 +64,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
+    //...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('prestationEtType', ['getAllTypePrestation'])
   },
   async mounted() {
     try {
@@ -76,7 +78,8 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['getTypePrestationsStore','createPrestationStore']),
+    //...mapActions(['getTypePrestationsStore','createPrestationStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore','createPrestationStore']),
     async loadData(){
         if (this.getAllTypePrestation.length === 0)
           await this.getTypePrestationsStore()

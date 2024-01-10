@@ -25,7 +25,7 @@
 <script>
 import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
-import {mapActions, mapMutations} from "vuex";
+import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {translate} from "../lang/translationService";
@@ -85,11 +85,11 @@ export default {
    */
   methods: {
     translate,
-    ...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
-    ...mapMutations(['GENERATE_SCHEDULE']),
+    //...mapActions(['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
+    ...mapActions('user', ['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
 
     closeModal() {
-      this.$store.commit('SET_LOGIN_MODAL', false);
+      this.$store.commit('user/SET_LOGIN_MODAL', false);
     },
 
     isEmpty() {
@@ -124,34 +124,34 @@ export default {
                       this.currentUser.id_role = res.id_role;
                       this.currentUser.id_stand = res.id_stand;
                       this.currentUser.solde = parseFloat(res.solde);
-                      this.$store.commit('SET_CURRENT_USER', this.currentUser)
+                      this.$store.commit('user/SET_CURRENT_USER', this.currentUser)
                       console.log("id_user : ", this.currentUser.id_user)
                       getPanierUserCourant(res.id_user)
                           .then(res=>{
                             console.log("panier : ", res)
-                            this.$store.commit('SET_PANIER_USER_COURANT', res)
+                            this.$store.commit('user/SET_PANIER_USER_COURANT', res)
                           })
                       getCommandeUserCourant(res.id_user)
                           .then(res=>{
                             console.log("commande : ", res)
-                            this.$store.commit('SET_COMMANDES_USER_COURANT', res)
+                            this.$store.commit('user/SET_COMMANDES_USER_COURANT', res)
                           })
                       getScheduleByUserId(res.id_user)
                           .then(res=>{
                             console.log("schedule : ", res)
-                            this.$store.commit('SET_SCHEDULE', res)
+                            this.$store.commit('user/SET_SCHEDULE', res)
                           })
                       getDroitsRole(res.id_role)
                           .then(res=>{
                             console.log("droits : ", res)
-                            this.$store.commit('SET_DROITS_USER_COURANT', res)
+                            this.$store.commit('user/SET_DROITS_USER_COURANT', res)
                             console.log("state droits : "+this.$store.getters.getCurrentUser.droits)
                           })
 
                       this.email=""
                       this.password=""
 
-                      this.$store.commit('SET_IS_USER_CONNECTED', true);
+                      this.$store.commit('user/SET_IS_USER_CONNECTED', true);
                       this.closeModal();
 //                      console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
                     })

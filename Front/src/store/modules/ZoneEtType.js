@@ -1,6 +1,7 @@
 import {createZone, deleteZone, getAllTypeZones, getAllZones, updateZone} from "@/services/map.service";
 
 export default {
+    namespaced: true,
     state: {
         typeZone: [],
         zones: [],

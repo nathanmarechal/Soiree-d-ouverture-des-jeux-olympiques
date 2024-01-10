@@ -1,6 +1,7 @@
 import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
 
 export default {
+    namespaced: true,
     state: {
         texts_home: [],
     },

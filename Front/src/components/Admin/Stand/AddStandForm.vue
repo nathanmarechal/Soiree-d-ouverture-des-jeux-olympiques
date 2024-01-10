@@ -91,7 +91,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+    //...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore', 'getUsersStore']),
     async loadData() {
       try {
         await this.getUsersStore();
@@ -168,13 +169,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'getAreaSelectedForStand',
-      'getAllUsers',
-      'getAllRoles',
-      'getAllDroits',
-      'getAllRoleDroitAssociation',
-    ]),
+    //...mapGetters(['getAreaSelectedForStand', 'getAllUsers', 'getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation',]),
+    ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
+    ...mapGetters('user', ['getAllUsers']),
+    ...mapGetters('emplacements', ['getAreaSelectedForStand']),
     getAllUsersWithoutStand() {
       var data;
       data = this.getAllUsers.filter(user => user.id_stand === null);

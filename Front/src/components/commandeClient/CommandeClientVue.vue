@@ -32,7 +32,8 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId']),
+    //...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId']),
+    ...mapGetters('user', ['getCurrentUser', 'getCommandeUserCourantGetters','getLigneCommandeBycommandeId']),
   },
   // this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
       //     .then(res=>{
@@ -46,7 +47,8 @@ export default {
 
 
   methods: {
-    ...mapActions(['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
+    //...mapActions(['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
+    ...mapActions('user', ['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
 
     viewDetails(id_commande) {
       this.$router.push({ name: 'DetailCommande', params: { id: id_commande } });

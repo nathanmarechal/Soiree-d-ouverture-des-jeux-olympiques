@@ -70,11 +70,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllZone','getAllStand']),
+    //...mapGetters('ZoneEtType', ['getAllZone']),
+    ...mapGetters('stands', ['getAllStand']),
   },
   methods: {
     translate,
-    ...mapActions(['updateAreasStore', 'deleteAreasStore', 'getStandsStore']),
+    //...mapActions(['updateAreasStore', 'deleteAreasStore', 'getStandsStore']),
+    ...mapActions('emplacements', ['updateAreasStore', 'deleteAreasStore']),
+    ...mapActions('stands', ['getStandsStore']),
     async loadData() {
       await this.getStandsStore();
     },

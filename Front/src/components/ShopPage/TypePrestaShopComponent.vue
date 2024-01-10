@@ -25,10 +25,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getSelectedTypePrestation','getAllTypePrestation']),
+    //...mapGetters(['getSelectedTypePrestation','getAllTypePrestation']),
+    ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation']),
   },
   methods: {
-    ...mapActions(['getTypePrestationsStore']),
+    //...mapActions(['getTypePrestationsStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore']),
     async loadData(){
       if (this.getAllTypePrestation.length === 0){
         await this.getTypePrestationsStore()

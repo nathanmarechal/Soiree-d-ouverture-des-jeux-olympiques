@@ -1,6 +1,7 @@
 import {createArea, deleteArea, getAllAreas, updateArea} from "@/services/map.service";
 
 export default {
+    namespaced: true,
     state: {
         areas : [],
         areaSelectedForStand: null,

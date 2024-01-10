@@ -46,7 +46,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllTypeEmplacementLogistique']),
+    //...mapGetters(['getAllTypeEmplacementLogistique']),
+    ...mapGetters('emplacementLogistiqueEtType', ['getAllEmplacementLogistique']),
     selectedType() {
       // Récupérer le type d'emplacement logistique sélectionné
       return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === this.editableEmplacement.id_type_emplacement_logistique);
@@ -62,7 +63,8 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['updateEmplacementLogistiqueStore', 'deleteEmplacementLogistiqueStore']),
+    //...mapActions(['updateEmplacementLogistiqueStore', 'deleteEmplacementLogistiqueStore']),
+    ...mapActions('emplacementLogistiqueEtType', ['updateEmplacementLogistiqueStore', 'deleteEmplacementLogistiqueStore']),
 
     closeModal() {
       this.$emit('close');

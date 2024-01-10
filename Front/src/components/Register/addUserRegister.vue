@@ -205,13 +205,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRoles', 'getCurrentUser'])
+    //...mapGetters(['getAllRoles', 'getCurrentUser']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('roleEtDroit', ['getAllRoles'])
   },
 
 
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
+    //...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
+    ...mapActions('user', [ 'createUserStore', 'createUsersWithStandStore']),
+    ...mapActions('roleEtDroit', ['getRolesStore']),
 
 
     dataEmplacement(id_emplacement) {

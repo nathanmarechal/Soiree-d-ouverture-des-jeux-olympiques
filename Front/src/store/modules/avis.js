@@ -1,6 +1,7 @@
 import {deleteAvis, getAvisByIdStand, uploadAvis} from "@/services/avis.service";
 
 export default {
+    namespaced: true,
     state: {
         avis : null,
     },

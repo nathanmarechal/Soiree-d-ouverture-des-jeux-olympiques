@@ -42,7 +42,7 @@ export default {
 
       selectedTypePrestations:[],
       selectedZones:[],
-      searchQuery: this.$store.state.searchQuery
+      searchQuery: this.$store.state.user.searchQuery
     };
   },
   async mounted() {
@@ -56,11 +56,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getSelectedTypePrestation', 'getSelectedZone', 'getAllTypePrestation', 'getAllZone']),
+    //...mapGetters(['getSelectedTypePrestation', 'getSelectedZone', 'getAllTypePrestation', 'getAllZone']),
+    ...mapGetters('ZoneEtType', ['getSelectedZone', 'getAllZone']),
+    ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation']),
   },
   methods: {
     translate,
-    ...mapActions(['getTypePrestationsStore', 'getZonesStore']),
+    //...mapActions(['getTypePrestationsStore', 'getZonesStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore']),
     async loadData() {
       if (this.getAllTypePrestation.length === 0) {
         await this.getTypePrestationsStore();
@@ -70,26 +74,29 @@ export default {
       }
     },
     updateFilterTypePrestation() {
-      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestations);
+      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestations);
       console.log(this.selectedTypePrestations)
-      console.log(this.$store.state.selectedTypePrestation)
+      console.log(this.$store.state.prestationEtType.selectedTypePrestation)
     },
     updateFilterZone() {
-      this.$store.commit('SET_SELECTED_ZONE', this.selectedZones);
+      this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
       console.log(this.selectedZones)
-      console.log(this.$store.state.selectedZone)
+      console.log(this.$store.state.ZoneEtType.selectedZone)
     },
     updateSearchQuery(event) {
       console.log(event); // Pour déboguer et voir l'objet de l'événement
       if (event && event.target && event.target.value !== undefined) {
         const searchValue = event.target.value;
-        this.$store.commit('SET_SEARCH_QUERY', searchValue);
+        this.$store.commit('user/SET_SEARCH_QUERY', searchValue);
         console.log('inside filter: ' + searchValue);
       } else {
         console.log('Erreur : L\'événement ou la valeur de l\'événement est undefined');
       }
     },
-    ...mapMutations(['SET_SELECTED_TYPE_PRESTATION', 'SET_SELECTED_ZONE', 'SET_SEARCH_QUERY']),
+    //...mapMutations(['SET_SELECTED_TYPE_PRESTATION', 'SET_SELECTED_ZONE', 'SET_SEARCH_QUERY']),
+    ...mapMutations('user', ['SET_SEARCH_QUERY']),
+    ...mapMutations('prestationEtType', ['SET_SELECTED_TYPE_PRESTATION']),
+    ...mapMutations('ZoneEtType', ['SET_SELECTED_ZONE']),
   },
 };
 </script>

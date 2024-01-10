@@ -18,6 +18,7 @@ import {
 } from "@/services/panier.service";
 
 export default {
+    namespaced: true,
     state: {
         userCourant: {
             "session_id": null,

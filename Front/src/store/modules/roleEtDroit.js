@@ -7,6 +7,7 @@ import {
 } from "@/services/role_droit.service";
 
 export default {
+    namespaced: true,
     state: {
         roles : [],
         droits : [],

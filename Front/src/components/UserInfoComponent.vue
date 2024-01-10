@@ -36,11 +36,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCurrentUser"]),
+    //...mapGetters(["getCurrentUser"]),
+    ...mapGetters('user', ["getCurrentUser"]),
     },
     methods: {
       translate,
-      ...mapActions(['updateSoldeStore', 'updateUserCourantWoPasswordStore']),
+      //...mapActions(['updateSoldeStore', 'updateUserCourantWoPasswordStore']),
+      ...mapActions('user', ['updateSoldeStore', 'updateUserCourantWoPasswordStore']),
       editMode(){
         this.$emit('edit-initiated');
       },

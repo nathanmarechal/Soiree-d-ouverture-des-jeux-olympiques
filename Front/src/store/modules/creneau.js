@@ -1,6 +1,7 @@
 import {getAllCreneaux} from "@/services/panier.service";
 
 export default {
+    namespaced: true,
     state: {
         creneau: [],
     },

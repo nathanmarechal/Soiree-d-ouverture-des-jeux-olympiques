@@ -1,11 +1,12 @@
 import {
     createPrestation,
-    deletePrestation,
+    deletePrestation, getAllPrestations,
     getAllTypePrestations, updateIsAvailablePrestation,
     updatePrestation
 } from "@/services/prestation.service";
 
 export default {
+    namespaced: true,
     state: {
         prestations: [],
         typePresations: [],
@@ -50,6 +51,20 @@ export default {
 
     },
     actions: {
+        async getPrestationsStore({ commit }) {
+            try {
+                const result = await getAllPrestations();
+                if (Array.isArray(result)) {
+                    commit('SET_PRESTATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getPrestations():", err);
+            }
+        },
+
+
         async updateIsAvailablePrestationStore({ commit }, body) {
             try {
                 console.log("id : " + body.id)

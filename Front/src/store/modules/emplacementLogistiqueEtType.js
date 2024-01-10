@@ -6,6 +6,7 @@ import {
 } from "@/services/emplacementLogistique.service";
 
 export default {
+    namespaced: true,
     state: {
         typeEmplacementLogistique: [],
         emplacementLogistique: [],

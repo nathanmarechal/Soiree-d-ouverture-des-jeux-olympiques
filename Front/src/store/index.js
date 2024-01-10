@@ -9,7 +9,7 @@ import roleEtDroit from "@/store/modules/roleEtDroit";
 import stands from "@/store/modules/Stands";
 import textsHome from "@/store/modules/textsHome";
 import ZoneEtType from "@/store/modules/ZoneEtType";
-
+import avis from "@/store/modules/avis";
 
 Vue.use(Vuex);
 
@@ -23,6 +23,7 @@ export default new Vuex.Store({
         roleEtDroit,
         stands,
         textsHome,
-        ZoneEtType
+        ZoneEtType,
+        avis,
     }
 });

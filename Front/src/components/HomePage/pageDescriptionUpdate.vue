@@ -53,10 +53,15 @@ export default {
     this.homeDescription = this.hd
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getTextsHome', 'getAllRoles']),
+    //...mapGetters(['getCurrentUser', 'getTextsHome', 'getAllRoles']),
+    ...mapGetters('textsHome', ['getTextsHome']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('roleEtDroit', ['getAllRoles']),
   },
   methods: {
-    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore', 'getRolesStore']),
+    //...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore', 'getRolesStore']),
+    ...mapActions('textsHome', ['getTextsHomeStore','updateDescriptionHomePageStore']),
+    ...mapActions('roleEtDroit', ['getRolesStore']),
     async loadData() {
       try {
         if (this.getTextsHome.length === 0){

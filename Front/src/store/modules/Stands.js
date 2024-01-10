@@ -1,6 +1,7 @@
 import {deleteStand, getAllStands, updateDescriptionStand, updateStand} from "@/services/stand.service";
 
 export default {
+    namespaced: true,
     state: {
         stands: [],
         selectedStands: [],

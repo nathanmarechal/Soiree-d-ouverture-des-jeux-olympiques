@@ -62,11 +62,14 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllUsersAttente', 'getAllStandAttente']),
+      //...mapGetters(['getAllUsersAttente', 'getAllStandAttente']),
+      ...mapGetters('user', ['getAllUsersAttente','getAllStandAttente']),
+
     },
     methods: {
       translate,
-      ...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
+      //...mapActions([ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
+      ...mapActions('user', [ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
