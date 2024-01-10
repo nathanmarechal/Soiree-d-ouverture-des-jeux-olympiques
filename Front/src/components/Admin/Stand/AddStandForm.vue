@@ -105,7 +105,7 @@ export default {
     getImageSrc(imageName) {
       try {
         console.log(imageName)
-        return require('../../../assets/stand/' + imageName)
+        return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.log("pas d'image")
       }

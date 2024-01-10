@@ -104,7 +104,7 @@ export default {
     getImageSrc(imageName) {
       try {
         console.log(imageName)
-        return require('../../../assets/stand/' + imageName)
+        return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.error('Erreur lors du chargement de l’image');
         return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
