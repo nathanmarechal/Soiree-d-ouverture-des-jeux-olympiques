@@ -19,7 +19,7 @@
         <a @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </a>
       </div>
     </div>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -29,7 +29,7 @@ import {mapActions, mapMutations} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {translate} from "../lang/translationService";
-import {getDroitsRole} from "@/services/droits.service";
+import {getDroitsRole} from "@/services/droit.service";
 
 export default {
   props : ['isLoginOpen'],
@@ -110,8 +110,7 @@ export default {
             .then(res=> {
               //getUserData()
               this.sessionId = res;
-              if(this.sessionId!="")
-              {
+              if(this.sessionId!=""){
                 getUserFromSessionId(this.sessionId)
                     .then(res=>{
                       this.currentUser.id_user = res.id_user;
