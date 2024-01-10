@@ -27,7 +27,7 @@ export default {
     actions: {
         async updateDescriptionHomePageStore({ commit }, {id_text_accueil, body}) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 await updateDescriptionHomePage(id_text_accueil, body, session_id);
                 commit('UPDATE_HomePage', {id_text_accueil, body});
             } catch (err) {

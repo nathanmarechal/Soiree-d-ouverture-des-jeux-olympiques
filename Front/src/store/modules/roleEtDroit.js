@@ -109,7 +109,7 @@ export default {
         async createRoleStore({commit}, body) {
             try {
                 console.log("createRoleStore: ", body)
-                const data = await createRole(body, this.state.userCourant.session_id);
+                const data = await createRole(body, this.$store.getters['user.getSessionId']);
                 console.log("datacreate: ", data);
                 console.log("datacreate: ", data[0]);
                 commit('CREATE_ROLE', data[0]);
@@ -121,7 +121,7 @@ export default {
 
         async deleteRoleStore({commit}, id) {
             try {
-                const data = await deleteRole(id, this.state.userCourant.session_id);
+                const data = await deleteRole(id, this.$store.getters['user.getSessionId']);
                 //console.log("datadelete: ", data[0].id_role);
                 commit('DELETE_ROLE', data[0].id_role);
             } catch (err) {
@@ -132,7 +132,7 @@ export default {
         async updateRoleStore({commit}, body) {
             try {
                 console.log("updateRoleStore: ", body)
-                const data = await updateRole(body, this.state.userCourant.session_id);
+                const data = await updateRole(body, this.$store.getters['user.getSessionId']);
                 console.log("dataupdate: ", data, data[0].id_role);
                 commit('UPDATE_ROLE', data[0].id_role);
                 console.log("dataupdate2: ", data[0]);
@@ -175,7 +175,7 @@ export default {
 
         async createRoleDroitAssociationStore({commit}, body) {
             try {
-                const data = await createRoleDroitAssociation(body, this.state.userCourant.session_id);
+                const data = await createRoleDroitAssociation(body, this.$store.getters['user.getSessionId']);
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
                 return data[0];
             } catch (err) {
@@ -186,7 +186,7 @@ export default {
         async deleteRoleDroitAssociationStore({commit}, body) {
             try {
                 //console.log("deleteRoleDroitAssociationStore: ", body)
-                const data = await deleteRoleDroitAssociation(body, this.state.userCourant.session_id);
+                const data = await deleteRoleDroitAssociation(body, this.$store.getters['user.getSessionId']);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
@@ -197,7 +197,7 @@ export default {
         async deleteRoleDroitAssociationForSpecificRoleStore({commit}, id_role) {
             try {
                 //console.log("deleteRoleDroitAssociationForSpecificRoleStore: ", id_role)
-                const data = await deleteRoleDroitAssociationForSpecificRole(id_role, this.state.userCourant.session_id);
+                const data = await deleteRoleDroitAssociationForSpecificRole(id_role, this.this.$store.getters['user.getSessionId']);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
             } catch (err) {
