@@ -100,11 +100,12 @@ async function deleteUserFromAPI(id,session_id) {
 }
 
 async function updateSolde(session_id, id_user, body) {
+    body = {solde: body}
     return await updateSoldeFromAPI(session_id, id_user, body)
 }
 
 async function updateSoldeFromAPI(session_id, id_user, body) {
-    return patchRequest('/users/updateSolde?session_id='+session_id+'&id_user='+id_user, body, 'UPDATESOLDE')
+    return patchRequest('/users/updateSolde?session_id='+session_id+'&id_user='+id_user,body, 'UPDATESOLDE')
 }
 
 async function updateUserCourantWoPassword(session_id, id, body) {

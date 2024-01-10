@@ -627,7 +627,7 @@ export default new Vuex.Store({
 
         async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
-                await addPrestationToPanierUser({id_user, id_prestation, quantite, id_creneau});
+                await addPrestationToPanierUser(id_user, id_prestation, quantite, id_creneau);
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -667,7 +667,9 @@ export default new Vuex.Store({
 
         async updateSoldeStore({ commit }, {id_user, solde}) {
             try {
-                await updateSolde({id_user, solde});
+                const session_id = this.state.userCourant.session_id
+                console.log("updateSoldeStore: ", id_user, solde)
+                await updateSolde(session_id, id_user, solde);
                 console.log("updateSoldeStore: ", id_user, solde)
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
@@ -883,7 +885,8 @@ export default new Vuex.Store({
         async getRolesStore({ commit }) {
             try {
                 const roles = await getAllRoles();
-                //if (result.error === 0) {
+                console.log("ROLEROLEROLE SANS CROCHET 0: ", roles)
+                console.log("ROLEROLEROLE [0]: ", roles[0])
                 if (Array.isArray(roles)) {
                     commit('SET_ROLES', roles);
                 } else {
@@ -963,16 +966,8 @@ export default new Vuex.Store({
 
         async createRoleDroitAssociationStore({ commit }, body) {
             try {
-                //console.log("createRoleDroitAssociationStore: ", body)
                 const data = await createRoleDroitAssociation(body, this.state.userCourant.session_id);
-                //console.log("datcreatea: ", data[0]);
-                //let statebefore = this.state.roleDroitAssociation
-                //console.log("statebefore", statebefore)
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
-                //let stateafter = this.state.roleDroitAssociation
-                //console.log("stateafter", stateafter)
-                //let newline = stateafter.filter(item => !statebefore.includes(item))
-                //console.log("newline", newline)
                 return data[0];
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
