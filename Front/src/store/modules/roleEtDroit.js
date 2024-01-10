@@ -91,10 +91,11 @@ export default {
     actions: {
 //----------------------------------------------------------------------Role--------------------------------------------------------------------//
 
-        async getRolesStore({ commit }) {
+        async getRolesStore({commit}) {
             try {
                 const roles = await getAllRoles();
-                //if (result.error === 0) {
+                console.log("ROLEROLEROLE SANS CROCHET 0: ", roles)
+                console.log("ROLEROLEROLE [0]: ", roles[0])
                 if (Array.isArray(roles)) {
                     commit('SET_ROLES', roles);
                 } else {
@@ -105,34 +106,36 @@ export default {
             }
         },
 
-        async createRoleStore({ commit }, body) {
+        async createRoleStore({commit}, body) {
             try {
                 console.log("createRoleStore: ", body)
-                const data = await createRole(body);
-                //console.log("datacreate: ", data.rows[0]);
-                commit('CREATE_ROLE', data.rows[0]);
-                return data.rows[0];
+                const data = await createRole(body, this.state.userCourant.session_id);
+                console.log("datacreate: ", data);
+                console.log("datacreate: ", data[0]);
+                commit('CREATE_ROLE', data[0]);
+                return data[0];
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
             }
         },
 
-        async deleteRoleStore({ commit }, id) {
+        async deleteRoleStore({commit}, id) {
             try {
-                const data = await deleteRole(id,this.state.userCourant.session_id);
-                //console.log("datadelete: ", data.rows[0].id_role);
-                commit('DELETE_ROLE', data.rows[0].id_role);
+                const data = await deleteRole(id, this.state.userCourant.session_id);
+                //console.log("datadelete: ", data[0].id_role);
+                commit('DELETE_ROLE', data[0].id_role);
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }
         },
 
-        async updateRoleStore({ commit },body) {
+        async updateRoleStore({commit}, body) {
             try {
                 console.log("updateRoleStore: ", body)
-                const data = await updateRole(body);
-                //console.log("dataupdate: ", data);
-                commit('UPDATE_ROLE', data.id_role, data);
+                const data = await updateRole(body, this.state.userCourant.session_id);
+                console.log("dataupdate: ", data, data[0].id_role);
+                commit('UPDATE_ROLE', data[0].id_role);
+                console.log("dataupdate2: ", data[0]);
                 return data;
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
@@ -141,7 +144,7 @@ export default {
 
 //-----------------------------------------------------------------Droits-----------------------------------------------------------------------//
 
-        async getDroitsStore({ commit }) {
+        async getDroitsStore({commit}) {
             try {
                 const result = await getAllDroits();
                 if (Array.isArray(result)) {
@@ -154,7 +157,7 @@ export default {
             }
         },
 
-        async getAllRoleDroitAssociationStore({ commit }) {
+        async getAllRoleDroitAssociationStore({commit}) {
             try {
                 const result = await getAllRoleDroitAssociation(); // Wait for the Promise to resolve
                 // print what kind of object is result
@@ -170,28 +173,20 @@ export default {
             }
         },
 
-        async createRoleDroitAssociationStore({ commit }, body) {
+        async createRoleDroitAssociationStore({commit}, body) {
             try {
-                //console.log("createRoleDroitAssociationStore: ", body)
-                const data = await createRoleDroitAssociation(body);
-                console.log("datcreatea: ", data[0]);
-                let statebefore = this.state.roleDroitAssociation
-                console.log("statebefore", statebefore)
+                const data = await createRoleDroitAssociation(body, this.state.userCourant.session_id);
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
-                let stateafter = this.state.roleDroitAssociation
-                console.log("stateafter", stateafter)
-                let newline = stateafter.filter(item => !statebefore.includes(item))
-                console.log("newline", newline)
                 return data[0];
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
             }
         },
 
-        async deleteRoleDroitAssociationStore({ commit }, body) {
+        async deleteRoleDroitAssociationStore({commit}, body) {
             try {
                 //console.log("deleteRoleDroitAssociationStore: ", body)
-                const data = await deleteRoleDroitAssociation(body);
+                const data = await deleteRoleDroitAssociation(body, this.state.userCourant.session_id);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
@@ -199,15 +194,15 @@ export default {
             }
         },
 
-        async deleteRoleDroitAssociationForSpecificRoleStore({ commit }, id_role) {
+        async deleteRoleDroitAssociationForSpecificRoleStore({commit}, id_role) {
             try {
                 //console.log("deleteRoleDroitAssociationForSpecificRoleStore: ", id_role)
-                const data = await deleteRoleDroitAssociationForSpecificRole(id_role);
+                const data = await deleteRoleDroitAssociationForSpecificRole(id_role, this.state.userCourant.session_id);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationForSpecificRoleStore():", err);
             }
         },
-    },
+    }
 };

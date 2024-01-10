@@ -54,8 +54,6 @@ export default {
         async getTypeZonesStore({ commit }) {
             try {
                 const typeZone = await getAllTypeZones();
-                console.log(typeZone);
-                console.log('type zone store')
                 if (Array.isArray(typeZone)) {
                     commit('SET_TYPE_ZONE', typeZone);
                 } else {
@@ -65,9 +63,11 @@ export default {
                 console.error("Error in getTypeZone():", err);
             }
         },
+
+
         async getZonesStore({ commit }) {
             try {
-                const result = await getAllZones(this.state.userCourant.session_id);
+                const result = await getAllZones();
                 if (Array.isArray(result)) {
                     commit('SET_ZONES', result);
                 } else {
@@ -80,7 +80,9 @@ export default {
 
         async deleteZoneStore({ commit }, id) {
             try {
-                await deleteZone(id,this.state.userCourant.session_id);
+                const session_id = this.state.userCourant.session_id
+                console.log("deleteZoneStore: ", id, session_id)
+                await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -89,8 +91,8 @@ export default {
 
         async updateZoneStore({ commit }, {id, body}) {
             try {
-                body.session_id=this.userCourant.session_id
-                await updateZone(id, body);
+                const session_id = this.state.userCourant.session_id
+                await updateZone(id, body, session_id);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
@@ -99,9 +101,9 @@ export default {
 
         async createZoneStore({ commit }, body) {
             try {
-                body['session_id'] = this.state.userCourant.session_id
-                const newZone = await createZone(body);
-                console.log("newZone: ", JSON.stringify(newZone[0], null, 2))
+                const session_id = this.state.userCourant.session_id
+                const newZone = await createZone(body, session_id);
+                console.log("newZone: ", newZone, newZone[0])
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
