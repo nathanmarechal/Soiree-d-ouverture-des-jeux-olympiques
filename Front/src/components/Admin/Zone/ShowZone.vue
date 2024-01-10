@@ -17,7 +17,7 @@
         <td>
           <div class="cercle" :style="{ background: zone.couleur_hexa }"></div>
         </td>
-        <td>{{ zone.type_zone_libelle }}</td>
+        <td>{{ getTypeZoneLibelle(zone.id_type_zone) }}</td>
         <td>
           <router-link :to="{ name: 'AdminEditZoneView', params: { selected_zone: zone } }" class="btn btn-primary">{{translate("showZone_6")}}</router-link>
           <button class="btn btn-danger" @click="zoneDelete(index)">{{translate("showZone_7")}}</button>
@@ -42,16 +42,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllZone', 'getAllArea']),
+    ...mapGetters(['getAllZone', 'getAllArea', 'getAllTypeZone']),
   },
   methods: {
     translate,
-    ...mapActions(['getZonesStore', 'deleteZoneStore', 'getAreasStore']),
+    ...mapActions(['getZonesStore', 'deleteZoneStore', 'getAreasStore', 'getTypeZonesStore']),
     async loadData() {
       if (this.getAllZone.length === 0)
         await this.getZonesStore();
       if (this.getAllArea.length === 0)
         await this.getAreasStore();
+      if (this.getAllTypeZone.length === 0)
+        await this.getTypeZonesStore();
+    },
+    getTypeZoneLibelle(id_type_zone) {
+      const typeZone = this.getAllTypeZone.find(type => type.id_type_zone === id_type_zone);
+      if (typeZone)
+        return typeZone.libelle;
+      return '';
     },
     async zoneDelete(index) {
       const zone = this.getAllZone[index];

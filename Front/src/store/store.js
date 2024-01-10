@@ -1184,6 +1184,7 @@ export default new Vuex.Store({
             try {
                 const session_id = this.state.userCourant.session_id
                 const newZone = await createZone(body, session_id);
+                console.log("newZone: ", newZone, newZone[0])
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
