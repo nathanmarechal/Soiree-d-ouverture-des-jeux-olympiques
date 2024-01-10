@@ -55,7 +55,7 @@ export default {
     ...mapGetters('stands', ['getSelectedStands'])
   },
   methods: {
-    ...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
+    //...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     ...mapActions('avis', ['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     async loadData(){
       try {

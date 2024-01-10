@@ -92,7 +92,8 @@ export default {
   },
   methods: {
     //...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
-    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore', 'getUsersStore']),
+    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
+    ...mapActions('user', ['getUsersStore']),
     async loadData() {
       try {
         await this.getUsersStore();

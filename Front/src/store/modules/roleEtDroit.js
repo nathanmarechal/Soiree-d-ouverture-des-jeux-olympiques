@@ -11,7 +11,8 @@ export default {
     state: {
         roles : [],
         droits : [],
-        roleDroitAssociation : [],    },
+        roleDroitAssociation : [],
+    },
     getters: {
         getAllRoles : state => state.roles,
         getAllDroits : state => state.droits,

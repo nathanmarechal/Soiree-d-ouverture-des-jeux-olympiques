@@ -36,11 +36,11 @@ export default {
   },
   computed: {
     //...mapGetters(['getAllTypePrestation']),
-    ...mapGetters('prestationEtType', ['getSelectedTypePrestation'])
+    ...mapGetters('prestationEtType', ['getAllTypePrestation'])
   },
   methods: {
     translate,
-    ...mapActions(['getTypePrestationsStore']),
+    //...mapActions(['getTypePrestationsStore']),
     ...mapActions('prestationEtType', ['getTypePrestationsStore']),
     async loadData(){
       if (this.getAllTypePrestation.length === 0){

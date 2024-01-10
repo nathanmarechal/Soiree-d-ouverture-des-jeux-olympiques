@@ -83,7 +83,7 @@
       //...mapGetters(['getAllStand', 'getAllPrestation', 'getAllArea']),
       ...mapGetters('emplacements', ['getAllArea']),
       ...mapGetters('prestationEtType', ['getAllPrestation']),
-      ...mapGetters('stand' , ['getAllStand']),
+      ...mapGetters('stands' , ['getAllStand']),
       filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllStand so for each data in filterProtector, check if it is in getAllStand or else remove it from filterProtector
         if(this.filterProtector != null){

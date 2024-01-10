@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     //...mapGetters('ZoneEtType', ['getAllZone']),
-    ...mapGetters('stands', ['getAllStand']),
+    ...mapGetters('ZoneEtType', ['getAllZone']),
   },
   methods: {
     translate,

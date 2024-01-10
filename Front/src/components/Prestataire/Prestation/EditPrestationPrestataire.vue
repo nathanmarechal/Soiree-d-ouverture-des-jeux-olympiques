@@ -83,7 +83,7 @@ export default {
   methods: {
     translate,
     //...mapActions(['updatePrestationStore', 'getTypePrestationsStore']), // Ajoutez votre action Vuex pour la mise à jour
-...mapActions('prestationEtType', ['getTypePrestationsStore', "getTypePrestationsStore"]),
+...mapActions('prestationEtType', ['updatePrestationStore', "getTypePrestationsStore"]),
     async loadData() {
       // Load selected prestation
       this.prestation = await this.selected_prestation;

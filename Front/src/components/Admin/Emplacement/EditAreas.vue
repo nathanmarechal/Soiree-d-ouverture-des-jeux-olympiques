@@ -76,7 +76,7 @@ export default {
     //...mapGetters(['getAllArea', 'getAllZone','getAllStand','getAllTypeEmplacementLogistique','getAllEmplacementLogistique']),
     ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
     ...mapGetters('emplacements', ['getAllArea']),
-    ...mapGetters('zones', ['getAllZone']),
+    ...mapGetters('ZoneEtType', ['getAllZone']),
     ...mapGetters('stands', ['getAllStand']),
     filteredAreas() {
       var data = [];
@@ -104,7 +104,7 @@ export default {
     //...mapActions(['getAreasStore', 'getZonesStore', 'getStandsStore','getTypeEmplacementLogistiqueStore','getEmplacementLogistiqueStore', 'deleteAreasStore', 'deleteStandStore']),
     ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore', 'getEmplacementLogistiqueStore']),
     ...mapActions('emplacements', ['getAreasStore', 'deleteAreasStore']),
-    ...mapActions('zones', ['getZonesStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore']),
     ...mapActions('stands', ['getStandsStore', 'deleteStandStore']),
     translate, 
     async loadData() {

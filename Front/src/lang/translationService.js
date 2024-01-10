@@ -17,10 +17,10 @@ export function changeLanguage(lang) {
             console.error(`Failed to load translations for ${lang}`, error);
         });
     this.$store.state.lang = lang;
-    console.log(this.$store.getters.getLang)
+    console.log(this.$store.getters['user/getLang'])
 }
 export function translate(key) {
-    const lang = this.$store.getters.getLang;
+    const lang = this.$store.getters['user/getLang'];
     if (!(lang in translations)) {
         console.error(`Language ${lang} not supported`);
         return key;

@@ -40,9 +40,10 @@ export default {
   },
   computed: {
     //...mapGetters(['getAllArea', 'getAllZone', 'getAllStand', 'getSelectedZone', 'getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique','getLogisticsRequirements']),
-    ...mapGetters('ZoneEtType', ['getAllZone', 'getAllTypeZone']),
+    ...mapGetters('ZoneEtType', ['getAllZone', 'getSelectedZone']),
+    ...mapGetters('emplacements', ['getAllArea',]),
+    ...mapGetters('stands', ['getAllStand']),
     ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique','getLogisticsRequirements']),
-    ...mapGetters('prestationEtType', ['getAllTypePrestation']),
     },
 
   methods: {

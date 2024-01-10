@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     //...mapGetters(['getAllTypeEmplacementLogistique']),
-    ...mapGetters('emplacementLogistiqueEtType', ['getAllEmplacementLogistique']),
+    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique']),
     selectedType() {
       const typeId = this.emplacementLogistique.id_type_emplacement_logistique;
       return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === typeId);

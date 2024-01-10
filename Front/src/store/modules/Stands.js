@@ -34,6 +34,9 @@ export default {
             state.selectedStands = stands;
         },
 
+        ADD_TO_STANDS(state, data) {
+            state.stands.push(data);
+        },
 
     },
     actions: {
@@ -78,6 +81,10 @@ export default {
             } catch (err) {
                 console.error("Error in getStands():", err);
             }
+        },
+
+        addToStands({ commit }, data) {
+            commit('ADD_TO_STANDS', data);
         },
     },
 
