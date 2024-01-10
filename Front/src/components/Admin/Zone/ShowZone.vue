@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     //...mapGetters(['getAllZone', 'getAllArea']),
-    ...mapGetters('ZoneEtType', ['getAllTypeZone']),
+    ...mapGetters('ZoneEtType', ['getAllZone']),
     ...mapGetters('emplacements', ['getAllArea'])
   },
   methods: {

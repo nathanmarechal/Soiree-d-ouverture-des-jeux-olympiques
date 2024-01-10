@@ -16,9 +16,9 @@ export default {
     },
     mutations: {
         SET_ZONES(state, zones) {
-            state.zones.splice(0)
-            zones.forEach(p => state.zones.push(p))
+            state.zones = zones;
         },
+
         SET_TYPE_ZONE(state, typeZone) {
             state.typeZone = typeZone;
         },
