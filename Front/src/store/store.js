@@ -45,6 +45,7 @@ import {getEmplacementLogistique,createEmplacementLogistique,updateEmplacementLo
 import {getAllDescription, updateDescriptionHomePage} from "@/services/homePage.service";
 import {deleteAvis, getAvisByIdStand, uploadAvis} from "@/services/avis.service";
 import Vue from "vue";
+import {getAllConversations, getConversationsForUser} from "@/services/messagerie.service";
 
 Vue.use(Vuex)
 
@@ -124,7 +125,9 @@ export default new Vuex.Store({
 
         texts_home: [],
 
-        lang:"fr"
+        lang:"fr",
+
+        conversations: []
     },
 
     getters: {
@@ -199,6 +202,8 @@ export default new Vuex.Store({
         getTextsHome: state => state.texts_home,
 
         getAvis : state => state.avis,
+
+        getConversations : state => state.conversations
         // getAvisByStandId: (state) => (id) => {
         //     cons
         //     return state.avis.filter(avis => avis.id_stand === id);
@@ -485,6 +490,10 @@ export default new Vuex.Store({
 
         SET_ALL_CRENEAU(state, creneau){
             state.creneau = creneau;
+        },
+
+        SET_CONVERSATIONS(state,conversations){
+            state.conversations = conversations;
         },
 
         CREATE_USER(state, payload) {
@@ -1296,6 +1305,33 @@ export default new Vuex.Store({
                 console.error("Error in getStands():", err);
             }
         },
+//-----------------------------------------------------------------------Messagerie--------------------------------------------------------------------//
+
+
+        async getConversationsAdminStore({commit}){
+            try {
+                const result = await getAllConversations();
+                if (Array.isArray(result)) {
+                    commit('SET_CONVERSATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getConversations():", err);
+            }
+        },
+        async getConversationsUserStore({commit}){
+            try {
+                const result = await getConversationsForUser(this.getters.getCurrentUser.id_user,this.getters.getCurrentUser.session_id);
+                if (Array.isArray(result)) {
+                    commit('SET_CONVERSATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getConversations():", err);
+            }
+        }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------//
 

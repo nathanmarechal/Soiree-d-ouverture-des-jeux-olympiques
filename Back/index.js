@@ -22,7 +22,7 @@ const typeEmplacementLogistiqueRoutes = require('./routes/typeEmplacementLogisti
 const emplacementLogistiqueRoutes = require('./routes/emplacementLogistique.router');
 const homePageRoutes = require('./routes/homePage.router');
 const avisRoutes = require('./routes/avis.router');
-
+const messagerieRoutes = require('./routes/messagerie.router')
 
 dotenv.config();
 const app = express();
@@ -67,6 +67,7 @@ app.use("/api/commande", commandeRoutes);
 app.use("/api/type-emplacement-logistique", typeEmplacementLogistiqueRoutes);
 app.use("/api/emplacement-logistique", emplacementLogistiqueRoutes);
 app.use("/api/avis", avisRoutes);
+app.use("/api/messagerie",messagerieRoutes)
 
 const swaggerOptions = {
   definition: {

@@ -1,0 +1,74 @@
+<template>
+  <div>
+    <h2>Conversation {{ conversation.titre }}</h2>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID Sender</th>
+        <th>Message</th>
+        <th>Time</th>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(message, index) in messages" :key="index">
+        <td>{{ message.id_sender }}</td>
+        <td>{{ message.message }}</td>
+        <td>{{ message.temps_emmission }}</td>
+        <td>{{ message.name }}</td>
+        <td>{{ message.email }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <textarea  v-model="newMessage" name="newMessage" id="newMessage"></textarea>
+    <button type="button" @click="send">Envoyer</button>
+  </div>
+</template>
+
+<script>
+import { getMessagesByConversation,sendMessage } from "@/services/messagerie.service";
+import {mapGetters} from "vuex";
+
+
+export default {
+  props: ['selected_conversation'],
+  data() {
+    return {
+      newMessage:'',
+      conversation: {},
+      messages: [],
+    };
+  },
+  computed:{
+    ...mapGetters(['getCurrentUser'])
+  },
+  methods:{
+    async send() {
+      console.log("dans le send mon petit thomas")
+      const body = {
+        id_conversation : this.conversation.id_conversation,
+        id_user : this.getCurrentUser.id_user,
+        message : this.newMessage
+      }
+      let response = await sendMessage(body)
+      this.messages.push(response);
+      console.log(response)
+      this.newMessage='';
+    },
+
+  },
+  async mounted() {
+    const selectedConversation = this.$route.params.selected_conversation;
+    this.conversation = selectedConversation;
+    this.messages = await getMessagesByConversation(this.conversation.id_conversation);
+
+  },
+};
+</script>
+
+<style scoped>
+/* Add any custom styles here if needed */
+</style>

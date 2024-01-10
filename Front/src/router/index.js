@@ -36,6 +36,10 @@ import edtPage from "@/views/EdtPage.vue";
 import CommandePrestatairePage from "@/views/Prestataire/commandes/CommandePrestatairePage.vue";
 import AdminDeleteCascadeProtector from "@/views/Admin/DeleteCascadeProtectorPage.vue";
 import AvisPagePrestataire from "@/views/Prestataire/Avis/AvisPagePrestataire.vue";
+import MessagerieAdmin from "@/views/Messagerie/MessagerieAdmin.vue";
+import MessagerieConversationAdmin from "@/views/Messagerie/MessagerieConversationAdmin.vue";
+import MessagerieUser from "@/views/Messagerie/MessagerieUser.vue";
+import MessagerieConversationUser from "@/views/Messagerie/MessagerieConversationUser.vue";
 
 Vue.use(VueRouter);
 
@@ -216,6 +220,26 @@ const routes = [
     path: '/prestataire/avis',
     name: 'PrestataireAvisView',
     component: AvisPagePrestataire
+  },
+  {
+    path: '/messages-admin',
+    name: 'MessagesAdmin',
+    component: MessagerieAdmin
+  },
+  {
+    path: '/messages-admin-conversation',
+    name: 'MessagesAdminConversation',
+    component: MessagerieConversationAdmin
+  },
+  {
+    path: '/messages-user',
+    name: 'MessagesUser',
+    component: MessagerieUser
+  },
+  {
+    path: '/messages-user-conversation',
+    name: 'MessagesConversationUser',
+    component: MessagerieConversationUser
   },
     //Error 404
   {

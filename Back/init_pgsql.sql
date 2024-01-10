@@ -27,6 +27,8 @@ DROP TABLE IF EXISTS creneau CASCADE;
 
 DROP TABLE IF EXISTS text_accueil CASCADE;
 
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS conversations;
 -- Create the tables
 
 CREATE TABLE text_accueil(
@@ -227,6 +229,25 @@ CREATE TABLE avis_stand_utilisateur(
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
 );
 
+CREATE TABLE conversations(
+    id_conversation SERIAL PRIMARY KEY,
+    id_creator INTEGER,
+    titre VARCHAR(64),
+    resolu BOOLEAN,
+    FOREIGN KEY (id_creator) REFERENCES utilisateur(id_user)
+);
+
+
+CREATE TABLE messages(
+    id_sender INTEGER ,
+    id_conversation INTEGER,
+    message VARCHAR(1024),
+    temps_emmission TIMESTAMP,
+    PRIMARY KEY (id_sender,id_conversation,temps_emmission),
+    FOREIGN KEY (id_sender) REFERENCES utilisateur(id_user),
+    FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)
+);
+
 INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
 ('eau','water.svg','L/h'),
 ('éléctrcité','electricity.svg','kW'),
@@ -322,7 +343,11 @@ INSERT INTO droits(libelle) VALUES
 ('create_avis'),
 ('delete_avis'),
 
-('update_home_page');
+('update_home_page'),
+
+('messages-admin'),
+('messages-user')
+;
 
 INSERT INTO role (libelle) VALUES
 ('admin'),
@@ -356,6 +381,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (23,1),
 (24,1),
 (25,1),
+(26,1),
 (1,2),
 (2,2),
 (3,2),
@@ -381,6 +407,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (23,2),
 (24,2),
 (25,2),
+(27,2),
 (1,3),
 (2,3),
 (3,3),
@@ -796,6 +823,31 @@ INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
 
 INSERT INTO text_accueil (description) VALUES ('<p>Les Jeux olympiques d''été de 2024, officiellement appelés les Jeux de la XXXIIIe olympiade de l''ère moderne, sont une compétition multisports internationale devant se dérouler à Paris, en France, du 26 juillet au 11 août 2024. La ville de Los Angeles, aux États-Unis, accueillera les Jeux olympiques d été de 2028.</p>'), ('<p>Le Comité international olympique (CIO) a attribué l''organisation des Jeux olympiques d''été de 2024 à Paris lors de la 131e session du CIO à Lima, au Pérou, le 13 septembre 2017. Paris sera la deuxième ville à accueillir les Jeux olympiques d''été pour la troisième fois, après Londres (1908, 1948 et 2012) et avant Los Angeles (1932, 1984 et 2028).</p>, <p>Les Jeux olympiques d''été de 2024 seront les premiers Jeux olympiques d''été à se dérouler en France depuis les Jeux olympiques d''été de 1924, qui se sont déroulés à Paris. Ils seront également les deuxièmes Jeux olympiques d''été à se dérouler en France après les Jeux olympiques d''été de 1900, qui se sont déroulés à Paris.</p>');
 
+INSERT INTO conversations(id_creator, titre, resolu) VALUES
+             (2,'nathan a push un truc pas fini',false),
+             (2,'je suis triste',false)
+;
+
+INSERT INTO messages(id_sender, id_conversation, message, temps_emmission)
+VALUES
+    (1,1,'ouais bah tant pis',now()),
+        (2,1,'mec je suis NRV','2024-01-10 12:30:40'),
+        (1,1,'ouais bah tant mieux','2024-01-10 12:30:45'),
+    (1,2,'tu es triste ? Bah arrête.',now())
+;
+
+SELECT id_sender, id_conversation, message, temps_emmission, concat(u.prenom, ' ', u.nom) as name, u.email
+FROM messages
+LEFT JOIN  utilisateur u on messages.id_sender = u.id_user
+WHERE id_conversation = 2
+ORDER BY temps_emmission
+;
+
+INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
+(1,1,'jdjdlqkjd',now())
+RETURNING *
+;
+
 select * from text_accueil;
 
 select * from avis_stand_utilisateur where id_stand = 1;
@@ -868,3 +920,19 @@ ORDER BY
     sales_revenue DESC
 LIMIT 1;
     
+SELECT conversations.id_conversation, titre, resolu,
+    COUNT(*) AS nb_messages
+FROM conversations
+LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
+LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user
+WHERE id_sender = 1
+GROUP BY conversations.id_conversation, utilisateur.email
+;
+
+SELECT conversations.id_conversation, titre, resolu,
+    COUNT(*) AS nb_messages
+FROM conversations
+LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
+WHERE id_creator = 2
+GROUP BY conversations.id_conversation
+;
