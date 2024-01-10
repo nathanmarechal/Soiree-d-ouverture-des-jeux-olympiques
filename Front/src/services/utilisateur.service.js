@@ -87,7 +87,7 @@ async function updateUser(session_id, id, body) {
 }
 
 async function updateUserFromAPI(session_id, id, body) {
-    return patchRequest('/users/update?session_id'+session_id, body, 'UPDATEUSER')
+    return patchRequest('/users/update?session_id='+session_id, body, 'UPDATEUSER')
 }
 
 async function deleteUser(id,session_id) {

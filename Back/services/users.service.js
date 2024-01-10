@@ -118,17 +118,10 @@ async function updateUserAsync(id_user, prenom, nom, email, password, adresse, c
         console.log("Entered updateUserAsync");
         const conn = await pool.connect();
         let result;
-        if (id_stand == null) {
-            result = await conn.query(
-                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9, id_role = $10 WHERE id_user = $1 RETURNING *",
-                [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_role]
-            );
-        } else {
-            result = await conn.query(
-                "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9, id_stand = $10, id_role = $11 WHERE id_user = $1 RETURNING *",
-                [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
-            );
-        }
+        result = await conn.query(
+            "UPDATE utilisateur SET email = $2, password = $3, nom = $4, prenom = $5, code_postal = $6, adresse = $7, commune = $8, solde = $9, id_stand = $10, id_role = $11 WHERE id_user = $1 RETURNING *",
+            [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
+        );
         conn.release();
         console.log("result.rows[0] = ", result.rows[0]);
         return result.rows;
