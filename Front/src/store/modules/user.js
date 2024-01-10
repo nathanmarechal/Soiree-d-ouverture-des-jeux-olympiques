@@ -1,7 +1,7 @@
 import {
     acceptUser,
     createUser,
-    createUserWithStand, deleteUser,
+     deleteUser,
     getAllStandAttente, getAllUsers, getAllUsersAttente,
     refuseUser, registerClient, registerPrestataire, updateSolde, updateUser, updateUserCourantWoPassword
 } from "@/services/utilisateur.service";
@@ -78,6 +78,7 @@ export default {
 
     },
     getters: {
+        getSessionId: state => state.userCourant.session_id,
         getAllUsers : state => state.users,
         getAllUsersAttente : state => state.usersAttente,
         getAllStandAttente: state => state.standAttente,
@@ -132,7 +133,7 @@ export default {
         ACCEPT_USER_ADD(state, data) {
             console.log("data: ", data)
             state.users.push(data.userAccept)
-            state.stands.push(data.standAccept)
+            this.$store.dispatch('stand/addToStands', data.standAccept);
         },
 
 
