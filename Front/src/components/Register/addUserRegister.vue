@@ -180,7 +180,7 @@ export default {
         nom_stand: "",
         image_stand: "",
         description_stand: "",
-        id_emplacement: null, //à choisir avec la map
+        id_emplacement: null,
         id_zone: null,
         id_type_prestation: null,
       },
@@ -211,7 +211,7 @@ export default {
 
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'createUserStore', 'createUsersWithStandStore']),
+    ...mapActions(['getRolesStore', 'registerClientStore', 'registerPrestataireStore']),
 
 
     dataEmplacement(id_emplacement) {
@@ -238,7 +238,7 @@ export default {
     },
     async submitFormClient() {
       try {
-        await this.createUserStore({
+        await this.registerClientStore({
           user: this.utilisateur,
         });
         this.$router.push('/');
@@ -258,7 +258,7 @@ export default {
         }
 
 
-        await this.createUsersWithStandStore({
+        await this.registerPrestataireStore({
           user: this.utilisateur,
           stand: this.stand,
         });
@@ -269,20 +269,15 @@ export default {
     },
 
     async handleImageUploadDescription(blobInfo, success, failure) {
-      // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
-      // Construire le nouveau nom de fichier
       const fileName = `profile_${timestamp}.jpeg`;
-      // Créer une nouvelle instance de File avec le nouveau nom
       const fileInstance = new File([blobInfo.blob()], fileName, {
         type: 'image/jpeg'
       });
       try {
-        // Appeler votre fonction d'upload
         const response = await uploadImageDescriptionStand(fileInstance);
 
         console.log(response.location)
-        // Vérifier si la réponse contient l'emplacement du fichier uploadé
         if (response.location) {
           success(response.location);
         } else {

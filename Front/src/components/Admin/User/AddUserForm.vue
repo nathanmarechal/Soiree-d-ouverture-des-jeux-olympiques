@@ -37,7 +37,7 @@
 
       <div class="form-group">
         <label for="solde">{{translate("addUser_8")}}</label>
-        <input type="number" id="solde" v-model="utilisateur.solde" value="0" required> 
+        <input type="number" id="solde" v-model="utilisateur.solde" value="0" required>
       </div>
 
       <div class="form-group" >
@@ -108,7 +108,6 @@ export default {
           console.log("user", this.utilisateur);
         await this.createUserStore({
           user: this.utilisateur,
-          session_id: this.getCurrentUser.session_id
         });
         this.$router.push('/admin/users');
         } catch (error) {

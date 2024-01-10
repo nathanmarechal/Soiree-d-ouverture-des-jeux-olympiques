@@ -346,7 +346,6 @@ INSERT INTO droits(libelle) VALUES
 ('update_home_page'),
 
 ('messages-admin'),
-('messages-user')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -842,135 +841,7 @@ VALUES
     (1,2,'tu es triste ? Bah arrête.',now())
 ;
 
-SELECT id_sender, id_conversation, message, temps_emmission, concat(u.prenom, ' ', u.nom) as name, u.email
-FROM messages
-LEFT JOIN  utilisateur u on messages.id_sender = u.id_user
-WHERE id_conversation = 2
-ORDER BY temps_emmission
-;
-
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())
 RETURNING *
 ;
-
-select * from text_accueil;
-
-select * from avis_stand_utilisateur where id_stand = 1;
-
-select prenom, nom, note, commentaire, avis_stand_utilisateur.id_stand as id_stand, avis_stand_utilisateur.id_user as id_user, avis_stand_utilisateur.id_avis_stand_utilisateur as id_avis_stand_utilisateur
-    from avis_stand_utilisateur
-    JOIN utilisateur u on u.id_user = avis_stand_utilisateur.id_user
-    where avis_stand_utilisateur.id_stand = 1;
-
-select * from utilisateur;
-SELECT * FROM stand;
-
-SELECT * FROM utilisateurAttente;
-
-SELECT * FROM standAttente;
-
-SELECT * FROM ligne_commande;
-
-
-
-
-
-SELECT concat(u.prenom, ' ',u.nom) as name, SUM(lc.prix * lc.quantite) AS best_client
-FROM ligne_commande lc
-JOIN prestation p ON lc.id_prestation = p.id_prestation
-JOIN utilisateur u on lc.id_user = u.id_user
-WHERE p.id_stand = 2
-GROUP BY  u.prenom, u.nom
-ORDER BY best_client DESC
-LIMIT 1;
-
-SELECT tp.libelle, SUM(lc.prix * lc.quantite) AS sales_revenue_by_type
-FROM ligne_commande lc
-JOIN prestation p ON lc.id_prestation = p.id_prestation
-JOIN type_prestation tp ON p.id_type_prestation = tp.id_type_prestation
-WHERE p.id_stand = 2
-GROUP BY tp.libelle;
-
-
-
-SELECT COUNT(note) as nb_rating FROM avis_stand_utilisateur WHERE id_stand = 2;
-
-SELECT COUNT(*) as nb_prestataires FROM stand;
-SELECT COUNT(*) as nb_prestations_available FROM prestation where is_available=true;
-SELECT COUNT(*) as nb_users FROM utilisateur;
-
-SELECT AVG(total_commande) AS average_purchase_global
-FROM (
-    SELECT c.id_commande, c.id_user, SUM(lc.prix * lc.quantite) AS total_commande
-    FROM commande c
-    JOIN ligne_commande lc ON c.id_commande = lc.id_commande
-    JOIN prestation p ON lc.id_prestation = p.id_prestation
-    GROUP BY c.id_commande, c.id_user
-) AS sous_requete;
-
-
-SELECT
-    s.nom_stand,
-    s.image_stand,
-    SUM(lc.prix * lc.quantite) AS sales_revenue
-FROM
-    ligne_commande lc
-JOIN
-    prestation p ON lc.id_prestation = p.id_prestation
-JOIN
-    stand s ON p.id_stand = s.id_stand
-GROUP BY
-    s.id_stand
-ORDER BY
-    sales_revenue DESC
-LIMIT 1;
-    
-SELECT conversations.id_conversation, titre, resolu,
-    COUNT(*) AS nb_messages
-FROM conversations
-LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
-LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user
-WHERE id_sender = 1
-GROUP BY conversations.id_conversation, utilisateur.email
-;
-
-SELECT conversations.id_conversation, titre, resolu,
-    COUNT(*) AS nb_messages
-FROM conversations
-LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
-WHERE id_creator = 2
-GROUP BY conversations.id_conversation
-ORDER BY
-;
-
-select * from utilisateur ;
-
- SELECT conversations.id_conversation, id_creator, titre, resolu, utilisateur.email AS email_creator,
-                  COUNT(*) AS nb_messages
-            FROM conversations
-            LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation
-            LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user
-            GROUP BY conversations.id_conversation, utilisateur.email
-            ;
-
-SELECT
-    conversations.id_conversation,
-    id_creator,
-    titre,
-    resolu,
-    utilisateur.email AS email_creator,
-    COUNT(messages.id_conversation) AS nb_messages,
-    MAX(messages.temps_emmission) as dernier_message
-FROM
-    conversations
-LEFT JOIN
-    messages ON conversations.id_conversation = messages.id_conversation
-LEFT JOIN
-    utilisateur ON conversations.id_creator = utilisateur.id_user
-GROUP BY
-    conversations.id_conversation, utilisateur.email
-ORDER BY
-    resolu ASC, -- false (non résolu) en premier
-    CASE WHEN MAX(messages.temps_emmission) IS NULL THEN 1 ELSE 0 END, -- Conversations sans messages en dernier
-    dernier_message DESC;

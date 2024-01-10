@@ -851,7 +851,7 @@ export default new Vuex.Store({
             }
         },
 
-        async registerClient({ commit }, body) {
+        async registerClientStore({ commit }, body) {
             try {
                 const user = body.user;
                 await registerClient(user);
@@ -861,13 +861,9 @@ export default new Vuex.Store({
             }
         },
 
-        async createUsersWithStandStore({commit}, user) {
+        async registerPrestataireStore({commit}, user) {
             try {
-                const body = {
-                    ...user,
-                };
-                console.log("IL EST ICI LE TEST" + JSON.stringify(body))
-                console.log("body: ", body)
+                const body = { ...user };
                 await registerPrestataire(body);
                 commit('CREATE_USER', body);
             } catch (err) {

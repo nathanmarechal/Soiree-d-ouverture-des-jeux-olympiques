@@ -61,23 +61,23 @@ async function createUserFromAPI(user, session_id) {
     return answer
 }
 
-async function registerClient(user, session_id) {
-    let answer = await registerClientFromAPI(user, session_id)
+async function registerClient(user) {
+    let answer = await registerClientFromAPI(user)
     return answer
 }
 
-async function registerClientFromAPI(user, session_id) {
-    let answer = await postRequest('/users/registerClient?session_id='+session_id, user, 'REGISTERCLIENT')
+async function registerClientFromAPI(user) {
+    let answer = await postRequest('/users/registerClient', user, 'REGISTERCLIENT')
     return answer
 }
 
-async function registerPrestataire(body, session_id) {
-    let answer = await RegisterPrestaireFromAPI(body, session_id)
+async function registerPrestataire(body) {
+    let answer = await RegisterPrestaireFromAPI(body)
     return answer
 }
 
-async function RegisterPrestaireFromAPI(body, session_id) {
-    let answer = await postRequest('/users/registerPrestataire?session_id'+session_id, body, 'REGISTERPRESTATAIRE')
+async function RegisterPrestaireFromAPI(body) {
+    let answer = await postRequest('/users/registerPrestataire', body, 'REGISTERPRESTATAIRE')
     return answer
 }
 
