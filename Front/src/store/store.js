@@ -701,7 +701,7 @@ export default new Vuex.Store({
 
         async uploadAvisStore({ commit }, {id_stand, id_user, note, commentaire}) {
             try {
-                const avis = await uploadAvis({id_stand, id_user, note, commentaire});
+                const avis = await uploadAvis({id_stand, id_user, note, commentaire}, this.state.userCourant.session_id);
                 commit('ADD_AVIS', avis);
             } catch (error) {
                 console.error('Error fetching avis:', error);
@@ -710,7 +710,7 @@ export default new Vuex.Store({
 
         async deleteAvisStore({ commit }, id) {
             try {
-                await deleteAvis(id);
+                await deleteAvis(id, this.state.userCourant.session_id);
                 console.log("deleteAvisStore: ", id)
                 commit('DELETE_AVIS', id);
             } catch (error) {
@@ -784,7 +784,7 @@ export default new Vuex.Store({
 
         async getAllUsersAttenteStore({ commit }) {
             try {
-                const usersAttente = await getAllUsersAttente();
+                const usersAttente = await getAllUsersAttente(this.state.userCourant.session_id);
                 commit('SET_USERS_ATTENTE', usersAttente);
                 console.log("usersAttente: ", usersAttente)
                 console.log("usersAttente: ", this.state.usersAttente)
@@ -827,7 +827,7 @@ export default new Vuex.Store({
         async createUserStore({ commit }, body) {
             try {
                 const user = body.user;
-                await createUser(user);
+                await createUser(user, this.state.userCourant.session_id);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -850,7 +850,7 @@ export default new Vuex.Store({
 
         async updateUserStore({ commit }, {body}) {
             try {
-                await updateUser(body.id_user, body);
+                await updateUser(body.id_user, body, this.state.userCourant.session_id);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
@@ -888,7 +888,7 @@ export default new Vuex.Store({
         async createRoleStore({ commit }, body) {
             try {
                 console.log("createRoleStore: ", body)
-                const data = await createRole(body);
+                const data = await createRole(body, this.state.userCourant.session_id);
                 //console.log("datacreate: ", data.rows[0]);
                 commit('CREATE_ROLE', data.rows[0]);
                 return data.rows[0];
@@ -910,7 +910,7 @@ export default new Vuex.Store({
         async updateRoleStore({ commit },body) {
             try {
                 console.log("updateRoleStore: ", body)
-                const data = await updateRole(body);
+                const data = await updateRole(body, this.state.userCourant.session_id);
                 //console.log("dataupdate: ", data);
                 commit('UPDATE_ROLE', data.id_role, data);
                 return data;
@@ -953,15 +953,15 @@ export default new Vuex.Store({
         async createRoleDroitAssociationStore({ commit }, body) {
             try {
                 //console.log("createRoleDroitAssociationStore: ", body)
-                const data = await createRoleDroitAssociation(body);
-                console.log("datcreatea: ", data[0]);
-                let statebefore = this.state.roleDroitAssociation
-                console.log("statebefore", statebefore)
+                const data = await createRoleDroitAssociation(body, this.state.userCourant.session_id);
+                //console.log("datcreatea: ", data[0]);
+                //let statebefore = this.state.roleDroitAssociation
+                //console.log("statebefore", statebefore)
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
-                let stateafter = this.state.roleDroitAssociation
-                console.log("stateafter", stateafter)
-                let newline = stateafter.filter(item => !statebefore.includes(item))
-                console.log("newline", newline)
+                //let stateafter = this.state.roleDroitAssociation
+                //console.log("stateafter", stateafter)
+                //let newline = stateafter.filter(item => !statebefore.includes(item))
+                //console.log("newline", newline)
                 return data[0];
             } catch (err) {
                 console.error("Error in createRoleDroitAssociationStore():", err);
@@ -971,7 +971,7 @@ export default new Vuex.Store({
         async deleteRoleDroitAssociationStore({ commit }, body) {
             try {
                 //console.log("deleteRoleDroitAssociationStore: ", body)
-                const data = await deleteRoleDroitAssociation(body);
+                const data = await deleteRoleDroitAssociation(body, this.state.userCourant.session_id);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
@@ -982,7 +982,7 @@ export default new Vuex.Store({
         async deleteRoleDroitAssociationForSpecificRoleStore({ commit }, id_role) {
             try {
                 //console.log("deleteRoleDroitAssociationForSpecificRoleStore: ", id_role)
-                const data = await deleteRoleDroitAssociationForSpecificRole(id_role);
+                const data = await deleteRoleDroitAssociationForSpecificRole(id_role, this.state.userCourant.session_id);
                 //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
             } catch (err) {
@@ -997,7 +997,7 @@ export default new Vuex.Store({
                 console.log("id : " + body.id)
                 console.log("body : " + body.is_available)
                 console.log("body : " + JSON.stringify(body, null, 2))
-                await updateIsAvailablePrestation(body.id, body.is_available);
+                await updateIsAvailablePrestation(body.id, body.is_available, this.state.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -1007,7 +1007,7 @@ export default new Vuex.Store({
         async updatePrestationStore({ commit }, body) {
             try {
                 console.log(body)
-                await updatePrestation(body.id_prestation, body)
+                await updatePrestation(body.id_prestation, body, this.state.userCourant.session_id)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -1016,7 +1016,7 @@ export default new Vuex.Store({
 
         async deletePrestationStore({ commit }, id) {
             try {
-                await deletePrestation(id);
+                await deletePrestation(id, this.state.userCourant.session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
@@ -1028,7 +1028,7 @@ export default new Vuex.Store({
                 console.log("createPrestation: ", body)
                 console.log("body : " + JSON.stringify(body, null, 2))
 
-                let response = await createPrestation(body);
+                let response = await createPrestation(body, this.state.userCourant.session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);
