@@ -1,38 +1,36 @@
-import {deleteStand, getAllStands, updateDescriptionStand, updateStand, createStand} from "@/services/stand.service";
+    import {deleteStand, getAllStands, updateDescriptionStand, updateStand, createStand} from "@/services/stand.service";
 
-export default {
-    namespaced: true,
-    state: {
-        stands: [],
-        selectedStands: [],
-        standAttente: null,
-    },
-    getters: {
-        getAllStand: state => state.stands,
-        getSelectedStands : state => state.selectedStands,
-    },
-    mutations: {
-        SET_STANDS(state, stands) {
-            state.stands = stands;
+    export default {
+        namespaced: true,
+        state: {
+            stands: [],
+            selectedStands: [],
+            standAttente: null,
         },
-
-
-        UPDATE_STAND(state, payload) {
-            state.stands = state.stands.map(item => {
-                if (item.id_stand === payload.id) {
-                    return { ...item, ...payload.body };
-                }
-                return item;
-            });
+        getters: {
+            getAllStand: state => state.stands,
+            getSelectedStands : state => state.selectedStands,
         },
+        mutations: {
+            SET_STANDS(state, stands) {
+                state.stands = stands;
+            },
+            UPDATE_STAND(state, payload) {
+                state.stands = state.stands.map(item => {
+                    if (item.id_stand === payload.id) {
+                        return { ...item, ...payload.body };
+                    }
+                    return item;
+                });
+            },
 
-        DELETE_STAND(state, id) {
-            state.stands = state.stands.filter(item => item.id_stand !== id);
-        },
+            DELETE_STAND(state, id) {
+                state.stands = state.stands.filter(item => item.id_stand !== id);
+            },
 
-        SET_SELECTED_STANDS(state, stands) {
-            state.selectedStands = stands;
-        },
+            SET_SELECTED_STANDS(state, stands) {
+                state.selectedStands = stands;
+            },
 
 
     },
@@ -79,18 +77,18 @@ export default {
         },
 
 
-        async getStandsStore({ commit }) {
-            try {
-                const result = await getAllStands();
-                if (Array.isArray(result)) {
-                    commit('SET_STANDS', result);
-                } else {
-                    console.error("Unexpected response format:", result);
+            async getStandsStore({ commit }) {
+                try {
+                    const result = await getAllStands();
+                    if (Array.isArray(result)) {
+                        commit('SET_STANDS', result);
+                    } else {
+                        console.error("Unexpected response format:", result);
+                    }
+                } catch (err) {
+                    console.error("Error in getStands():", err);
                 }
-            } catch (err) {
-                console.error("Error in getStands():", err);
-            }
+            },
         },
-    },
 
-};
+    };

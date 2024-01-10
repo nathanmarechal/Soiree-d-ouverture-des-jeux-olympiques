@@ -50,7 +50,7 @@ export default {
   methods: {
     translate,
     //...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
-    ...mapActions('prestationEtType', ['getTypePrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore','getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)
