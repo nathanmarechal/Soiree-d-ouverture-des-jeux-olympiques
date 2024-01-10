@@ -155,7 +155,7 @@ export default {
     },
   },
 };
-</script>
+</script> 
 
 <style scoped>
 /* Your styles here */
