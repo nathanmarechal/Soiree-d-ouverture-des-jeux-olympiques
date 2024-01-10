@@ -58,7 +58,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAllRoles", "getAllDroits","getCurrentUser"]),
+    ...mapGetters('roleEtDroit', ["getAllRoles", "getAllDroits"]),
+    ...mapGetters('user', ["getCurrentUser"]),
     droitCategories() {
       // Extract unique categories from droit names
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
@@ -72,7 +73,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(["getRolesStore", "createRoleStore", "getDroitsStore", "createRoleDroitAssociationStore"]),
+    ...mapActions('roleEtDroit', ["getRolesStore", "createRoleStore", "getDroitsStore", "createRoleDroitAssociationStore"]),
     async loadData() {
       try {
         if (this.getAllRoles.length === 0) await this.getRolesStore();

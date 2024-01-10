@@ -170,9 +170,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'getAreaSelectedForStand',
-    ]),
+    ...mapGetters('emplacements', ['getAreaSelectedForStand'])
   },
   watch: {
     getAreaSelectedForStand: 'toggleSelectEmplacementModal',

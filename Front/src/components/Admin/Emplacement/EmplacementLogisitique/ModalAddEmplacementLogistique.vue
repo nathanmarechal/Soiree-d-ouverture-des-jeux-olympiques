@@ -51,7 +51,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllTypeEmplacementLogistique']),
+    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique']),
     selectedType() {
       const typeId = this.emplacementLogistique.id_type_emplacement_logistique;
       return this.getAllTypeEmplacementLogistique.find(type => type.id_type_emplacement_logistique === typeId);
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['createEmplacementLogistiqueStore']),
+    ...mapActions('emplacementLogistiqueEtType', ['createEmplacementLogistiqueStore']),
 
     closeModal() {
       this.$emit('close');
