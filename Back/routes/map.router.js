@@ -134,6 +134,23 @@ router.delete("/delete-area", rightMiddleware.checkRight, mapMiddleware.checkEmp
  *               coordonnes:
  *                 type: object
  *                 description: Coordinates of the area (format and structure as per your application's requirements)
+ *                 example: [[
+ *                              [
+ *                                  48.857572,
+ *                                  2.2977709
+ *                              ],
+ *                              [
+ *                                  48.8575631,
+ *                                  2.2977724
+ *                              ],
+ *                              [
+ *                                  48.8575566,
+ *                                  2.2977726
+ *                              ],
+ *                              [
+ *                                  48.857554,
+ *                                  2.2977637
+ *                              ]]]
  *               surface:
  *                 type: number
  *                 format: float

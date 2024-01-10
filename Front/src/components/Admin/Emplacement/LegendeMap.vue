@@ -18,16 +18,9 @@ import {mapActions, mapGetters} from 'vuex';
 import {translate} from "@/lang/translationService";
 
 export default {
-  /*
-  data() {
-    return {
-      zones: [],
-    };
-  },
-   */
+
   async mounted() {
     await this.loadData();
-    //this.zones = await this.getZones();
   },
   computed: {
     ...mapGetters(['getAllZone','getAllTypeEmplacementLogistique', 'getAllTypeZone']),
@@ -48,6 +41,9 @@ export default {
       try {
         if (this.getAllZone.length === 0)
           await this.getZonesStore();
+
+        if (this.getAllTypeZone.length === 0)
+          await this.getTypeZonesStore();
 
         if (this.getAllTypeEmplacementLogistique.length === 0)
           await this.getTypeEmplacementLogistiqueStore();

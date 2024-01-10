@@ -23,7 +23,7 @@ async function updateArea(id, body, session_id) {
 }
 
 async function createAreaFromAPI(body, session_id) {
-    let answer = await postRequest('/map/create-area?session_id' + session_id, body, 'CREATEAREA')
+    let answer = await postRequest('/map/create-area?session_id=' + session_id, body, 'CREATEAREA')
     //console.log("createAreaFromAPI: ", answer)
     return answer
 }
