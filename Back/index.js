@@ -73,7 +73,7 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API de la SAE',
+      title: 'API cérémonie ouverture des JO',
       version: '1.0.0',
       description: 'API du site de la cérémonie d\'ouverture des jeux olympiques 2024',
     },
