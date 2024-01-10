@@ -74,9 +74,6 @@ async function getTopAvisStand() {
     return answer
 }
 
-
-
-
 async function getNewStandByMonthFromAPI() {
     let answer = await getRequest('/statistiques/new-stand-by-month', 'GETNEWSTANDBYMONTH')
     return answer

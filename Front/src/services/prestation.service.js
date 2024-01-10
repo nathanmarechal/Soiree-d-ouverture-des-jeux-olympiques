@@ -34,46 +34,44 @@ async function uploadImagePresation(image) {
 }
 
 
-async function createPrestation(body) {
-    let answer = await createPrestationFromAPI(body)
+async function createPrestation(body, session_id) {
+    let answer = await createPrestationFromAPI(body, session_id)
     //console.log("createZone: ", answer)
     return answer
 }
 
-async function createPrestationFromAPI(body) {
-    console.log("createPrestationFromAPI: ", body)
-    let answer = await postRequest('/prestations/add', body, 'CREATEPRESTATION')
+async function createPrestationFromAPI(body, session_id) {
+    let answer = await postRequest('/prestations/add?session_id='+session_id, body, 'CREATEPRESTATION')
     return answer
 }
 
 
-async function updateIsAvailablePrestationFromAPI(id, body) {
-    console.log("updateIsAvailablePrestationFromAPI: ", id, body)
-    return patchRequest('/prestations/update/is-available/' + id, body, 'UPDATEPRESTATIONISAVAIBLE')
+async function updateIsAvailablePrestationFromAPI(id, body, session_id) {
+    return patchRequest('/prestations/update/is-available?session_id' + session_id + '&id_prestation=' + id, body, 'UPDATEPRESTATIONISAVAIBLE')
 }
 
-async function updateIsAvailablePrestation(id, body) {
-    let answer = await updateIsAvailablePrestationFromAPI(id, body)
+async function updateIsAvailablePrestation(id, body, session_id) {
+    let answer = await updateIsAvailablePrestationFromAPI(id, body, session_id)
     //console.log("updateZone: ", answer)
     return answer
 }
-async function updatePrestationFromAPI(id, body) {
-    return patchRequest('/prestations/update/' + id, body, 'UPDATEPRESTATION')
+async function updatePrestationFromAPI(id, body, session_id) {
+    return patchRequest('/prestations/update?session_id='+session_id+'&id_prestation' + id, body, 'UPDATEPRESTATION')
 }
 
-async function updatePrestation(id, body) {
-    let answer = await updatePrestationFromAPI(id, body)
+async function updatePrestation(id, body, session_id) {
+    let answer = await updatePrestationFromAPI(id, body, session_id)
     return answer
 }
 
 
-async function deletePrestation(id){
-    let answer = await deletePrestationFromApi(id)
+async function deletePrestation(id, session_id){
+    let answer = await deletePrestationFromApi(id, session_id)
     return answer;
 }
 
-async function deletePrestationFromApi(id){
-    return deleteRequest('/prestations/delete/' + id , 'DELETEPRESTATIONFROMPANIERUSER')
+async function deletePrestationFromApi(id, session_id){
+    return deleteRequest('/prestations/delete?session_id'+session_id+'&id_prestation='+id , 'DELETEPRESTATIONFROMPANIERUSER')
 }
 
 

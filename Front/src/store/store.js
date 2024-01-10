@@ -992,12 +992,22 @@ export default new Vuex.Store({
 
 //-----------------------------------------------------------------Prestation-----------------------------------------------------------------------//
 
+        async getPrestationsStore({ commit }) {
+            try {
+                const result = await getAllPrestations();
+                if (Array.isArray(result)) {
+                    commit('SET_PRESTATIONS', result);
+                } else {
+                    console.error("Unexpected response format:", result);
+                }
+            } catch (err) {
+                console.error("Error in getPrestations():", err);
+            }
+        },
+
         async updateIsAvailablePrestationStore({ commit }, body) {
             try {
-                console.log("id : " + body.id)
-                console.log("body : " + body.is_available)
-                console.log("body : " + JSON.stringify(body, null, 2))
-                await updateIsAvailablePrestation(body.id, body.is_available, this.state.userCourant.session_id);
+                await updateIsAvailablePrestation(body.id, this.state.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -1006,7 +1016,6 @@ export default new Vuex.Store({
 
         async updatePrestationStore({ commit }, body) {
             try {
-                console.log(body)
                 await updatePrestation(body.id_prestation, body, this.state.userCourant.session_id)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
@@ -1016,7 +1025,8 @@ export default new Vuex.Store({
 
         async deletePrestationStore({ commit }, id) {
             try {
-                await deletePrestation(id, this.state.userCourant.session_id);
+                const session_id = this.state.userCourant.session_id
+                await deletePrestation(id, session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
@@ -1025,10 +1035,8 @@ export default new Vuex.Store({
 
         async createPrestationStore({ commit }, body) {
             try {
-                console.log("createPrestation: ", body)
-                console.log("body : " + JSON.stringify(body, null, 2))
-
-                let response = await createPrestation(body, this.state.userCourant.session_id);
+                const session_id = this.state.userCourant.session_id
+                let response = await createPrestation(body, session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);
@@ -1056,8 +1064,6 @@ export default new Vuex.Store({
         async getTypeZonesStore({ commit }) {
             try {
                 const typeZone = await getAllTypeZones();
-                console.log(typeZone);
-                console.log('type zone store')
                 if (Array.isArray(typeZone)) {
                     commit('SET_TYPE_ZONE', typeZone);
                 } else {
@@ -1099,7 +1105,8 @@ export default new Vuex.Store({
 
         async createEmplacementLogistiqueStore({ commit }, body) {
             try {
-                let response =  await createEmplacementLogistique(body);
+                const session_id = this.state.userCourant.session_id
+                let response =  await createEmplacementLogistique(body, session_id);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
                 console.error("Error in createEmplacementLogistiqueStore():", err);
@@ -1108,11 +1115,8 @@ export default new Vuex.Store({
 
         async updateEmplacementLogistiqueStore({ commit }, {id,body}) {
             try {
-                console.log(id)
-                console.log(body)
-                let response = await updateEmplacementLogistique(id, body)
-
-                console.log(response[0])
+                const session_id = this.state.userCourant.session_id
+                let response = await updateEmplacementLogistique(id, body, session_id);
                 commit('UPDATE_EMPLACEMENT_LOGISITIQUE',{id: id, body: response[0]});
             } catch (err) {
                 console.error("Error in updateEmplacementLogistiqueStore():", err);
@@ -1121,8 +1125,8 @@ export default new Vuex.Store({
 
         async deleteEmplacementLogistiqueStore({ commit }, id) {
             try {
-
-                await deleteEmplacementLogistique(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteEmplacementLogistique(id, session_id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
@@ -1134,7 +1138,7 @@ export default new Vuex.Store({
 
         async getZonesStore({ commit }) {
           try {
-              const result = await getAllZones(this.state.userCourant.session_id);
+              const result = await getAllZones();
               if (Array.isArray(result)) {
                   commit('SET_ZONES', result);
               } else {
@@ -1147,7 +1151,8 @@ export default new Vuex.Store({
 
         async deleteZoneStore({ commit }, id) {
             try {
-                await deleteZone(id,this.state.userCourant.session_id);
+                const session_id = this.state.userCourant.session_id
+                await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -1166,9 +1171,8 @@ export default new Vuex.Store({
 
         async createZoneStore({ commit }, body) {
             try {
-                body['session_id'] = this.state.userCourant.session_id
-                const newZone = await createZone(body);
-                console.log("newZone: ", JSON.stringify(newZone[0], null, 2))
+                const session_id = this.state.userCourant.session_id
+                const newZone = await createZone(body, session_id);
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
@@ -1192,8 +1196,8 @@ export default new Vuex.Store({
 
         async updateAreasStore({ commit },{id, body}) {
             try {
-                await updateArea(id, body);
-                console.log("updateAreasStore: ", id, body)
+                const session_id = this.state.userCourant.session_id
+                await updateArea(id, body, session_id);
                 commit('UPDATE_AREA', {id, body});
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
@@ -1202,8 +1206,8 @@ export default new Vuex.Store({
 
         async deleteAreasStore({ commit }, id) {
             try {
-                console.log("deleteAreasStore: ", id)
-                await deleteArea(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteArea(id, session_id);
                 commit('DELETE_AREA', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -1212,7 +1216,8 @@ export default new Vuex.Store({
 
         async createAreasStore({ commit }, body) {
             try {
-                let response =  await createArea(body);
+                const session_id = this.state.userCourant.session_id
+                let response =  await createArea(body, session_id);
                 commit('CREATE_AREA', response[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
@@ -1223,8 +1228,8 @@ export default new Vuex.Store({
 
         async updateDescriptionHomePageStore({ commit }, {id_text_accueil, body}) {
             try {
-                console.log(id_text_accueil, body)
-                await updateDescriptionHomePage(id_text_accueil, body);
+                const session_id = this.state.userCourant.session_id
+                await updateDescriptionHomePage(id_text_accueil, body, session_id);
                 commit('UPDATE_HomePage', {id_text_accueil, body});
             } catch (err) {
                 console.error("Error in updateHomePageStore():", err);
@@ -1248,8 +1253,8 @@ export default new Vuex.Store({
 
         async updateStandStore({ commit }, {id, body}) {
             try {
-                console.log(id, body)
-                await updateStand(id, body);
+                const session_id = this.state.userCourant.session_id
+                await updateStand(id, body, session_id);
                 commit('UPDATE_STAND', id, body);
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -1258,7 +1263,8 @@ export default new Vuex.Store({
 
         async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
-                await updateDescriptionStand(id, body);
+                const session_id = this.state.userCourant.session_id
+                await updateDescriptionStand(id, body, session_id);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
@@ -1267,7 +1273,8 @@ export default new Vuex.Store({
 
         async deleteStandStore({ commit }, id) {
             try {
-                await deleteStand(id);
+                const session_id = this.state.userCourant.session_id
+                await deleteStand(id, session_id);
                 commit('DELETE_STAND', id);
             } catch (err) {
                 console.error("Error in deleteStandStore():", err);
@@ -1285,22 +1292,6 @@ export default new Vuex.Store({
                 }
             } catch (err) {
                 console.error("Error in getStands():", err);
-            }
-        },
-
-//----------------------------------------------------------------------Prestations--------------------------------------------------------------------//
-
-
-        async getPrestationsStore({ commit }) {
-            try {
-                const result = await getAllPrestations();
-                if (Array.isArray(result)) {
-                    commit('SET_PRESTATIONS', result);
-                } else {
-                    console.error("Unexpected response format:", result);
-                }
-            } catch (err) {
-                console.error("Error in getPrestations():", err);
             }
         },
 

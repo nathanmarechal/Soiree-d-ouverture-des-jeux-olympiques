@@ -35,14 +35,11 @@ async function createArea(body, session_id) {
 }
 
 async function deleteAreaFromAPI(id, session_id) {
-    console.log("deleteArea2: ", id, session_id)
     return deleteRequest('/map/delete-area?session_id=' + session_id + 'id_emplacement' + id, 'DELETEAREA')
 }
 
-async function deleteArea(id) {
-    console.log("deleteArea1: ", id)
-    let answer = await deleteAreaFromAPI(id)
-    //console.log("deleteArea: ", answer)
+async function deleteArea(id, session_id) {
+    let answer = await deleteAreaFromAPI(id, session_id)
     return answer
 }
 
