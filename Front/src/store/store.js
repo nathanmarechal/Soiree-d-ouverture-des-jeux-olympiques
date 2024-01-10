@@ -820,7 +820,7 @@ export default new Vuex.Store({
                 let result = await acceptUser(id,this.state.userCourant.session_id);
                 console.log("result: ", result)
                 commit('ACCEPT_USER_DELETE', id);
-                commit('ACCEPT_USER_ADD', result);
+                commit('ACCEPT_USER_ADD', result[0]);
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
             }
