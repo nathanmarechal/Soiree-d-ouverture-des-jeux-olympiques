@@ -16,7 +16,7 @@ export function changeLanguage(lang) {
         .catch((error) => {
             console.error(`Failed to load translations for ${lang}`, error);
         });
-    this.$store.state.lang = lang;
+    this.$store.state.user.lang = lang;
     console.log(this.$store.getters['user/getLang'])
 }
 export function translate(key) {

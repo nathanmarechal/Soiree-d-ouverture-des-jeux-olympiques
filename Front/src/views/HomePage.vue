@@ -1,6 +1,6 @@
 <template>
   <div class="marge">
-    <div v-if="$store.getters.getLang==='fr'">
+    <div v-if="$store.getters['user/getLang']==='fr'">
     <MainImageAndTitle_fr/>
     </div>
     <div v-else>
