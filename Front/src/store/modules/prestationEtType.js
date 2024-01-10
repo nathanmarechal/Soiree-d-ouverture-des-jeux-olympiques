@@ -66,7 +66,7 @@ export default {
 
         async updateIsAvailablePrestationStore({ commit }, body) {
             try {
-                await updateIsAvailablePrestation(body.id, this.state.userCourant.session_id);
+                await updateIsAvailablePrestation(body.id, this.$store.getters['user.getSessionId']);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -75,7 +75,7 @@ export default {
 
         async updatePrestationStore({ commit }, body) {
             try {
-                await updatePrestation(body.id_prestation, body, this.state.userCourant.session_id)
+                await updatePrestation(body.id_prestation, body, this.$store.getters['user.getSessionId'])
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -84,7 +84,7 @@ export default {
 
         async deletePrestationStore({ commit }, id) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 await deletePrestation(id, session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
@@ -94,7 +94,7 @@ export default {
 
         async createPrestationStore({ commit }, body) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = this.$store.getters['user.getSessionId']
                 let response = await createPrestation(body, session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
