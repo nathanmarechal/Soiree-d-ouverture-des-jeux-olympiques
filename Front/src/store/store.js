@@ -6,7 +6,7 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword, createUserWithStand, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
+    updateUserCourantWoPassword, registerPrestataire, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -841,7 +841,7 @@ export default new Vuex.Store({
                 };
                 console.log("IL EST ICI LE TEST" + JSON.stringify(body))
                 console.log("body: ", body)
-                await createUserWithStand(body);
+                await registerPrestataire(body);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -889,9 +889,10 @@ export default new Vuex.Store({
             try {
                 console.log("createRoleStore: ", body)
                 const data = await createRole(body, this.state.userCourant.session_id);
-                //console.log("datacreate: ", data.rows[0]);
-                commit('CREATE_ROLE', data.rows[0]);
-                return data.rows[0];
+                console.log("datacreate: ", data);
+                console.log("datacreate: ", data[0]);
+                commit('CREATE_ROLE', data[0]);
+                return data[0];
             } catch (err) {
                 console.error("Error in createRoleStore():", err);
             }
@@ -900,8 +901,8 @@ export default new Vuex.Store({
         async deleteRoleStore({ commit }, id) {
             try {
                 const data = await deleteRole(id,this.state.userCourant.session_id);
-                //console.log("datadelete: ", data.rows[0].id_role);
-                commit('DELETE_ROLE', data.rows[0].id_role);
+                //console.log("datadelete: ", data[0].id_role);
+                commit('DELETE_ROLE', data[0].id_role);
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }
@@ -911,8 +912,9 @@ export default new Vuex.Store({
             try {
                 console.log("updateRoleStore: ", body)
                 const data = await updateRole(body, this.state.userCourant.session_id);
-                //console.log("dataupdate: ", data);
-                commit('UPDATE_ROLE', data.id_role, data);
+                console.log("dataupdate: ", data, data[0].id_role);
+                commit('UPDATE_ROLE', data[0].id_role);
+                console.log("dataupdate2: ", data[0]);
                 return data;
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);

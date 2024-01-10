@@ -71,23 +71,23 @@ async function registerClientFromAPI(user, session_id) {
     return answer
 }
 
-async function registerPrestataire(session_id, body) {
-    let answer = await RegisterPrestaireFromAPI(session_id, body)
+async function registerPrestataire(body, session_id) {
+    let answer = await RegisterPrestaireFromAPI(body, session_id)
     return answer
 }
 
-async function RegisterPrestaireFromAPI(session_id, body) {
+async function RegisterPrestaireFromAPI(body, session_id) {
     let answer = await postRequest('/users/registerPrestataire?session_id'+session_id, body, 'REGISTERPRESTATAIRE')
     return answer
 }
 
-async function updateUser(session_id, id, body) {
-    let answer = await updateUserFromAPI(session_id, id, body)
+async function updateUser(id, body, session_id) {
+    let answer = await updateUserFromAPI(id, body, session_id)
     return answer
 }
 
-async function updateUserFromAPI(session_id, id, body) {
-    return patchRequest('/users/update?session_id='+session_id, body, 'UPDATEUSER')
+async function updateUserFromAPI(id, body, session_id) {
+    return patchRequest('/users/update?session_id='+session_id + '&id_user=' + id, body, 'UPDATEUSER')
 }
 
 async function deleteUser(id,session_id) {

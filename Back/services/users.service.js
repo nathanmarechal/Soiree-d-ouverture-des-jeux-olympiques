@@ -110,7 +110,7 @@ const updateUser = (id_user, prenom, nom, email, password, adresse, code_postal,
         .catch(error => {
             console.log("updateUserAsync error:", error);
             callback(error, null);
-        })
+        }) 
 }
 
 async function updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune,solde, id_role, id_stand) {

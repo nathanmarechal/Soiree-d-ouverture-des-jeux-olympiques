@@ -47,7 +47,7 @@ export default {
       try {
         if (this.getTextsHome.length === 0) {
           await this.getTextsHomeStore()
-        }
+        } 
         if (this.getAllRoles.length === 0) {
           console.log("ICI LES ROLES SONT VIDES")
           await this.getRolesStore()
