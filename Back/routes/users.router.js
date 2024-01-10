@@ -272,7 +272,6 @@ router.patch("/updateSolde", usersMiddleware.checkUserExists, usersController.up
  */
 router.patch("/updateUserCourantWoPassword", usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
 
-
 /**
  * @swagger
  * /api/users/registerClient:
@@ -395,8 +394,7 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
  *       '500':
  *         description: Internal error
  */
-router.post("/registerPrestataire",  usersController.createUserWithStand);
-
+router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
 
 /**
  * @swagger
@@ -558,6 +556,5 @@ router.post("/acceptUser", rightMiddleware.checkRight, usersMiddleware.checkUser
  *         description: Internal error
  */
 router.post("/refuseUser", rightMiddleware.checkRight, usersMiddleware.checkUserAttenteExists, usersController.refuseUser);
-
 
 module.exports = router;
