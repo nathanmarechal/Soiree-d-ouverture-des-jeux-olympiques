@@ -435,8 +435,7 @@ export default {
 
         async getUsersStore({ commit }) {
             try {
-                console.log(this.state.userCourant.session_id)
-                const result = await getAllUsers(this.state.userCourant.session_id);
+                const result = await getAllUsers(this.state.user.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
