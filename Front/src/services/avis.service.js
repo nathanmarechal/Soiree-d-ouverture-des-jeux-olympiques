@@ -1,4 +1,4 @@
-import {getRequest, postRequest, postRequestPicture} from "@/services/axios.service";
+import {deleteRequest, getRequest, postRequest, postRequestPicture} from "@/services/axios.service";
 
 async function uploadImageAvisFromAPI(image){
     return postRequestPicture('/avis/uploading/picture-avis/',image, 'UPLOADPICTUREDESCRIPTIONHOMEPAGE')
@@ -35,7 +35,7 @@ async function deleteAvis(id, session_id) {
 }
 
 async function deleteAvisFromAPI(id, session_id) {
-    return postRequest('/avis/deleteAvisByIdStandUser?session_id=' + session_id + "&id_avis=" + id, 'DELETEAVIS')
+    return deleteRequest('/avis/deleteAvisByIdStandUser?session_id=' + session_id + "&id_avis=" + id, 'DELETEAVIS')
 }
 
 export {
@@ -43,5 +43,4 @@ export {
     uploadImageAvis,
     uploadAvis,
     deleteAvis
-
 }
