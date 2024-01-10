@@ -58,8 +58,8 @@ export default {
 
         async updateAreasStore({ commit },{id, body}) {
             try {
-                await updateArea(id, body);
-                console.log("updateAreasStore: ", id, body)
+                const session_id = this.$store.getters['user.getSessionId']
+                await updateArea(id, body, session_id);
                 commit('UPDATE_AREA', {id, body});
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
@@ -69,8 +69,8 @@ export default {
 
         async deleteAreasStore({ commit }, id) {
             try {
-                console.log("deleteAreasStore: ", id)
-                await deleteArea(id);
+                const session_id = this.$store.getters['user.getSessionId']
+                await deleteArea(id, session_id);
                 commit('DELETE_AREA', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -80,14 +80,12 @@ export default {
 
         async createAreasStore({ commit }, body) {
             try {
-                let response =  await createArea(body);
+                const session_id = this.$store.getters['user.getSessionId']
+                let response =  await createArea(body, session_id);
                 commit('CREATE_AREA', response[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);
             }
         },
-
-
-
     },
 }
