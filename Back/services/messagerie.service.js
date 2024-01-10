@@ -39,7 +39,7 @@ async function getConversationsForUserAsync(id_user) {
             "FROM conversations\n" +
             "LEFT JOIN messages ON conversations.id_conversation = messages.id_conversation\n" +
             "LEFT JOIN utilisateur on conversations.id_creator = utilisateur.id_user\n" +
-            "WHERE id_creator = $1\n" +
+            "WHERE id_creator = $1 AND resolu=false\n" +
             "GROUP BY conversations.id_conversation, utilisateur.email\n" +
             ";",[id_user]);
         conn.release();
@@ -130,9 +130,65 @@ const sendMessage = (id_conversation,message,id_user,callback) => {
         });
 }
 
+async function createConversationAsync(message, id_user) {
+    try {
+        console.log(message, id_user)
+        const conn = await pool.connect();
+        const result = await conn.query(`INSERT INTO conversations (id_creator, titre, resolu)
+                                         VALUES ($1, $2, false) RETURNING *;
+        `,[id_user,message]);
+        conn.release();
+        return result.rows;
+
+    } catch (error) {
+        console.error('Error in sendMessageAsync:', error);
+        throw error;
+    }
+}
+
+const createConversation = (message,id_user,callback) => {
+    createConversationAsync(message,id_user)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
+
+async function toggleResolvedConversationAsync(id_conversation) {
+    try {
+        const conn = await pool.connect();
+        const result = await conn.query(`
+                UPDATE conversations
+                SET resolu = true
+                WHERE id_conversation = $1;`,[id_conversation]);
+        conn.release();
+        return result.rows;
+    } catch (error) {
+        console.error('Error in toggleResolvedConversationAsync:', error);
+        throw error;
+    }
+}
+
+const toggleResolvedConversation = (id_conversation,callback) => {
+    toggleResolvedConversationAsync(id_conversation)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback(error, null);
+        });
+}
+
 module.exports = {
     getAllConversations: getAllConversations,
     getConversationsForUser:getConversationsForUser,
     getMessagesByConversation:getMessagesByConversation,
-    sendMessage:sendMessage
+    sendMessage:sendMessage,
+    toggleResolvedConversation,
+    createConversation
 }

@@ -233,7 +233,7 @@ CREATE TABLE conversations(
     id_conversation SERIAL PRIMARY KEY,
     id_creator INTEGER,
     titre VARCHAR(64),
-    resolu BOOLEAN,
+    resolu BOOLEAN, 
     FOREIGN KEY (id_creator) REFERENCES utilisateur(id_user)
 );
 

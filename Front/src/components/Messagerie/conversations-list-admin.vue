@@ -1,13 +1,13 @@
 <template>
   <div class="user-list">
-    <table>
+    <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th>titre de la conversation</th>
-        <th>email du créateur</th>
-        <th>nombre de messages</th>
-        <th>résolu</th>
-        <th>actions</th>
+        <th>Titre de la conversation</th>
+        <th>Email du créateur</th>
+        <th>Nombre de messages</th>
+        <th>Résolu</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -17,22 +17,22 @@
         <td style="text-align: center">{{ conversation.nb_messages }}</td>
         <td>{{ conversation.resolu }}</td>
         <td>
-          <router-link :to="{ name: 'MessagesAdminConversation', params: { selected_conversation: conversation } }" class="btn btn-primary">voir</router-link>
-          <button class="red-button" @click="toggleResolved(conversation.id_conversation)">marquer résolu</button>
+          <router-link :to="{ name: 'MessagesAdminConversation', params: { selected_conversation: conversation } }" class="btn btn-primary">Voir</router-link>
+          <button v-if="!conversation.resolu" class="btn btn-danger" @click="toggleResolved(conversation.id_conversation)">Marquer résolu</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 </template>
+
 <script>
-
-
 import {mapActions, mapGetters} from "vuex";
+import {toggleResolvedConversation} from "@/services/messagerie.service";
 
 export default({
   computed: {
-    ...mapGetters(['getConversations'])
+    ...mapGetters(['getConversations','getCurrentUser'])
   },
 
   async mounted() {
@@ -43,7 +43,7 @@ export default({
     }
   },
 
-  methods:{
+  methods: {
     ...mapActions(['getConversationsAdminStore']),
     async loadData() {
       try {
@@ -54,13 +54,19 @@ export default({
         console.error('Erreur lors du chargement des données :', error);
       }
     },
-    async toggleResolved(id_conversation)
-    {
-      console.log("toggling "+id_conversation+" resolved.")
+    async toggleResolved(id_conversation) {
+      let body = {id_conversation: id_conversation}
+      await toggleResolvedConversation(body, this.getCurrentUser.session_id);
+      this.updateLocalConversationStatus(id_conversation);
+    },
+    updateLocalConversationStatus(id_conversation) {
+      const conversation = this.getConversations.find(conversation => conversation.id_conversation === id_conversation);
+      if (conversation) {
+        conversation.resolu = !conversation.resolu;
+      }
     }
   }
 })
-
 </script>
 
 <style scoped>

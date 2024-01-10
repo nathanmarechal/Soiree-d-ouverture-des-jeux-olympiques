@@ -11,4 +11,8 @@ router.get("/get-messages-by-conversation", messagerieController.getMessagesByCo
 
 router.post("/send-message", messagerieController.sendMessage);
 
+router.post("/create-conversation", messagerieController.createConversation);
+
+router.patch("/toggle-resolved-converstation", messagerieController.toggleResolvedConversation);
+
 module.exports = router

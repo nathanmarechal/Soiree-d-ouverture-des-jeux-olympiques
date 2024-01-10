@@ -23,8 +23,11 @@
       </tbody>
     </table>
 
-    <textarea  v-model="newMessage" name="newMessage" id="newMessage"></textarea>
-    <button type="button" @click="send">Envoyer</button>
+    <div class="mb-3">
+      <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" placeholder="Tapez votre message ici..."></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" @click="send">Envoyer</button>
+
   </div>
 </template>
 
