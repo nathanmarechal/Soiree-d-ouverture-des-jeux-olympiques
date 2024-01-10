@@ -1,27 +1,35 @@
 <template>
   <div>
-    <h2>Conversation {{ conversation.titre }}</h2>
+    <div class="title-line"></div>
+    <h2 class="conversation-title">{{ conversation.titre }}</h2>
+    <div class="title-line"></div>
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>{{translate("conversationMessages_1")}}</th>
-        <th>{{translate("conversationMessages_2")}}</th>
-        <th>{{translate("conversationMessages_3")}}</th>
-        <th>{{translate("conversationMessages_4")}}</th>
-        <th>{{translate("conversationMessages_5")}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(message, index) in messages" :key="index">
-        <td>{{ message.id_sender }}</td>
-        <td>{{ message.message }}</td>
-        <td>{{ message.temps_emmission }}</td>
-        <td>{{ message.name }}</td>
-        <td>{{ message.email }}</td>
-      </tr>
-      </tbody>
-    </table>
+
+    <div  v-for="(message, index) in messages" :key="index" >
+        <div v-if="message.id_sender===getCurrentUser.id_user" class="message-container-own">
+          <div class="message-header">
+            <p>{{ message.name }} - {{ message.email }}</p>
+          </div>
+          <div class="message-body">
+            <p>{{ message.message }}</p>
+          </div>
+          <div class="message-footer">
+            <p>{{ message.temps_emmission }}</p>
+          </div>
+      </div>
+      <div v-else class="message-container">
+        <div class="message-header">
+          <p>{{ message.name }} - {{ message.email }}</p>
+        </div>
+        <div class="message-body">
+          <p>{{ message.message }}</p>
+        </div>
+        <div class="message-footer">
+          <p>{{ message.temps_emmission }}</p>
+        </div>
+      </div>
+    </div>
+
 
     <div class="mb-3">
       <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
@@ -74,5 +82,42 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styles here if needed */
+.message-container {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid yellow;
+  border-radius: 5px;
+}
+.message-container-own {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+.message-header {
+  font-weight: bold;
+}
+
+.message-body {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.message-footer {
+  font-size: 12px;
+  color: rgb(128, 128, 128);
+}
+ .title-line {
+   border-top: 2px solid rgb(128, 128, 128);
+   width: 100%;
+   margin: 10px 0;
+ }
+
+.conversation-title {
+  text-align: center;
+  margin: 10px 0;
+}
 </style>
