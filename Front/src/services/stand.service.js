@@ -18,7 +18,7 @@ async function updateStand(id, body, session_id) {
 }
 
 async function updateStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands/?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
+    return patchRequest('/stands?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
 }
 
 async function deleteStand(id, session_id) {
@@ -38,7 +38,7 @@ async function createStand(body, session_id) {
 }
 
 async function deleteStandFromAPI(id, session_id) {
-    return deleteRequest('/stands/delete/?session_id=' + session_id  + "&id_stand=" + id, 'DELETESTAND')
+    return deleteRequest('/stands/delete?session_id=' + session_id  + "&id_stand=" + id, 'DELETESTAND')
 }
 
 
@@ -52,7 +52,7 @@ async function uploadImageDescriptionStand(image) {
 }
 
 async function getStandByUserIdFromAPI(id) {
-    return getRequest('/stands/get/?id_stand=' + id, 'GETPRESTATIONBYUSERID')
+    return getRequest('/stands/get?id_stand=' + id, 'GETPRESTATIONBYUSERID')
 }
 
 async function getStandByUserId(id) {
@@ -62,7 +62,7 @@ async function getStandByUserId(id) {
 }
 
 async function updateDescriptionStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands/description/?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATEDESCRIPTIONSTAND')
+    return patchRequest('/stands/description?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATEDESCRIPTIONSTAND')
 }
 
 async function updateDescriptionStand(id, body, session_id) {
