@@ -20,8 +20,8 @@
           <ul class="list-unstyled mb-0 ">
             <li><a href="#" class="text-custom">{{translate("footer_1")}}</a></li>
             <li><a href="https://www.paris2024.org/fr/" class="text-custom">{{translate("footer_2")}}</a></li>
-            <li><a href="#" class="text-custom">{{ translate("footer_3") }}</a></li>
-            <li><a href="#" class="text-custom">{{translate("footer_4")}}</a></li>
+            <li><a href="https://github.com/Natflaz/SAE_s3" class="text-custom">{{ translate("footer_3") }}</a></li>
+            <li><a href="https://github.com/Natflaz/" class="text-custom">{{translate("footer_4")}}</a></li>
           </ul>
         </div>
         <div class="col-md-3 text-right custom-margin">

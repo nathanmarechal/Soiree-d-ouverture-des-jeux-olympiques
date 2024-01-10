@@ -943,4 +943,4 @@ WHERE id_creator = 2
 GROUP BY conversations.id_conversation
 ;
 
-select * from utilisateur where id_user = 1;
+select * from utilisateur ;

@@ -6,7 +6,13 @@ import {
     updateUser,
     deleteUser,
     updateSolde,
-    updateUserCourantWoPassword, registerPrestataire, getAllUsersAttente, acceptUser, refuseUser, getAllStandAttente
+    updateUserCourantWoPassword,
+    registerPrestataire,
+    getAllUsersAttente,
+    acceptUser,
+    refuseUser,
+    getAllStandAttente,
+    registerClient
 } from "@/services/utilisateur.service";
 import {
     getAllRoles,
@@ -839,6 +845,16 @@ export default new Vuex.Store({
             try {
                 const user = body.user;
                 await createUser(user, this.state.userCourant.session_id);
+                commit('CREATE_USER', body);
+            } catch (err) {
+                console.error("Error in createUserStore():", err);
+            }
+        },
+
+        async registerClient({ commit }, body) {
+            try {
+                const user = body.user;
+                await registerClient(user);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
