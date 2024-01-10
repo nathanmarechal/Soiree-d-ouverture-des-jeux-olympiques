@@ -67,7 +67,7 @@ export default {
         },
         async getZonesStore({ commit }) {
             try {
-                const result = await getAllZones(this.state.userCourant.session_id);
+                const result = await getAllZones();
                 if (Array.isArray(result)) {
                     commit('SET_ZONES', result);
                 } else {
