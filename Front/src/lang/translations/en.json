@@ -342,5 +342,22 @@
   "addPrestationPrestataire_8": "Add",
   "addPrestationPrestataire_9": "Exit",
 
-  "validLigneCommande_1": "The order has been retrieved"
+  "validLigneCommande_1": "The order has been retrieved",
+
+  "conversationMessages_1": "Sender ID",
+  "conversationMessages_2": "Message",
+  "conversationMessages_3": "Name",
+  "conversationMessages_4": "Email",
+  "conversationMessages_5": "Type your message here...",
+  "conversationMessages_6": "Send",
+
+  "conversationsList_creerConvoPlaceholder": "Enter the conversation message",
+  "conversationsList_creerConvo": "Create Conversation",
+  "conversationsList_titre": "Title of the conversation",
+  "conversationsList_email": "Creator's Email",
+  "conversationsList_nbMessages": "Number of messages",
+  "conversationsList_resolu": "Resolved",
+  "conversationsList_actions": "Actions",
+  "conversationsList_voir": "View",
+  "conversationsList_marquerResolu": "Mark as Resolved"
 }

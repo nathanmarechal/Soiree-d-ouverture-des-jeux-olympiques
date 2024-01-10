@@ -5,11 +5,11 @@
     <table class="table">
       <thead>
       <tr>
-        <th>ID Sender</th>
-        <th>Message</th>
-        <th>Time</th>
-        <th>Name</th>
-        <th>Email</th>
+        <th>{{translate("conversationMessages_1")}}</th>
+        <th>{{translate("conversationMessages_2")}}</th>
+        <th>{{translate("conversationMessages_3")}}</th>
+        <th>{{translate("conversationMessages_4")}}</th>
+        <th>{{translate("conversationMessages_5")}}</th>
       </tr>
       </thead>
       <tbody>
@@ -24,16 +24,17 @@
     </table>
 
     <div class="mb-3">
-      <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" placeholder="Tapez votre message ici..."></textarea>
+      <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
     </div>
-    <button type="button" class="btn btn-primary" @click="send">Envoyer</button>
+    <button type="button" class="btn btn-primary" @click="send">{{translate("conversationMessages_6")}}</button>
 
   </div>
 </template>
 
 <script>
-import { getMessagesByConversation,sendMessage } from "@/services/messagerie.service";
+import {getMessagesByConversation, sendMessage} from "@/services/messagerie.service";
 import {mapGetters} from "vuex";
+import {translate} from "@/lang/translationService";
 
 
 export default {
@@ -49,6 +50,7 @@ export default {
     ...mapGetters(['getCurrentUser'])
   },
   methods:{
+    translate,
     async send() {
       console.log("dans le send mon petit thomas")
       const body = {
@@ -64,8 +66,7 @@ export default {
 
   },
   async mounted() {
-    const selectedConversation = this.$route.params.selected_conversation;
-    this.conversation = selectedConversation;
+    this.conversation = this.$route.params.selected_conversation;
     this.messages = await getMessagesByConversation(this.conversation.id_conversation);
 
   },

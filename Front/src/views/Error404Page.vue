@@ -2,7 +2,7 @@
   <div class="main">
     <h1>{{translate("erro_1")}}</h1>
     <h2>{{translate("erro_2")}}</h2>
-    <img src="@/assets/stand/arthur-clown.png" alt="Arthur Clown" @click="toggleRotation">
+    <img src="@/assets/clown.png" alt="Arthur Clown" @click="toggleRotation">
     <h3>{{translate("erro_3")}}</h3>
     <router-link to="/">
       <button @click="playAudio" class="btn-success">{{translate("erro_4")}}</button>
