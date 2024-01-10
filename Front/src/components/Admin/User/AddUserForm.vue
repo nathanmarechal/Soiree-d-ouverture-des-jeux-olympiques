@@ -105,6 +105,7 @@ export default {
           this.utilisateur.id_role = role;
           console.log("user", this.utilisateur.id_role);
           console.log("role", role);
+          console.log("user", this.utilisateur);
         await this.createUserStore({
           user: this.utilisateur,
           session_id: this.getCurrentUser.session_id

@@ -9,8 +9,9 @@ exports.createUser = (req, res) => {
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
     const id_role = req.body.id_role;
+    const solde = req.body.solde;
 
-    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, (error, data) => {
+    usersService.createUser(prenom, nom, email, password, adresse, code_postal, commune, id_role, solde, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
