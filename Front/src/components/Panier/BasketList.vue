@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12">
         <h1 class="text-center">Panier</h1>
-        <p>{{getCurrentUser.solde}}</p>
-        <button @click="ajouterdufric" >+ 100 balles</button>
+        <p>solde : {{getCurrentUser.solde}} €</p>
+        <button @click="get100" >+ 100 €</button>
       </div>
     </div>
     <div class="alert alert-success" role="alert" v-if="getPanierUserCourant.length === 0">
@@ -95,7 +95,7 @@ export default {
 
     ...mapActions(['getCreneauStore', "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore", "updateSoldeStore"]),
 
-    ajouterdufric(){
+    get100(){
       this.updateSoldeStore({id_user : this.getCurrentUser.id_user, solde : this.getCurrentUser.solde + 100})
     },
 

@@ -19,9 +19,6 @@
               <th scope="col">{{translate("waitingUsers_8")}}</th>
               <th scope="col">{{translate("waitingUsers_9")}}</th>
               <th scope="col">{{translate("waitingUsers_10")}}</th>
-              <th scope="col">{{translate("waitingUsers_11")}}</th>
-              <th scope="col">{{translate("waitingUsers_12")}}</th>
-              <th scope="col">{{translate("waitingUsers_13")}}</th>
               <th scope="col">{{translate("waitingUsers_14")}}</th>
             </tr>
             </thead>
@@ -35,12 +32,9 @@
               <td>{{user.code_postal}}</td>
               <td>{{user.adresse}}</td>
               <td>{{user.commune}}</td>
-              <td>{{user.id_role}}</td>
-              <td>{{user.id_stand}}</td>
-              <td>{{user.droits}}</td>
+
 
               <td>
-                <span>{{user}}</span>
                 <button class="btn btn-success" @click="acceptUser(user.id_user)">{{translate("waitingUsers_15")}}</button>
                 <button class="btn btn-danger" @click="refuseUser(user.id_user)">{{translate("waitingUsers_16")}}</button>
               </td>
