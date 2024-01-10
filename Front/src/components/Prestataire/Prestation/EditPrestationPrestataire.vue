@@ -96,7 +96,7 @@ export default {
       try {
         return require('./../../../../../Back/assets/prestation/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
 

@@ -107,7 +107,7 @@ export default {
         return require('../../../assets/stand/' + imageName)
       } catch {
         console.error('Erreur lors du chargement de l’image');
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
     translate,

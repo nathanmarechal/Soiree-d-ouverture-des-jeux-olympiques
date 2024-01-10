@@ -222,7 +222,7 @@ export default {
         console.log(imageName)
         return require('./../../../../Back/assets/stand/profile/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
     goToPrestations() {
