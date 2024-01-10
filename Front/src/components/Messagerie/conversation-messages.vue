@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div style="width: 50%">
     <div class="title-line"></div>
     <h2 class="conversation-title">{{ conversation.titre }}</h2>
     <div class="title-line"></div>
 
 
-    <div  v-for="(message, index) in messages" :key="index" >
+    <div  class="box" v-for="(message, index) in messages" :key="index" >
         <div v-if="message.id_sender===getCurrentUser.id_user" class="message-container-own">
           <div class="message-header">
             <p>{{ message.name }} - {{ message.email }}</p>
