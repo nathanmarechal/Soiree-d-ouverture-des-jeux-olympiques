@@ -76,7 +76,7 @@ export default {
 
         async createEmplacementLogistiqueStore({ commit }, body) {
             try {
-                let response =  await createEmplacementLogistique(body);
+                let response =  await createEmplacementLogistique(body, this.state.user.userCourant.session_id);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
                 console.error("Error in createEmplacementLogistiqueStore():", err);
@@ -87,7 +87,7 @@ export default {
             try {
                 console.log(id)
                 console.log(body)
-                let response = await updateEmplacementLogistique(id, body)
+                let response = await updateEmplacementLogistique(id, body, this.state.user.userCourant.session_id)
 
                 console.log(response[0])
                 commit('UPDATE_EMPLACEMENT_LOGISITIQUE',{id: id, body: response[0]});
@@ -99,7 +99,7 @@ export default {
         async deleteEmplacementLogistiqueStore({ commit }, id) {
             try {
 
-                await deleteEmplacementLogistique(id);
+                await deleteEmplacementLogistique(id, this.state.user.userCourant.session_id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
