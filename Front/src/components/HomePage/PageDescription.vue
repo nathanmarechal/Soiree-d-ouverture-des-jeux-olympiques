@@ -27,7 +27,6 @@ export default {
       myEditor: null,
       homeText : null,
       HomeDescription: null,
-      role : null,
       editMode : false,
       editorConfig: {
         plugins: 'image',
@@ -50,13 +49,14 @@ export default {
           await this.getTextsHomeStore()
         }
         if (this.getAllRoles.length === 0) {
+          console.log("ICI LES ROLES SONT VIDES")
           await this.getRolesStore()
         }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
-        console.log(this.homeText + " zazazazazazaza ")
         this.HomeDescription = this.homeText.description;
-        console.log(this.HomeDescription + " zouzouzouzozuzouzozuozuozu ")
-        this.role = this.getAllRoles.find(role => role.id_role === this.getCurrentUser.id_role).libelle;
+
+        console.log("REGARDE LES ROLES ICI BG", this.getAllRoles)
+
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

@@ -26,7 +26,7 @@ exports.checkStandAppartenance = async (req, res, next) => {
         const conn = await pool.connect();
 
         const checkStand = await conn.query("SELECT * FROM stand WHERE id_stand = $1;", [standId]);
-        if (checkStand.rows.length === 0) {
+        if (checkStand.rows.length === 0 && standId != null) {
             conn.release();
             return res.status(404).send("Stand non trouvé");
         }
