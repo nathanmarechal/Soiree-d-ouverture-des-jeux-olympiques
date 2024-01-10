@@ -1,4 +1,4 @@
-import {getRequest,postRequestPicture,patchRequest, deleteRequest} from "@/services/axios.service";
+import {postRequest,getRequest,postRequestPicture,patchRequest, deleteRequest} from "@/services/axios.service";
 
 async function getAllStandsFromAPI() {
     let answer = await getRequest('/stands/get', 'GETALLSTANDS')
@@ -23,6 +23,17 @@ async function updateStandFromAPI(id, body) {
 
 async function deleteStand(id) {
     let answer = await deleteStandFromAPI(id)
+    return answer
+}
+
+async function createStandFromAPI(body) {
+    console.log("createStandFromAPI: ", body)
+    let answer = await postRequest('/stands/add', body, 'CREATESTAND')
+    return answer
+}
+
+async function createStand(body) {
+    let answer = await createStandFromAPI(body)
     return answer
 }
 
@@ -76,5 +87,6 @@ export {
     updateDescriptionStand,
     deleteStand,
     updateStand,
-    uploadImageStand
+    uploadImageStand,
+    createStand
 }

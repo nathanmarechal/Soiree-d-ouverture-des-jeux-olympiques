@@ -30,7 +30,7 @@
 
 
 
-      <map-sign-up-pre-view style="width: 100%; height: 25vh;"></map-sign-up-pre-view>
+      <map-sign-up-pre-view style="width: 100%; height: 25vh;" @dataEmplacement="handleDataEmplacement"></map-sign-up-pre-view>
 
       <div class="d-flex justify-content-center"> <!-- Flexbox for centering -->
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_4") }}</button>
@@ -131,7 +131,11 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-      initializeCropper() {
+    handleDataEmplacement(data) {
+      console.log(data)
+      this.stand.id_emplacement = data.id_emplacement
+    },
+    initializeCropper() {
       const image = this.$refs.image_stand;
       this.cropper = new Cropper(image, {
         aspectRatio: 1,

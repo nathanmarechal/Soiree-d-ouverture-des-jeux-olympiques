@@ -45,6 +45,7 @@ exports.deleteStand = (req, res) => {
 }
 
 exports.createStand = (req, res) => {
+    console.log("createStand: ", req.body)
     const body = req.body;
     standsService.createStand(body, (error, data) => {
         if (error) {

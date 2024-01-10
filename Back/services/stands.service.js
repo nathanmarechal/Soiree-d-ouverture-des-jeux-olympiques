@@ -119,6 +119,7 @@ const createStand = (body, callback) => {
 
 async function createStandAsync(body) {
     try {
+        console.log("gagagougou", body)
         const conn = await pool.connect();
         const result = await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;", [body.nom_stand, body.image_stand, body.description_stand, body.date_achat, body.prix, body.id_emplacement]);
         conn.release();

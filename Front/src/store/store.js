@@ -16,7 +16,7 @@ import {
 } from "@/services/role.service";
 import {getAllAreas, getAllZones, getAllTypeZones, deleteZone, updateZone, createZone, updateArea, deleteArea, createArea} from "@/services/map.service";
 import {getAllPrestations, getAllTypePrestations,createPrestation,updateIsAvailablePrestation,updatePrestation,deletePrestation} from "@/services/prestation.service";
-import {getAllStands, deleteStand, updateStand,updateDescriptionStand} from "@/services/stand.service";
+import {getAllStands, deleteStand, updateStand,updateDescriptionStand, createStand} from "@/services/stand.service";
 import {
     addPrestationToPanierUser,
     deletePrestationFromPanierUser,
@@ -1245,6 +1245,18 @@ export default new Vuex.Store({
         },
 
 //----------------------------------------------------------------------Stand--------------------------------------------------------------------//
+
+        async createStandStore({ commit }, body) {
+            try {
+                console.log("createStandStore: ", body)
+                const data = await createStand(body);
+                console.log("datacreate: ", data.rows);
+                commit('CREATE_STAND', data.rows);
+                return data.rows[0];
+            } catch (err) {
+                console.error("Error in createStandStore():", err);
+            }
+        },
 
         async updateStandStore({ commit }, {id, body}) {
             try {
