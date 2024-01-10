@@ -137,16 +137,19 @@ export default {
       try {
         console.log("Données de la prestation :", this.prestation);
 
-        await this.createPrestationStore(this.prestation);
+        // Étape 1: Télécharger l'image
         await uploadImagePresation(this.image_raw);
 
+        await this.createPrestationStore(this.prestation);
+
+        // Redirection après la création de la prestation
         await this.$router.push('/prestataire/prestations/');
       } catch (error) {
-        // Gestion des erreurs
         console.error("Erreur lors de la création de la prestation :", error);
         // Afficher un message d'erreur à l'utilisateur, si nécessaire
       }
     }
+
   }
 };
 </script>

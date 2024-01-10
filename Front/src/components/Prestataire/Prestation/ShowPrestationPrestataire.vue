@@ -41,7 +41,7 @@ export default {
   computed: {
     ...mapGetters(['getCurrentUser', 'getAllPrestation','getAllTypePrestation']),
   },
-  async created() {
+  async mounted() {
     await this.loadData()
     this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
@@ -70,6 +70,7 @@ export default {
     },
     getPrestationByUserId(id){
       this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
+      console.log(this.prestations)
     },
     getTypePrestationLibelle(idTypePrestation) {
       const typePrestation = this.getAllTypePrestation.find(type => type.id_type_prestation === idTypePrestation);
