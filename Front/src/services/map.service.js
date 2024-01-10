@@ -35,7 +35,7 @@ async function createArea(body, session_id) {
 }
 
 async function deleteAreaFromAPI(id, session_id) {
-    return deleteRequest('/map/delete-area?session_id=' + session_id + 'id_emplacement' + id, 'DELETEAREA')
+    return deleteRequest('/map/delete-area?session_id=' + session_id + '&id_emplacement=' + id, 'DELETEAREA')
 }
 
 async function deleteArea(id, session_id) {
