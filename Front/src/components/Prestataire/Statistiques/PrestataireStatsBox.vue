@@ -68,7 +68,8 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        const standId = this.$store.getters["user/g etUserId"];
+        const standId = this.$store.getters["user/getUserId"];
+        console.log(standId);
         [this.bestClient] = await getBestClientByStand(standId);
         [this.averagePurchase] = await getAveragePurchaseByStand(standId);
         [this.avgRating] = await getAvgRatingByStand(standId);
