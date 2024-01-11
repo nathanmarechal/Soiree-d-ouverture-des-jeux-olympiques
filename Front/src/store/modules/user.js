@@ -2,7 +2,7 @@ import {
     acceptUser,
     createUser,
      deleteUser,
-    getAllStandAttente, getAllUsers, getAllUsersAttente,
+    getAllUsers, getAllUsersAttente,
     refuseUser, registerClient, registerPrestataire, updateSolde, updateUser, updateUserCourantWoPassword
 } from "@/services/utilisateur.service";
 import {
@@ -525,7 +525,7 @@ export default {
                 await updateUser(body.id_user, body, state.userCourant.session_id);
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
-                console.error("Error in updateUserStore({ ...item, ...payload.body }):", err);
+                console.error("Error in updateUserStore():", err);
             }
         },
 
