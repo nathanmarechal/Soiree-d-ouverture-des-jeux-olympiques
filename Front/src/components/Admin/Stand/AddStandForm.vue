@@ -179,8 +179,6 @@ export default {
         }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
         await this.createStandStore(this.stand); 
-        console.log("getAllStand", this.getAllStand)
-        console.log("id_emplacement", this.stand.id_emplacement)
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
         user.id_stand = stand.id_stand;
