@@ -66,7 +66,6 @@ export default {
     if (this.getAllCreneau.length > 0) {
       this.creneau = this.getAllCreneau[0].id_creneau;
     }
-    console.log("all crenaux : " + this.getAllCreneau)
     //this.creneau = this.getAllCreneau;
   },
 

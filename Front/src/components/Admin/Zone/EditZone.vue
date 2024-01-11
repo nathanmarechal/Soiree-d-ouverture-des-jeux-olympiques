@@ -56,7 +56,6 @@ export default {
 
     async submitForm() {
       try {
-        console.log("Données de la zone :", this.zone);
         await this.updateZoneStore({id : this.zone.id_zone, body : {
           libelle: this.zone.libelle,
           couleur_hexa: this.zone.couleur_hexa,

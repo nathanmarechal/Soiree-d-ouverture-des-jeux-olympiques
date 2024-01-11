@@ -283,7 +283,6 @@ export default {
       try {
         const response = await uploadImageDescriptionStand(fileInstance);
 
-        console.log(response.location)
         if (response.location) {
           success(response.location);
         } else {

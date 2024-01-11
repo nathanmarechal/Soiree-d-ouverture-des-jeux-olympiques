@@ -61,9 +61,7 @@ export default {
         if (typeZone)
           this.zone.type_zone_libelle = typeZone.libelle;
 
-        console.log("Données de la zone :", this.zone);
         await this.createZoneStore(this.zone);
-        console.log(this.getAllZone);
         await this.$router.push('/admin/zones/');
       } catch (error) {
         console.error("Erreur lors de la création de la zone :", error);

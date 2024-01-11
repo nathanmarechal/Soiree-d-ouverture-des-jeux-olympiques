@@ -108,12 +108,9 @@ export default {
     async areaDelete() {
       if (this.selectedArea) {
         try {
-          console.log("selected area: " + JSON.stringify(this.selectedArea, null, 2));
-          console.log("has stand", this.getAllStand.find(stand => stand.id_emplacement === this.selectedArea.id_emplacement) != null);
           if (this.selectedArea.id_stand != null) {
             //Protector
             window.alert('ALERTEALERTeALERT')
-            console.log(this.$route.name)
             if (this.$route.name !== 'AdminDeleteCascadeProtector') {
               router.push(
                 {
@@ -126,9 +123,7 @@ export default {
               );
               return;
             }else{
-              console.log("will emit")
               this.$emit('NeedProtection', {dataProp: this.selectedArea, dataType: 'area'});
-              console.log("dataProp: ", this.selectedArea, "dataType: ", 'area');
             }
           }else{
             await this.deleteAreasStore(this.selectedArea.id_emplacement);
@@ -136,7 +131,6 @@ export default {
           //alert('Zone deleted successfully');
           this.$emit('close'); // close the modal
         } catch (error) {
-          console.error('Error deleting area:', error);
           alert('Error deleting area');
         }
       } else {

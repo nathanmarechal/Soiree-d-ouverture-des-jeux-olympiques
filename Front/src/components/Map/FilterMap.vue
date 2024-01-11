@@ -73,20 +73,14 @@ export default {
     },
     updateFilterTypePrestation() {
       this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestations);
-      console.log(this.selectedTypePrestations)
-      console.log(this.$store.state.selectedTypePrestation)
     },
     updateFilterZone() {
       this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
-      console.log(this.selectedZones)
-      console.log(this.$store.state.selectedZone)
     },
     updateSearchQuery(event) {
-      console.log(event); // Pour déboguer et voir l'objet de l'événement
       if (event && event.target && event.target.value !== undefined) {
         const searchValue = event.target.value;
         this.$store.commit('user/SET_SEARCH_QUERY', searchValue);
-        console.log('inside filter: ' + searchValue);
       } else {
         console.log('Erreur : L\'événement ou la valeur de l\'événement est undefined');
       }

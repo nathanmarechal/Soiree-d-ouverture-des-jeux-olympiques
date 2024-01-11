@@ -103,7 +103,6 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        console.log(imageName)
         return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.error('Erreur lors du chargement de l’image');
@@ -157,11 +156,9 @@ export default {
         this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
-        console.log(fileName)
       });
     },
     submitForm() {
-      // Perform form submission logic here
       console.log(this.stand);
     },
     toggleSelectEmplacementModal() {

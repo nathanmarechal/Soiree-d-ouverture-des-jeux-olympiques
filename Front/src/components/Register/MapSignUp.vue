@@ -71,7 +71,6 @@ export default {
           await this.getEmplacementLogistiqueStore();
         }
 
-        console.log(this.areasShow)
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -111,7 +110,6 @@ export default {
       });
     },
     initializeMap() {
-      console.log('initalized')
 
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
@@ -126,12 +124,10 @@ export default {
     },
     showZoneInfo(zone) {
 
-      console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
       this.modalActive = true;
     },
     updateMap() {
-      console.log('updateMAP');
       // Supprimez les polygones actuels de la carte
 
       console.log(this.getLogisticsRequirements)
@@ -145,8 +141,6 @@ export default {
 
       const hasSearchCriteria = selectedZoneIds.length > 0
 
-      console.log('data')
-      console.log()
 
       this.areasShow = this.mergeData();
       console.log( this.areasShow)
@@ -176,7 +170,6 @@ export default {
         const center = this.calculateCenter(optimalZone.coordinates);
         this.drawLinesToClosestLogistics(center);
       }
-      console.log('fini')
 
       const bounds = L.latLngBounds();
 
@@ -208,7 +201,6 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
-          console.log(zone.id_emplacement);
           this.$emit('dataEmplacement', zone.id_emplacement);
         });
 
@@ -221,7 +213,6 @@ export default {
 
       const logisticLocations = this.mergeLogisticLocations();
 
-      console.log(logisticLocations)
 
       // Remove existing markers
       if (this.markers) {
@@ -233,7 +224,6 @@ export default {
       this.markers = []; // Clear the markers array
 
       logisticLocations.forEach(location => {
-        console.log('Icon URL:', '/assets/Logos/' + location.image);
         const iconUrl = require('@/assets/Logos/' + location.image);
 
         const customIcon = L.icon({

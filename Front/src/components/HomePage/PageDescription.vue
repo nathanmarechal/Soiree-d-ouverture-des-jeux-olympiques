@@ -50,15 +50,13 @@ export default {
       try {
         if (this.getTextsHome.length === 0) {
           await this.getTextsHomeStore()
-        } 
+        }
         if (this.getAllRoles.length === 0) {
-          console.log("ICI LES ROLES SONT VIDES")
           await this.getRolesStore()
         }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
+        console.log(this.homeText);
         this.HomeDescription = this.homeText.description;
-
-        console.log("REGARDE LES ROLES ICI BG", this.getAllRoles)
 
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);

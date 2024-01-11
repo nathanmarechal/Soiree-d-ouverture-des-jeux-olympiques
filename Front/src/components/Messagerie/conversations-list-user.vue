@@ -76,7 +76,6 @@ export default({
         };
 
         let response = await createConversation(body);
-        console.log(response);
 
         // Vérifiez si la réponse contient des données et extrayez la conversation de la réponse
         if (response && response.length > 0) {

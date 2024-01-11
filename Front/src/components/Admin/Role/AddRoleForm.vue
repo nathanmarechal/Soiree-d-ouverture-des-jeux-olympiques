@@ -89,14 +89,9 @@ export default {
     },
     async submitForm() {
       try {
-        // Create the role
         this.role.session_id = this.getCurrentUser.session_id
-       // console.log("arf session_id : "+this.getCurrentUser.session_id)
-       // console.log("arf body : "+this.role.session_id)
         let result = await this.createRoleStore(this.role);
-        console.log('Résultat de la création du rôle :', result);
 
-        // Save the selected droits for the role
         for (const droitId of this.roleDroits) {
           await this.createRoleDroitAssociationStore({
             id_role: result.id_role,

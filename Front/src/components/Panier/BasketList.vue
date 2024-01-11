@@ -80,7 +80,6 @@ export default {
     ...mapActions('user', ['deletePrestationFromPanierUserCourantStore']),
     ...mapMutations('user', ['ADD_SCHEDULE']),
     deleteLigne(id_prestation, id_creneau) {
-      console.log("delete ligne :" + id_prestation + " " + id_creneau + " dans le vue");
       this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation, id_creneau: id_creneau});
     },
     calculateTotal() {
@@ -114,7 +113,6 @@ export default {
         alert("Votre solde est insuffisant")
         return;
       }
-      console.log("valider panier" + this.getCurrentUser.id_user)
       if(this.getPanierUserCourant.length === 0){
         console.log(this.getPanierUserCourant.length)
         alert("Votre panier est vide")
@@ -141,12 +139,9 @@ export default {
 
     confirmerModifPanier() {
        Object.keys(this.nouvellesQuantites).forEach(id_prestation => {
-        console.log("Contenu actuel du panier:", this.getPanierUserCourant);
         const quantite = this.nouvellesQuantites[id_prestation];
-        console.log("Nouvelle quantité pour id_prestation", id_prestation, ":", quantite);
         const id_user = this.getCurrentUser.id_user;
         const item = this.getPanierUserCourant.find(item => item.id_prestation === Number(id_prestation));
-        console.log("Item avec id_prestation", id_prestation)
         if (item) {
           const id_creneau = item.id_creneau;
           this.updateQuantityInPanierStore({ id_user, id_prestation, quantite, id_creneau });
@@ -155,7 +150,6 @@ export default {
         }
       });
       this.modifOn = false;
-      console.log("Modifications du panier confirmées");
     },
   },
 }

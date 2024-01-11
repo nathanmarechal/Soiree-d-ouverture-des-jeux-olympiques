@@ -112,7 +112,6 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        console.log(imageName)
         return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.log("pas d'image")
@@ -166,18 +165,15 @@ export default {
         this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
-        console.log(fileName)
       });
     },
     submitForm() {
       // Perform form submission logic here to create a new stand
-      console.log('Creating a new stand:', this.stand);
       try {
         this.createStandStore(this.stand);
         //update the user with the right stand id
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
         user.id_stand = this.stand.id_stand;
-        console.log('user',{user});
         this.updateUserStore({user});
         this.$router.push('/admin/stands');
       } catch (error) {
@@ -190,7 +186,6 @@ export default {
     },
     handledataEmplacement(data) {
       this.stand.id_emplacement = data;
-      console.log(this.stand.id_emplacement)
       this.toggleSelectEmplacementModal();
     },
   },
@@ -203,9 +198,7 @@ export default {
       var data;
       data = this.getAllUsers.filter(user => user.id_stand === null);
       data = data.filter(user => user.id_role === 2);
-      console.log("alluser", this.getAllUsers)
-      console.log(data)
-      //verifie si l'utilisateur peut avoir un stand 
+      //verifie si l'utilisateur peut avoir un stand
       return data
     }
   },

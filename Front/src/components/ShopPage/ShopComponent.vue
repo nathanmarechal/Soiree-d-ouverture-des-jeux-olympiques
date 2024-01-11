@@ -50,7 +50,6 @@ export default {
   async mounted() {
     try {
       await this.loadData();
-      console.log("prestations : " + this.filteredPrestations);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
@@ -72,7 +71,6 @@ export default {
         const typeFilter = isTypeSelected ? this.getSelectedTypePrestation.includes(prestation.id_type_prestation) : true;
         const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
         const availabilityFilter = prestation.is_available; // Check if the service is available
-        console.log(typeFilter && standFilter && availabilityFilter + "puais puais ");
         return typeFilter && standFilter && availabilityFilter; // Include availability in the f// ilter conditions
       });
     },

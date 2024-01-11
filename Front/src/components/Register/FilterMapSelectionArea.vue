@@ -77,8 +77,6 @@ export default {
     },
     updateFilterZone() {
       this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
-      console.log(this.selectedZones)
-      console.log(this.$store.state.selectedZone)
     },
     updateLogisticsRequirement(typeId, value) {
       const intValue = value === '' ? null : parseInt(value, 10); // Convert to integer, use null for empty strings

@@ -49,8 +49,6 @@ export default {
         if (this.getAllTypeEmplacementLogistique.length === 0)
           await this.getTypeEmplacementLogistiqueStore();
       } catch (error) {
-        //const txt = translate("showColorZone_err")
-        //console.error(txt, error);
         console.error("Erreur lors du chargement des données :", error);
       }
     },

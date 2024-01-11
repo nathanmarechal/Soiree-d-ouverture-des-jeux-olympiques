@@ -81,7 +81,6 @@ export default {
           await this.getTypePrestationsStore()
       this.prestation.id_stand = this.getCurrentUser.id_stand
 
-      console.log(getAllTypePrestations)
     },
 
     destroyed() {
@@ -129,12 +128,10 @@ export default {
         this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
-        console.log(fileName)
       });
     },
     async submitForm() {
       try {
-        console.log("Données de la prestation :", this.prestation);
 
         await this.createPrestationStore(this.prestation);
         await uploadImagePresation(this.image_raw);

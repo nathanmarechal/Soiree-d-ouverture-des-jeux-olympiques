@@ -143,19 +143,14 @@ export default {
         case 'role':
           id = this.dataToProtect.id_role;
           data = this.getAllUsers.filter(user => user.id_role === id);
-          console.log("all data", id, data);
           this.dataToDelete = data;
           this.dataToDeleteType = 'user';
           this.previousDataType = 'role';
           this.previousDataId = id;
           break;
         case 'user':
-          console.log("user so the data to delete is the stand");
           id = this.dataToProtect.id_stand;
-          console.log("id", id);
-          console.log("this.getAllStand", this.getAllStand);
           data = this.getAllStand.filter(stand => stand.id_stand === id);
-          console.log("all data", id, data);
           this.dataToDelete = data;
           this.dataToDeleteType = 'stand';
           if (this.previousDataType === 'role'){
@@ -163,24 +158,16 @@ export default {
           }else this.previousDataType = 'user';
           break;
         case 'zone':
-          console.log("zone so the data to delete is the emplacement");
           id = this.dataToProtect.id_zone;
-          console.log("id", id);
-          console.log("this.getAllArea", this.getAllArea);
           data = this.getAllArea.filter(area => area.id_zone === id);
-          console.log("all data", id, data);
           this.dataToDelete = data;
           this.dataToDeleteType = 'area';
           this.previousDataType = 'zone';
           this.previousDataId = id;
           break;
         case 'area':
-          console.log("area so the data to delete is the stand");
           id = this.dataToProtect.id_emplacement;
-          console.log("id", id);
-          console.log("this.getAllStand", this.getAllStand);
           data = this.getAllStand.filter(stand => stand.id_emplacement === id);
-          console.log("all data", id, data);
           this.dataToDelete = data;
           this.dataToDeleteType = 'stand';
           if (this.previousDataType === 'zone'){
@@ -188,11 +175,9 @@ export default {
           }else this.previousDataType = 'area';
           break;
         default: 
-          console.error('all data given', this.dataToProtectType, this.dataToProtect, this.dataToDeleteType, this.dataToDelete, this.previousDataType, this.previousDataId, this.isLevel2)
           console.error('Erreur lors du chargement des données');
           break;
       }
-      console.log("data to protect", this.dataToProtect);
     },
     async handleNeedProtection(data) {
       console.log("HandleNeedPRotection");
@@ -200,8 +185,7 @@ export default {
       this.dataToProtectType = data.dataType;
       this.getAllDataToDelete();
       window.alert('OH NO RECURSIVITE')
-      console.log("data to protect", this.dataToProtect, this.dataToProtectType);
-      console.log("data to delete", this.dataToDelete, this.dataToDeleteType);
+
     },
     async handleGoBack(data) {
       this.isLevel2 = data.isLevel2;

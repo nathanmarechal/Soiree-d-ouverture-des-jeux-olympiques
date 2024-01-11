@@ -105,12 +105,10 @@
           await this.getAllArea();
         }
 
-        console.log(this.getAllStand);
       },
       async removeStand(id) {
         const stand = this.getAllStand.find(stand => stand.id_stand === id);
         const confirmMessage = `Êtes-vous sûr de vouloir supprimer le stand ${stand.nom_stand} ?`;
-        console.log(stand.id_stand);
         if (window.confirm(confirmMessage)) {
           try {
             await this.deleteStandStore(stand.id_stand);
@@ -123,14 +121,10 @@
           } catch (error) {
             console.error('Erreur lors de la suppression du stand :', error);
           }
-          console.log(this.isProtectorDelete);
           if (this.isProtectorDelete){
-            console.log("dans le if",this.previousDataType );
             if (this.previousDataType === 'user'){
               window.alert("Vous pouvez dorénavant supprimer l'utilisateur");
-              console.log("le lvl", this.isLevel2, this.$route.name);
               if (this.isLevel2 === false){
-                console.log("isGoingBack to user page");
                 router.push({name: 'AdminUsers'});
                 return;
               }
@@ -138,7 +132,6 @@
             else if (this.previousDataType === 'area'){
               window.alert("Vous pouvez dorénavant supprimer cet emplacement");
               if (this.isLevel2 === false){
-                console.log("isGoingBack to map page");
                 router.push({name: 'AdminMapView'});
                 return;
               }
@@ -152,7 +145,6 @@
                         },
                       });
             else{
-              console.log("all", this.isLevel2, this.previousDataType, this.previousDataId)
               this.$emit('goBack', {isLevel2: this.isLevel2, previousDataType: this.previousDataType, previousDataId: this.previousDataId});
               return;
             }

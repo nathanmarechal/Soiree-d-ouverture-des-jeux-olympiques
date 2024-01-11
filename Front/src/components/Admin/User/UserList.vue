@@ -88,34 +88,26 @@
         }
       },
       async removeUser(id_user, noMessage = false, force = false) {
-        //console.log("removing a user my zizi")
         const connectedUser = this.getCurrentUser;
         if (connectedUser.id_user === id_user) {
           window.alert(this.translate("userList_7"));
           return;
         }
         const user = this.getAllUsers.find(user => user.id_user === id_user)
-        console.log("user", user);
         const confirmMessage = `Êtes-vous sûr de vouloir supprimer l'utilisateur ${user.prenom} ${user.nom} ?`;
-        console.log("OUUUAIIIIS remove user")
         if (noMessage || confirm(confirmMessage)) {
-          console.log("user before ifhasstand", user);
           const ifHasStand = user.id_stand !== null;
-          console.log("ifHasStand", ifHasStand);
           if (ifHasStand) {
             if(force){
               try {
-                console.log("delete *", user.id_stand, user.id_user, user);
                 const id_stand = user.id_stand;
                 const id_user = user.id_user;
                 for (const prestation of this.getAllPrestation) {
                   if (prestation.id_stand === id_stand) {
-                    console.log("delete prestation", prestation.id_prestation);
                     await this.deletePrestationStore(prestation.id_prestation);
                   }
                 }
                 await this.deleteStandStore(id_stand);
-                console.log("about to delete user store")
                 await this.deleteUserStore(id_user);
               } catch (error) {
                 console.error('Error during user deletion:', error);
@@ -148,11 +140,8 @@
               }
             }
           }
-          console.log("this.$route.name", this.$route.name);
               if(this.$route.name !== 'AdminRoles' && this.isProtectorDelete){
-                console.log("filteredProtector", this.filteredProtector);
                 if(this.filteredProtector.length === 0){
-                  console.log("push to admin users");
                   router.push(
                     {
                       name: 'AdminRoles',
