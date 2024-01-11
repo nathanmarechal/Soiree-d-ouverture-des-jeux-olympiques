@@ -1,4 +1,5 @@
 import {deleteStand, getAllStands, updateDescriptionStand, updateStand, createStand} from "@/services/stand.service";
+import {getAllStandAttente} from "@/services/utilisateur.service";
 
 export default {
     namespaced: true,
@@ -39,6 +40,10 @@ export default {
         CREATE_STAND(state, stand) {
             state.stands.push(stand);
         },
+
+        SET_STANDS_ATTENTE(state, standAttente) {
+            state.standAttente = standAttente;
+        }
 
 
     },
@@ -96,6 +101,16 @@ export default {
                 console.error("Error in getStands():", err);
             }
         },
+
+        async getAllStandAttenteStore({ commit }) {
+            try {
+                const standAttente = await getAllStandAttente();
+                commit('SET_STANDS_ATTENTE', standAttente);
+            } catch (error) {
+                console.error('Error fetching creneau:', error);
+            }
+        },
+
         addToStands({ commit }, data) {
             commit('ADD_TO_STANDS', data);
         },
