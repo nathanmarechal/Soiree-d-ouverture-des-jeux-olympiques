@@ -19,7 +19,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentUser'])
+    ...mapGetters('user', ['getCurrentUser'])
   },
   async mounted() {
     await this.loadSalesData();

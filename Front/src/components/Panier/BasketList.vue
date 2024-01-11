@@ -69,14 +69,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getPanierUserCourant', "getCurrentUser", 'getAllPrestation', 'getAllStand']),
+    ...mapGetters('user', ['getCurrentUser', 'getPanierUserCourant']),
+    ...mapGetters('prestationEtType', ['getAllPrestation']),
+    ...mapGetters('stands', ['getAllStand']),
     isEditModeActive() {
       return this.modifOn;
     }
   },
   methods: {
-    ...mapActions(['deletePrestationFromPanierUserCourantStore']),
-    ...mapMutations(['ADD_SCHEDULE']),
+    ...mapActions('user', ['deletePrestationFromPanierUserCourantStore']),
+    ...mapMutations('user', ['ADD_SCHEDULE']),
     deleteLigne(id_prestation, id_creneau) {
       console.log("delete ligne :" + id_prestation + " " + id_creneau + " dans le vue");
       this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation, id_creneau: id_creneau});
@@ -93,7 +95,8 @@ export default {
     },
 
 
-    ...mapActions(['getCreneauStore', "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore", "updateSoldeStore"]),
+    ...mapActions('user', [ "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore", "updateSoldeStore"]),
+    ...mapActions('creneau', ['getCreneauStore']),
 
     ajouterdufric(){
       this.updateSoldeStore({id_user : this.getCurrentUser.id_user, solde : this.getCurrentUser.solde + 100})
@@ -132,7 +135,7 @@ export default {
       await this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: newSolde})
       await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
       await this.getCommandeUserCourantStore(this.getCurrentUser.id_user);
-      this.$store.commit('SET_PANIER_USER_COURANT', [])
+      this.$store.commit('user/SET_PANIER_USER_COURANT', [])
 
     },
 

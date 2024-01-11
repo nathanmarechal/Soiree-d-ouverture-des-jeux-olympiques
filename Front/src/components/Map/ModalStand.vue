@@ -39,9 +39,9 @@ export default {
         newSelection.splice(index, 1);
       }
 
-      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('SET_SELECTED_STANDS', []);
-      this.$store.commit('SET_SELECTED_STANDS', newSelection);
+      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
+      this.$store.commit('stands/SET_SELECTED_STANDS', []);
+      this.$store.commit('stands/SET_SELECTED_STANDS', newSelection);
 
     },
     getImageSrc(imageName) {
@@ -49,13 +49,13 @@ export default {
         console.log(imageName)
         return require('./../../../../Back/assets/stand/profile/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
 
     goToStore(stand){
       this.updateFilterj(stand)
-      this.$store.commit('SET_PROVENANCE', 1)
+      this.$store.commit('user/SET_PROVENANCE', 1)
       this.$router.push({ name: 'shopView'});
     },
   }

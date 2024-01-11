@@ -28,18 +28,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getSelectedStands','getAllStand']),
+    ...mapGetters('stands', ['getAllStand','getSelectedStands']),
     imagePath() {
       if (this.stand) {
-        return require(`@/assets/stand/${this.stand.image_stand}`);
+        return require(`./../../../../Back/assets/stand/profile/${this.stand.image_stand}`);
       } else {
-        return require(`@/assets/arthur-clown.png`); // replace with your default image path
+        return require(`@/assets/clown.png`); // replace with your default image path
       }
     }
 
   },
   methods: {
-    ...mapActions(['getStandsStore']),
+    ...mapActions('stands', ['getStandsStore']),
     async loadData(){
       if (this.getAllStand.length === 0){
         await this.getStandsStore()

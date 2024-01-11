@@ -37,7 +37,7 @@
 
       <div class="form-group">
         <label for="solde">{{translate("addUser_8")}}</label>
-        <input type="number" id="solde" v-model="utilisateur.solde" value="0" required> 
+        <input type="number" id="solde" v-model="utilisateur.solde" value="0" required>
       </div>
 
       <div class="form-group" >
@@ -84,11 +84,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRoles', 'getCurrentUser'])
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('roleEtDroit', ['getAllRoles']),
   },
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'createUserStore']),
+    ...mapActions('user', ['createUserStore']),
+    ...mapActions('roleEtDroit', ['getRolesStore']),
     async loadData(){
       try {
         if (this.getAllRoles.length === 0)
@@ -98,20 +100,15 @@ export default {
       }
     },
     async submitForm() {
-      //console.log("in the submit form, pelooo")
       try {
         let role = this.utilisateur.id_role.id_role;
         if (role)
           this.utilisateur.id_role = role;
-          console.log("user", this.utilisateur.id_role);
-          console.log("role", role);
-          console.log("user", this.utilisateur);
         await this.createUserStore({
           user: this.utilisateur,
-          session_id: this.getCurrentUser.session_id
         });
         this.$router.push('/admin/users');
-        } catch (error) {
+      } catch (error) {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
       }
     },

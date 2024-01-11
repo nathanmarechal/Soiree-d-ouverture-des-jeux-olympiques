@@ -88,11 +88,6 @@ async function getUserBySessionIdAsync(session_id) {
             "LEFT JOIN utilisateur on session.id_user = utilisateur.id_user\n" +
             "WHERE session_id = $1;", [session_id]);
         client.release();
-        if(res.rows.length!=1)
-        {
-            console.log("row length : "+res.rows.length);
-            return null;
-        }
         return res.rows[0];
     } catch (error) {
         console.error('Error in getUserBySessionIdAsync:', error);
@@ -168,6 +163,7 @@ const updateSolde = (id, newsolde, callback) => {
 async function updateSoldeAsync(id_user, newsolde) {
     try {
         const conn = await pool.connect();
+        console.log("TEMA LA GUEULE DU STEAK"+newsolde + " " + id_user)
         const result = await conn.query("UPDATE utilisateur SET solde = $1 WHERE id_user = $2 RETURNING *", [newsolde, id_user]);
         conn.release();
         return result.rows;
@@ -288,7 +284,8 @@ async function acceptUserAsync(id_user) {
         console.log("stand : ", stand)
         const standAccept = await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING *", [stand.nom_stand, stand.image_stand, stand.description_stand, stand.prix, stand.id_emplacement]);
         await conn.query("DELETE FROM standAttente WHERE id_stand = $1", [user.id_stand])
-        const utilisateurAccept = await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role, solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;", [user.email, user.password, user.nom, user.prenom, user.code_postal, user.adresse, user.commune, user.id_stand, user.id_role, user.solde]);
+        const id_stand_accept = standAccept.rows[0].id_stand;
+        const utilisateurAccept = await conn.query("INSERT INTO utilisateur (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role, solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;", [user.email, user.password, user.nom, user.prenom, user.code_postal, user.adresse, user.commune, id_stand_accept, user.id_role, user.solde]);
         await conn.query("DELETE FROM utilisateurAttente WHERE id_user = $1", [id_user]);
         conn.release();
         const accept = {
@@ -333,6 +330,7 @@ module.exports = {
     , getAllUsers: getAllUsers
     , getUserById: getUserById
     , getUserBySessionId: getUserBySessionId
+    , getUserBySessionIdAsync: getUserBySessionIdAsync
     , updateUser: updateUser
     , deleteUser: deleteUser
     , updateSolde: updateSolde

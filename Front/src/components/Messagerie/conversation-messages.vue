@@ -1,36 +1,48 @@
 <template>
-  <div>
-    <h2>Conversation {{ conversation.titre }}</h2>
+  <div style="width: 50%">
+    <div class="title-line"></div>
+    <h2 class="conversation-title">{{ conversation.titre }}</h2>
+    <div class="title-line"></div>
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>ID Sender</th>
-        <th>Message</th>
-        <th>Time</th>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(message, index) in messages" :key="index">
-        <td>{{ message.id_sender }}</td>
-        <td>{{ message.message }}</td>
-        <td>{{ message.temps_emmission }}</td>
-        <td>{{ message.name }}</td>
-        <td>{{ message.email }}</td>
-      </tr>
-      </tbody>
-    </table>
 
-    <textarea  v-model="newMessage" name="newMessage" id="newMessage"></textarea>
-    <button type="button" @click="send">Envoyer</button>
+    <div  class="box" v-for="(message, index) in messages" :key="index" >
+        <div v-if="message.id_sender===getCurrentUser.id_user" class="message-container-own">
+          <div class="message-header">
+            <p>{{ message.name }} - {{ message.email }}</p>
+          </div>
+          <div class="message-body">
+            <p>{{ message.message }}</p>
+          </div>
+          <div class="message-footer">
+            <p>{{ message.temps_emmission }}</p>
+          </div>
+      </div>
+      <div v-else class="message-container">
+        <div class="message-header">
+          <p>{{ message.name }} - {{ message.email }}</p>
+        </div>
+        <div class="message-body">
+          <p>{{ message.message }}</p>
+        </div>
+        <div class="message-footer">
+          <p>{{ message.temps_emmission }}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" @click="send">{{translate("conversationMessages_6")}}</button>
+
   </div>
 </template>
 
 <script>
-import { getMessagesByConversation,sendMessage } from "@/services/messagerie.service";
+import {getMessagesByConversation, sendMessage} from "@/services/messagerie.service";
 import {mapGetters} from "vuex";
+import {translate} from "@/lang/translationService";
 
 
 export default {
@@ -43,9 +55,10 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(['getCurrentUser'])
+    ...mapGetters('user', ['getCurrentUser'])
   },
   methods:{
+    translate,
     async send() {
       console.log("dans le send mon petit thomas")
       const body = {
@@ -61,8 +74,7 @@ export default {
 
   },
   async mounted() {
-    const selectedConversation = this.$route.params.selected_conversation;
-    this.conversation = selectedConversation;
+    this.conversation = this.$route.params.selected_conversation;
     this.messages = await getMessagesByConversation(this.conversation.id_conversation);
 
   },
@@ -70,5 +82,42 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styles here if needed */
+.message-container {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid yellow;
+  border-radius: 5px;
+}
+.message-container-own {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+.message-header {
+  font-weight: bold;
+}
+
+.message-body {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.message-footer {
+  font-size: 12px;
+  color: rgb(128, 128, 128);
+}
+ .title-line {
+   border-top: 2px solid rgb(128, 128, 128);
+   width: 100%;
+   margin: 10px 0;
+ }
+
+.conversation-title {
+  text-align: center;
+  margin: 10px 0;
+}
 </style>

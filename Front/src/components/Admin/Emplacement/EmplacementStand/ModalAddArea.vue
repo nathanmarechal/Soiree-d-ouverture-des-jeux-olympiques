@@ -40,11 +40,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getAllZone']),
+    ...mapGetters('ZoneEtType', ['getAllZone']),
   },
   methods: {
     translate,
-    ...mapActions(['createAreasStore']),
+    ...mapActions('emplacements', ['createAreasStore']),
     initializeZone() {
       this.zone = this.selectedZone.id_zone;
     },

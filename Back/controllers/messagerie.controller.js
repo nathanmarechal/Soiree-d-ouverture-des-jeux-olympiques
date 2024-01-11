@@ -49,3 +49,28 @@ exports.sendMessage = (req, res)=>{
         }
     })
 }
+
+exports.createConversation = (req, res)=>{
+    const id_user = req.body.id_user;
+    const message = req.body.message;
+    messagerieService.createConversation(message,id_user,(error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}
+
+exports.toggleResolvedConversation = (req, res)=>{
+    const id_conversation = req.body.id_conversation;
+    messagerieService.toggleResolvedConversation(id_conversation,(error, data) => {
+        if (error) {
+            return res.status(500).send("Internal error");
+        }
+        else {
+            return res.status(200).send(data);
+        }
+    })
+}

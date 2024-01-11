@@ -17,7 +17,7 @@
   "monStand": "Mon stand",
   "prestations": "Mes prestations",
   "mesStatistiques": "Mes statistiques",
-  "monPanier": "Mon panier,",
+  "monPanier": "Mon panier",
   "mesCommandes":"Mes commandes",
   "mesInformations": "Mes informations",
   "monEmploiDuTemps": "Mon emploi du temps",
@@ -340,5 +340,24 @@
   "adminStatistics_numberOfUsers": "Nombre d'utilisateurs",
   "adminStatistics_averagePurchase": "Panier moyen stand",
   "adminStatistics_topSellerStand": "Meilleur stand en chiffre d'affaires",
-  "adminStatistics_topAvisStand": "Meilleur stand en avis"
+  "adminStatistics_topAvisStand": "Meilleur stand en avis",
+
+  "conversationMessages_1": "ID Envoyeur",
+  "conversationMessages_2": "Message",
+  "conversationMessages_3": "Nom",
+  "conversationMessages_4": "Email",
+  "conversationMessages_5": "Tapez votre message ici...",
+  "conversationMessages_6": "Envoyer",
+
+  "conversationsList_creerConvoPlaceholder": "Entrez le message de la conversation",
+  "conversationsList_creerConvo": "Créer Conversation",
+  "conversationsList_titre": "Titre de la conversation",
+  "conversationsList_email": "Email du créateur",
+  "conversationsList_nbMessages": "Nombre de messages",
+  "conversationsList_resolu": "Résolu",
+  "conversationsList_actions": "Actions",
+  "conversationsList_voir": "Voir",
+  "conversationsList_marquerResolu": "Marquer résolu"
+
+
 }

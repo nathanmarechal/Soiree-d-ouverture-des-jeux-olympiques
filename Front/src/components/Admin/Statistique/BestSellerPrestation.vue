@@ -38,7 +38,7 @@ export default {
     },
     createBarChart() {
       const svg = d3.select(this.$refs.svg);
-      const margin = { top: 20, right: 30, bottom: 40, left: 90 };
+      const margin = {top: 20, right: 30, bottom: 40, left: 90};
       const chartWidth = this.width - margin.left - margin.right;
       const chartHeight = this.height - margin.top - margin.bottom;
 
@@ -75,7 +75,15 @@ export default {
 </script>
 
 <style>
-.bar { fill: steelblue; }
-.bar:hover { fill: orange; }
-.axis-label { font-size: 12px; }
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: orange;
+}
+
+.axis-label {
+  font-size: 12px;
+}
 </style>

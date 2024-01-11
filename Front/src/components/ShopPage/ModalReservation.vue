@@ -70,14 +70,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getAllCreneau', "getCurrentUser", "getPanierUserCourant"]),
+    ...mapGetters('creneau', ['getAllCreneau']),
+    ...mapGetters('user', ['getCurrentUser', "getPanierUserCourant"]),
     total() {
       return this.prestation.prix * this.quantite;
     },
   },
 
   methods: {
-    ...mapActions(['getCreneauStore', 'addPrestationToPanierUserCourantStore', 'getPanierUserCourantStore', "updateSoldeStore" ]),
+    ...mapActions('user', ['getPanierUserCourantStore', 'addPrestationToPanierUserCourantStore', "updateSoldeStore" ]),
+    ...mapActions('creneau', ['getCreneauStore']),
     async loadData(){
       if (this.getAllCreneau.length === 0)
         await this.getCreneauStore()

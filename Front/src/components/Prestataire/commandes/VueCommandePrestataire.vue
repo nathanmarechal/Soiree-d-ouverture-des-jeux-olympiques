@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-      ...mapGetters(['getCurrentUser', 'getCommandePrestataire']),
+    ...mapGetters('user', ['getCurrentUser', 'getCommandePrestataire']),
   },
   async mounted() {
     try {
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['getCommandesPrestataireStore']),
+    ...mapActions('user', ['getCommandesPrestataireStore']),
     async loadData(){
       await this.getCommandesPrestataireStore(this.getCurrentUser.id_user);
       this.commandes = this.getCommandePrestataire;

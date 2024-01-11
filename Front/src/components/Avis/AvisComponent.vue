@@ -2,7 +2,7 @@
   <div>
     <div v-if="size === 0">
       <div class="alert alert-info" role="alert" v-if="addMode===false">
-        Aucun avis pour ce prestataire
+        Aucun avis pour ce stand
         <button v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && addMode === false" class="btn btn-outline-success" @click="setActiveAddMode" style="margin-left: 50%"> ajouter un avis</button>
       </div>
       <div v-if="addMode===true">
@@ -64,10 +64,12 @@ export default {
     this.size = this.avis.length
   },
   computed: {
-    ...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
+    ...mapGetters('avis', ['getAvis']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('stands', ['getSelectedStands']),
   },
   methods: {
-    ...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
+    ...mapActions('avis', ['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     async loadData(){
       try {
         await this.getAvisStore(this.getSelectedStands[0]);

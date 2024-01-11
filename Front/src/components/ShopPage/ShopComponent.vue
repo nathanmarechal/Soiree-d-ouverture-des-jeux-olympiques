@@ -13,7 +13,7 @@
           <div class="card-footer">
             <div class="buy d-flex justify-content-center align-items-center">
               <div>
-                <a @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
+                <a v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null" @click="selectPrestation(prestation.id_prestation)" class="btn btn-success mt-3">{{ translate("shopC_1") }}</a>
               </div>
               <modal-reservation
                   @close="selectedPrestationId = null"
@@ -50,6 +50,7 @@ export default {
   async mounted() {
     try {
       await this.loadData();
+      console.log("prestations : " + this.filteredPrestations);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
@@ -59,7 +60,10 @@ export default {
     this.equalizeCardHeights();
   },
   computed: {
-    ...mapGetters(["getSelectedStands", "getSelectedTypePrestation", "getAllPrestation", "getAllTypePrestation", "getAllStand", "getAllCreneau"]),
+    ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation', 'getAllPrestation']),
+    ...mapGetters('stands', ['getAllStand', 'getSelectedStands']),
+    ...mapGetters('creneau', ['getAllCreneau']),
+    ...mapGetters('user', ['getCurrentUser']),
     filteredPrestations() {
       return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
@@ -68,14 +72,16 @@ export default {
         const typeFilter = isTypeSelected ? this.getSelectedTypePrestation.includes(prestation.id_type_prestation) : true;
         const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
         const availabilityFilter = prestation.is_available; // Check if the service is available
-
-        return typeFilter && standFilter && availabilityFilter; // Include availability in the filter conditions
+        console.log(typeFilter && standFilter && availabilityFilter + "puais puais ");
+        return typeFilter && standFilter && availabilityFilter; // Include availability in the f// ilter conditions
       });
     },
   },
   methods: {
     translate,
-    ...mapActions(['getPrestationsStore', 'getTypePrestationsStore', 'getStandsStore', 'getCreneauStore']),
+    ...mapActions('prestationEtType', ['getPrestationsStore', 'getTypePrestationsStore']),
+    ...mapActions('stands', ['getStandsStore']),
+    ...mapActions('creneau', ['getCreneauStore']),
     async loadData() {
       if (this.getAllPrestation.length === 0)
         await this.getPrestationsStore()
@@ -96,7 +102,7 @@ export default {
       try {
         return require('./../../../../Back/assets/prestation/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
     getStandName(idStand) {

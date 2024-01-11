@@ -23,7 +23,7 @@ async function updateArea(id, body, session_id) {
 }
 
 async function createAreaFromAPI(body, session_id) {
-    let answer = await postRequest('/map/create-area?session_id' + session_id, body, 'CREATEAREA')
+    let answer = await postRequest('/map/create-area?session_id=' + session_id, body, 'CREATEAREA')
     //console.log("createAreaFromAPI: ", answer)
     return answer
 }
@@ -35,7 +35,7 @@ async function createArea(body, session_id) {
 }
 
 async function deleteAreaFromAPI(id, session_id) {
-    return deleteRequest('/map/delete-area?session_id=' + session_id + 'id_emplacement' + id, 'DELETEAREA')
+    return deleteRequest('/map/delete-area?session_id=' + session_id + '&id_emplacement=' + id, 'DELETEAREA')
 }
 
 async function deleteArea(id, session_id) {

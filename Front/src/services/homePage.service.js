@@ -10,7 +10,7 @@ async function uploadImageDescriptionHomePage(image) {
 }
 
 async function updateDescriptionHomePageFromAPI(id, body, session_id) {
-    return patchRequest('/homePage/description?session_id=' + session_id + '&id_text_accueil' + id, body, 'UPDATEDESCRIPTIONHOMEPAGE')
+    return patchRequest('/homePage/description?session_id=' + session_id + '&id_text_accueil=' + id, body, 'UPDATEDESCRIPTIONHOMEPAGE')
 }
 
 async function updateDescriptionHomePage(id, body, session_id) {

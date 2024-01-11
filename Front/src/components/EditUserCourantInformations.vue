@@ -21,10 +21,10 @@ export default {
     this.newcommune = this.getCurrentUser.commune;
   },
   computed: {
-    ...mapGetters(["getCurrentUser"]),
+    ...mapGetters('user', ["getCurrentUser"]),
   },
   methods: {
-    ...mapActions(['updateUserCourantWoPasswordStore']),
+    ...mapActions('user', ['updateUserCourantWoPasswordStore']),
     cancelEdit() {
       this.updateUserCourantWoPasswordStore({
         id_user: this.getCurrentUser.id_user,

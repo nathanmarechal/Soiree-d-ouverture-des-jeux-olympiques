@@ -95,7 +95,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentUser']) // If needed for admin validation
+    ...mapGetters('user',['getCurrentUser'])
   },
   async mounted() {
     await this.loadStatistics();
@@ -120,7 +120,7 @@ export default {
         console.log(imageName)
         return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
   }
@@ -134,7 +134,7 @@ export default {
   gap: 2vh;
   background: #f9f9f9;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .stat-box {
@@ -146,13 +146,13 @@ export default {
   margin: 1vh;
   padding: 30px;
   width: 40%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
 .stat-box:hover {
   transform: translateY(-10px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .stat-box h3 {
@@ -161,6 +161,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
 }
+
 .stat-image {
   display: block; /* Assure que l'image est traitée comme un bloc */
   margin: auto; /* Centre l'image horizontalement */

@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "@/services/axios.service";
+import {getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 async function getAllConversations(session_id) {
     let answer = await getAllConversationsFromAPI(session_id)
@@ -53,9 +53,35 @@ async function sendMessageFromAPI(body){
     return answer
 }
 
+async function toggleResolvedConversationFromAPI(body, session_id) {
+    console.log("updateZoneFromAPI: ", body)
+    return patchRequest('/messagerie/toggle-resolved-converstation?session_id=' + session_id, body, 'toggleResolvedConversationFromAPI')
+}
+
+async function toggleResolvedConversation(body, session_id) {
+    let answer = await toggleResolvedConversationFromAPI(body, session_id)
+    //console.log("updateZone: ", answer)
+    return answer
+}
+
+async function createConversation(body){
+    const answer = await createConversationAsyncFromAPI(body)
+    console.log("answer sendmessage : "+answer)
+    return answer
+}
+
+async function createConversationAsyncFromAPI(body){
+    let answer = await postRequest('/messagerie/create-conversation',body)
+    console.log("sendMessage ", answer)
+    return answer
+}
+
+
 export {
     getAllConversations,
     getConversationsForUser,
     getMessagesByConversation,
-    sendMessage
+    sendMessage,
+    toggleResolvedConversation,
+    createConversation
 }

@@ -91,8 +91,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getUsersStore', 'getRolesStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
-    async loadData() {
+    ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
+    ...mapActions('user', ['getUsersStore']),    async loadData() {
       try {
         await this.getUsersStore();
         await this.getRolesStore();
@@ -105,7 +105,7 @@ export default {
     getImageSrc(imageName) {
       try {
         console.log(imageName)
-        return require('../../../assets/stand/' + imageName)
+        return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.log("pas d'image")
       }
@@ -165,16 +165,8 @@ export default {
     },
     toggleSelectEmplacementModal() {
       this.showSelectEmplacementModal = !this.showSelectEmplacementModal;
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'getAreaSelectedForStand',
-      'getAllUsers',
-      'getAllRoles',
-      'getAllDroits',
-      'getAllRoleDroitAssociation',
-    ]),
+    },
+
     getAllUsersWithoutStand() {
       var data;
       data = this.getAllUsers.filter(user => user.id_stand === null);
@@ -183,6 +175,12 @@ export default {
 
       return data
     }
+  },
+
+  computed: {
+    ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
+    ...mapGetters('user', ['getAllUsers']),
+    ...mapGetters('emplacements', ['getAreaSelectedForStand']),
   },
   watch: {
     getAreaSelectedForStand: 'toggleSelectEmplacementModal',

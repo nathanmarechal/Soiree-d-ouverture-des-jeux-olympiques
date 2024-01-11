@@ -39,7 +39,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getAllPrestation','getAllTypePrestation']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('prestationEtType', ['getAllPrestation','getAllTypePrestation']),
   },
   async created() {
     await this.loadData()
@@ -47,7 +48,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions(['getPrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
         console.log(this.getCurrentUser.id_stand)
@@ -65,7 +66,7 @@ export default {
       try {
         return require('./../../../../../Back/assets/prestation/' + imageName)
       } catch {
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
     getPrestationByUserId(id){

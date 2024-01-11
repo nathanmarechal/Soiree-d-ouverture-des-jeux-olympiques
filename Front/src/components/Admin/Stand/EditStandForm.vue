@@ -104,10 +104,10 @@ export default {
     getImageSrc(imageName) {
       try {
         console.log(imageName)
-        return require('../../../assets/stand/' + imageName)
+        return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.error('Erreur lors du chargement de l’image');
-        return require('@/assets/arthur-clown.png'); // Image par défaut en cas d'erreur
+        return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
     translate,
@@ -170,9 +170,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'getAreaSelectedForStand',
-    ]),
+    ...mapGetters('emplacements', ['getAreaSelectedForStand'])
   },
   watch: {
     getAreaSelectedForStand: 'toggleSelectEmplacementModal',

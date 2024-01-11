@@ -61,7 +61,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getProvenance']),
+    ...mapGetters('user',['getProvenance']),
   },
 
 

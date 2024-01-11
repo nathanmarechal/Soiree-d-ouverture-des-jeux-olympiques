@@ -35,11 +35,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllTypePrestation']),
+    ...mapGetters('prestationEtType', ['getAllTypePrestation'])
   },
   methods: {
     translate,
-    ...mapActions(['getTypePrestationsStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore']),
     async loadData(){
       if (this.getAllTypePrestation.length === 0){
         await this.getTypePrestationsStore()
@@ -47,10 +47,10 @@ export default {
     },
     updateFilter() {
       console.log(this.selectedTypePrestation)
-      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestation);
+      this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestation);
     },
 
-    ...mapMutations(['SET_SELECTED_TYPE_PRESTATION']),
+    ...mapMutations(['prestationEtType/SET_SELECTED_TYPE_PRESTATION']),
   }
 };
 </script>

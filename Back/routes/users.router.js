@@ -207,7 +207,7 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *       '500':
  *         description: Erreur interne
  */
-router.patch("/updateSolde", usersMiddleware.checkUserExists, usersController.updateSolde);
+router.patch("/updateSolde", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersController.updateSolde);
 
 
 /**
@@ -270,7 +270,7 @@ router.patch("/updateSolde", usersMiddleware.checkUserExists, usersController.up
  *       '500':
  *         description: Internal error
  */
-router.patch("/updateUserCourantWoPassword", usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
+router.patch("/updateUserCourantWoPassword", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
 
 
 /**
@@ -395,7 +395,7 @@ router.post("/registerClient", usersMiddleware.validateUserInput, usersMiddlewar
  *       '500':
  *         description: Internal error
  */
-router.post("/registerPrestataire",  usersController.createUserWithStand);
+router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, rolesMiddleware.checkIfPrestataire, mapMiddleware.checkEmplacementExists, usersController.createUserWithStand);
 
 
 /**

@@ -87,13 +87,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getCurrentUser', 'getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits', 'getAllUsers']),
-  },
+    ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits']),
+    ...mapGetters('user', ['getCurrentUser']),  },
 
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore', 'getUsersStore']),
-
+    ...mapActions('roleEtDroit', ['getRolesStore', 'deleteRoleStore', 'getDroitsStore', 'getAllRoleDroitAssociationStore']),
+    ...mapActions('user', ['getUsersStore']),
     async loadData() {
       try {
         await this.getRolesStore();
