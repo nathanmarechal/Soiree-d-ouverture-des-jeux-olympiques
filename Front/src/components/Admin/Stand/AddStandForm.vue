@@ -34,9 +34,7 @@
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("createStand_6") }}</button>
       </div>
       <div v-if="stand.id_emplacement">
-        <input type="number" id="id_emplacement" v-model="stand.id_emplacement" hidden required />
-        <label for="id_emplacement">{{ translate("createStand_7") }}</label>
-        <p>{{ translate("createStand_8") }} {{ this.stand.id_emplacement }}</p>
+        <p id="id_emplacement">{{ translate("createStand_8") }} {{ this.stand.id_emplacement }}</p>
       </div>
       <SelectEmplacement @close="toggleSelectEmplacementModal" :showSelectEmplacementModal="showSelectEmplacementModal" @dataEmplacement="handledataEmplacement"></SelectEmplacement>
       <button type="submit" class="btn btn-primary">{{ translate("createStand_9") }}</button>
@@ -48,7 +46,7 @@
 <script>
 import SelectEmplacement from './SelectEmplacement.vue';
 import { mapActions, mapGetters } from 'vuex';
-import { translate } from "../../../lang/translationService";
+import { translate } from "@/lang/translationService";
 import Cropper from 'cropperjs';
 import Editor from '@tinymce/tinymce-vue';
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Le {{ dataType }} suivant : </p>
+    <p>{{ translate("protectedData_1") }} {{ dataType }} {{translate("protectedData_2")}} </p>
     <table class="table table-striped table-bordered">
       <tbody>
         <tr>
@@ -10,11 +10,13 @@
         </tr>
       </tbody>
     </table>  
-    <p>est lié à d'autres données, veuillez les supprimer avant de supprimer ce {{ dataType }}.</p>
+    <p> {{translate("protectedData_3")}} {{ dataType }}.</p>
   </div>
 </template>
 
 <script>
+import {translate} from "@/lang/translationService";
+
 export default {
   props: {
     dataProp: {
@@ -31,6 +33,7 @@ export default {
     };
   },
   methods: {
+    translate,
     random(data) {
       //generate a random number to be used as key so that vue doesn't complain
       for(var value in data)
