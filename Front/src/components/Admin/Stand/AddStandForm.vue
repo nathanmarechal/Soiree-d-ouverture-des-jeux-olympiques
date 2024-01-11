@@ -14,14 +14,19 @@
         <span v-else>{{ translate("createStand_3") }}</span>
       </div>
 
-      <div class="form">
+      <div class="form-group">
         <label for="image_stand">{{ translate("createStand_4") }}</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
       </div>
-      <img v-if="!isImageInputUpload && !newImage" :src="getImageSrc(stand.image_stand)" class="card-img-top " style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;">
       <div v-if="croppedImage">
-        <img :src="croppedImage" class="cropped-image" style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;" />
+        <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
       </div>
+      <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
+        <img ref="image" class="cropper-image" style=""/>
+        <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+      </div>
+
+
       <div class="d-flex flex-column">
           <label for="descriptionStand">{{ translate("createStand_5") }}</label>
           <Editor 
@@ -49,6 +54,8 @@ import { mapActions, mapGetters } from 'vuex';
 import { translate } from "@/lang/translationService";
 import Cropper from 'cropperjs';
 import Editor from '@tinymce/tinymce-vue';
+import { uploadImageStand } from "@/services/stand.service";
+import {uploadImageDescriptionStand} from "@/services/stand.service";
 
 export default {
   async mounted() {
@@ -70,8 +77,7 @@ export default {
       showSelectEmplacementModal: false,
       croppedImage: null,
       isImageInputUpload: false,
-      newImage: false,
-      image_raw:false,
+      imageRaw: null,
       stand: {
         nom_stand: '',
         image_stand: '',
@@ -82,16 +88,16 @@ export default {
       },
       id_user: null,
       editorConfig: {
-          height: 500,
-          menubar: true,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-          ],
-          toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
-          images_upload_handler: this.handleImageUploadDescription
-        },
+        height: 500,
+        menubar: true,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
+        images_upload_handler: this.handleImageUploadDescription
+      },
       image_stand: null // Initialize to nul
     };
   },
@@ -123,46 +129,58 @@ export default {
         this.cropper.destroy();
       }
     },
+    async handleImageUploadDescription(blobInfo, success, failure) {
+      const timestamp = Math.floor(Date.now() / 1000);
+      const fileName = `profile_${timestamp}.jpeg`;
+      const fileInstance = new File([blobInfo.blob()], fileName, {
+        type: 'image/jpeg'
+      });
+      try {
+        const response = await uploadImageDescriptionStand(fileInstance);
+
+        if (response.location) {
+          success(response.location);
+        } else {
+          failure('Invalid response');
+        }
+      } catch (error) {
+        failure('Upload failed: '+ error.message);
+      }
+    },
+
     handleImageUpload(event) {
       this.croppedImage = null;
       const file = event.target.files[0];
       const reader = new FileReader();
       this.isImageInputUpload = true;
 
-      // Store the original file name without the extension
-      this.stand.image_stand = file.name.split('.').slice(0, -1).join('.');
-
       reader.onload = (e) => {
-        if (this.image_stand) { // Check if the reference is defined
-          this.image_stand.src = e.target.result;
-          this.initializeCropper();
-        }
+        this.$refs.image.src = e.target.result;
+        this.initializeCropper();
       };
       reader.readAsDataURL(file);
     },
+
     initializeCropper() {
-      const image = this.$refs.image_stand;
+      const image = this.$refs.image;
       this.cropper = new Cropper(image, {
         aspectRatio: 1,
         viewMode: 3,
-        zoomable:true,
-        scalable:true
+        zoomable: true,
+        scalable: true
       });
     },
     cropImage() {
-      this.newImage = true;
       const croppedCanvas = this.cropper.getCroppedCanvas();
       croppedCanvas.toBlob((blob) => {
-        const timestamp = Math.floor(Date.now() / 1000); // Unix time
+        const timestamp = Math.floor(Date.now() / 1000);
         const fileName = `stand_${timestamp}.jpeg`;
-        this.stand.image_stand=fileName;
-
-        // Create a new file from the blob
+        this.stand.image_stand = fileName;
         const file = new File([blob], fileName, { type: 'image/jpeg' });
 
         const url = URL.createObjectURL(file);
         this.croppedImage = url;
-        this.image_raw = file;
+        this.imageRaw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
       });
@@ -176,6 +194,13 @@ export default {
         }else if(this.getAllUsersWithoutStand.length === 0){
           window.alert("Il n'y a plus d'utilisateur disponible");
           return;
+        }
+        if (this.$refs.myEditor && this.$refs.myEditor.editor) {
+          const descriptionContent = this.$refs.myEditor.editor.getContent();
+          this.stand.description_stand = descriptionContent;
+        }
+        if (this.imageRaw) {
+          await uploadImageStand(this.imageRaw);
         }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
         await this.createStandStore(this.stand); 
