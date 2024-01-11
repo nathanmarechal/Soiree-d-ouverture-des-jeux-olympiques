@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     translate,
-    ...mapActions('prestationEtType', ['getTypePrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
+    ...mapActions('prestationEtType', ['getTypePrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore','getPrestationsStore']),
     async loadData() {
       try {
         if (this.getAllPrestation.length === 0){
