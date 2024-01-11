@@ -6,31 +6,34 @@
         <input type="text" id="id_stand" v-model="stand.id_stand" hidden required />
       </div>
       <div class="form">
-        <label for="nom_stand">{{ translate("updateStand_1") }}</label>
+        <label for="nom_stand">{{ translate("editStand_1") }}</label>
         <input type="text" id="nom_stand" v-model="stand.nom_stand" required />
       </div>
       <div class="form">
-        <label for="id_user">{{ translate("updateStand_2") }}</label>
+        <label for="id_user">{{ translate("editStand_2") }}</label>
         <select id="id_user" v-model="id_user" required>
           <option v-for="user in this.getAllUsersWithoutStand" :key="user.id_user" :value="user.id_user">{{ user.prenom }} {{ user.nom }}</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="image_stand">{{ translate("updateStand_4") }}</label><br>
+        <label for="image_stand">{{ translate("editStand_4") }}</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
       </div>
+      <div v-if="!croppedImage">
+        <img :src="getImageSrc(stand.image_stand)" alt="image_stand" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;">
+      </div>
       <div v-if="croppedImage">
-        <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
+        <img :src="croppedImage" class="cropped-image" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;" />
       </div>
       <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
-        <img ref="image_stand" class="cropper-image" style=" max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;"/>
-        <button  type="button" @click="cropImage" class="btn btn-primary">{{ translate("editStand_2") }}</button>
+        <img ref="image_stand" class="cropper-image" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;"/>
+        <button  type="button" @click="cropImage" class="btn btn-primary">{{ translate("editStand_12") }}</button>
       </div>
 
 
       <div class="d-flex flex-column">
-          <label for="descriptionStand">{{ translate("updateStand_5") }}</label>
+          <label for="descriptionStand">{{ translate("editStand_5") }}</label>
           <Editor 
               ref="myEditor"
               api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
@@ -38,14 +41,14 @@
           />
       </div>
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("updateStand_6") }}</button>
+        <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_6") }}</button>
       </div>
       <div v-if="stand.id_emplacement">
-        <p id="id_emplacement">{{ translate("updateStand_8") }} {{ this.stand.id_emplacement }}</p>
+        <p id="id_emplacement">{{ translate("editStand_8") }} {{ this.stand.id_emplacement }}</p>
       </div>
       <SelectEmplacement @close="toggleSelectEmplacementModal" :showSelectEmplacementModal="showSelectEmplacementModal" @dataEmplacement="handledataEmplacement"></SelectEmplacement>
-      <button type="submit" class="btn btn-primary">{{ translate("updateStand_9") }}</button>
-      <router-link to="/admin/stands" class="btn btn-danger">{{ translate("updateStand_10") }}</router-link>
+      <button type="submit" class="btn btn-primary">{{ translate("editStand_9") }}</button>
+      <router-link to="/admin/stands" class="btn btn-danger">{{ translate("editStand_10") }}</router-link>
     </form>
   </div>
 </template>
@@ -119,17 +122,10 @@ export default {
         await this.getAllRoleDroitAssociationStore();
         await this.getStandsStore();
         this.stand = this.selected_stand;
-        this.id_user = this.getAllUsers.find(user => user.id_user === this.id_user).id_user;
+        this.id_user = this.getAllUsers.find(user => user.id_stand === this.stand.id_stand).id_user;
         console.log("id_user :", this.id_user)
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
-      }
-    },
-    getImageSrc(imageName) {
-      try {
-        return require('./../../../../../Back/assets/stand/profile/' + imageName)
-      } catch {
-        console.log("pas d'image")
       }
     },
     translate,
@@ -212,18 +208,32 @@ export default {
           await uploadImageStand(this.imageRaw);
         }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
-        await this.updateStandStore(this.stand); 
+        console.log("stand :", this.stand)
+        await this.updateStandStore({id : this.stand.id_stand, body : this.stand});
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
-        user.id_stand = stand.id_stand;
-        console.log("user", user);
-        console.log("id_stand", stand.id_stand)
-        await this.updateUserStore(user);
+        //if the user changed remove the id_stand from the old user
+        if(user.id_stand !== stand.id_stand){
+          const oldUser = this.getAllUsers.find(user => user.id_stand === stand.id_stand);
+          oldUser.id_stand = null;
+          await this.updateUserStore(oldUser);
+          //then add it to the new one
+          user.id_stand = stand.id_stand;
+          await this.updateUserStore(user);
+        }
+        
         this.$router.push('/admin/stands');
       } catch (error) {
         console.error('Erreur lors de la création du stand :', error);
       }
 
+    },
+    getImageSrc(fileName) {
+      try {
+        return require('./../../../../../Back/assets/stand/profile/' + fileName)
+      } catch {
+        return "pas d'image"// Image par défaut en cas d'erreur
+      }
     },
     toggleSelectEmplacementModal() {
       this.showSelectEmplacementModal = !this.showSelectEmplacementModal;
@@ -241,7 +251,12 @@ export default {
     ...mapGetters('stands', ['getAllStand']),
     getAllUsersWithoutStand() {
       var data;
-      data = this.getAllUsers.filter(user => (user.id_stand === null || user.id_stand === this.stand.id_stand));
+      data = this.getAllUsers.filter(user => user.id_stand === null);
+      console.log("papa", data, this.getAllUsers.filter(user => user.id_stand === null))
+      //add the user that already had this stand
+      console.log("id_stand", this.stand.id_stand)
+      data.push(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand));
+      console.log("maman", data, this.getAllUsers.find(user => user.id_stand === this.stand.id_stand))
       data = data.filter(user => user.id_role === 2);
       //verifie si l'utilisateur peut avoir un stand 
       return data

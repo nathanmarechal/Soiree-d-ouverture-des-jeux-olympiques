@@ -157,7 +157,7 @@ router.patch("/description", rightMiddleware.checkRight, standsMiddleware.checkS
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/update", standsMiddleware.checkStandExists, mapMiddleware.checkEmplacementExists, standsController.updateStand);
+router.patch("/update", rightMiddleware.checkRight, standsMiddleware.checkStandExists, mapMiddleware.checkEmplacementExists, standsController.updateStand);
 
 
 /**

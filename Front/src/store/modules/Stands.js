@@ -60,6 +60,8 @@ export default {
         },
         async updateStandStore({ rootState, commit }, {id, body}) {
             try {
+                console.log("id", id)
+                console.log("body", body)
                 const session_id = rootState.user.userCourant.session_id
                 await updateStand(id, body, session_id);
                 commit('UPDATE_STAND', id, body);

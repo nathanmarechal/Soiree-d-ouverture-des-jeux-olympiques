@@ -4,17 +4,20 @@ exports.checkRight = async (req, res, next) => {
     try {
         const sessionId = req.query.session_id;
         const rightName = getRightName(req.originalUrl);
+        console.log("rightName", rightName)
+        console.log("sessionId", sessionId)
+        console.log(req.body)
 
         if (!rightName) {
             console.log(`No right assigned to path: ${req.originalUrl}`);
             return res.status(403).send("Aucun droit associé à ce chemin");
         }
-
+        console.log("sessionId", sessionId)
         const hasRight = await checkRight(sessionId, rightName);
         if (!hasRight) {
             return res.status(403).send("L'utilisateur courant ne dispose pas de ce droit");
         }
-
+        console.log("sessionId", sessionId)
         next();
     } catch (error) {
         return res.status(400).send(`Erreur: ${error}`);

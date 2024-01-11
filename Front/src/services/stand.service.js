@@ -11,12 +11,14 @@ async function getAllStands() {
 }
 
 async function updateStand(id, body, session_id) {
+    console.log(id, body, session_id)
     let answer = await updateStandFromAPI(id, body, session_id)
     return answer
 }
 
 async function updateStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
+    console.log(id, body, session_id)
+    return patchRequest('/stands/update?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
 }
 
 async function createStandFromAPI(body, session_id) {
