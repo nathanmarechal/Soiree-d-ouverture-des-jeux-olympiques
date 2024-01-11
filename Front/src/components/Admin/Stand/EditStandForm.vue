@@ -16,7 +16,7 @@
       </div>
       <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
         <img ref="image_stand" class="cropper-image" style=" max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;"/>
-        <button  type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
+        <button  type="button" @click="cropImage" class="btn btn-primary">{{ translate("editStand_2") }}</button>
       </div>
       
       <div class="d-flex flex-column">

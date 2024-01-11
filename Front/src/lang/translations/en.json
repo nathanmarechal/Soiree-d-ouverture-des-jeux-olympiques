@@ -381,6 +381,12 @@
   "createStand_9": "Validate",
   "createStand_10": "Quit",
 
+  "editStand_1": "Stand Name",
+  "editStand_2": "Crop the Image",
+  "editStand_3": "Stand Description",
+  "editStand_4": "Select a Location",
+  "editStand_5": "Validate",
+  "editStand_6": "Quit",
 
   "protectedData_1": "The following ",
   "protectedData_2": " : ",
