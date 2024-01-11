@@ -83,7 +83,6 @@ export default {
 
         getAllUsers : state => state.users,
         getAllUsersAttente : state => state.usersAttente,
-        getAllStandAttente: state => state.standAttente,
         getIdUserCourant: state => state.userCourant.id_user,
         getProvenance : state => state.provenance,
         getCurrentUser: state => state.userCourant,
