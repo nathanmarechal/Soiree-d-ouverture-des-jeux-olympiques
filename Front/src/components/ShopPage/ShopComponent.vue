@@ -35,7 +35,6 @@
 import {mapActions, mapGetters} from 'vuex';
 import ModalReservation from '@/components/ShopPage/ModalReservation.vue'
 import {translate} from "../../lang/translationService";
-import user from "@/store/modules/user";
 export default {
   components: {
     ModalReservation
@@ -61,9 +60,6 @@ export default {
     this.equalizeCardHeights();
   },
   computed: {
-    user() {
-      return user
-    },
     ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation', 'getAllPrestation']),
     ...mapGetters('stands', ['getAllStand', 'getSelectedStands']),
     ...mapGetters('creneau', ['getAllCreneau']),
