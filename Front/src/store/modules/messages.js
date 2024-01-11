@@ -5,17 +5,17 @@ export default {
     state:{
         conversations: []
     },
-    getter:{
+    getters:{
         getConversations : state => state.conversations,
     },
 
-    mutation:{
+    mutations:{
         SET_CONVERSATIONS(state,conversations){
             state.conversations = conversations;
         },
     },
 
-    action:{
+    actions:{
         //-----------------------------------------------------------------------Messagerie--------------------------------------------------------------------//
 
         async getConversationsAdminStore({commit}){
