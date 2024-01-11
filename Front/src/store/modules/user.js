@@ -436,9 +436,10 @@ export default {
         },
 
 
-        async getUsersStore({ commit }) {
+        async getUsersStore({ commit, state }) {
             try {
-                const result = await getAllUsers(this.state.userCourant.session_id);
+                console.log("getUsersStore" + state.userCourant.session_id)
+                const result = await getAllUsers(state.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
@@ -449,9 +450,9 @@ export default {
             }
         },
 
-        async getAllUsersAttenteStore({ commit }) {
+        async getAllUsersAttenteStore({ commit, state }) {
             try {
-                const usersAttente = await getAllUsersAttente(this.state.userCourant.session_id);
+                const usersAttente = await getAllUsersAttente(state.userCourant.session_id);
                 commit('SET_USERS_ATTENTE', usersAttente);
                 console.log("usersAttente: ", usersAttente)
                 console.log("usersAttente: ", this.state.usersAttente)
@@ -472,9 +473,9 @@ export default {
             }
         },
 
-        async acceptUserStore({ commit }, id) {
+        async acceptUserStore({ commit, state }, id) {
             try {
-                let result = await acceptUser(id,this.state.userCourant.session_id);
+                let result = await acceptUser(id,state.userCourant.session_id);
                 console.log("result: ", result)
                 commit('ACCEPT_USER_DELETE', id);
                 commit('ACCEPT_USER_ADD', result[0]);
@@ -484,19 +485,19 @@ export default {
         },
 
 
-        async refuseUserStore({ commit }, id) {
+        async refuseUserStore({ commit ,state }, id) {
             try {
-                await refuseUser(id,this.state.userCourant.session_id);
+                await refuseUser(id,state.userCourant.session_id);
                 commit('REFUSE_USER', id);
             } catch (err) {
                 console.error("Error in refuseUserStore():", err);
             }
         },
 
-        async createUserStore({ commit }, body) {
+        async createUserStore({ commit, state }, body) {
             try {
                 const user = body.user;
-                await createUser(user, this.state.userCourant.session_id);
+                await createUser(user, state.userCourant.session_id);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -525,9 +526,9 @@ export default {
         },
 
 
-        async updateUserStore({ commit }, {body}) {
+        async updateUserStore({ commit , state }, {body}) {
             try {
-                await updateUser(body.id_user, body, this.state.userCourant.session_id);
+                await updateUser(body.id_user, body, state.userCourant.session_id);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
@@ -535,10 +536,10 @@ export default {
             }
         },
 
-        async deleteUserStore({ commit }, id) {
+        async deleteUserStore({ commit, state }, id) {
             try {
                 console.log("in delete user store")
-                const session_id = this.state.userCourant.session_id
+                const session_id = state.userCourant.session_id
                 await deleteUser(id,session_id);
                 commit('DELETE_USER', id);
             } catch (err) {

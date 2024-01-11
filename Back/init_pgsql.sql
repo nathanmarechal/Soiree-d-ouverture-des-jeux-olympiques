@@ -859,3 +859,5 @@ RETURNING *
 ;
 
 select * from text_accueil;
+
+select * from utilisateur;
