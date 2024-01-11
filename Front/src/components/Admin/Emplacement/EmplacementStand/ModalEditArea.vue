@@ -10,7 +10,7 @@
           <td>{{ selectedArea.id_emplacement }}</td>
         </tr>
         <tr>
-          <th>Zone</th>zone
+          <th>Zone</th>
           <td v-if="!isEditAreaActive">{{ selectedArea.zone }}</td>
           <td v-if="isEditAreaActive">
             <select v-model="zone">
