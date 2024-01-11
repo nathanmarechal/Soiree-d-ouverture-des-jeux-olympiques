@@ -4,7 +4,7 @@
       <div class="col-12">
         <h1 class="text-center">Panier</h1>
         <p>{{getCurrentUser.solde}}</p>
-        <button @click="ajouterdufric" >+ 100 balles</button>
+        <button @click="ajouterdufric" >+ 100€</button>
       </div>
     </div>
     <div class="alert alert-success" role="alert" v-if="getPanierUserCourant.length === 0">

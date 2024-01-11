@@ -846,17 +846,17 @@ INSERT INTO text_accueil (description) VALUES
 <p style="text-align: justify;">Rejoignez-nous pour c&eacute;l&eacute;brer l''unit&eacute;, la paix et la diversit&eacute; &agrave; travers le sport, la culture, la gastronomie et les arts. La c&eacute;r&eacute;monie d''ouverture des JO 2024 &agrave; Paris est bien plus qu''un &eacute;v&eacute;nement sportif, c''est une invitation &agrave; une aventure extraordinaire au c&oelig;ur de l''Olympisme. Venez nous rejoindre pour une soir&eacute;e qui &eacute;blouira vos sens et vous laissera des souvenirs durables.</p>');
 
 INSERT INTO conversations(id_creator, titre, resolu) VALUES
-             (2,'nathan a push un truc pas fini',false),
-             (2,'je suis triste',false)
+             (2,'je me pose une question',false),
+             (2,'il y a un soucis ',false)
 ;
 
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission)
 VALUES
-    (1,1,'ouais bah tant pis',now()),
-        (2,1,'mec je suis NRV','2024-01-10 12:30:40'),
-        (1,1,'ouais bah tant mieux','2024-01-10 12:30:45'),
-    (1,2,'tu es triste ? Bah arrête.',now())
-;
+    (1,1,'laquelle ?',now()),
+        (2,1,'comment je peux réserver un stand','2024-01-10 12:30:40'),
+        (1,1,'veuillez mieux décrire votre soucis','2024-01-10 12:30:45'),
+    (1,2,'je pense que c est bon',now())
+;   
 
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())

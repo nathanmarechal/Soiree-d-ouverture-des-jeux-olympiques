@@ -2,8 +2,6 @@
   <div v-if="isLoginOpen">
     <div class="d-flex justify-content-center align-items-center overlay">
       <div class="login-box bg-white p-4 rounded shadow">
-
-        <button class="close-btn" @click="closeModal">X</button>
         <h2 class="text-center mb-4">{{translate("login_title")}}</h2>
         <form @submit.prevent="submitForm">
           <div class="form-group">
@@ -17,6 +15,8 @@
           <button type="submit" class="btn btn-primary w-100">{{translate("login_2")}}</button>
         </form>
         <a @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </a>
+        <button @click="closeModal" class="btn btn-danger w-100">{{translate("login_4")}}</button>
+
       </div>
     </div>
   </div> 

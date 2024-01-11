@@ -212,7 +212,7 @@ export default {
 
   methods: {
     translate,
-    ...mapActions('user', [ 'createUserStore', 'registerPrestataireStore']),
+    ...mapActions('user', [ 'createUserStore', 'registerPrestataireStore','registerClientStore']),
     ...mapActions('roleEtDroit', ['getRolesStore']),
 
 

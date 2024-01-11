@@ -59,7 +59,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentUser'])
+    ...mapGetters('users'['getCurrentUser'])
   },
   async mounted() {
     await this.loadStatistics();
@@ -68,7 +68,7 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        const standId = this.getCurrentUser.id_stand;
+        const standId = this.$store.getters["user/g etUserId"];
         [this.bestClient] = await getBestClientByStand(standId);
         [this.averagePurchase] = await getAveragePurchaseByStand(standId);
         [this.avgRating] = await getAvgRatingByStand(standId);
