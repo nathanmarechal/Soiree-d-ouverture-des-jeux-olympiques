@@ -23,11 +23,12 @@ export default {
     await this.loadData();
   },
   computed: {
-    ...mapGetters(['getAllZone','getAllTypeEmplacementLogistique', 'getAllTypeZone']),
-  },
+    ...mapGetters('ZoneEtType', ['getAllZone','getAllTypeZone']),
+    ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique']),  },
   methods: {
     translate,
-    ...mapActions(['getZonesStore','getTypeEmplacementLogistiqueStore', 'getTypeZonesStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore']),
+    ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore']),
     getTypeZoneLibelle(id_type_zone) {
       const typeZone = this.getAllTypeZone.find(type => type.id_type_zone === id_type_zone);
       if (typeZone)

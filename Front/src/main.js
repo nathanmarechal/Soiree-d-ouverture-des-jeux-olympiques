@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 
+
 Vue.config.productionTip = false
 
 new Vue({

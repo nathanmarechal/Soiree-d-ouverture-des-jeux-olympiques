@@ -70,11 +70,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRoles', 'getAllUsers', 'getAllStand', 'getAllArea', 'getAllTypeZone', 'getAllZone']),
-  },
+    ...mapGetters('roleEtDroit', ['getAllRoles']),
+    ...mapGetters('user', ['getAllUsers']),
+    ...mapGetters('stands', ['getAllStand']),
+    ...mapGetters('emplacements', ['getAllArea']),
+    ...mapGetters('ZoneEtType', ['getAllTypeZone', 'getAllZone']),  },
   methods: {
-    ...mapActions(['getRolesStore', 'getUsersStore', 'getStandsStore', 'getAreasStore', 'getTypeZonesStore', 'getZonesStore']),
-    async loadData() {
+    ...mapActions('roleEtDroit', ['getRolesStore']),
+    ...mapActions('user', ['getUsersStore']),
+    ...mapActions('stands', ['getStandsStore']),
+    ...mapActions('emplacements', ['getAreasStore']),
+    ...mapActions('ZoneEtType', ['getTypeZonesStore', 'getZonesStore']),    async loadData() {
       try {
         console.log("props data", this.dataProp);
         console.log("data type", this.dataType);

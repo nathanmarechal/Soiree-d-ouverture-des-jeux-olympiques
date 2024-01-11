@@ -80,8 +80,9 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllStand', 'getAllPrestation', 'getAllArea']),
-      filteredProtector: function(){
+      ...mapGetters('emplacements', ['getAllArea']),
+      ...mapGetters('prestationEtType', ['getAllPrestation']),
+      ...mapGetters('stands' , ['getAllStand']),      filteredProtector: function(){
         // verify that the data in filterProtector is still in the getAllStand so for each data in filterProtector, check if it is in getAllStand or else remove it from filterProtector
         if(this.filterProtector != null){
           let filteredProtector = this.filterProtector.filter(protector => this.getAllStand.includes(protector));
@@ -93,7 +94,9 @@
     },
     methods: {
       translate,
-      ...mapActions(['getStandsStore', 'getAreasStore', 'deleteStandStore', 'updatePrestationStore']),
+      ...mapActions('emplacements', ['getAreasStore']),
+      ...mapActions('prestationEtType', ['updatePrestationStore']),
+      ...mapActions('stands', ['getStandsStore', 'deleteStandStore']),
       async loadData() {
         if (this.getAllStand.length === 0) {
           await this.getStandsStore();
