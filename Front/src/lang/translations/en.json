@@ -392,6 +392,7 @@
 
   "protectedData_1": "The following ",
   "protectedData_2": " : ",
-  "protectedData_3": "is associated with other data, please remove them before deleting this"
+  "protectedData_3": "is associated with other data, please remove them before deleting this",
 
+  "EditAreas_1": "Delete"
 }
