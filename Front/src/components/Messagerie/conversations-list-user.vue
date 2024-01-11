@@ -38,7 +38,9 @@ import {translate} from "@/lang/translationService";
 
 export default({
   computed: {
-    ...mapGetters(['getConversations','getCurrentUser'])
+    //...mapGetters(['getConversations','getCurrentUser']),
+    ...mapGetters('messagerie', ['getConversations']),
+    ...mapGetters('user', ['getCurrentUser'])
   },
   data() {
     return {
@@ -55,7 +57,8 @@ export default({
   },
 
   methods:{
-    ...mapActions(['getConversationsUserStore']),
+    //...mapActions(['getConversationsUserStore']),
+    ...mapActions('messagerie', ['getConversationsUserStore']),
     async loadData() {
       try {
         if (this.getConversations.length === 0) {

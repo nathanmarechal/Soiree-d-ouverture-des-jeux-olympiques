@@ -55,7 +55,7 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(['getCurrentUser'])
+    ...mapGetters('user', ['getCurrentUser'])
   },
   methods:{
     translate,

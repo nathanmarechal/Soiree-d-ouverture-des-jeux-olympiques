@@ -28,7 +28,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getSelectedStands','getAllStand']),
+    ...mapGetters('stands', ['getAllStand','getSelectedStands']),
     imagePath() {
       if (this.stand) {
         return require(`./../../../../Back/assets/stand/profile/${this.stand.image_stand}`);
@@ -39,7 +39,7 @@ export default {
 
   },
   methods: {
-    ...mapActions(['getStandsStore']),
+    ...mapActions('stands', ['getStandsStore']),
     async loadData(){
       if (this.getAllStand.length === 0){
         await this.getStandsStore()

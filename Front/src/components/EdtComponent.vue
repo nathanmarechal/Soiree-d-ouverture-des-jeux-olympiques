@@ -21,7 +21,7 @@ import {translate} from "../lang/translationService";
 export default {
   methods: {translate},
   computed: {
-    ...mapGetters(['getCurrentUser']),
+    ...mapGetters('user', ['getCurrentUser']),
     schedule() {
       return this.getCurrentUser.schedule;
     }

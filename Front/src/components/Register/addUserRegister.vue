@@ -205,13 +205,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllRoles', 'getCurrentUser'])
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('roleEtDroit', ['getAllRoles'])
   },
 
 
   methods: {
     translate,
-    ...mapActions(['getRolesStore', 'registerClientStore', 'registerPrestataireStore']),
+    ...mapActions('user', [ 'createUserStore', 'registerPrestataireStore']),
+    ...mapActions('roleEtDroit', ['getRolesStore']),
 
 
     dataEmplacement(id_emplacement) {
@@ -223,10 +225,12 @@ export default {
       this.isPrestataire = true;
       this.utilisateur.id_role = 2;
     },
+
     setClient() {
       this.isPrestataire = false;
       this.utilisateur.id_role = 3;
     },
+
     async loadData() {
       try {
         if (this.getAllRoles.length === 0) {
@@ -236,6 +240,7 @@ export default {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
+
     async submitFormClient() {
       try {
         await this.registerClientStore({
@@ -246,6 +251,7 @@ export default {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
       }
     },
+
     async submitFormPrestataire() {
       try {
         if (this.$refs.myEditor && this.$refs.myEditor.editor) {

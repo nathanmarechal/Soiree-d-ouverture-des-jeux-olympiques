@@ -68,7 +68,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getAllTypePrestation', 'getCurrentUser']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('prestationEtType', ['getAllTypePrestation'])
   },
   async mounted() {
     try {
@@ -80,7 +81,7 @@ export default {
 
   methods: {
     translate,
-    ...mapActions(['updatePrestationStore','getTypePrestationsStore']), // Ajoutez votre action Vuex pour la mise à jour
+    ...mapActions('prestationEtType', ['updatePrestationStore', "getTypePrestationsStore"]),
 
     async loadData() {
       // Load selected prestation

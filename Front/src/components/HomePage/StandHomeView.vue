@@ -184,14 +184,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllStand']),
+    ...mapGetters('stands', ['getAllStand']),
     firstThreeStands() {
       return this.getAllStand.slice(0, 3);
     },
   },
   methods: {
     translate,
-    ...mapActions(['getStandsStore']),
+    ...mapActions('stands', ['getStandsStore']),
     async loadData() {
       if (this.getAllStand.length === 0) {
         await this.getStandsStore();
@@ -207,14 +207,14 @@ export default {
         newSelection.splice(index, 1);
       }
 
-      this.$store.commit('SET_SELECTED_TYPE_PRESTATION', []);
-      this.$store.commit('SET_SELECTED_STANDS', []);
-      this.$store.commit('SET_SELECTED_STANDS', newSelection);
+      this.$store.commit('prestationEtType/SET_PRESTATIONS', []);
+      this.$store.commit('stands/SET_SELECTED_STANDS', []);
+      this.$store.commit('stands/SET_SELECTED_STANDS', newSelection);
     },
 
     goToStore(stand){
       this.updateFilterH(stand)
-      this.$store.commit('SET_PROVENANCE', 1)
+      this.$store.commit('user/SET_PROVENANCE', 1)
       this.$router.push({ name: 'shopView'});
     },
     getImageSrc(imageName) {
