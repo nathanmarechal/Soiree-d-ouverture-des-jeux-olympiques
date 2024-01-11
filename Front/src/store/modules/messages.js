@@ -1,6 +1,7 @@
 import {getAllConversations, getConversationsForUser} from "@/services/messagerie.service";
 
 export default {
+    namespaced: true,
     state:{
         conversations: []
     },
