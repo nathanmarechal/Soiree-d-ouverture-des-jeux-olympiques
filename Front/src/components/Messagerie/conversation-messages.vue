@@ -3,8 +3,8 @@
     <div class="title-line"></div>
     <h2 class="conversation-title">{{ conversation.titre }}</h2>
     <div class="title-line"></div>
-
-
+    <h4 class="conversation-subtitle">{{conversation.email_creator}}</h4>
+    <br>
     <div  class="box" v-for="(message, index) in messages" :key="index" >
       <div v-if="message.id_sender === getCurrentUser.id_user" class="message-container-own">
         <div class="message-header">
@@ -119,5 +119,11 @@ export default {
 .conversation-title {
   text-align: center;
   margin: 10px 0;
+}
+
+.conversation-subtitle {
+  text-align: center;
+  margin: 4px 0;
+  color: rgb(128, 128, 128);
 }
 </style>
