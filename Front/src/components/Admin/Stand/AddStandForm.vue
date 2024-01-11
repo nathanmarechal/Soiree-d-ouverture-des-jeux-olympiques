@@ -19,10 +19,11 @@
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
       </div>
       <div v-if="croppedImage">
-        <img :src="croppedImage" class="cropped-image" style="width: 100%; border-radius: 15%;" />
+        <img :src="croppedImage" class="cropped-image" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;"  />
       </div>
       <div v-if="isImageInputUpload" class="d-flex flex-column gap-3 justify-content-center">
-        <img ref="image" class="cropper-image" style=""/>
+        <img ref="image" class="cropper-image" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;" />
+
         <button type="button" @click="cropImage" class="btn btn-primary">Recadrer l'image</button>
       </div>
 
