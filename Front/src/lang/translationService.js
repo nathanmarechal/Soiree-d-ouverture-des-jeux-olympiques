@@ -1,6 +1,7 @@
 import en from './translations/en.json'
 import fr from './translations/fr.json'
 
+
 const translations = {
     en: en,
     fr: fr
@@ -16,7 +17,7 @@ export function changeLanguage(lang) {
         .catch((error) => {
             console.error(`Failed to load translations for ${lang}`, error);
         });
-    this.$store.getters['user/getLang'] = lang;
+    this.$store.state.user.lang = lang;
     console.log(this.$store.getters['user/getLang'])
 }
 export function translate(key) {
