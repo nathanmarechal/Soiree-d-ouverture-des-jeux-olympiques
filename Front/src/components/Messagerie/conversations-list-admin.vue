@@ -33,7 +33,6 @@ import {translate} from "@/lang/translationService";
 
 export default({
   computed: {
-    //...mapGetters(['getConversations','getCurrentUser']),
     ...mapGetters('user', ['getCurrentUser']),
     ...mapGetters('messagerie', ['getConversations'])
   },

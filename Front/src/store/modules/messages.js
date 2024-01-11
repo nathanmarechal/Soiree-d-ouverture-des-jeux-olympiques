@@ -2,8 +2,9 @@ import {getAllConversations, getConversationsForUser} from "@/services/messageri
 
 export default {
     namespaced: true,
+
     state:{
-        conversations: []
+        conversations: [],
     },
     getters:{
         getConversations : state => state.conversations,
