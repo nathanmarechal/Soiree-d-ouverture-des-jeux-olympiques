@@ -59,7 +59,6 @@ exports.addPrestationToPanierUser = (req, res) => {
     const id_prestation = req.body.id_prestation;
     const quantite = req.body.quantite;
     const id_creneau = req.body.id_creneau;
-    console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le controller panier.controller.js" + ", quantite:" + quantite + ", id_creneau:" + id_creneau)
     panierService.addPrestationToPanier(id_user, id_prestation, quantite, id_creneau, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

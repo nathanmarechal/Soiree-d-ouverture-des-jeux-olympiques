@@ -44,7 +44,6 @@ export default {
     async loadData(){
       await this.getCommandesPrestataireStore(this.getCurrentUser.id_user);
       this.commandes = this.getCommandePrestataire;
-      console.log(this.commandes + " dans le vue");
     },
   }
 }

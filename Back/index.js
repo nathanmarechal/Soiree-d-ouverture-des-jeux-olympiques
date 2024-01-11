@@ -58,7 +58,7 @@ app.use("/api/map", mapRoutes);
 app.use("/api/login",loginRoutes);
 app.use("/api/prestations",prestationsRoutes);
 
-app.use("/api/typePrestations",typePrestationsRoutes);  // a mettre en type-prestations
+app.use("/api/typePrestations",typePrestationsRoutes);
 
 app.use("/api/stands",standsRoutes);
 app.use("/api/homePage",homePageRoutes);
@@ -86,4 +86,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
-}); // npm start
+});

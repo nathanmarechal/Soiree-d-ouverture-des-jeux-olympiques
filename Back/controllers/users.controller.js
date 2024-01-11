@@ -34,7 +34,6 @@ exports.createUserWithStand = (req, res) => {
     const image_stand = req.body.stand.image_stand;
     const description_stand = req.body.stand.description_stand;
 
-    console.log("TEMA LA GUEULE DU STEAK "+description_stand)
     const prix_stand = 0;
     const id_emplacement = req.body.stand.id_emplacement;
 
@@ -48,8 +47,6 @@ exports.createUserWithStand = (req, res) => {
 }
 
 exports.getUsers = (req, res) => {
-    console.log("getUsers");
-
     usersService.getAllUsers((error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -60,9 +57,6 @@ exports.getUsers = (req, res) => {
 }
 
 exports.getUsersAttente = (req, res) => {
-    // Log function name
-    console.log("getUsersAttente");
-
     usersService.getAllUsersAttente((error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -74,9 +68,6 @@ exports.getUsersAttente = (req, res) => {
 
 exports.acceptUser = (req, res) => {
     const id_user = req.query.id_user;
-
-    console.log("acceptUser", id_user);
-
     usersService.acceptUser(id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -88,9 +79,6 @@ exports.acceptUser = (req, res) => {
 
 exports.refuseUser = (req, res) => {
     const id_user = req.query.id_user;
-
-    console.log("refuseUser", id_user);
-
     usersService.refuseUser(id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -102,10 +90,6 @@ exports.refuseUser = (req, res) => {
 
 exports.getUserById = (req, res) => {
     const id = req.query.id_user;
-
-    // Log function name and data
-    console.log("getUserById", { id });
-
     usersService.getUserById(id, (error, data) => {
         if (error) {
             return res.status(500).send("internal error");
@@ -120,44 +104,28 @@ exports.getUserById = (req, res) => {
 
 exports.getUserBySessionId = (req, res) => {
     const session_id = req.query.session_id;
-
-    // Log function name and data
-    console.log("getUserBySessionId", { session_id });
-
     usersService.getUserBySessionId(session_id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            console.log("sending the data" + data.id_role);
             return res.status(200).send(data);
         }
     });
 }
 
 exports.updateUser = (req, res) => {
-    console.log("Entered updateUser");
     const id_user = req.query.id_user;
     const { prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand } = req.body;
-
-    // Log function name and data
-    console.log("Request data", { id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand });
-
     usersService.updateUser(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, (error, data) => {
         if (error) {
-            console.log("Sending 500 response");
             return res.status(500).send("internal error");
         }
-        console.log("Sending 200 response");
         return res.status(200).send(data);
     });
 }
 
 exports.deleteUser = (req, res) => {
-    console.log("deleting the user willy nilly");
     const id = req.query.id_user;
-
-    // Log function name and data
-    console.log("deleteUser", { id });
 
     if (!id) {
         return res.status(400).send("id is null");
@@ -178,9 +146,6 @@ exports.updateSolde = (req, res) => {
     const id = req.query.id_user;
     const newsolde = req.body.solde;
 
-    console.log("updateSolde", { id, newsolde });
-
-
     usersService.updateSolde(id, newsolde, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -198,8 +163,6 @@ exports.updateUserCourantWoPassword = (req, res) => {
     const adresse = req.body.adresse;
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
-
-    console.log("updateUserCourantWoPassword", { id, nom, prenom, email, adresse, code_postal, commune });
 
     usersService.updateUserCourantWoPassword(id, nom, prenom, email, adresse, code_postal, commune, (error, data) => {
         if (error) {

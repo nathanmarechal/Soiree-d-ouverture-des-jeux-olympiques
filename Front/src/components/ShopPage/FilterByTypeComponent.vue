@@ -46,7 +46,6 @@ export default {
       }
     },
     updateFilter() {
-      console.log(this.selectedTypePrestation)
       this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', this.selectedTypePrestation);
     },
 

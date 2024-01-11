@@ -79,10 +79,10 @@ export default {
   async mounted() {
     try {
       await this.loadData();
-      this.loading = false; // Set loading to false after data is loaded
+      this.loading = false;
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
-      this.loading = false; // Handle loading error
+      this.loading = false;
     }
   },
 
@@ -114,8 +114,6 @@ export default {
       const role = this.getAllRoles.find(role => role.id_role === id);
       const confirmMessage = this.translate("roleList_ConfirmDeleteMessage") + ` ${role.libelle} ?`;
       if (all || window.confirm(confirmMessage) ) {
-        console.log('role :', role);
-        console.log('truc ', this.getAllUsers)
         const ifHasUser = this.getAllUsers.find(user => user.id_role === id);
         if (ifHasUser) {
           window.alert('ALERTEALERTeALERT')

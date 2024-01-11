@@ -84,11 +84,7 @@ export default {
     ...mapActions('prestationEtType', ['updatePrestationStore', "getTypePrestationsStore"]),
 
     async loadData() {
-      // Load selected prestation
       this.prestation = await this.selected_prestation;
-      console.log(this.prestation.image);
-
-      // Load type prestations if not already loaded
       if (this.getAllTypePrestation.length === 0) {
         await this.getTypePrestationsStore();
       }
@@ -107,7 +103,6 @@ export default {
       const reader = new FileReader();
       this.isImageInputUpload = true;
 
-      // Stocker le nom du fichier original sans l'extension
 
       reader.onload = (e) => {
         this.$refs.image.src = e.target.result;
@@ -140,13 +135,11 @@ export default {
         this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
-        console.log(fileName)
       });
     },
     async submitForm() {
       try {
 
-        console.log(this.prestation.image)
 
         this.prestation.prix = parseFloat(this.prestation.prix);
 
@@ -157,9 +150,7 @@ export default {
 
         await this.$router.push('/prestataire/prestations/');
       } catch (error) {
-        // Gestion des erreurs
         console.error("Erreur lors de la création de la prestation :", error);
-        // Afficher un message d'erreur à l'utilisateur, si nécessaire
       }
     },
     toggleImageUpload() {

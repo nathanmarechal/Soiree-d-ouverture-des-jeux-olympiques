@@ -14,7 +14,7 @@ exports.checkRight = async (req, res, next) => {
         if (!hasRight) {
             return res.status(403).send("L'utilisateur courant ne dispose pas de ce droit");
         }
-        console.log("POSSEDE LES DROITS")
+
         next();
     } catch (error) {
         return res.status(400).send(`Erreur: ${error}`);

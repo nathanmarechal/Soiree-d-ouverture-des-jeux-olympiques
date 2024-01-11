@@ -74,8 +74,6 @@ methods: {
         }
 
         this.areasShow = this.mergeData();
-
-        console.log(this.areasShow)
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -110,7 +108,6 @@ methods: {
       });
     },
     initializeMap() {
-      console.log('initalized')
 
       // Initialise la carte Leaflet avec une vue par défaut
       this.map = L.map('map').setView([48.859024, 2.329182], 14);
@@ -126,12 +123,10 @@ methods: {
       this.updateMap()
     },
     showZoneInfo(zone) {
-      console.log(zone); // Vérifiez si les données zone sont correctes
       this.selectedStand = zone;
       this.modalActive = true;
     },
     updateMap() {
-      console.log('updateMAP');
       // Supprimez les polygones actuels de la carte
 
       if (this.map == null) {

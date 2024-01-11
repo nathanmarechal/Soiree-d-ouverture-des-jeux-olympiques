@@ -88,7 +88,6 @@ export default {
     },
 
     async deleteAvis(id) {
-      console.log(id)
       await this.deleteAvisStore(id)
       if(this.index === this.size - 1){
         this.index = this.index - 1

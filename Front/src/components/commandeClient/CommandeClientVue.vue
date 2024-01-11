@@ -72,7 +72,6 @@ export default {
 
         return `${day}/${month} - ${hours}:${minutes}`;
       } catch (error) {
-        console.error(error);
         return dateString;
       }
     }

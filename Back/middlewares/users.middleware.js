@@ -25,7 +25,6 @@ exports.checkUserExists = async (req, res, next) => {
             return res.status(404).send("Utilisateur non trouvé");
         }
         conn.release();
-        console.log("USER EXISTE")
         next();
     } catch (error) {
         res.status(500).send("Internal Server Error");

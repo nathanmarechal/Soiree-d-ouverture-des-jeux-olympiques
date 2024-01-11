@@ -69,7 +69,6 @@ export default {
       return [...new Set(this.getAllDroits.map((droit) => this.extractCategoryFromDroitName(droit.libelle)))];
     },
     filteredDroits() {
-      // Filter droits based on selected category
       return this.selectedCategory === 'all'
         ? this.getAllDroits
         : this.getAllDroits.filter((droit) => this.extractCategoryFromDroitName(droit.libelle) === this.selectedCategory);
@@ -88,20 +87,13 @@ export default {
       }
     },
     getAllSelectedDroits(){
-      console.log("digondsngos", this.getRoleDroits(this.role.id_role))
       let selectedDroitsID = [];
       let allAssociation = this.getAllRoleDroitAssociation;
-      console.log("all association", allAssociation);
       for (let i = 0; i < allAssociation.length; i++) {
-        console.log("i", i);
-        console.log("all association id role", allAssociation[i].id_role);
-        console.log("this role id", this.role.id_role);
         if (allAssociation[i].id_role === this.role.id_role) {
           selectedDroitsID.push(allAssociation[i].id_droit);
-          console.log("selected droits id", selectedDroitsID);
         }
       }
-      console.log("all selected droits id", selectedDroitsID);
       return selectedDroitsID;
     },
     getFilteredDroits() {
@@ -112,13 +104,11 @@ export default {
           );
     },
     extractCategoryFromDroitName(droitName) {
-      // Extract category from the second part of droit name after "_"
       const parts = droitName.split('_');
       return parts.length > 1 ? parts[1] : '';
     },
     async submitForm() {
       try {
-        // modify the role
         this.role.session_id = this.getCurrentUser.session_id;
         let result = await this.updateRoleStore(this.role);
         console.log('Résultat de la modification du rôle :', result);

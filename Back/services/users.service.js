@@ -96,7 +96,6 @@ async function getUserBySessionIdAsync(session_id) {
 }
 
 const updateUser = (id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, callback) => {
-    console.log("Entered updateUser service");
     updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand)
         .then(res => {
             console.log("updateUserAsync resolved");

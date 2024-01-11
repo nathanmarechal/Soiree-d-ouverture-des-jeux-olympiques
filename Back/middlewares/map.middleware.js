@@ -31,7 +31,6 @@ exports.checkEmplacementExists = async (req, res, next) => {
             }
         }
         conn.release();
-        console.log("EMPLACEMENT EXISTE");
         next();
     } catch (error) {
         res.status(500).send("Internal Server Error");
@@ -53,7 +52,6 @@ exports.checkZoneExists = async (req, res, next) => {
             return res.status(404).send("Zone non trouvée");
         }
         conn.release();
-        console.log("ZONE EXISTE")
         next();
     } catch (error) {
         res.status(500).send("Internal Server Error");
@@ -75,7 +73,6 @@ exports.checkTypeZoneExists = async (req, res, next) => {
             return res.status(404).send("Type de zone non trouvée");
         }
         conn.release();
-        console.log("TYPE DE ZONE EXISTE")
         next();
     } catch (error) {
         res.status(500).send("Internal Server Error");

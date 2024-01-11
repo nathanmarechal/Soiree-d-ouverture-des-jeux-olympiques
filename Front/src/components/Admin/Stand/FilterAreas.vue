@@ -53,11 +53,9 @@ export default {
     },
   updateFilterZone() {
     this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
-    console.log(this.selectedZones)
   },
     updateFilterTypeZone(){
       this.$store.commit('ZoneEtType/SET_SELECTED_TYPE_ZONES', this.selectedTypeZones);
-      console.log(this.selectedTypeZones)
 
     }
   }

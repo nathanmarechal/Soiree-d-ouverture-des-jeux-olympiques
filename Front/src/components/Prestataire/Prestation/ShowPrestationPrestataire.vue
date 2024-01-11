@@ -51,7 +51,6 @@ export default {
     ...mapActions('prestationEtType', ['getTypePrestationsStore','updateIsAvailablePrestationStore','deletePrestationStore']),
     async loadData() {
       try {
-        console.log(this.getCurrentUser.id_stand)
         if (this.getAllPrestation.length === 0){
           await this.getPrestationsStore()
         }

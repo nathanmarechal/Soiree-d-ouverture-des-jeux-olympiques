@@ -1,28 +1,4 @@
 <template>
-
-<!--  Stands disponibles :-->
-<!--  <div v-for="stand in stands" :key="stand.id_stand">-->
-<!--    <h3>{{stand.nom_stand}}</h3>-->
-<!--    <p>{{stand.description_stand}}</p>-->
-<!--    <button>Acheter</button>-->
-<!--  </div>-->
-<!--  <div class="row row-cols-1 row-cols-md-3 g-4">-->
-<!--    <div v-for="i in 4" :key="i">-->
-<!--    <div class="col">-->
-<!--      <div class="card h-100">-->
-<!--        <img :src="getImageSrc(getAllStands[i].image_stand)" class="card-img-top" alt="image qui représente le stand">-->
-<!--        <div class="card-body">-->
-<!--          <h5 class="card-title">{{getAllStands[i].nom_stand}}</h5>-->
-<!--          <p class="card-text">{{getAllStands[i].description_stand}}</p>-->
-<!--          <button type="button" class="btn btn-success" @click="goToPrestations">Prestations</button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <!--  Thanks to frontendmentor.io for the challenge.  -->
-
   <main class="setMargin">
     <div v-if="!isDiscoverMore()">
 
@@ -219,7 +195,6 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        console.log(imageName)
         return require('./../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         return require('@/assets/clown.png'); // Image par défaut en cas d'erreur

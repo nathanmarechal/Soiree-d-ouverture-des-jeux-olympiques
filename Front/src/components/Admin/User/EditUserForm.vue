@@ -63,7 +63,6 @@ export default {
     async mounted() {
         try {
             this.user = this.selected_user;
-            console.log(this.user);
             if (this.user === undefined) {
                 throw new Error("L'utilisateur n'a pas été trouvé");
             }
@@ -88,8 +87,7 @@ export default {
         },
         async submitForm() {
             try {
-                console.log("Données de l'utilisateur :", this.user);
-                await this.updateUserStore({
+                await this.updateUserStore({body : {
                     id_user: this.selected_user.id_user,
                     prenom: this.user.prenom,
                     nom: this.user.nom,

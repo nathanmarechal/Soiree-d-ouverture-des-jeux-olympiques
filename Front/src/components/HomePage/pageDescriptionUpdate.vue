@@ -53,10 +53,13 @@ export default {
     this.homeDescription = this.hd
   },
   computed: {
-    ...mapGetters(['getCurrentUser', 'getTextsHome', 'getAllRoles']),
+    ...mapGetters('user', ['getCurrentUser']),
+    ...mapGetters('roleEtDroit', ['getAllRoles']),
+    ...mapGetters('textsHome', ['getTextsHome']),
   },
   methods: {
-    ...mapActions(['getTextsHomeStore','updateDescriptionHomePageStore', 'getRolesStore']),
+    ...mapActions('roleEtDroit', ['getRolesStore']),
+    ...mapActions('textsHome', ['getTextsHomeStore', 'updateDescriptionHomePageStore']),
     async loadData() {
       try {
         if (this.getTextsHome.length === 0){
@@ -66,31 +69,22 @@ export default {
           await this.getRolesStore()
         }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
-        console.log(this.homeText + " zazazazazazaza ")
         this.HomeDescription = this.homeText.description;
-        console.log(this.HomeDescription + " zouzouzouzozuzouzozuozuozu ")
         this.role = this.getAllRoles.find(role => role.id_role === this.getCurrentUser.id_role).libelle;
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
     async handleImageUpload(blobInfo, success, failure) {
-      // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
-      // Construire le nouveau nom de fichier
 
-      //const fileName = `description_id_homeText_${this.homeText.id}_${timestamp}.jpeg`;
       const fileName = `description_home_page${timestamp}.jpeg`;
-      // Créer une nouvelle instance de File avec le nouveau nom
       const fileInstance = new File([blobInfo.blob()], fileName, {
         type: 'image/jpeg'
       });
       try {
-        // Appeler votre fonction d'upload
         const response = await uploadImageDescriptionHomePage(fileInstance);
 
-        console.log(response.location)
-        // Vérifier si la réponse contient l'emplacement du fichier uploadé
         if (response.location) {
           success(response.location);
         } else {
@@ -107,8 +101,6 @@ export default {
           id_text_accueil: this.id,
           body: { description: content }
         });
-        console.log('Contenu à enregistrer:', content);
-        // Add here the logic to save the content to your server or handle it as needed
       } else {
         console.error('Éditeur non initialisé ou indisponible');
       }

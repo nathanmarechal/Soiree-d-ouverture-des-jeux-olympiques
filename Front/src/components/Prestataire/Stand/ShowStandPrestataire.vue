@@ -61,12 +61,10 @@ export default {
     ...mapActions('stands', ['getStandsStore', 'updateDescriptionStandStore', 'getStandsStore']),
     async loadData() {
       try {
-        console.log(this.getCurrentUser.id_stand)
         if (this.getAllStand.length === 0){
           await this.getStandsStore()
         }
         this.stand = this.getAllStand.find(stand => stand.id_stand === this.getCurrentUser.id_stand);
-        console.log(this.stand)
         this.standDescription = this.stand.description_stand;
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
@@ -85,7 +83,6 @@ export default {
         // Appeler votre fonction d'upload
         const response = await uploadImageDescriptionStand(fileInstance);
 
-        console.log(response.location)
         // Vérifier si la réponse contient l'emplacement du fichier uploadé
         if (response.location) {
           success(response.location);
@@ -103,7 +100,6 @@ export default {
           id: this.stand.id_stand,
           body: { description_stand: content, id: this.stand.id_stand  }
         });
-        console.log('Contenu à enregistrer:', content);
         // Add here the logic to save the content to your server or handle it as needed
       } else {
         console.error('Éditeur non initialisé ou indisponible');

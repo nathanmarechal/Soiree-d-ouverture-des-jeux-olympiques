@@ -72,20 +72,16 @@ export default {
 
 
     async handleImageUpload(blobInfo, success, failure) {
-      // Générer un timestamp unique
       const timestamp = Math.floor(Date.now() / 1000);
 
       const fileName = `description_home_page${timestamp}.jpeg`;
-      // Créer une nouvelle instance de File avec le nouveau nom
+
       const fileInstance = new File([blobInfo.blob()], fileName, {
         type: 'image/jpeg'
       });
       try {
-        // Appeler votre fonction d'upload
         const response = await uploadImageAvis(fileInstance);
 
-        console.log(response.location)
-        // Vérifier si la réponse contient l'emplacement du fichier uploadé
         if (response.location) {
           success(response.location);
         } else {
@@ -99,7 +95,6 @@ export default {
       if (this.myEditor && this.myEditor.editor) {
         const content = await this.myEditor.editor.getContent();
         await this.uploadAvisStore({"id_stand" : this.getSelectedStands[0], "id_user" : this.getCurrentUser.id_user, "note" : this.rating, "commentaire" : content});
-        console.log('Contenu à enregistrer:', content);
         this.$emit('contentSaved');
       } else {
         console.error('Éditeur non initialisé ou indisponible');

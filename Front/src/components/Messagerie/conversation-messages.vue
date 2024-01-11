@@ -69,7 +69,6 @@ export default {
       }
       let response = await sendMessage(body)
       this.messages.push(response);
-      console.log(response)
       this.newMessage='';
     },
 

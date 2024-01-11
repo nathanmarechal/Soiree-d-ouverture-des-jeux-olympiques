@@ -15,7 +15,6 @@ exports.getAreas = (req, res) => {
 exports.updateArea = (req, res) => {
     const id = req.query.id_emplacement;
     const body = req.body;
-    console.log("updateArea: ", id, body)
     mapService.updateArea(id, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -28,7 +27,6 @@ exports.updateArea = (req, res) => {
 
 exports.createArea = (req, res) => {
     const body = req.body;
-    console.log("createArea: ", body)
     mapService.createArea(body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -40,7 +38,6 @@ exports.createArea = (req, res) => {
 
 exports.deleteArea = (req, res) => {
     const id_emplacement = req.query.id_emplacement;
-    console.log("deleteArea: ", id_emplacement)
     mapService.deleteArea(id_emplacement, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -77,7 +74,6 @@ exports.getZoneById = (req, res) => {
 exports.updateZone = (req, res) => {
     const id = req.query.id_zone;
     const body = req.body;
-    console.log("updateZone: ", id, body)
     mapService.updateZone(id, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -90,7 +86,6 @@ exports.updateZone = (req, res) => {
 
 exports.createZone = (req, res) => {
     const body = req.body;
-    console.log("createZone: ", body)
     mapService.createZone(body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -102,7 +97,6 @@ exports.createZone = (req, res) => {
 
 exports.deleteZone = (req, res) => {
     const id = req.query.id_zone;
-    console.log("deleteZone: ", id)
     mapService.deleteZone(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

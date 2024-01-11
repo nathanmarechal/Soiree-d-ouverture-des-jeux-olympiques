@@ -31,7 +31,6 @@ export default {
       this.$emit('add-dataEmplacement', newEmplacement);
     },
     handleDataEmplacement(data) {
-      console.log(data);
       this.$emit('dataEmplacement', data);
     },
   },

@@ -61,9 +61,6 @@ const createArea = (body, callback) => {
 async function createAreaAsync(body) {
     try {
         const conn = await pool.connect();
-        console.log("body.coordonnes: ", body.coordonnes)
-        console.log("body.surface: ", body.surface)
-        console.log("body.id_zone: ", body.id_zone)
         const result = await conn.query("INSERT INTO emplacement (coordonnes, surface, id_zone) VALUES ($1, $2, $3) RETURNING * ;", [JSON.stringify(body.coordonnes), body.surface, body.id_zone]);
         conn.release();
         return result.rows;
@@ -74,7 +71,6 @@ async function createAreaAsync(body) {
 }
 
 const deleteArea = (id, callback) => {
-    console.log("deleteAreatruc: ", id)
     deleteAreaAsync(id)
         .then(res => {
             callback(null, res);
@@ -157,8 +153,6 @@ const updateZone = (id, body, callback) => {
 async function updateZoneAsync(id, body) {
     try {
         const conn = await pool.connect();
-        console.log("id in updateZoneAsync: ", id)
-        console.log("body in updateZoneAsync: ", body)
         const result = await conn.query("UPDATE zone SET id_type_zone = $1, libelle = $2, couleur_hexa = $3 WHERE id_zone = $4 RETURNING *;", [body.id_type_zone, body.libelle, body.couleur_hexa, id]);
         conn.release();
         return result.rows;
@@ -184,7 +178,6 @@ async function createZoneAsync(body) {
         const conn = await pool.connect();
         const result = await conn.query("INSERT INTO zone (id_type_zone, libelle, couleur_hexa) VALUES ($1, $2, $3) RETURNING *;", [body.id_type_zone, body.libelle, body.couleur_hexa]);
         conn.release();
-        console.log("result.rows[0]: ", result.rows)
         return result.rows;
     } catch (error) {
         console.error('Error in createZoneAsync:', error);
