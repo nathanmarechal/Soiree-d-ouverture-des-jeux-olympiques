@@ -25,6 +25,8 @@ function getRightName(url) {
     const paths = {
         "/api/users/get": "see_users",
         "/api/users/update": "update_users",
+        "/api/users/updateSolde": "update_users",
+        "/api/users/updateUserCourantWoPassword": "update_users",
         "/api/users/delete": "delete_users",
         "/api/users/create-user": "create_users",
 
