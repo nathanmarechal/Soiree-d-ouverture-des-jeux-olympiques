@@ -1,19 +1,19 @@
 <template>
   <div v-if="isReservationSelected" class="overlay">
     <div class="modal-inner">
-      <h4>Réserver</h4>
+      <h4>{{ translate("modalReservation_1") }}</h4>
       <table class="table">
         <tbody>
         <tr>
-          <th>Libellé</th>
+          <th>{{ translate("modalReservation_2") }}</th>
           <td>{{ prestation.libelle }}</td>
         </tr>
         <tr>
-          <th>Prix</th>
+          <th>{{ translate("modalReservation_3") }}</th>
           <td>{{ prestation.prix }} €</td>
         </tr>
         <tr>
-          <th>Crénau</th>
+          <th>{{ translate("modalReservation_4") }}</th>
           <td>
             <div class="options d-flex flex-fill">
               <select required class="custom-select mr-1" v-model="creneau">
@@ -23,13 +23,13 @@
           </td>
         </tr>
         <tr>
-          <th>Quantité</th>
+          <th>{{ translate("modalReservation_5") }}</th>
           <td>
             <input required type="number" v-model.number="quantite" min="1">
           </td>
         </tr>
         <tr>
-          <th>Total</th>
+          <th>{{ translate("modalReservation_6") }}</th>
           <td>{{ total }} €</td>
         </tr>
         </tbody>
@@ -38,8 +38,8 @@
 
 
       <div class="d-flex justify-content-between">
-        <button @click="validerReservation()" type="button" class="btn btn-success">Valider</button>
-        <button @click="$emit('close')" type="button" class="btn btn-danger">Quitter</button>
+        <button @click="validerReservation()" type="button" class="btn btn-success">{{ translate("modalReservation_7") }}</button>
+        <button @click="$emit('close')" type="button" class="btn btn-danger">{{ translate("modalReservation_8") }}</button>
       </div>
     </div>
   </div>
@@ -47,6 +47,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import {translate} from "@/lang/translationService";
 
 export default {
   props: ["isReservationSelected", "prestation"],
@@ -78,6 +79,7 @@ export default {
   },
 
   methods: {
+    translate,
     ...mapActions('user', ['getPanierUserCourantStore', 'addPrestationToPanierUserCourantStore', "updateSoldeStore" ]),
     ...mapActions('creneau', ['getCreneauStore']),
     async loadData(){

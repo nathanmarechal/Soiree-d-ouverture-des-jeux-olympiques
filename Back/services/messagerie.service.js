@@ -102,9 +102,15 @@ const getMessagesByConversation = (id_conversation,callback) => {
         });
 }
 
-async function sendMessageAsync(id_conversation, message, id_user) {
+async function sendMessageAsync(id_conversation, message, session_id) {
     try {
         const conn = await pool.connect();
+
+        const res = await conn.query("SELECT id_user FROM session WHERE session_id = $1;",[session_id])
+
+        const id_user = res.rows[0].id_user
+
+        console.log("session_id="+session_id+", id_user="+id_user)
         // Insert the message
         await conn.query(
             "INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES ($1, $2, $3, now());",
@@ -131,8 +137,8 @@ async function sendMessageAsync(id_conversation, message, id_user) {
     }
 }
 
-const sendMessage = (id_conversation,message,id_user,callback) => {
-    sendMessageAsync(id_conversation,message,id_user)
+const sendMessage = (id_conversation,message,session_id,callback) => {
+    sendMessageAsync(id_conversation,message,session_id)
         .then(res => {
             callback(null, res);
         })

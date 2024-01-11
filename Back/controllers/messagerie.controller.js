@@ -37,10 +37,10 @@ exports.getMessagesByConversation = (req, res)=>{
 }
 
 exports.sendMessage = (req, res)=>{
-    const id_user = req.body.id_user;
     const id_conversation = req.body.id_conversation;
     const message = req.body.message;
-    messagerieService.sendMessage(id_conversation,message,id_user,(error, data) => {
+    const session_id = req.body.session_id;
+    messagerieService.sendMessage(id_conversation,message,session_id,(error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
