@@ -239,11 +239,12 @@ CREATE TABLE conversations(
 
 
 CREATE TABLE messages(
+	id SERIAL,
     id_sender INTEGER ,
     id_conversation INTEGER,
     message VARCHAR(1024),
     temps_emmission TIMESTAMP,
-    PRIMARY KEY (id_sender,id_conversation,temps_emmission),
+    PRIMARY KEY (id,id_sender,id_conversation,temps_emmission),
     FOREIGN KEY (id_sender) REFERENCES utilisateur(id_user),
     FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)
 );
@@ -859,9 +860,7 @@ VALUES
 
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())
-RETURNING *
 ;
-
 select * from text_accueil;
 
 select * from utilisateur;
