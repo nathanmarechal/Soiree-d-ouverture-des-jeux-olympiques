@@ -530,7 +530,6 @@ export default {
         async updateUserStore({ commit , state }, {body}) {
             try {
                 await updateUser(body.id_user, body, state.userCourant.session_id);
-                console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
                 console.error("Error in updateUserStore({ ...item, ...payload.body }):", err);

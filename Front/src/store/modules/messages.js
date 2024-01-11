@@ -19,9 +19,9 @@ export default {
     actions:{
         //-----------------------------------------------------------------------Messagerie--------------------------------------------------------------------//
 
-        async getConversationsAdminStore({commit}){
+        async getConversationsAdminStore({rootState, commit}){
             try {
-                let session_id = this.state.user.userCourant.session_id
+                let session_id = rootState.user.userCourant.session_id
                 const result = await getAllConversations(session_id);
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
