@@ -368,5 +368,22 @@
   "modalReservation_5": "Quantity",
   "modalReservation_6": "Total",
   "modalReservation_7": "Submit",
-  "modalReservation_8": "Exit"
+  "modalReservation_8": "Exit",
+
+  "createStand_1": "Stand Name: ",
+  "createStand_2": "Service Provider: ",
+  "createStand_3": "No service provider without a stand",
+  "createStand_4": "Image: ",
+  "createStand_5": "Description: ",
+  "createStand_6": "Choose Location",
+  "createStand_7": "Location ID: ",
+  "createStand_8": "You have selected the location: ",
+  "createStand_9": "Validate",
+  "createStand_10": "Quit",
+
+
+  "protectedData_1": "The following ",
+  "protectedData_2": " : ",
+  "protectedData_3": "is associated with other data, please remove them before deleting this"
+
 }

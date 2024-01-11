@@ -366,7 +366,22 @@
   "modalReservation_5": "Quantité",
   "modalReservation_6": "Total",
   "modalReservation_7": "Valider",
-  "modalReservation_8": "Quitter"
+  "modalReservation_8": "Quitter",
+
+  "createStand_1": "Nom du stand : ",
+  "createStand_2": "Prestataire : ",
+  "createStand_3": "Aucun prestataire sans stand",
+  "createStand_4": "Image : ",
+  "createStand_5": "Description : ",
+  "createStand_6": "Choisir emplacement",
+  "createStand_7": "Id emplacement : ",
+  "createStand_8": "Vous avez sélectionné l'emplacement : ",
+  "createStand_9": "Valider",
+  "createStand_10": "Quitter",
+
+  "protectedData_1": "Le ",
+  "protectedData_2": " suivant : ",
+  "protectedData_3":"est lié à d'autres données, veuillez les supprimer avant de supprimer ce"
 
 
 }
