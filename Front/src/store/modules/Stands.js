@@ -46,8 +46,9 @@ export default {
         async createStandStore({ rootState, commit }, body) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                await createStand(body, session_id);
-                commit('CREATE_STAND', body);
+                const data = await createStand(body, session_id);
+                console.log(data[0])
+                commit('CREATE_STAND', data[0]);
             } catch (err) {
                 console.error("Error in createStandStore():", err);
             }

@@ -34,8 +34,9 @@
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("createStand_6") }}</button>
       </div>
       <div v-if="stand.id_emplacement">
+        <input type="number" id="id_emplacement" v-model="stand.id_emplacement" hidden required />
         <label for="id_emplacement">{{ translate("createStand_7") }}</label>
-        <p id="id_emplacement">{{ translate("createStand_8") }} {{ this.stand.id_emplacement }}</p>
+        <p>{{ translate("createStand_8") }} {{ this.stand.id_emplacement }}</p>
       </div>
       <SelectEmplacement @close="toggleSelectEmplacementModal" :showSelectEmplacementModal="showSelectEmplacementModal" @dataEmplacement="handledataEmplacement"></SelectEmplacement>
       <button type="submit" class="btn btn-primary">{{ translate("createStand_9") }}</button>
@@ -79,7 +80,7 @@ export default {
         description_stand: '',
         date_achat: null,
         prix: 0,
-        id_emplacement: ''
+        id_emplacement: null,
       },
       id_user: null,
       editorConfig: {
@@ -99,14 +100,14 @@ export default {
   methods: {
     ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
     ...mapActions('user', ['getUsersStore', 'updateUserStore']),    
-    ...mapActions('stands', ['createStandStore', 'getStandStore']),
+    ...mapActions('stands', ['createStandStore', 'getStandsStore']),
     async loadData() {
       try {
         await this.getUsersStore();
         await this.getRolesStore();
         await this.getDroitsStore();
         await this.getAllRoleDroitAssociationStore();
-        await this.getStandStore();
+        await this.getStandsStore();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -171,12 +172,22 @@ export default {
     async submitForm() {
       // Perform form submission logic here to create a new stand
       try {
+        if(this.stand.id_emplacement === null){
+          window.alert("Veuillez choisir un emplacement");
+          return;
+        }else if(this.getAllUsersWithoutStand.length === 0){
+          window.alert("Il n'y a plus d'utilisateur disponible");
+          return;
+        }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
         await this.createStandStore(this.stand); 
+        console.log("getAllStand", this.getAllStand)
+        console.log("id_emplacement", this.stand.id_emplacement)
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
-        //update the user with the right stand id
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
         user.id_stand = stand.id_stand;
+        console.log("user", user);
+        console.log("id_stand", stand.id_stand)
         await this.updateUserStore(user);
         this.$router.push('/admin/stands');
       } catch (error) {
