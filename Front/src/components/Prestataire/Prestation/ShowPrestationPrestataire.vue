@@ -42,7 +42,7 @@ export default {
     ...mapGetters('user', ['getCurrentUser']),
     ...mapGetters('prestationEtType', ['getAllPrestation','getAllTypePrestation']),
   },
-  async created() {
+  async mounted() {
     await this.loadData()
     this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
