@@ -6,33 +6,35 @@
 
 
     <div  class="box" v-for="(message, index) in messages" :key="index" >
-        <div v-if="message.id_sender===getCurrentUser.id_user" class="message-container-own">
-          <div class="message-header">
-            <p>{{ message.name }} - {{ message.email }}</p>
-          </div>
-          <div class="message-body">
-            <p>{{ message.message }}</p>
-          </div>
-          <div class="message-footer">
-            <p>{{ message.temps_emmission }}</p>
-          </div>
-      </div>
-      <div v-else class="message-container">
+      <div v-if="message.id_sender === getCurrentUser.id_user" class="message-container-own">
         <div class="message-header">
           <p>{{ message.name }} - {{ message.email }}</p>
         </div>
         <div class="message-body">
-          <p>{{ message.message }}</p>
+          <p style="word-wrap: break-word; max-width: 100%;">{{ message.message }}</p>
         </div>
         <div class="message-footer">
           <p>{{ message.temps_emmission }}</p>
         </div>
       </div>
+
+      <div v-else class="message-container">
+        <div class="message-header">
+          <p>{{ message.name }} - {{ message.email }}</p>
+        </div>
+        <div class="message-body">
+          <p style="word-wrap: break-word; max-width: 100%;">{{ message.message }}</p>
+        </div>
+        <div class="message-footer">
+          <p>{{ message.temps_emmission }}</p>
+        </div>
+      </div>
+
     </div>
 
 
     <div class="mb-3">
-      <textarea class="form-control" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
+      <textarea class="form-control" maxlength="1024" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
     </div>
     <button type="button" class="btn btn-primary" @click="send">{{translate("conversationMessages_6")}}</button>
 
@@ -60,10 +62,9 @@ export default {
   methods:{
     translate,
     async send() {
-      console.log("dans le send mon petit thomas")
       const body = {
         id_conversation : this.conversation.id_conversation,
-        id_user : this.getCurrentUser.id_user,
+        session_id : this.getCurrentUser['session_id'],
         message : this.newMessage
       }
       let response = await sendMessage(body)
