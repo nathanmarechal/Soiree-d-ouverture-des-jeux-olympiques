@@ -47,7 +47,7 @@ async function createPrestationFromAPI(body, session_id) {
 
 
 async function updateIsAvailablePrestationFromAPI(id, body, session_id) {
-    return patchRequest('/prestations/update/is-available?session_id' + session_id + '&id_prestation=' + id, body, 'UPDATEPRESTATIONISAVAIBLE')
+    return patchRequest('/prestations/update/is-available?session_id=' + session_id + '&id_prestation=' + id, body, 'UPDATEPRESTATIONISAVAIBLE')
 }
 
 async function updateIsAvailablePrestation(id, body, session_id) {
