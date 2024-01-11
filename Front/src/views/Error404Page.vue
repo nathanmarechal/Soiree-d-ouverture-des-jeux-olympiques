@@ -2,13 +2,13 @@
   <div class="main">
     <h1>{{translate("erro_1")}}</h1>
     <h2>{{translate("erro_2")}}</h2>
-    <img src="@/assets/clown.png" alt="Arthur Clown" @click="toggleRotation">
+    <img src="@/assets/clown.png" alt="Clown" @click="toggleRotation">
     <h3>{{translate("erro_3")}}</h3>
     <router-link to="/">
       <button @click="playAudio" class="btn-success">{{translate("erro_4")}}</button>
     </router-link>
     <button class="btn btn-danger" @click="playAudio">{{translate("erro_5")}} </button>
-    <audio ref="audioPlayer" src="@/assets/Music/arthur-main-sound.mp3"></audio>
+    <audio ref="audioPlayer" src="@/assets/Music/clown-main-sound.mp3"></audio>
   </div>
 </template>
 
