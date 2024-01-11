@@ -3,8 +3,8 @@
     <div v-if="showSelectEmplacementModal" class="overlay">
       <button class="close-btn" @click="$emit('close')">×</button>
       <div class="modal-inner">
-        <FilterAreas style="width: 20%; height : 100%;"></FilterAreas>
-        <MapSignUp style="width: 70%; height : 100%;"></MapSignUp>
+        <FilterMapSelectionArea style="width: 20%; height : 100%;"></FilterMapSelectionArea>
+        <MapSignUp @dataEmplacement="handleDataEmplacement" style="width: 70%; height : 100%;"></MapSignUp>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 <script>
 
 import MapSignUp from '../../Register/MapSignUp.vue'
-import FilterAreas from './FilterAreas.vue'
+import FilterMapSelectionArea from "@/components/Register/FilterMapSelectionArea.vue";
 export default {
   props: ['showSelectEmplacementModal'],
   data() {
@@ -28,12 +28,16 @@ export default {
       const newEmplacement = {
         typeZone: this.typeZone,
       };
-      this.$emit('add-emplacement', newEmplacement);
+      this.$emit('add-dataEmplacement', newEmplacement);
+    },
+    handleDataEmplacement(data) {
+      console.log(data);
+      this.$emit('dataEmplacement', data);
     },
   },
   components: {
     MapSignUp,
-    FilterAreas
+    FilterMapSelectionArea
   },
 };
 </script>

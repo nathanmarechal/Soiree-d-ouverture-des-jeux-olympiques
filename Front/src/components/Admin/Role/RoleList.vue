@@ -88,7 +88,7 @@ export default {
 
   computed: {
     ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation', 'getRoleDroits']),
-    ...mapGetters('user', ['getCurrentUser']),  },
+    ...mapGetters('user', ['getCurrentUser', 'getAllUsers']),  },
 
   methods: {
     translate,
@@ -114,6 +114,8 @@ export default {
       const role = this.getAllRoles.find(role => role.id_role === id);
       const confirmMessage = this.translate("roleList_ConfirmDeleteMessage") + ` ${role.libelle} ?`;
       if (all || window.confirm(confirmMessage) ) {
+        console.log('role :', role);
+        console.log('truc ', this.getAllUsers)
         const ifHasUser = this.getAllUsers.find(user => user.id_role === id);
         if (ifHasUser) {
           window.alert('ALERTEALERTeALERT')

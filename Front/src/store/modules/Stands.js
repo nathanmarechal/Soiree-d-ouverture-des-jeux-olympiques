@@ -1,4 +1,4 @@
-import {deleteStand, getAllStands, updateDescriptionStand, updateStand} from "@/services/stand.service";
+import {deleteStand, getAllStands, updateDescriptionStand, updateStand, createStand} from "@/services/stand.service";
 
 export default {
     namespaced: true,
@@ -36,10 +36,22 @@ export default {
         ADD_TO_STANDS(state, data) {
             state.stands.push(data);
         },
+        CREATE_STAND(state, stand) {
+            state.stands.push(stand);
+        },
 
 
     },
     actions: {
+        async createStandStore({ rootState, commit }, body) {
+            try {
+                const session_id = rootState.user.userCourant.session_id
+                const result = await createStand(body, session_id);
+                commit('CREATE_STAND', result);
+            } catch (err) {
+                console.error("Error in createStandStore():", err);
+            }
+        },
         async updateStandStore({ rootState, commit }, {id, body}) {
             try {
                 const session_id = rootState.user.userCourant.session_id

@@ -208,6 +208,7 @@ export default {
 
         // Gestionnaire pour l'événement 'click'
         polygon.on('click', () => {
+          console.log(zone.id_emplacement);
           this.$emit('dataEmplacement', zone.id_emplacement);
         });
 
@@ -247,7 +248,7 @@ export default {
         }).addTo(this.map);
 
         marker.on('click', () => {
-          this.showEmplacementLogistiqueInfo(location);
+         console.log('click')
         });
 
         this.markers.push(marker);

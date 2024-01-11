@@ -1,21 +1,21 @@
 <template>
-  <div>
+  <div><br><br>
     <h4>Création d'un nouveau stand</h4>
     <form @submit.prevent="submitForm" class="stand">
       <div class="form">
-        <label for="nom_stand">{{ translate("editStand_1") }}</label>
+        <label for="nom_stand">{{ translate("createStand_1") }}</label>
         <input type="text" id="nom_stand" v-model="stand.nom_stand" required />
       </div>
-      
       <div class="form">
-        <label for="id_user">Utilisateur Associe</label>
-        <select id="id_user" v-model="stand.id_user" required>
+        <label for="id_user">{{ translate("createStand_2") }}</label>
+        <select id="id_user" v-if="this.getAllUsersWithoutStand.length > 0" v-model="id_user" required>
           <option v-for="user in this.getAllUsersWithoutStand" :key="user.id_user" :value="user.id_user">{{ user.prenom }} {{ user.nom }}</option>
         </select>
+        <span v-else>{{ translate("createStand_3") }}</span>
       </div>
 
       <div class="form">
-        <label for="image_stand">Image :</label><br>
+        <label for="image_stand">{{ translate("createStand_4") }}</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
       </div>
       <img v-if="!isImageInputUpload && !newImage" :src="getImageSrc(stand.image_stand)" class="card-img-top " style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;">
@@ -23,7 +23,7 @@
         <img :src="croppedImage" class="cropped-image" style="border-radius: 10%; max-width: 50vh; max-height: 50vh; width: auto; height: auto; object-fit: cover;" />
       </div>
       <div class="d-flex flex-column">
-          <label for="descriptionStand">{{ translate("editStand_3") }}</label>
+          <label for="descriptionStand">{{ translate("createStand_5") }}</label>
           <Editor 
               ref="myEditor"
               api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
@@ -31,11 +31,15 @@
           />
       </div>
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_4") }}</button>
+        <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("createStand_6") }}</button>
       </div>
-      <SelectEmplacement @close="toggleSelectEmplacementModal" :showSelectEmplacementModal="showSelectEmplacementModal"></SelectEmplacement>
-      <button type="submit" class="btn btn-primary">{{ translate("editStand_5") }}</button>
-      <router-link to="/admin/stands" class="btn btn-danger">{{ translate("editStand_6") }}</router-link>
+      <div v-if="stand.id_emplacement">
+        <label for="id_emplacement">{{ translate("createStand_7") }}</label>
+        <p id="id_emplacement">{{ translate("createStand_8") }} {{ this.stand.id_emplacement }}</p>
+      </div>
+      <SelectEmplacement @close="toggleSelectEmplacementModal" :showSelectEmplacementModal="showSelectEmplacementModal" @dataEmplacement="handledataEmplacement"></SelectEmplacement>
+      <button type="submit" class="btn btn-primary">{{ translate("createStand_9") }}</button>
+      <router-link to="/admin/stands" class="btn btn-danger">{{ translate("createStand_10") }}</router-link>
     </form>
   </div>
 </template>
@@ -75,8 +79,9 @@ export default {
         description_stand: '',
         date_achat: 'WIP',
         prix: 'WIP',
-        id_emplacement: 'WIP'
+        id_emplacement: ''
       },
+      id_user: null,
       editorConfig: {
           height: 500,
           menubar: true,
@@ -88,11 +93,14 @@ export default {
           toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
           images_upload_handler: this.handleImageUploadDescription
         },
+      image_stand: null // Initialize to nul
     };
   },
   methods: {
     ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
-    ...mapActions('user', ['getUsersStore']),    async loadData() {
+    ...mapActions('user', ['getUsersStore', 'updateUserStore']),    
+    ...mapActions('stands', ['createStandStore']),
+    async loadData() {
       try {
         await this.getUsersStore();
         await this.getRolesStore();
@@ -126,8 +134,10 @@ export default {
       this.stand.image_stand = file.name.split('.').slice(0, -1).join('.');
 
       reader.onload = (e) => {
-        this.$refs.image_stand.src = e.target.result;
-        this.initializeCropper();
+        if (this.image_stand) { // Check if the reference is defined
+          this.image_stand.src = e.target.result;
+          this.initializeCropper();
+        }
       };
       reader.readAsDataURL(file);
     },
@@ -162,25 +172,42 @@ export default {
     submitForm() {
       // Perform form submission logic here to create a new stand
       console.log('Creating a new stand:', this.stand);
+      try {
+        this.createStandStore(this.stand);
+        //update the user with the right stand id
+        const user = this.getAllUsers.find(user => user.id_user === this.id_user);
+        user.id_stand = this.stand.id_stand;
+        console.log('user',{user});
+        this.updateUserStore({user});
+        this.$router.push('/admin/stands');
+      } catch (error) {
+        console.error('Erreur lors de la création du stand :', error);
+      }
+
     },
     toggleSelectEmplacementModal() {
       this.showSelectEmplacementModal = !this.showSelectEmplacementModal;
     },
-
-    getAllUsersWithoutStand() {
-      var data;
-      data = this.getAllUsers.filter(user => user.id_stand === null);
-      //verifie si l'utilisateur peut avoir un stand
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-      return data
-    }
+    handledataEmplacement(data) {
+      this.stand.id_emplacement = data;
+      console.log(this.stand.id_emplacement)
+      this.toggleSelectEmplacementModal();
+    },
   },
 
   computed: {
     ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
     ...mapGetters('user', ['getAllUsers']),
     ...mapGetters('emplacements', ['getAreaSelectedForStand']),
+    getAllUsersWithoutStand() {
+      var data;
+      data = this.getAllUsers.filter(user => user.id_stand === null);
+      data = data.filter(user => user.id_role === 2);
+      console.log("alluser", this.getAllUsers)
+      console.log(data)
+      //verifie si l'utilisateur peut avoir un stand 
+      return data
+    }
   },
   watch: {
     getAreaSelectedForStand: 'toggleSelectEmplacementModal',
