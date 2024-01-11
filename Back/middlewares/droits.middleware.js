@@ -65,7 +65,12 @@ function getRightName(url) {
         "/api/avis/add": "create_avis",
         "/api/avis/deleteAvisByIdStandUser": "delete_avis",
 
-        "/api/homePage/description": "update_home_page"
+        "/api/homePage/description": "update_home_page",
+
+        "/api/messagerie/get-all-conversations":"messages-admin",
+        "/api/messagerie/get-conversations-for-user":"messages-user",
+        "/api/messagerie/toggle-resolved-converstation":"messages-admin"
+
     };
 
 

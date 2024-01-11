@@ -1,7 +1,7 @@
 const rightMiddleware = require("../middlewares/droits.middleware");
 const messagerieController = require("../controllers/messagerie.controller");
 const express = require("express");
-var router = express.Router();
+router = express.Router();
 
 /**
  * @swagger
@@ -15,9 +15,9 @@ var router = express.Router();
  *       '500':
  *         description: Internal server error
  */
-router.get("/get-all-conversations", messagerieController.getConversations);
+router.get("/get-all-conversations",rightMiddleware.checkRight, messagerieController.getConversations);
 
-router.get("/get-conversations-for-user", messagerieController.getConversationsForUser);
+router.get("/get-conversations-for-user",rightMiddleware.checkRight, messagerieController.getConversationsForUser);
 
 router.get("/get-messages-by-conversation", messagerieController.getMessagesByConversation);
 
@@ -25,6 +25,6 @@ router.post("/send-message", messagerieController.sendMessage);
 
 router.post("/create-conversation", messagerieController.createConversation);
 
-router.patch("/toggle-resolved-converstation", messagerieController.toggleResolvedConversation);
+router.patch("/toggle-resolved-converstation",rightMiddleware.checkRight, messagerieController.toggleResolvedConversation);
 
 module.exports = router
