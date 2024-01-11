@@ -25,7 +25,7 @@
 <script>
 import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
-import {mapActions, mapMutations} from "vuex";
+import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {translate} from "../lang/translationService";

@@ -1,5 +1,5 @@
 export function currentUserHasRight(right_name){
-    if(this.$store.getters.getCurrentUser === null)
+    if(this.$store.getters['user/getCurrentUser'] === null)
         return false;
-    return this.$store.getters.getCurrentUser.droits.includes(right_name)
+    return this.$store.getters['user/getCurrentUser'].droits.includes(right_name)
 }
