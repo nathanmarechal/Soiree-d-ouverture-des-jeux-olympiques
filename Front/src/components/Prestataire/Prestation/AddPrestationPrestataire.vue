@@ -77,11 +77,13 @@ export default {
   methods: {
     ...mapActions('prestationEtType', ['getTypePrestationsStore','createPrestationStore']),
     async loadData(){
-        if (this.getAllTypePrestation.length === 0)
-          await this.getTypePrestationsStore()
+      if (this.getAllTypePrestation.length === 0)
+        await this.getTypePrestationsStore()
       this.prestation.id_stand = this.getCurrentUser.id_stand
 
+      console.log(getAllTypePrestations)
     },
+
 
     destroyed() {
       if (this.cropper) {
@@ -103,7 +105,7 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-      initializeCropper() {
+    initializeCropper() {
       const image = this.$refs.image;
       this.cropper = new Cropper(image, {
         aspectRatio: 1,
