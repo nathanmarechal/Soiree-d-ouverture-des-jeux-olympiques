@@ -60,7 +60,7 @@
 
 
       <div>
-        <button type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
+        <button  type="submit" class="btn btn-success">{{translate("addUser_11")}}</button>
         <button @click="isPrestataire = null" class="btn btn-danger">{{translate("addUser_12")}}</button>
       </div>
     </form>

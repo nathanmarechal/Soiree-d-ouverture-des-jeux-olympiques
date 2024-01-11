@@ -118,8 +118,8 @@ export default {
         },
 
 
-        SET_STAND_ATTENTE(state, usersAttente) {
-            state.usersAttente = usersAttente;
+        CREATE_USER_ATTENTE(state, usersAttente) {
+            state.usersAttente.push(usersAttente);
         },
 
 
@@ -131,10 +131,8 @@ export default {
         },
 
 
-        ACCEPT_USER_ADD(state, data) {
-            console.log("data: ", data)
+        ACCEPT_USER_ADD({state}, data) {
             state.users.push(data.userAccept)
-            this.$store.dispatch('stand/addToStands', data.standAccept);
         },
 
 
@@ -465,12 +463,14 @@ export default {
             }
         },
 
-        async acceptUserStore({ commit, state }, id) {
+        async acceptUserStore({ commit, state, rootState }, id) {
             try {
                 let result = await acceptUser(id,state.userCourant.session_id);
-                console.log("result: ", result)
                 commit('ACCEPT_USER_DELETE', id);
-                commit('ACCEPT_USER_ADD', result[0]);
+                commit('ACCEPT_USER_ADD', result);
+                rootState.stands.stands.push(result.standAccept[0]);
+
+
             } catch (err) {
                 console.error("Error in acceptUserStore():", err);
             }
@@ -511,7 +511,7 @@ export default {
             try {
                 const body = { ...user };
                 await registerPrestataire(body);
-                commit('CREATE_USER', body);
+                commit('CREATE_USER_ATTENTE', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
             }

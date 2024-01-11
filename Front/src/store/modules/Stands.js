@@ -35,6 +35,7 @@ export default {
             state.selectedStands = stands;
         },
         ADD_TO_STANDS(state, data) {
+            console.log("data", data)
             state.stands.push(data);
         },
         CREATE_STAND(state, stand) {
@@ -114,6 +115,7 @@ export default {
         },
 
         addToStands({ commit }, data) {
+            console.log("data et je passe", data)
             commit('ADD_TO_STANDS', data);
         },
     },
