@@ -233,7 +233,7 @@ CREATE TABLE conversations(
     id_conversation SERIAL PRIMARY KEY,
     id_creator INTEGER,
     titre VARCHAR(64),
-    resolu BOOLEAN, 
+    resolu BOOLEAN,
     FOREIGN KEY (id_creator) REFERENCES utilisateur(id_user)
 );
 
@@ -825,7 +825,6 @@ INSERT INTO avis_stand_utilisateur(id_stand, id_user, note, commentaire) VALUES
 ;
 
 INSERT INTO etat_commande (libelle) VALUES
-('En attente de paiement'),
 ('En attente de validation'),
 ('Validée'),
 ('Annulée');
@@ -864,3 +863,4 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 select * from text_accueil;
 
 select * from utilisateur;
+
