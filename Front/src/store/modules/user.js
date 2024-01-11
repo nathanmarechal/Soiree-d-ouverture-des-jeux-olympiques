@@ -305,7 +305,12 @@ export default {
 
 
     },
+
+
     actions: {
+
+//-----------------------------------------------------------------Panier-----------------------------------------------------------------------//
+
         async getPanierUserCourantStore({commit},user_id){
             try {
                 const panier = await getPanierUserCourant(user_id);
@@ -347,69 +352,22 @@ export default {
             }
         },
 
-
-        //ne pas toucher svp, c'est normal si ce n'est pas méthode domas
-        async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
-            console.log({ id_commande, id_prestation, id_creneau})
-            try {
-                await setEtatLigneCommandeExterieur({ id_commande, id_prestation, id_creneau});
-                commit('SET_ETAT_LIGNE_COMMANDE_EXTERIEUR', { id_commande, id_prestation, id_creneau});
-            } catch (err) {
-                console.error("Error in setEtatLigneCommandeExterieurStore():", err);
-            }
-        },
-
-        async updateUserCourantWoPasswordStore({ commit, state}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
-            try {
-                let session_id = state.userCourant.session_id
-                await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
-                commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
-            } catch (err) {
-                console.error("Error in updateNomStore():", err);
-            }
-        },
-
-
-        async updateSoldeStore({ commit, state }, {id_user, solde}) {
-            try {
-                const session_id = state.userCourant.session_id
-                console.log("updateSoldeStore: ", id_user, solde)
-                await updateSolde(session_id, id_user, solde);
-                console.log("updateSoldeStore: ", id_user, solde)
-                commit('UPDATE_SOLDE', solde);
-            } catch (err) {
-                console.error("Error in updateSoldeStore():", err);
-            }
-        },
-
-        async getLigneCommandebyIdCommandeStore({commit}, id_commande){
-            try {
-                const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
-                commit('SET_LIGNE_COMMANDE', { id_commande, ligne_commande });
-            } catch (error) {
-                console.error('Error fetching commandes:', error);
-            }
-        },
-
-
-//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
-
-
-        async getScheduleByUserIdStore({commit}, id){
-            try {
-                const schedule = await getScheduleByUserId(id);
-                console.log("schedule envoyée au store" + JSON.stringify(schedule))
-                commit('SET_SCHEDULE', schedule);
-            } catch (error) {
-                console.error('Error fetching schedule:', error);
-            }
-        },
-
+//-------------------------------------------------------------------Commande--------------------------------------------------------------------------//
 
         async getCommandeUserCourantStore({commit},user_id){
             try {
                 const commandes = await getCommandeUserCourant(user_id);
                 commit('SET_COMMANDES_USER_COURANT', commandes);
+                console.log("commande envoyée au store" + JSON.stringify(commandes))
+            } catch (error) {
+                console.error('Error fetching commandes:', error);
+            }
+        },
+
+        async getCommandesPrestataireStore({commit},id_user){
+            try {
+                const commandes = await getCommandesPrestataires(id_user);
+                commit('SET_COMMANDS_PRESTATAIRE', commandes);
                 console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
@@ -426,16 +384,26 @@ export default {
             }
         },
 
-        async getCommandesPrestataireStore({commit},id_user){
+        async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
+            console.log({ id_commande, id_prestation, id_creneau})
             try {
-                const commandes = await getCommandesPrestataires(id_user);
-                commit('SET_COMMANDS_PRESTATAIRE', commandes);
-                console.log("commande envoyée au store" + JSON.stringify(commandes))
+                await setEtatLigneCommandeExterieur({ id_commande, id_prestation, id_creneau});
+                commit('SET_ETAT_LIGNE_COMMANDE_EXTERIEUR', { id_commande, id_prestation, id_creneau});
+            } catch (err) {
+                console.error("Error in setEtatLigneCommandeExterieurStore():", err);
+            }
+        },
+
+        async getLigneCommandebyIdCommandeStore({commit}, id_commande){
+            try {
+                const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
+                commit('SET_LIGNE_COMMANDE', { id_commande, ligne_commande });
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
         },
 
+//-----------------------------------------------------------------User-----------------------------------------------------------------------//
 
         async getUsersStore({ commit, state }) {
             try {
@@ -462,15 +430,39 @@ export default {
             }
         },
 
-
-        async getAllStandAttenteStore({ commit }) {
+        async updateUserCourantWoPasswordStore({ commit, state}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                const standAttente = await getAllStandAttente();
-                commit('SET_STANDS_ATTENTE', standAttente);
-                console.log("standAttente: ", standAttente)
-                console.log("standAttente: ", this.state.usersAttente)
+                let session_id = state.userCourant.session_id
+                await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
+                commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
+            } catch (err) {
+                console.error("Error in updateNomStore():", err);
+            }
+        },
+
+
+        async updateSoldeStore({ commit, state }, {id_user, solde}) {
+            try {
+                const session_id = state.userCourant.session_id
+                console.log("updateSoldeStore: ", id_user, solde)
+                await updateSolde(session_id, id_user, solde);
+                console.log("updateSoldeStore: ", id_user, solde)
+                commit('UPDATE_SOLDE', solde);
+            } catch (err) {
+                console.error("Error in updateSoldeStore():", err);
+            }
+        },
+
+//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
+
+
+        async getScheduleByUserIdStore({commit}, id){
+            try {
+                const schedule = await getScheduleByUserId(id);
+                console.log("schedule envoyée au store" + JSON.stringify(schedule))
+                commit('SET_SCHEDULE', schedule);
             } catch (error) {
-                console.error('Error fetching creneau:', error);
+                console.error('Error fetching schedule:', error);
             }
         },
 
@@ -547,10 +539,5 @@ export default {
                 console.error("Error in deleteUserStore():", err);
             }
         },
-
-
-
     },
-
-
 };

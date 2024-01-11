@@ -65,7 +65,7 @@
     },
     methods: {
       translate,
-      ...mapActions('user', [ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore', 'getAllStandAttenteStore']),
+      ...mapActions('user', [ 'acceptUserStore', 'refuseUserStore', 'getAllUsersAttenteStore']),
       async getUsers() {
         try {
           await this.getAllUsersAttenteStore();
