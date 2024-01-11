@@ -40,9 +40,9 @@ export default {
 
     },
     actions: {
-        async updateStandStore({ commit }, {id, body}) {
+        async updateStandStore({ rootState, commit }, {id, body}) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await updateStand(id, body, session_id);
                 commit('UPDATE_STAND', id, body);
             } catch (err) {
@@ -50,9 +50,9 @@ export default {
             }
         },
 
-        async updateDescriptionStandStore({ commit }, {id, body}) {
+        async updateDescriptionStandStore({ rootState, commit }, {id, body}) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await updateDescriptionStand(id, body, session_id);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
@@ -60,9 +60,9 @@ export default {
             }
         },
 
-        async deleteStandStore({ commit }, id) {
+        async deleteStandStore({ rootState, commit }, id) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await deleteStand(id, session_id);
                 commit('DELETE_STAND', id);
             } catch (err) {

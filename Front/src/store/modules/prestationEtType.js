@@ -68,27 +68,27 @@ export default {
             }
         },
 
-        async updateIsAvailablePrestationStore({ commit }, body) {
+        async updateIsAvailablePrestationStore({ rootState, commit }, body) {
             try {
-                await updateIsAvailablePrestation(body.id, this.$store.getters['user.getSessionId']);
+                await updateIsAvailablePrestation(body.id, rootState.user.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-        async updatePrestationStore({ commit }, body) {
+        async updatePrestationStore({rootState,  commit }, body) {
             try {
-                await updatePrestation(body.id_prestation, body, this.$store.getters['user.getSessionId'])
+                await updatePrestation(body.id_prestation, body, rootState.user.userCourant.session_id)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-        async deletePrestationStore({ commit }, id) {
+        async deletePrestationStore({ rootState, commit }, id) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await deletePrestation(id, session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
@@ -96,9 +96,9 @@ export default {
             }
         },
 
-        async createPrestationStore({ commit }, body) {
+        async createPrestationStore({ rootState, commit }, body) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 let response = await createPrestation(body, session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {

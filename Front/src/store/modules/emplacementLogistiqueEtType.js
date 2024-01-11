@@ -79,9 +79,9 @@ export default {
             }
         },
 
-        async createEmplacementLogistiqueStore({commit}, body) {
+        async createEmplacementLogistiqueStore({rootState, commit}, body) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 let response = await createEmplacementLogistique(body, session_id);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
@@ -89,9 +89,9 @@ export default {
             }
         },
 
-        async updateEmplacementLogistiqueStore({commit}, {id, body}) {
+        async updateEmplacementLogistiqueStore({rootState, commit}, {id, body}) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 let response = await updateEmplacementLogistique(id, body, session_id);
                 commit('UPDATE_EMPLACEMENT_LOGISITIQUE', {id: id, body: response[0]});
             } catch (err) {
@@ -99,9 +99,9 @@ export default {
             }
         },
 
-        async deleteEmplacementLogistiqueStore({commit}, id) {
+        async deleteEmplacementLogistiqueStore({rootState, commit}, id) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await deleteEmplacementLogistique(id, session_id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {

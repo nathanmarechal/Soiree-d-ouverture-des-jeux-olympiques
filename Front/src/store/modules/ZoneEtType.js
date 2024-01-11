@@ -78,9 +78,9 @@ export default {
             }
         },
 
-        async deleteZoneStore({ commit }, id) {
+        async deleteZoneStore({ rootState,commit }, id) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 console.log("deleteZoneStore: ", id, session_id)
                 await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
@@ -89,9 +89,9 @@ export default {
             }
         },
 
-        async updateZoneStore({ commit }, {id, body}) {
+        async updateZoneStore({ rootState,commit }, {id, body}) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await updateZone(id, body, session_id);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
@@ -99,9 +99,10 @@ export default {
             }
         },
 
-        async createZoneStore({ commit }, body) {
+        async createZoneStore({ rootState,commit }, body) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
+                console.log("createZoneStore KEUSCH: " + session_id)
                 const newZone = await createZone(body, session_id);
                 console.log("newZone: ", newZone, newZone[0])
                 commit('CREATE_ZONE', newZone[0]);

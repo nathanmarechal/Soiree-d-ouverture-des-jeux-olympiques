@@ -56,9 +56,9 @@ export default {
         },
 
 
-        async updateAreasStore({ commit },{id, body}) {
+        async updateAreasStore({ rootState, commit },{id, body}) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await updateArea(id, body, session_id);
                 commit('UPDATE_AREA', {id, body});
             } catch (err) {
@@ -67,9 +67,9 @@ export default {
         },
 
 
-        async deleteAreasStore({ commit }, id) {
+        async deleteAreasStore({ rootState, commit }, id) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 await deleteArea(id, session_id);
                 commit('DELETE_AREA', id);
             } catch (err) {
@@ -78,9 +78,9 @@ export default {
         },
 
 
-        async createAreasStore({ commit }, body) {
+        async createAreasStore({ rootState, commit }, body) {
             try {
-                const session_id = this.$store.getters['user.getSessionId']
+                const session_id = rootState.user.userCourant.session_id
                 let response =  await createArea(body, session_id);
                 commit('CREATE_AREA', response[0]);
             } catch (err) {

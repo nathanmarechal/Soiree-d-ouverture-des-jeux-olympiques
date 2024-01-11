@@ -29,9 +29,9 @@ export default {
                 console.error("Error in getConversations():", err);
             }
         },
-        async getConversationsUserStore({commit}){
+        async getConversationsUserStore({rootState, commit}){
             try {
-                const result = await getConversationsForUser(this.$store.getters['user.getUserId'],this.$store.getters['user.getSessionId']);
+                const result = await getConversationsForUser(rootState.user.userCourant.id_user,rootState.user.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
                 } else {
