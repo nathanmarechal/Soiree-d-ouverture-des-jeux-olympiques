@@ -123,27 +123,21 @@ export default {
                       this.currentUser.id_stand = res.id_stand;
                       this.currentUser.solde = parseFloat(res.solde);
                       this.$store.commit('user/SET_CURRENT_USER', this.currentUser)
-                      console.log("id_user : ", this.currentUser.id_user)
                       getPanierUserCourant(res.id_user)
                           .then(res=>{
-                            console.log("panier : ", res)
                             this.$store.commit('user/SET_PANIER_USER_COURANT', res)
                           })
                       getCommandeUserCourant(res.id_user)
                           .then(res=>{
-                            console.log("commande : ", res)
                             this.$store.commit('user/SET_COMMANDES_USER_COURANT', res)
                           })
                       getScheduleByUserId(res.id_user)
                           .then(res=>{
-                            console.log("schedule : ", res)
                             this.$store.commit('user/SET_SCHEDULE', res)
                           })
                       getDroitsRole(res.id_role)
                           .then(res=>{
-                            console.log("droits : ", res)
                             this.$store.commit('user/SET_DROITS_USER_COURANT', res)
-                            console.log("state droits : "+this.$store.getters['user/getCurrentUser'].droits)
                           })
 
                       this.email=""
@@ -151,7 +145,6 @@ export default {
 
                       this.$store.commit('user/SET_IS_USER_CONNECTED', true);
                       this.closeModal();
-//                      console.log("Current user :", JSON.stringify(this.currentUser, null, 2));
                     })
 
               }
