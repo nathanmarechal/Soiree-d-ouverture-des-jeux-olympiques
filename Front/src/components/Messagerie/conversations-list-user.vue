@@ -61,10 +61,8 @@ export default({
     ...mapActions('messagerie', ['getConversationsUserStore']),
     async loadData() {
       try {
-        if (this.getConversations.length === 0) {
           await this.getConversationsUserStore();
           this.conversation =this.getConversations;
-        }
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
