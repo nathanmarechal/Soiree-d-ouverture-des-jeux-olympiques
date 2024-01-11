@@ -27,7 +27,7 @@ export default {
     ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique']),  },
   methods: {
     translate,
-    ...mapActions('ZoneEtType', ['getZonesStore']),
+    ...mapActions('ZoneEtType', ['getZonesStore','getTypeZonesStore']),
     ...mapActions('emplacementLogistiqueEtType', ['getTypeEmplacementLogistiqueStore']),
     getTypeZoneLibelle(id_type_zone) {
       const typeZone = this.getAllTypeZone.find(type => type.id_type_zone === id_type_zone);
