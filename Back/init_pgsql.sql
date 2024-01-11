@@ -255,11 +255,32 @@ INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
 ('internet haut débit','wifi.svg','Mbp/s')
 ;
 
-INSERT INTO emplacement_logistique(libelle,coordonnes,id_type_emplacement_logistique,unite) VALUES
-('raccordement du flop','[48.857572, 2.2977709]',3,50),
-('raccordement allée Adrien Lecouvreur','[48.857572, 2.2977709]',2,50),
-('raccordement Anatole France','[48.8575458, 2.2963378]',1,25)
-;
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('raccordement du flop', '[48.857572, 2.2977709]', 50, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('raccordement Anatole France', '[48.8575458, 2.2963378]', 25, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('eau grand palais éphémère', '[48.85361664555185,2.301281675224711]', 120, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('grand palais éphémère', '[48.85389540910096,2.3017054680343967]', 50, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('ouest champs mars', '[48.854777584984355,2.297537284224052]', 120, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('ouest champs mars', '[48.85527865240099,2.295745555856659]', 75, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Gustave Eiffel', '[48.858489825337315,2.2963195587438805]', 55, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Gustave Eiffel', '[48.85703650350346,2.2940933207574825]', 55, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Theirry', '[48.85634601478476,2.2951017862667826]', 80, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('est champs de mars', '[48.857057615531076,2.2996562377789114]', 80, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('est champs de mars', '[48.85750572284105,2.299087604388737]', 20, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('seine ouest', '[48.86254864492503,2.3016783478713214]', 250, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Pont de la concorde', '[48.86280266263824,2.318715891712828]', 75, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Pont de la concorde', '[48.864157234894385,2.3194454732642416]', 20, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('Terrasse du bord d''eau', '[48.863381230711504,2.323243574081175]', 80, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('centre tuilerie', '[48.86288793466376,2.329219554605007]', 80, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('jeu de paume ', '[48.86556255135248,2.3245310199938145]', 30, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('carouselle', '[48.860243742908146,2.3332643294570192]', 180, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('pyramide du louvre', '[48.86101393860024,2.335828563416747]', 250, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('pont de notre dame', '[48.85672656998265,2.348928394630727]', 30, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('quai saint michel', '[48.85374114229819,2.344615394868313]', 30, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('pont d’Austerlitz', '[48.84434889575977,2.3649144355065754]', 150, 1);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('pont d’Austerlitz', '[48.84566035881054,2.3669099012665256]', 60, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('le petit labyrinthe', '[48.84344950254814,2.3575007509734207]', 60, 2);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('allée buffon', '[48.842944814495354,2.3604780177857876]', 30, 3);
+INSERT INTO emplacement_logistique (libelle, coordonnes, unite, id_type_emplacement_logistique) VALUES ('rue cuvier', '[48.843781438599436,2.355011654778623]', 65, 3);
 
 INSERT INTO creneau(heure_creneau) VALUES
 ('16h00-16h15'),
