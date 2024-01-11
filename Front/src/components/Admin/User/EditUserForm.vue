@@ -73,11 +73,12 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['getAllRoles']),
+      ...mapGetters('roleEtDroit', ['getAllRoles']),
     },
     methods: {
-        ...mapActions(['getRolesStore', 'updateUserStore']),
-        async loadData() {
+      ...mapActions('roleEtDroit', ['getRolesStore']),
+      ...mapActions('user', ['updateUserStore']),
+      async loadData() {
             try {
                 if (this.getAllRoles.length === 0)
                     await this.getRolesStore();

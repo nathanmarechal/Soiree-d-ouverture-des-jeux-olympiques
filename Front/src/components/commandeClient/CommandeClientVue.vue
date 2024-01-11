@@ -32,13 +32,8 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId']),
+    ...mapGetters('user', ['getCurrentUser', 'getCommandeUserCourantGetters','getLigneCommandeBycommandeId']),
   },
-  // this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
-      //     .then(res=>{
-      //       console.log("commande : ", res)
-      //       this.$store.commit('SET_COMMANDES_USER_COURANT', res)
-      //     })
 
   async created() {
     await this.loadData()
@@ -46,7 +41,7 @@ export default {
 
 
   methods: {
-    ...mapActions(['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
+    ...mapActions('user', ['getCommandeUserCourantStore','getLigneCommandebyIdCommandeStore']),
 
     viewDetails(id_commande) {
       this.$router.push({ name: 'DetailCommande', params: { id: id_commande } });

@@ -57,12 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCommandeUserCourantGetters', "getCurrentUser", 'getLigneCommandeBycommandeId','getCommandeById']),
-    /*
-    commande() {
-      return this.getCommandeById(this.$route.params.id);
-    }
-     */
+    ...mapGetters('user', ['getCurrentUser', 'getCommandeUserCourantGetters','getLigneCommandeBycommandeId','getCommandeById'])
   },
 
   async mounted() {
@@ -71,7 +66,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getLigneCommandebyIdCommandeStore']),
+    ...mapActions('user',['getLigneCommandebyIdCommandeStore']),
 
     async loadCommandeDetails() {
       await this.getLigneCommandebyIdCommandeStore(this.$route.params.id)
