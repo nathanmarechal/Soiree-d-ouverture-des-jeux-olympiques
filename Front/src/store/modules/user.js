@@ -272,6 +272,7 @@ export default {
 
 
         UPDATE_USER_WO_PASSWORD(state, payload) {
+            console.log("UPDATE_USER_WO_PASSWORD AHAHAHAHAHHAHAHAHAHAHAH " + payload.nom + " " + payload.prenom + " " + payload.email + " " + payload.adresse + " " + payload.code_postal + " " + payload.commune);
             state.userCourant.nom = payload.nom;
             state.userCourant.prenom = payload.prenom;
             state.userCourant.email = payload.email;
@@ -358,9 +359,9 @@ export default {
             }
         },
 
-        async updateUserCourantWoPasswordStore({ commit }, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
+        async updateUserCourantWoPasswordStore({ commit, state}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                let session_id = this.state.userCourant.session_id
+                let session_id = state.userCourant.session_id
                 await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
@@ -369,9 +370,9 @@ export default {
         },
 
 
-        async updateSoldeStore({ commit }, {id_user, solde}) {
+        async updateSoldeStore({ commit, state }, {id_user, solde}) {
             try {
-                const session_id = this.state.userCourant.session_id
+                const session_id = state.userCourant.session_id
                 console.log("updateSoldeStore: ", id_user, solde)
                 await updateSolde(session_id, id_user, solde);
                 console.log("updateSoldeStore: ", id_user, solde)

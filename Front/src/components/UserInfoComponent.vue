@@ -1,6 +1,7 @@
 <template>
   <div class="container mt-4">
     <h1 class="mb-3">{{translate("infoPersos_1")}}</h1>
+    <span>{{getCurrentUser}}</span>
     <div class="card">
       <ul class="list-group list-group-flush">
         <li  class="list-group-item">{{translate("infoPersos_2")}}{{ getCurrentUser.nom }} </li>
