@@ -116,7 +116,7 @@ export default {
       if (all || window.confirm(confirmMessage) ) {
         const ifHasUser = this.getAllUsers.find(user => user.id_role === id);
         if (ifHasUser) {
-          window.alert('ALERTEALERTeALERT')
+          window.alert("Cette donnée est connectée à d'autres")
           router.push(
             {
               name: 'AdminDeleteCascadeProtector',

@@ -148,11 +148,8 @@
               this.$emit('goBack', {isLevel2: this.isLevel2, previousDataType: this.previousDataType, previousDataId: this.previousDataId});
               return;
             }
-            console.log("hmmm1");
           }
-          console.log("hmmm2");
         }
-        console.log("hmmm3");
       },
       formatDate(dateString) {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };

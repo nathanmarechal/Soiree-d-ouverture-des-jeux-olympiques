@@ -114,7 +114,7 @@
               }
             }
             else{
-              window.alert('ALERTEALERTeALERT')
+              window.alert("Cette données est liée à d'autres")
               if (this.$route.name !== 'AdminDeleteCascadeProtector') {
                 router.push(
                   {
