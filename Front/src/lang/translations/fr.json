@@ -378,6 +378,14 @@
   "createStand_8": "Vous avez sélectionné l'emplacement : ",
   "createStand_9": "Valider",
   "createStand_10": "Quitter",
+  "createStand_11": "Veuillez choisir un emplacement",
+
+  "editStand_1": "Nom du stand",
+  "editStand_2": "Recadrer l'image",
+  "editStand_3": "Desription du stand",
+  "editStand_4": "Sélectionner un emplacement",
+  "editStand_5": "Valider",
+  "editStand_6": "Quitter",
 
   "protectedData_1": "Le ",
   "protectedData_2": " suivant : ",

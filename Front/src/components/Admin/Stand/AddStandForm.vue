@@ -189,10 +189,10 @@ export default {
       // Perform form submission logic here to create a new stand
       try {
         if(this.stand.id_emplacement === null){
-          window.alert("Veuillez choisir un emplacement");
+          window.alert(this.translate("createStand_11"));
           return;
         }else if(this.getAllUsersWithoutStand.length === 0){
-          window.alert("Il n'y a plus d'utilisateur disponible");
+          window.alert(this.translate("createStand_3"));
           return;
         }
         if (this.$refs.myEditor && this.$refs.myEditor.editor) {
