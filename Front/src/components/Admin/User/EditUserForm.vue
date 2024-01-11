@@ -89,7 +89,7 @@ export default {
         async submitForm() {
             try {
                 console.log("Données de l'utilisateur :", this.user);
-                await this.updateUserStore({body : {
+                await this.updateUserStore({
                     id_user: this.selected_user.id_user,
                     prenom: this.user.prenom,
                     nom: this.user.nom,
@@ -100,7 +100,7 @@ export default {
                     code_postal: this.user.code_postal,
                     password: this.user.password,
                     id_role: this.user.id_role,
-                }});
+                });
                 await this.$router.push('/admin/users/');
             } catch (error) {
                 console.error("Erreur lors de la modification de l'utilisateur :", error);

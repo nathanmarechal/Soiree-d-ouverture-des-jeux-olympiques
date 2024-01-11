@@ -78,7 +78,7 @@ CREATE TABLE stand(
    date_achat DATE,
    prix INT,
    id_emplacement INT,
-   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE CASCADE
+   FOREIGN KEY(id_emplacement) REFERENCES emplacement(id_emplacement) ON DELETE SET NULL
 );
 
 CREATE TABLE standAttente(
@@ -117,8 +117,8 @@ CREATE TABLE utilisateur(
    solde FLOAT,
    id_stand INT,
    id_role INT,
-   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE CASCADE,
-   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE CASCADE
+   FOREIGN KEY(id_stand) REFERENCES stand(id_stand) ON DELETE SET NULL,
+   FOREIGN KEY(id_role) REFERENCES role(id_role) ON DELETE SET NULL
 );
 
 CREATE TABLE utilisateurAttente(
@@ -251,7 +251,7 @@ CREATE TABLE messages(
 
 INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
 ('eau','water.svg','L/h'),
-('éléctricité','electricity.svg','kW'),
+('éléctrcité','electricity.svg','kW'),
 ('internet haut débit','wifi.svg','Mbp/s')
 ;
 

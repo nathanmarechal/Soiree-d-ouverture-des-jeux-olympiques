@@ -77,8 +77,8 @@ export default {
         nom_stand: '',
         image_stand: '',
         description_stand: '',
-        date_achat: 'WIP',
-        prix: 'WIP',
+        date_achat: null,
+        prix: 0,
         id_emplacement: ''
       },
       id_user: null,
@@ -99,20 +99,20 @@ export default {
   methods: {
     ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
     ...mapActions('user', ['getUsersStore', 'updateUserStore']),    
-    ...mapActions('stands', ['createStandStore']),
+    ...mapActions('stands', ['createStandStore', 'getStandStore']),
     async loadData() {
       try {
         await this.getUsersStore();
         await this.getRolesStore();
         await this.getDroitsStore();
         await this.getAllRoleDroitAssociationStore();
+        await this.getStandStore();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
     },
     getImageSrc(imageName) {
       try {
-        console.log(imageName)
         return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         console.log("pas d'image")
@@ -166,19 +166,18 @@ export default {
         this.image_raw = file;
         this.cropper.destroy();
         this.isImageInputUpload = false;
-        console.log(fileName)
       });
     },
-    submitForm() {
+    async submitForm() {
       // Perform form submission logic here to create a new stand
-      console.log('Creating a new stand:', this.stand);
       try {
-        this.createStandStore(this.stand);
+        this.stand.date_achat = new Date().toISOString().slice(0, 10);
+        await this.createStandStore(this.stand); 
+        const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         //update the user with the right stand id
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
-        user.id_stand = this.stand.id_stand;
-        console.log('user',{user});
-        this.updateUserStore({user});
+        user.id_stand = stand.id_stand;
+        await this.updateUserStore(user);
         this.$router.push('/admin/stands');
       } catch (error) {
         console.error('Erreur lors de la création du stand :', error);
@@ -190,7 +189,6 @@ export default {
     },
     handledataEmplacement(data) {
       this.stand.id_emplacement = data;
-      console.log(this.stand.id_emplacement)
       this.toggleSelectEmplacementModal();
     },
   },
@@ -199,12 +197,11 @@ export default {
     ...mapGetters('roleEtDroit', ['getAllRoles', 'getAllDroits', 'getAllRoleDroitAssociation']),
     ...mapGetters('user', ['getAllUsers']),
     ...mapGetters('emplacements', ['getAreaSelectedForStand']),
+    ...mapGetters('stands', ['getAllStand']),
     getAllUsersWithoutStand() {
       var data;
       data = this.getAllUsers.filter(user => user.id_stand === null);
       data = data.filter(user => user.id_role === 2);
-      console.log("alluser", this.getAllUsers)
-      console.log(data)
       //verifie si l'utilisateur peut avoir un stand 
       return data
     }

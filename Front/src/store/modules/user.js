@@ -527,8 +527,9 @@ export default {
         },
 
 
-        async updateUserStore({ commit , state }, {body}) {
+        async updateUserStore({ commit , state }, body) {
             try {
+                console.log('up', {body}, body)
                 await updateUser(body.id_user, body, state.userCourant.session_id);
                 console.log("eee", body, "id", body.id_user)
                 commit('UPDATE_USER', body.id_user, body);
