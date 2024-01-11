@@ -357,7 +357,16 @@
   "conversationsList_resolu": "Résolu",
   "conversationsList_actions": "Actions",
   "conversationsList_voir": "Voir",
-  "conversationsList_marquerResolu": "Marquer résolu"
+  "conversationsList_marquerResolu": "Marquer résolu",
+
+  "modalReservation_1": "Réserver",
+  "modalReservation_2": "Libellé",
+  "modalReservation_3": "Prix",
+  "modalReservation_4": "Créneau",
+  "modalReservation_5": "Quantité",
+  "modalReservation_6": "Total",
+  "modalReservation_7": "Valider",
+  "modalReservation_8": "Quitter"
 
 
 }

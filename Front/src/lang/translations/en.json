@@ -359,5 +359,14 @@
   "conversationsList_resolu": "Resolved",
   "conversationsList_actions": "Actions",
   "conversationsList_voir": "View",
-  "conversationsList_marquerResolu": "Mark as Resolved"
+  "conversationsList_marquerResolu": "Mark as Resolved",
+
+  "modalReservation_1": "Add to cart",
+  "modalReservation_2": "Label",
+  "modalReservation_3": "Price",
+  "modalReservation_4": "Time Slot",
+  "modalReservation_5": "Quantity",
+  "modalReservation_6": "Total",
+  "modalReservation_7": "Submit",
+  "modalReservation_8": "Exit"
 }
