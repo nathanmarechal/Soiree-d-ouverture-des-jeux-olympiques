@@ -87,7 +87,7 @@ export default {
         },
         async submitForm() {
             try {
-                await this.updateUserStore({body : {
+                await this.updateUserStore({
                     id_user: this.selected_user.id_user,
                     prenom: this.user.prenom,
                     nom: this.user.nom,
