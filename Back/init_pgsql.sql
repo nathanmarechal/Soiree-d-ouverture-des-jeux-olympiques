@@ -345,7 +345,8 @@ INSERT INTO droits(libelle) VALUES
 
 ('update_home_page'),
 
-('messages-admin')
+('messages-admin'),
+('messages-user')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -406,6 +407,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (23,2),
 (24,2),
 (25,2),
+(27,2),
 (1,3),
 (2,3),
 (3,3),
@@ -430,7 +432,9 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (22,3),
 (23,3),
 (24,3),
-(25,3)
+(25,3),
+(27,3)
+
 ;
 
 INSERT INTO type_zone (libelle) VALUES
