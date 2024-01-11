@@ -26,36 +26,27 @@ const getAllPrestations = (callback) => {
         });
 }
 
-// Fonction pour nettoyer le nom de fichier et éviter les injections de chemin de fichier
 function sanitizeFileName(fileName) {
-    // Utiliser path.basename pour s'assurer que seul le nom de fichier est pris, sans chemin
     const baseName = path.basename(fileName);
-    // Remplacer les caractères non autorisés par des underscores
     return baseName.replace(/[^a-zA-Z0-9_.-]/g, "_");
 }
 
-// Configuration de Multer pour le stockage des fichiers
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const destinationPath = path.join(__dirname, '../assets/prestation');
-
-        cb(null, destinationPath); // Assurez-vous que ce chemin existe et est accessible en écriture
+        cb(null, destinationPath);
     },
     filename: function (req, file, cb) {
-        // Utiliser le nom de fichier original, nettoyé pour éviter les problèmes de sécurité
         const safeName = sanitizeFileName(file.originalname);
         cb(null, safeName);
     }
 });
-
-// Initialisation de l'upload Multer pour traiter un seul fichier avec le nom de champ 'photo'
 const upload = multer({ storage: storage }).single('photo');
 
 
 
 async function uploadPicturePresatationAsync(req) {
     try {
-        // Uploading the picture using Multer
         await new Promise((resolve, reject) => {
             upload(req, null, (err) => {
                 if (err) {
@@ -100,7 +91,7 @@ const addPrestation = (libelle, prix, image, id_type_prestation, id_stand,is_ava
 async function addPrestationAsync(libelle, prix, image, id_type_prestation, id_stand, is_available) {
     try {
         const conn = await pool.connect();
-        const date = new Date().toISOString(); // Get the current timestamp in ISO format
+        const date = new Date().toISOString();
 
         const query = `
             INSERT INTO prestation (libelle, prix, date, image, id_type_prestation, id_stand, is_available)
@@ -132,7 +123,6 @@ const updateIsAvailablePrestation = (id, callback) => {
 async function updateIsAvailablePrestationAsync(id) {
     try {
         const conn = await pool.connect();
-        console.log("id in updateIsAvailablePrestationAsync: ", id)
         const result = await conn.query("UPDATE prestation SET is_available = NOT is_available WHERE id_prestation = $1 RETURNING is_available;", [id]);
         conn.release();
         return result.rows;
@@ -190,7 +180,7 @@ async function deletePrestationAsync(id) {
 
         const result = await conn.query(deleteQuery, values);
         conn.release();
-        return result.rows; // This will return the number of rows deleted.
+        return result.rows;
     } catch (error) {
         console.error('Error in deletePrestationAsync:', error);
         throw error;

@@ -15,7 +15,6 @@ async function getPanierByUserIdAsync(id) {
 
 async function deletePrestationFromPanierUserAsync(id_user, id_prestation, id_creneau) {
     try {
-        console.log("id_user:" + id_user + ", id_prestation:" + id_prestation + " dans le service panier.service.js")
         const conn = await pool.connect();
         await conn.query("DELETE FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2 and id_creneau = $3;", [id_user, id_prestation, id_creneau]);
         conn.release();

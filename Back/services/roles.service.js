@@ -65,7 +65,6 @@ async function updateRoleAsync(id, body) {
         const conn = await pool.connect();
         const result = await conn.query("UPDATE role SET libelle = $1 WHERE id_role = $2 RETURNING *", [libelle, id_role]);
         conn.release();
-        console.log('result', result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error in updateRoleAsync:', error);

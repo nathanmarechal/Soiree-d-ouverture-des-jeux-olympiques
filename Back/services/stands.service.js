@@ -206,36 +206,27 @@ const updateStandDescription = (id, body, callback) => {
 
 
 
-// Fonction pour nettoyer le nom de fichier et éviter les injections de chemin de fichier
 function sanitizeFileName(fileName) {
-    // Utiliser path.basename pour s'assurer que seul le nom de fichier est pris, sans chemin
     const baseName = path.basename(fileName);
-    // Remplacer les caractères non autorisés par des underscores
     return baseName.replace(/[^a-zA-Z0-9_.-]/g, "_");
 }
 
-// Configuration de Multer pour le stockage des fichiers
 const storageProfile = multer.diskStorage({
     destination: function (req, file, cb) {
         const destinationPath = path.join(__dirname, '../assets/stand/profile');
 
-        cb(null, destinationPath); // Assurez-vous que ce chemin existe et est accessible en écriture
+        cb(null, destinationPath);
     },
     filename: function (req, file, cb) {
-        // Utiliser le nom de fichier original, nettoyé pour éviter les problèmes de sécurité
         const safeName = sanitizeFileName(file.originalname);
         cb(null, safeName);
     }
 });
 
-// Initialisation de l'upload Multer pour traiter un seul fichier avec le nom de champ 'photo'
 const uploadProfile = multer({ storage: storageProfile }).single('photo');
-
-
 
 async function uploadPictureStandAsync(req) {
     try {
-        // Uploading the picture using Multer
         await new Promise((resolve, reject) => {
             uploadProfile(req, null, (err) => {
                 if (err) {

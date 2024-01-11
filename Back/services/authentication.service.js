@@ -14,15 +14,11 @@ const getLoginToken = (email,password,callback) => {
 async function getSessionTokenAsync(email, password) {
     try {
         userId = await getUserIdAsync(email,password)
-        console.log("id_user:"+userId);
-        if(userId==null)
-        {
-            console.log("id_user is null");
+        if(userId == null) {
             return null;
         }
         await deleteSessionAsync(userId);
         uuid = await createSessionAsync(userId);
-        console.log("uuid = "+uuid)
         return uuid;
     } catch (error) {
         console.error('Error in getLoginToken:', error);
@@ -47,13 +43,10 @@ async function deleteSessionAsync(userId){
 
 async function getUserIdAsync(email,password){
     const conn = await pool.connect();
-    //console.log("email:"+email+", password:"+password);
     const res = await conn.query('SELECT id_user FROM utilisateur WHERE email=$1 AND password=$2', [email,password]);
     conn.release();
-    //console.log("res.rows.length:"+res.rows.length);
     if(res.rows.length!==1)
         return null;
-    //console.log("id_user = "+id_user)
     return res.rows[0].id_user;
 }
 

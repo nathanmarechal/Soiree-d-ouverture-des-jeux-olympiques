@@ -5,7 +5,6 @@ const {as} = require("pg-promise");
 async function getCommandeByUserIdAsync(id_user) {
     try {
         const conn = await pool.connect();
-        console.log("dans le service" + id_user)
         const result = await conn.query("SELECT c.id_commande, date_commande, c.id_etat_commande, sum( ligne_commande.prix * quantite) as prix_total, sum(quantite) as nbr_presta, e.libelle FROM commande c LEFT JOIN ligne_commande on c.id_commande = ligne_commande.id_commande JOIN etat_commande e on e.id_etat=c.id_etat_commande WHERE c.id_user=$1 GROUP BY c.date_commande, c.id_commande, c.id_user, e.libelle ORDER BY date_commande desc;", [id_user]);
         conn.release();
         return result.rows;
@@ -27,7 +26,6 @@ const getCommandeByUserId = (id, callback) => {
 }
 
 const addCommande = (id_user, callback) => {
-    console.log("dans le service" + id_user)
     addCommandeAsync(id_user)
         .then(res => {
             callback(null, "success");
@@ -42,10 +40,8 @@ async function addCommandeAsync(id_user) {
     try {
         const conn = await pool.connect();
         const items_ligne_panier = await conn.query("SELECT * FROM ligne_panier LEFT JOIN prestation p on ligne_panier.id_prestation = p.id_prestation WHERE id_user=$1;", [id_user]);
-        console.log(items_ligne_panier.rows)
         const result = await conn.query("INSERT INTO commande (date_commande, id_user, id_etat_commande) VALUES (timeofday(), $1, 1) RETURNING id_commande;", [id_user]);
         let last_insert_id = result.rows[0].id_commande;
-        console.log("last_insert_id : " + last_insert_id)
         for (const item of items_ligne_panier.rows) {
             await conn.query('DELETE FROM ligne_panier WHERE id_user=$1 AND id_prestation=$2 AND id_creneau=$3;', [id_user, item.id_prestation, item.id_creneau]);
             await conn.query('INSERT INTO ligne_commande (id_commande,  id_user, id_prestation, quantite, prix, id_creneau, id_etat_commande) VALUES ($1, $6 ,$2, $3, $4, $5,1);', [last_insert_id, item.id_prestation, item.quantite, item.prix, item.id_creneau, id_user]);
@@ -81,7 +77,6 @@ async function getLigneCommandeBycommandeIdAsync(id) {
 }
 
 const setEtatLigneCommandeExterieur = ({ id_commande, id_presta, id_creneau}, callback) => {
-    console.log("id_commande:" + id_commande + ", id_prestation:" + id_presta + ", id_creneau:" + id_creneau + " dans le const service commande.service.js")
     setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_creneau})
         .then(res => {
             callback(null, "success");
@@ -95,7 +90,6 @@ const setEtatLigneCommandeExterieur = ({ id_commande, id_presta, id_creneau}, ca
 async function setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_creneau}) {
     try {
         const conn = await pool.connect();
-        console.log("id_commande:" + id_commande + ", id_prestation:" + id_presta + ", id_creneau:" + id_creneau + " dans le service commande.service.js")
         await conn.query("UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = $1 AND id_prestation = $2 AND id_creneau = $3;", [  id_commande, id_presta, id_creneau]);
         conn.release();
     } catch (error) {

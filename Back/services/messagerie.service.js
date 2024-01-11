@@ -111,13 +111,11 @@ async function sendMessageAsync(id_conversation, message, session_id) {
         const id_user = res.rows[0].id_user
 
         console.log("session_id="+session_id+", id_user="+id_user)
-        // Insert the message
         await conn.query(
             "INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES ($1, $2, $3, now());",
             [id_user, id_conversation, message]
         );
 
-        // Retrieve the inserted message
         const result = await conn.query(
             "SELECT id_sender, message, temps_emmission, concat(u.prenom, ' ', u.nom) as name, u.email " +
             "FROM messages " +
@@ -128,7 +126,6 @@ async function sendMessageAsync(id_conversation, message, session_id) {
         );
         conn.release();
 
-        // Return the latest message details
         return result.rows[0];
 
     } catch (error) {

@@ -8,7 +8,7 @@ async function getBestSellerPrestationAsync() {
             "FROM ligne_commande lc " +
             "JOIN prestation p ON p.id_prestation = lc.id_prestation " +
             "GROUP BY p.id_prestation, p.libelle " +
-            "ORDER BY SUM(p.prix * lc.quantite) DESC " + // Added space before 'LIMIT'
+            "ORDER BY SUM(p.prix * lc.quantite) DESC " +
             "LIMIT 5;"
         );
         conn.release();

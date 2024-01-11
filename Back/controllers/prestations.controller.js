@@ -17,7 +17,6 @@ exports.uploadPicturePresatation = (req, res) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            console.log(data)
             return res.status(200).send(data);
         }
     });
@@ -35,7 +34,6 @@ exports.addPrestation = (req, res) => {
             return res.status(500).send("Internal error");
         }
         else {
-            console.log(data)
             return res.status(201).send(data);
         }
     })
@@ -43,7 +41,6 @@ exports.addPrestation = (req, res) => {
 
 exports.updateIsAvailablePrestation = (req, res) => {
     const id = req.query.id_prestation;
-    console.log("updateIsAvailablePrestation: ", id)
     prestationsService.updateIsAvailablePrestation(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
