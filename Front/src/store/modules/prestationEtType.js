@@ -29,6 +29,8 @@ export default {
 
         SET_PRESTATIONS(state, prestations) {
             state.prestations = prestations;
+            console.log("prestation" +state.prestations)
+            console.log("state.prestations : " + state.prestations)
         },
 
         SET_SELECTED_TYPE_PRESTATION(state, type) {
@@ -53,7 +55,9 @@ export default {
     actions: {
         async getPrestationsStore({ commit }) {
             try {
+                console.log("getPresta")
                 const result = await getAllPrestations();
+                console.log("result : " + result)
                 if (Array.isArray(result)) {
                     commit('SET_PRESTATIONS', result);
                 } else {

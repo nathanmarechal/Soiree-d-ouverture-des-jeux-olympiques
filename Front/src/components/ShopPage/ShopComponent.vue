@@ -35,6 +35,7 @@
 import {mapActions, mapGetters} from 'vuex';
 import ModalReservation from '@/components/ShopPage/ModalReservation.vue'
 import {translate} from "../../lang/translationService";
+import user from "@/store/modules/user";
 export default {
   components: {
     ModalReservation
@@ -50,6 +51,7 @@ export default {
   async mounted() {
     try {
       await this.loadData();
+      console.log("prestations : " + this.filteredPrestations);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
@@ -59,9 +61,13 @@ export default {
     this.equalizeCardHeights();
   },
   computed: {
+    user() {
+      return user
+    },
     ...mapGetters('prestationEtType', ['getSelectedTypePrestation', 'getAllTypePrestation', 'getAllPrestation']),
     ...mapGetters('stands', ['getAllStand', 'getSelectedStands']),
     ...mapGetters('creneau', ['getAllCreneau']),
+    ...mapGetters('user', ['getCurrentUser']),
     filteredPrestations() {
       return this.getAllPrestation.filter(prestation => {
         const isTypeSelected = this.getSelectedTypePrestation.length > 0;
@@ -70,8 +76,8 @@ export default {
         const typeFilter = isTypeSelected ? this.getSelectedTypePrestation.includes(prestation.id_type_prestation) : true;
         const standFilter = isStandSelected ? this.getSelectedStands.includes(prestation.id_stand) : true;
         const availabilityFilter = prestation.is_available; // Check if the service is available
-
-        return typeFilter && standFilter && availabilityFilter; // Include availability in the filter conditions
+        console.log(typeFilter && standFilter && availabilityFilter + "puais puais ");
+        return typeFilter && standFilter && availabilityFilter; // Include availability in the f// ilter conditions
       });
     },
   },
