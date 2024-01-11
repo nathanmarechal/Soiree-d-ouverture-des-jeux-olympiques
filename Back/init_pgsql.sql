@@ -251,7 +251,7 @@ CREATE TABLE messages(
 
 INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
 ('eau','water.svg','L/h'),
-('éléctrcité','electricity.svg','kW'),
+('éléctricité','electricity.svg','kW'),
 ('internet haut débit','wifi.svg','Mbp/s')
 ;
 
