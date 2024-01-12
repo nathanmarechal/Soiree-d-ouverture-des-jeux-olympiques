@@ -352,7 +352,7 @@
   "conversationMessages_5": "Tapez votre message ici...",
   "conversationMessages_6": "Envoyer",
 
-  "conversationsList_creerConvoPlaceholder": "Entrez le message de la conversation",
+  "conversationsList_creerConvoPlaceholder": "Entrez le titre de la conversation",
   "conversationsList_creerConvo": "Créer Conversation",
   "conversationsList_titre": "Titre de la conversation",
   "conversationsList_email": "Email du créateur",

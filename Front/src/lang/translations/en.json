@@ -354,7 +354,7 @@
   "conversationMessages_5": "Type your message here...",
   "conversationMessages_6": "Send",
 
-  "conversationsList_creerConvoPlaceholder": "Enter the conversation message",
+  "conversationsList_creerConvoPlaceholder": "Enter the conversation title",
   "conversationsList_creerConvo": "Create Conversation",
   "conversationsList_titre": "Title of the conversation",
   "conversationsList_email": "Creator's Email",
