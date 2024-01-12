@@ -29,20 +29,39 @@
             </b-nav-item-dropdown>
           </div>
 
-          <b-nav-item-dropdown v-if="isUserAdmin" right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
-            <router-link to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
-            <br>
-            <router-link to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
-            <br>
-            <router-link to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
-            <br>
-            <router-link to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
-            <br>
-            <router-link to="/admin/zones" class = "dp">{{translate("zones")}}</router-link>
-            <br>
-            <router-link to="/admin/roles" class = "dp">{{translate("roles")}}</router-link>
-            <br>
-            <router-link to="/admin/statistiques" class = "dp">{{translate("statistiques")}}</router-link>
+          <b-nav-item-dropdown
+              v-if="isUserAdmin"
+
+              right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
+            <div v-if="currentUserHasRight('see_users')">
+              <router-link  to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
+            </div>
+            <div v-if="currentUserHasRight('see_waiting_users')">
+              <router-link  to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
+            </div>
+            <div v-if="currentUserHasRight('create_stands')
+            || currentUserHasRight('update_stands')
+            || currentUserHasRight('delete_stands')">
+              <router-link  to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
+            </div>
+            <div v-if="currentUserHasRight('create_areas')
+            || currentUserHasRight('update_areas')
+            || currentUserHasRight('delete_areas')">
+              <router-link  to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
+            </div>
+            <div v-if="currentUserHasRight('create_zones')
+            || currentUserHasRight('update_zones')
+            || currentUserHasRight('delete_zones')">
+              <router-link  to="/admin/zones" class = "dp">{{translate("zones")}}</router-link>
+            </div>
+            <div v-if="currentUserHasRight('create_roles')
+            || currentUserHasRight('update_roles')
+            || currentUserHasRight('delete_roles')">
+              <router-link  to="/admin/roles" class = "dp">{{translate("roles")}}</router-link>
+            </div>
+            <div v-if="currentUserHasRight('statistiques_admin')">
+              <router-link to="/admin/statistiques" class = "dp">{{translate("statistiques")}}</router-link>
+            </div>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
@@ -98,14 +117,17 @@ export default {
       return this.$store.getters['user/isUserConnected'];
     },
     isUserAdmin() {
-      const val = this.$store.getters['user/isUserConnected']
-          && this.$store.getters['user/getCurrentUser'].id_role===1;
-      return val;
+      const v = this.currentUserHasRight('see_users')
+          ||this.currentUserHasRight('see_waiting_users')
+          ||this.currentUserHasRight('create_stands') || this.currentUserHasRight('update_stands') || this.currentUserHasRight('delete_stands')
+          ||this.currentUserHasRight('create_zones') || this.currentUserHasRight('update_zones') || this.currentUserHasRight('delete_zones')
+          ||this.currentUserHasRight('create_areas') || this.currentUserHasRight('update_areas') || this.currentUserHasRight('delete_areas')
+          ||this.currentUserHasRight('create_roles') || this.currentUserHasRight('update_roles') || this.currentUserHasRight('delete_roles')
+||this.currentUserHasRight('statistiques_admin')
+      return v;
     },
     isUserPrestataire() {
-      const val = this.$store.getters['user/isUserConnected']
-          && this.$store.getters['user/getCurrentUser'].id_role===2;
-      return val;
+      return this.currentUserHasRight('create_self_prestations') || this.currentUserHasRight('update_self_prestations') || this.currentUserHasRight('delete_self_prestations')
     },
     currentUser() {
       return this.$store.getters['user/getCurrentUser'];

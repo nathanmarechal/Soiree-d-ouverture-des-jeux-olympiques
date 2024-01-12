@@ -391,6 +391,11 @@ INSERT INTO role (libelle) VALUES
 ('utilisateur')
 ;
 
+SELECT d.libelle FROM role_droits
+LEFT JOIN droits d on role_droits.id_droit = d.id
+WHERE id_role = 1
+;
+
 INSERT INTO role_droits(id_droit, id_role) VALUES
 (1,1),
 (2,1),
@@ -414,11 +419,11 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (20,1),
 (21,1),
 (22,1),
-(23,1),
+
 (24,1),
-(25,1),
+
 (26,1),
-(27,1),
+
 (28,1),
 (29,1),
 (30,1),
