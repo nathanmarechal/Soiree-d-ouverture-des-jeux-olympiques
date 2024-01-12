@@ -38,8 +38,8 @@ export default {
     return {
       sessionId: '',
       email: '',
-      incorrectLog: false,
-      password: '', //variable locale
+      incorrectLog : false,
+      password: '',
     }
   },
 
@@ -103,52 +103,66 @@ export default {
       return this.password.length >= 8
     },
 
-    async submitForm() {
-
+    submitForm() {
       this.incorrectLog = false;
 
       if (this.isEmailValid() && this.isPasswordValid()) {
-        try {
-          const sessionResponse = await getSession(this.email, this.password);
+        //alert('Formulaire envoyé !')
+        getSession(this.email,this.password)
+            .then(res=> {
+              this.sessionId = res;
+              if(this.sessionId.error!=1){
+                getUserFromSessionId(this.sessionId)
+                    .then(res=>{
+                      this.currentUser.id_user = res.id_user;
+                      this.currentUser.email = res.email;
+                      this.currentUser.nom = res.nom;
+                      this.currentUser.prenom = res.prenom;
+                      this.currentUser.code_postal = res.code_postal;
+                      this.currentUser.adresse = res.adresse;
+                      this.currentUser.commune = res.commune;
+                      this.currentUser.id_role = res.id_role;
+                      this.currentUser.id_stand = res.id_stand;
+                      this.currentUser.solde = parseFloat(res.solde);
+                      this.$store.commit('user/SET_CURRENT_USER', this.currentUser)
+                      getPanierUserCourant(res.id_user)
+                          .then(res=>{
+                            this.$store.commit('user/SET_PANIER_USER_COURANT', res)
+                          })
+                      getCommandeUserCourant(res.id_user)
+                          .then(res=>{
+                            this.$store.commit('user/SET_COMMANDES_USER_COURANT', res)
+                          })
+                      getScheduleByUserId(res.id_user)
+                          .then(res=>{
+                            this.$store.commit('user/SET_SCHEDULE', res)
+                          })
+                      getDroitsRole(res.id_role)
+                          .then(res=>{
+                            this.$store.commit('user/SET_DROITS_USER_COURANT', res)
+                          })
 
-          this.sessionId = sessionResponse;
+                      this.email=""
+                      this.password=""
 
-          if (this.sessionId.error != 1) {
-            const userData = await getUserFromSessionId(this.sessionId);
+                      this.$store.commit('user/SET_IS_USER_CONNECTED', true);
+                      this.closeModal();
+                    })
 
-            // Mise à jour des données de l'utilisateur
-            this.currentUser = { ...this.currentUser, ...userData };
-            this.currentUser.solde = parseFloat(userData.solde);
-            this.$store.commit('user/SET_CURRENT_USER', this.currentUser);
-
-            // Mise à jour des autres données associées à l'utilisateur
-            const panier = await getPanierUserCourant(userData.id_user);
-            this.$store.commit('user/SET_PANIER_USER_COURANT', panier);
-
-            const commandes = await getCommandeUserCourant(userData.id_user);
-            this.$store.commit('user/SET_COMMANDES_USER_COURANT', commandes);
-
-            const schedule = await getScheduleByUserId(userData.id_user);
-            this.$store.commit('user/SET_SCHEDULE', schedule);
-
-            const droits = await getDroitsRole(userData.id_role);
-            this.$store.commit('user/SET_DROITS_USER_COURANT', droits);
-
-            this.$store.commit('user/SET_IS_USER_CONNECTED', true);
-            this.closeModal();
-          } else {
-            this.incorrectLog = true;
-          }
-
-        } catch (error) {
-          alert('Une erreur est survenue lors du traitement de la requête.');
-          console.error(error);
-        } finally {
-          this.email = "";
-          this.password = "";
-        }
+              }
+              else
+              {
+                this.incorrectLog = true; // Activation du message d'erreur
+                this.email = "";
+                this.password = "";
+              }
+            }).catch(error => {
+          // Gérer d'autres erreurs potentielles ici
+          console.error("Erreur lors de la connexion", error);
+          this.incorrectLog = true; // Activation du message d'erreur en cas d'erreur système
+        });
       } else {
-        alert('Veuillez remplir correctement le formulaire !');
+        alert('Veuillez remplir correctement le formulaire !')
       }
     }
   }
