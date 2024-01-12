@@ -40,14 +40,14 @@ async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, qt
     try {
         const conn = await pool.connect();
         const result = await conn.query("SELECT * FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2 AND id_creneau = $3;", [id_user, id_prestation, id_creneau]);
-        console.log("result", result.rows);
-        console.log(result.rows.length);
+        let res;
         if (result.rows.length > 0) {
-            await conn.query("UPDATE ligne_panier SET quantite = quantite + $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4;", [qt, id_user, id_prestation, id_creneau]);
+            res = await conn.query("UPDATE ligne_panier SET quantite = quantite + $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4;", [qt, id_user, id_prestation, id_creneau]);
         } else {
-            await conn.query("INSERT INTO ligne_panier (id_user, id_prestation, id_creneau, quantite) VALUES ($1, $2, $3, $4);", [id_user, id_prestation, id_creneau, qt]);
+            res = await conn.query("INSERT INTO ligne_panier (id_user, id_prestation, id_creneau, quantite) VALUES ($1, $2, $3, $4) RETURNING *;", [id_user, id_prestation, id_creneau, qt]);
         }
         conn.release();
+        return res.rows;
     } catch (error) {
         console.error('Error in addPrestationToPanierAsync:', error);
         throw error;
@@ -57,8 +57,9 @@ async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, qt
 async function updateQuantityInPanierAsync(id_user, id_prestation, quantite, id_creneau) {
     try {
         const conn = await pool.connect();
-        await conn.query("UPDATE ligne_panier SET quantite = $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4;", [quantite, id_user, id_prestation, id_creneau]);
+        const res = await conn.query("UPDATE ligne_panier SET quantite = $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4 RETURNING *;", [quantite, id_user, id_prestation, id_creneau]);
         conn.release();
+        return res.rows;
     } catch (error) {
         console.error('Error in updateQuantityInPanierAsync:', error);
         throw error;
@@ -79,7 +80,7 @@ const getPanierByUserId = (id, callback) => {
 const updateQuantityInPanier = (id_user, id_prestation,  quantite, id_creneau, callback) => {
     updateQuantityInPanierAsync(id_user, id_prestation, quantite , id_creneau)
         .then(res => {
-            callback(null, "success");
+            callback(null, res);
         })
         .catch(error => {
             console.log(error);
@@ -110,10 +111,9 @@ const getAllCreneaux = (callback) => {
 }
 
 const addPrestationToPanier = (id_user, id_prestation, id_creneau, quantite, callback) => {
-    console.log("addPrestationToPanier", id_user, id_prestation, id_creneau, quantite);
     addPrestationToPanierAsync(id_user, id_prestation, id_creneau, quantite)
         .then(res => {
-            callback(null, "add successfully");
+            callback(null, res);
         })
         .catch(error => {
             console.log(error);
