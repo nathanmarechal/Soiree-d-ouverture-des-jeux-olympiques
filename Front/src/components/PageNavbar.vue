@@ -21,7 +21,7 @@
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
               <br>
-              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
+              <router-link v-if="currentUserHasRight('statistiques-prestataire')" to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
               <br>
               <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
               <br>
@@ -127,7 +127,7 @@ export default {
       return v;
     },
     isUserPrestataire() {
-      return this.currentUserHasRight('create_self_prestations') || this.currentUserHasRight('update_self_prestations') || this.currentUserHasRight('delete_self_prestations')
+      return this.currentUserHasRight('create_self_prestations') || this.currentUserHasRight('update_self_prestations') || this.currentUserHasRight('delete_self_prestations') || this.currentUserHasRight('statistiques-prestataire')
     },
     currentUser() {
       return this.$store.getters['user/getCurrentUser'];
