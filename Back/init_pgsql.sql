@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS creneau CASCADE;
 
 DROP TABLE IF EXISTS text_accueil CASCADE;
 
-DROP TABLE IF EXISTS messages;
-DROP TABLE IF EXISTS conversations;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS conversations CASCADE;
 -- Create the tables
 
 CREATE TABLE text_accueil(
@@ -234,7 +234,7 @@ CREATE TABLE conversations(
     id_creator INTEGER,
     titre VARCHAR(64),
     resolu BOOLEAN,
-    FOREIGN KEY (id_creator) REFERENCES utilisateur(id_user)
+    FOREIGN KEY (id_creator) REFERENCES utilisateur(id_user)  ON DELETE CASCADE
 );
 
 
@@ -245,8 +245,8 @@ CREATE TABLE messages(
     message VARCHAR(1024),
     temps_emmission TIMESTAMP,
     PRIMARY KEY (id,id_sender,id_conversation,temps_emmission),
-    FOREIGN KEY (id_sender) REFERENCES utilisateur(id_user),
-    FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)
+    FOREIGN KEY (id_sender) REFERENCES utilisateur(id_user)  ON DELETE CASCADE,
+    FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)   ON DELETE CASCADE
 );
 
 INSERT INTO type_emplacement_logistique(libelle,image, libelle_unite) VALUES
@@ -902,3 +902,4 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 ;
 
 SELECT p FROM prestation p JOIN utilisateur u ON p.id_stand = u.id_stand WHERE p.id_stand = 4 AND u.id_stand = 4;
+
