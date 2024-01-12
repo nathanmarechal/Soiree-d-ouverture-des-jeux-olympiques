@@ -3,8 +3,14 @@
     <div v-if="$store.getters['user/getLang']==='fr'">
     <MainImageAndTitle_fr/>
     </div>
-    <div v-else>
+    <div v-if="$store.getters['user/getLang']==='en'">
     <MainImageAndTitle_en/>
+    </div>
+    <div v-if="$store.getters['user/getLang']==='jp'">
+      <MainImageAndTitle_en/>
+    </div>
+    <div v-if="$store.getters['user/getLang']==='es'">
+      <MainImageAndTitle_en/>
     </div>
     <PageTitle />
     <PageDescription :id="1"/>

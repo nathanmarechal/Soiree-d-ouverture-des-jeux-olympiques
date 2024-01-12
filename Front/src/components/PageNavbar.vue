@@ -83,6 +83,8 @@
       <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>
+        <option value="jp">日本語</option>
+        <option value="es">Español</option>
       </select>
       </div>
     </b-navbar>
