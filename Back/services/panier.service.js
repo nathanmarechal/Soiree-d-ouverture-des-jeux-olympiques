@@ -36,10 +36,17 @@ async function getAllCreneauxAsync() {
     }
 }
 
-async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, quantite) {
+async function addPrestationToPanierAsync(id_user, id_prestation, id_creneau, qt) {
     try {
         const conn = await pool.connect();
-        await conn.query("INSERT INTO Ligne_panier (id_user, id_prestation, quantite, id_creneau) VALUES ($1, $2, $3, $4);", [id_user, id_prestation, id_creneau, quantite]);
+        const result = await conn.query("SELECT * FROM ligne_panier WHERE id_user = $1 AND id_prestation = $2 AND id_creneau = $3;", [id_user, id_prestation, id_creneau]);
+        console.log("result", result.rows);
+        console.log(result.rows.length);
+        if (result.rows.length > 0) {
+            await conn.query("UPDATE ligne_panier SET quantite = quantite + $1 WHERE id_user = $2 AND id_prestation = $3 AND id_creneau = $4;", [qt, id_user, id_prestation, id_creneau]);
+        } else {
+            await conn.query("INSERT INTO ligne_panier (id_user, id_prestation, id_creneau, quantite) VALUES ($1, $2, $3, $4);", [id_user, id_prestation, id_creneau, qt]);
+        }
         conn.release();
     } catch (error) {
         console.error('Error in addPrestationToPanierAsync:', error);
@@ -103,6 +110,7 @@ const getAllCreneaux = (callback) => {
 }
 
 const addPrestationToPanier = (id_user, id_prestation, id_creneau, quantite, callback) => {
+    console.log("addPrestationToPanier", id_user, id_prestation, id_creneau, quantite);
     addPrestationToPanierAsync(id_user, id_prestation, id_creneau, quantite)
         .then(res => {
             callback(null, "add successfully");
