@@ -9,6 +9,7 @@
 import * as d3 from 'd3';
 import { getNewStandByMonth } from '@/services/statistiques.service';
 import {translate} from "../../../lang/translationService";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'CumulativeLineChart',
@@ -19,9 +20,14 @@ export default {
       height: 500
     };
   },
+
+  computed: {
+    ...mapGetters('user', ['getSessionId'])
+  },
+
   async mounted() {
     try {
-      const dataFromService = await getNewStandByMonth();
+      const dataFromService = await getNewStandByMonth(this.getSessionId);
       this.chartData = dataFromService.map(d => ({
         mois: d.mois,
         nombre_stands: parseInt(d.nombre_stands)

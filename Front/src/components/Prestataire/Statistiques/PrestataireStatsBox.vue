@@ -68,12 +68,12 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        const standId = this.$store.getters["user/getStandId"];
-        console.log(standId);
-        [this.bestClient] = await getBestClientByStand(standId);
-        [this.averagePurchase] = await getAveragePurchaseByStand(standId);
-        [this.avgRating] = await getAvgRatingByStand(standId);
-        [this.countRating] = await getCountRatingByStand(standId);
+        const session_id = this.$store.getters["user/getSessionId"];
+        console.log(session_id);
+        [this.bestClient] = await getBestClientByStand(session_id);
+        [this.averagePurchase] = await getAveragePurchaseByStand(session_id);
+        [this.avgRating] = await getAvgRatingByStand(session_id);
+        [this.countRating] = await getCountRatingByStand(session_id);
       } catch (error) {
         console.error('Erreur lors du chargement des statistiques :', error);
       }

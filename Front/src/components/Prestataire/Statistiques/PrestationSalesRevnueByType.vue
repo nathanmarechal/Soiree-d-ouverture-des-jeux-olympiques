@@ -19,7 +19,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', ['getCurrentUser'])
+    ...mapGetters('user', ['getSessionId'])
   },
   async mounted() {
     await this.loadSalesData();
@@ -29,7 +29,7 @@ export default {
     translate,
     async loadSalesData() {
       try {
-        this.salesData = await getSalesRevnueByTypeByStand(this.getCurrentUser.id_stand);
+        this.salesData = await getSalesRevnueByTypeByStand(this.getSessionId);
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

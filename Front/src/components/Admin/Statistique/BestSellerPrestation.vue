@@ -9,6 +9,7 @@
 import * as d3 from 'd3';
 import { getBestSellerPrestation } from '@/services/statistiques.service';
 import {translate} from "../../../lang/translationService";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'BarChart',
@@ -23,11 +24,15 @@ export default {
     await this.loadData();
     this.createBarChart();
   },
+
+  computed: {
+    ...mapGetters('user', ['getSessionId'])
+  },
   methods: {
     translate,
     async loadData() {
       try {
-        const response = await getBestSellerPrestation();
+        const response = await getBestSellerPrestation(this.getSessionId);
         this.data = response.map(item => ({
           prestation: item.libelle,
           total: +item.prix_total

@@ -20,7 +20,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', ['getCurrentUser'])
+    ...mapGetters('user', ['getSessionId'])
   },
   async mounted() {
     await this.loadPrestationData();
@@ -30,7 +30,7 @@ export default {
     translate,
     async loadPrestationData() {
       try {
-        this.prestations = await getNbPrestationHeure(this.getCurrentUser.id_stand);
+        this.prestations = await getNbPrestationHeure(this.getSessionId);
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
