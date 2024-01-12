@@ -44,7 +44,6 @@ async function setEtatLigneCommandeExterieur({id_commande, id_prestation, id_cre
 }
 
 async function setEtatLigneCommandeExterieurFromAPI({ id_commande,id_prestation, id_creneau}){
-    console.log("id_prestation:" + id_prestation + ", id_creneau:" + id_creneau + ", id_commande:" + id_commande + " dans le service commande.service.js")
     return patchRequest('/commande/setetatligne', {id_commande, id_prestation, id_creneau}, 'SETETATLIGNECOMMANDEEXTERIEUR')
 }
 
