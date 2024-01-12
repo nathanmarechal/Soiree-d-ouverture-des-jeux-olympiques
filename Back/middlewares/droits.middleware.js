@@ -84,6 +84,14 @@ function getRightName(url) {
         "/api/panier/addPrestationToOwnPanier": "add_self_panier",
         "/api/panier/updateOwnPanier": "update_self_panier",
         "/api/panier/deletePrestationFromPanierOwnUser": "delete_self_panier",
+
+        "/api/statistiques/prestataire/count-rating":"statistiques-prestataire",
+        "/api/statistiques/prestataire/average-rating":"statistiques-prestataire",
+        "/api/statistiques/prestataire/nb-prestation-heure":"statistiques-prestataire",
+        "/api/statistiques/prestataire/average-purchase":"statistiques-prestataire",
+        "/api/statistiques/prestataire/best-client":"statistiques-prestataire",
+        "/api/statistiques/prestataire/sales-revenue-by-type":"statistiques-prestataire"
+        ,
     };
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";
