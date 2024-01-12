@@ -401,5 +401,12 @@
   "protectedData_2": " suivant : ",
   "protectedData_3":"est lié à d'autres données, veuillez les supprimer avant de supprimer ce",
 
-  "EditAreas_1": "Supprimer"
+  "EditAreas_1": "Supprimer",
+
+  "roleList_droits": "Droits",
+  "droitCategory": "Catégories de droits",
+  "allCategories": "Toutes les catégories",
+  "droit": "Droits : ",
+  "editRole_confirm": "Confirmer",
+  "editRole_annuler": "Annuler"
 }
