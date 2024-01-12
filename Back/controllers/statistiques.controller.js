@@ -1,4 +1,5 @@
 const statistiquesService = require("../services/statistiques.service");
+const standsService = require("../services/stands.service");
 
 exports.getBestSellerPrestation = (req, res) => {
     statistiquesService.getBestSellerPrestation((error, data) => {
@@ -88,8 +89,12 @@ exports.getTopAvisStand = (req, res) => {
     })
 }
 
-exports.getNbPrestationHeure = (req, res) => {
-    const id = req.params.id;
+exports.getNbPrestationHeure = async (req, res) => {
+
+    const session_id = req.query.session_id;
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+    const id = stand.id_stand;
+
     statistiquesService.getNbPrestationHeure(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -100,8 +105,12 @@ exports.getNbPrestationHeure = (req, res) => {
     })
 }
 
-exports.getAveragePurchaseByStand = (req, res) => {
-    const id = req.params.id;
+exports.getAveragePurchaseByStand = async (req, res) => {
+
+    const session_id = req.query.session_id;
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+    const id = stand.id_stand;
+
     statistiquesService.getAveragePurchaseByStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -112,9 +121,19 @@ exports.getAveragePurchaseByStand = (req, res) => {
     })
 }
 
-exports.getBestClientByStand = (req, res) => {
-    const id = req.params.id;
-    statistiquesService.getBestClientByStand(id, (error, data) => {
+exports.getBestClientByStand = async (req, res) => {
+    console.log("debut de getBestClientByStand")
+    const session_id = req.query.session_id;
+
+    console.log(session_id)
+
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+
+    console.log("stand : "+stand)
+
+    const id_stand = stand.id_stand;
+
+    statistiquesService.getBestClientByStand(id_stand, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
@@ -124,8 +143,11 @@ exports.getBestClientByStand = (req, res) => {
     })
 }
 
-exports.getSalesRevnueByTypeByStand = (req, res) => {
-    const id = req.params.id;
+exports.getSalesRevnueByTypeByStand = async (req, res) => {
+    const session_id = req.query.session_id;
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+    const id = stand.id_stand;
+
     statistiquesService.getSalesRevnueByTypeByStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -135,8 +157,10 @@ exports.getSalesRevnueByTypeByStand = (req, res) => {
         }
     })
 }
-exports.getAvgRatingByStand = (req, res) => {
-    const id = req.params.id;
+exports.getAvgRatingByStand = async (req, res) => {
+    const session_id = req.query.session_id;
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+    const id = stand.id_stand;
     statistiquesService.getAvgRatingByStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -146,8 +170,12 @@ exports.getAvgRatingByStand = (req, res) => {
         }
     })
 }
-exports.getCountRatingByStand = (req, res) => {
-    const id = req.params.id;
+exports.getCountRatingByStand = async (req, res) => {
+
+    const session_id = req.query.session_id;
+    const stand =  await standsService.getStandBySessionIdAsync(session_id)
+    const id = stand.id_stand;
+
     statistiquesService.getCountRatingByStand(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

@@ -256,6 +256,34 @@ const uploadPictureStand = (req, callback) => {
 }
 
 
+const getStandBySessionId = (session_id, callback) => {
+    getStandBySessionIdAsync(session_id)
+        .then(res => {
+            callback(null, res);
+        })
+        .catch(error => {
+            console.log(error);
+            callback('Error in getUserBySessionId', null);
+        })
+}
+
+async function getStandBySessionIdAsync(session_id) {
+    try {
+        const client = await pool.connect();
+        const res = await client.query(`SELECT s.id_stand
+            FROM stand s
+            JOIN utilisateur u on s.id_stand = u.id_stand
+            JOIN session se on u.id_user = se.id_user
+            WHERE se.session_id =$1;`, [session_id]);
+        client.release();
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error in getStandBySessionIdAsync:', error);
+        throw error;
+    }
+}
+
+
 
 
 module.exports = {
@@ -267,5 +295,7 @@ module.exports = {
     createStand: createStand,
     updateStand: updateStand,
     deleteStand: deleteStand,
-    uploadPictureStand: uploadPictureStand
+    uploadPictureStand: uploadPictureStand,
+    getStandBySessionId : getStandBySessionId,
+    getStandBySessionIdAsync: getStandBySessionIdAsync
 }

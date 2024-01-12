@@ -105,7 +105,7 @@ async function getAveragePurchaseByStand(session_id) {
 }
 
 async function getBestClientByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/best-client?session_id=' + session_id, 'BESTVLIENTBYSTAND')
+    return getRequest('/statistiques/prestataire/best-client?session_id=' + session_id, 'BESTCLIENTBYSTAND')
 }
 
 async function getBestClientByStand(session_id) {

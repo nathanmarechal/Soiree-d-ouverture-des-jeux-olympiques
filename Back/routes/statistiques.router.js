@@ -55,7 +55,7 @@ router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/nb-prestation-heure/:id',standMiddleware.checkStandExists ,statistiquesController.getNbPrestationHeure)
+router.get('/prestataire/nb-prestation-heure' ,statistiquesController.getNbPrestationHeure)
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ router.get('/prestataire/nb-prestation-heure/:id',standMiddleware.checkStandExis
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/average-purchase/:id',standMiddleware.checkStandExists ,statistiquesController.getAveragePurchaseByStand)
+router.get('/prestataire/average-purchase',statistiquesController.getAveragePurchaseByStand)
 
 /**
  * @swagger
@@ -105,7 +105,7 @@ router.get('/prestataire/average-purchase/:id',standMiddleware.checkStandExists 
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/best-client/:id',standMiddleware.checkStandExists ,statistiquesController.getBestClientByStand)
+router.get('/prestataire/best-client', statistiquesController.getBestClientByStand)
 
 /**
  * @swagger
@@ -130,7 +130,7 @@ router.get('/prestataire/best-client/:id',standMiddleware.checkStandExists ,stat
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/sales-revenue-by-type/:id',standMiddleware.checkStandExists ,statistiquesController.getSalesRevnueByTypeByStand)
+router.get('/prestataire/sales-revenue-by-type' ,statistiquesController.getSalesRevnueByTypeByStand)
 
 /**
  * @swagger
@@ -155,7 +155,7 @@ router.get('/prestataire/sales-revenue-by-type/:id',standMiddleware.checkStandEx
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/average-rating/:id',standMiddleware.checkStandExists ,statistiquesController.getAvgRatingByStand)
+router.get('/prestataire/average-rating' ,statistiquesController.getAvgRatingByStand)
 
 /**
  * @swagger
@@ -180,7 +180,7 @@ router.get('/prestataire/average-rating/:id',standMiddleware.checkStandExists ,s
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/prestataire/count-rating/:id', standMiddleware.checkStandExists ,statistiquesController.getCountRatingByStand)
+router.get('/prestataire/count-rating' ,statistiquesController.getCountRatingByStand)
 
 router.get('/nb-stands',statistiquesController.getNbStands)
 
