@@ -157,6 +157,7 @@ export default {
 
         ADD_COMMANDES_USER_COURANT(state, id_commande) {
             console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
+
         },
 
 
@@ -265,6 +266,7 @@ export default {
         {
             state.lang = lang;
         },
+
         SET_ETAT_LIGNE_COMMANDE_EXTERIEUR(state, { id_commande, id_prestation, id_creneau}) {
             console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
         },
