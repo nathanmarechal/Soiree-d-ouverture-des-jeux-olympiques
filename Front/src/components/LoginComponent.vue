@@ -95,7 +95,7 @@ export default {
    */
   methods: {
     translate,
-    ...mapActions('user', ['getPanierUserCourantStore', "getCommandeUserCourantStore"]),
+    ...mapActions('user', ["getCommandeUserCourantStore"]),
 
     closeModal() {
       this.$store.commit('user/SET_LOGIN_MODAL', false);

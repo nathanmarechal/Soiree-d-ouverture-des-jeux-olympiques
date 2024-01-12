@@ -311,9 +311,10 @@ export default {
 
 //-----------------------------------------------------------------Panier-----------------------------------------------------------------------//
 
-        async getPanierUserCourantStore({commit},user_id){
+        async getPanierUserCourantStore({commit, state}){
             try {
-                const panier = await getPanierUserCourant(user_id);
+                const session_id = state.userCourant.session_id
+                const panier = await getPanierUserCourant(session_id);
                 commit('SET_PANIER_USER_COURANT', panier);
                 console.log("le panier dans le store : " + panier)
             } catch (error) {
@@ -322,9 +323,10 @@ export default {
         },
 
 
-        async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
+        async updateQuantityInPanierStore({commit, state}, {id_user, id_prestation, id_creneau , quantite}) {
             try {
-                await updateQuantityInPanier({id_user, id_prestation, id_creneau , quantite});
+                const session_id = state.userCourant.session_id
+                await updateQuantityInPanier(session_id, {id_prestation, id_creneau , quantite});
                 commit('UPDATE_PRESTATION_QUANTITY_IN_PANIER', {id_user, id_prestation, id_creneau , quantite});
             }
             catch (error) {
@@ -332,9 +334,10 @@ export default {
             }
         },
 
-        async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
+        async addPrestationToPanierUserCourantStore({commit, state},{id_user, id_prestation, quantite, id_creneau}){
             try {
-                await addPrestationToPanierUser(id_user, id_prestation, quantite, id_creneau);
+                const session_id = state.userCourant.session_id
+                await addPrestationToPanierUser(session_id, id_prestation, quantite, id_creneau);
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -342,10 +345,10 @@ export default {
         },
 
 
-        async deletePrestationFromPanierUserCourantStore({ commit },{id_user, id_prestation, id_creneau}){
+        async deletePrestationFromPanierUserCourantStore({ commit, state },{id_prestation, id_creneau}){
             try {
-                console.log("deletePrestationFromPanierUserCourantStore " + id_user + " " + id_prestation + " " + id_creneau);
-                await deletePrestationFromPanierUser( id_user, id_prestation, id_creneau);
+                const session_id = state.userCourant.session_id
+                await deletePrestationFromPanierUser( session_id, id_prestation, id_creneau);
                 commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau,});
             } catch (error) {
                 console.error('Error fetching panier:', error);

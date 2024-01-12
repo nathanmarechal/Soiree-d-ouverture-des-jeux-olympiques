@@ -85,18 +85,18 @@ export default {
       if (this.getAllCreneau.length === 0)
         await this.getCreneauStore()
       if (this.getPanierUserCourant.length === 0)
-        await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
+        await this.getPanierUserCourantStore()
     },
     async validerReservation() {
       await this.addPrestationToPanierUserCourantStore({
-        id_prestation: this.prestation.id_prestation,
         id_user: this.getCurrentUser.id_user,
+        id_prestation: this.prestation.id_prestation,
         quantite: this.quantite,
         id_creneau: this.creneau,
       });
       console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
 
-      await this.getPanierUserCourantStore(this.getCurrentUser.id_user)
+      await this.getPanierUserCourantStore()
       this.$emit('close');},
   },
 }

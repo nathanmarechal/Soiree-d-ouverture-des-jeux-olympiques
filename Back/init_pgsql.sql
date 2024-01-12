@@ -382,7 +382,13 @@ INSERT INTO droits(libelle) VALUES
 ('messages-admin'),
 ('messages-user'),
 
-('statistiques-admin')
+('statistiques-admin'),
+('statistiques-prestataire'),
+
+('see_self_panier'),
+('add_self_panier'),
+('update_self_panier'),
+('delete_self_panier')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -419,16 +425,17 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (20,1),
 (21,1),
 (22,1),
-
 (24,1),
-
 (26,1),
-
 (28,1),
 (29,1),
 (30,1),
 (31,1),
 (33,1),
+(35,1),
+(36,1),
+(37,1),
+(38,1),
 
 (4,2),
 (11,2),
@@ -436,9 +443,14 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (25,2),
 (27,2),
 (32,2),
+(34,2),
 
 (4,3),
-(32,3)
+(32,3),
+(35,3),
+(36,3),
+(37,3),
+(38,3)
 ;
 
 INSERT INTO type_zone (libelle) VALUES
@@ -785,6 +797,7 @@ INSERT INTO prestation (libelle, prix, image, id_type_prestation, id_stand,is_av
 INSERT INTO utilisateur (email, password, nom, prenom,solde, code_postal, adresse, commune, id_stand, id_role) VALUES
 ('email1@example.com', 'password1', 'Nom1', 'Prenom1',1000.00, 75001, 'Adresse1', 'Commune1', null, 1),
 ('email2@example.com', 'password2', 'Nom2', 'Prenom2',1000, 75002, 'Adresse2', 'Commune2', 2, 2),
+('email3@example.com', 'password3', 'Nom3', 'Prenom3',1000, 75003, 'Adresse3', 'Commune3', null, 3),
 ('email4@example.com', 'password4', 'Nom4', 'Prenom4',1000, 75004, 'Adresse4', 'Commune4', 3, 2),
 ('email5@example.com', 'password5', 'Nom5', 'Prenom5', 1000,75005, 'Adresse5', 'Commune5', 4, 2),
 ('email6@example.com', 'password4', 'Nom4', 'Prenom4', 1000,75004, 'Adresse4', 'Commune4', 5, 2),

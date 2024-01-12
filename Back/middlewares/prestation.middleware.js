@@ -3,7 +3,7 @@ const usersService = require("../services/users.service");
 
 
 exports.checkPrestationExists = async (req, res, next) => {
-    const id = req.query.id_prestation;
+    const id = req.query.id_prestation || req.body.id_prestation;
 
     if (!id) {
         return res.status(400).send("ID prestation requis.");
@@ -23,18 +23,33 @@ exports.checkPrestationExists = async (req, res, next) => {
     }
 };
 
+exports.checkCreneauExists = async (req, res, next) => {
+    const id = req.query.id_creneau || req.body.id_creneau;
+
+    if (!id) {
+        return res.status(400).send("ID creneau requis.");
+    }
+
+    try {
+        const conn = await pool.connect();
+        const checkResult = await conn.query("SELECT * FROM creneau WHERE id_creneau = $1", [id]);
+        if (checkResult.rows.length === 0) {
+            conn.release();
+            return res.status(404).send("Creneau non trouvée");
+        }
+        conn.release();
+        next();
+    } catch (error) {
+        res.status(500).send("Internal Server Error");
+    }
+};
+
 exports.checkIfPrestationBelongsToUserExists = async (req, res, next) => {
     const session_id = req.query.session_id;
     const id_prestation = req.query.id_prestation;
     const id_stand = req.body.id_stand;
 
-    console.log("id_prestation", id_prestation)
-    console.log("id_stand", id_stand)
-    console.log("session_id", session_id)
-
     const user_courant = await usersService.getUserBySessionIdAsync(session_id);
-
-    console.log("user_courant", user_courant)
 
     try {
         const conn = await pool.connect();

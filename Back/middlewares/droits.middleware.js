@@ -78,8 +78,12 @@ function getRightName(url) {
 
         "/api/messagerie/get-all-conversations":"messages-admin",
         "/api/messagerie/get-conversations-for-user":"messages-user",
-        "/api/messagerie/toggle-resolved-converstation":"messages-admin"
+        "/api/messagerie/toggle-resolved-converstation":"messages-admin",
 
+        "/api/panier/getOwnPanier": "see_self_panier",
+        "/api/panier/addPrestationToOwnPanier": "add_self_panier",
+        "/api/panier/updateOwnPanier": "update_self_panier",
+        "/api/panier/deletePrestationFromPanierOwnUser": "delete_self_panier",
     };
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";

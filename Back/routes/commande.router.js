@@ -96,6 +96,38 @@ router.get("/getSchedule/:id", usersMiddleware.checkUserExists, commandeControll
  */
 router.get("/getCommandesPrestataires/:id", usersMiddleware.checkUserExists, commandeController.getCommandesPrestataires);
 
+/**
+ * @swagger
+ * /api/commande/setetatligne:
+ *   patch:
+ *     summary: Met à jour l'état d'une ligne de commande
+ *     tags: [Commande]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id_prestation
+ *               - id_creneau
+ *               - id_commande
+ *             properties:
+ *               id_prestation:
+ *                 type: integer
+ *                 description: ID de la prestation
+ *               id_creneau:
+ *                 type: integer
+ *                 description: ID du créneau
+ *               id_commande:
+ *                 type: integer
+ *                 description: ID de la commande
+ *     responses:
+ *       '200':
+ *         description: L'état de la ligne de commande a été mis à jour avec succès
+ *       '500':
+ *         description: Erreur interne du serveur
+ */
 router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
 
 router.post("/add", commandeController.addCommande);

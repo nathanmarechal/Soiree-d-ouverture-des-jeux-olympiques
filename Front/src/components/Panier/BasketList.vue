@@ -80,7 +80,7 @@ export default {
     ...mapActions('user', ['deletePrestationFromPanierUserCourantStore']),
     ...mapMutations('user', ['ADD_SCHEDULE']),
     deleteLigne(id_prestation, id_creneau) {
-      this.deletePrestationFromPanierUserCourantStore({id_user : this.getCurrentUser.id_user, id_prestation :id_prestation, id_creneau: id_creneau});
+      this.deletePrestationFromPanierUserCourantStore({id_prestation :id_prestation, id_creneau: id_creneau});
     },
     calculateTotal() {
       const panier = this.getPanierUserCourant;
@@ -94,7 +94,7 @@ export default {
     },
 
 
-    ...mapActions('user', [ "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "getPanierUserCourantStore", "updateSoldeStore"]),
+    ...mapActions('user', [ "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "updateSoldeStore"]),
     ...mapActions('creneau', ['getCreneauStore']),
 
     ajouterdufric(){
