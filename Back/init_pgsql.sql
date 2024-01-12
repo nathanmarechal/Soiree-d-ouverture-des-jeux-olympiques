@@ -845,6 +845,17 @@ INSERT INTO etat_commande (libelle) VALUES
 ('Validée'),
 ('Annulée');
 
+INSERT INTO commande(date_commande, id_user, id_etat_commande)
+VALUES('2024-01-12 09:23:47.123456',2,1)
+;
+
+INSERT INTO ligne_commande(id_commande, id_user, id_prestation, id_creneau, quantite, prix, id_etat_commande)
+VALUES(1,2,25,1,1,17,1),
+(1,2,36,1,1,100,1),
+(1,2,4,1,1,3,2),
+(1,2,23,1,1,15,2)
+;
+
 INSERT INTO text_accueil (description) VALUES
 ('<p style="padding-left: 40px; text-align: justify;">Bienvenue sur le site officiel de la c&eacute;r&eacute;monie d''ouverture des <strong>Jeux Olympiques de 2024 &agrave; Paris&nbsp; se d&eacute;roulant le 26 juillet 2024</strong>, un &eacute;v&eacute;nement qui promet d''&ecirc;tre le point culminant de l''ann&eacute;e, sinon de la d&eacute;cennie ! Pr&eacute;parez-vous &agrave; vivre une exp&eacute;rience extraordinaire qui marquera l''histoire et vous laissera des <strong>souvenirs imp&eacute;rissables</strong>.</p>
 <p style="padding-left: 40px; text-align: justify;">Imaginez-vous au c&oelig;ur de la <strong>Ville Lumi&egrave;re</strong>, entour&eacute; par l''&eacute;l&eacute;gance et le charme de Paris, alors que le monde entier se r&eacute;unit pour c&eacute;l&eacute;brer l''esprit olympique. La c&eacute;r&eacute;monie d''ouverture de Paris 2024 promet d''&eacute;blouir et d''&eacute;merveiller avec un spectacle grandiose, alliant l''art, la musique, la culture et le sport.</p>
