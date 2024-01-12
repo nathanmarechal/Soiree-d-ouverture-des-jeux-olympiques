@@ -90,8 +90,16 @@ function getRightName(url) {
         "/api/statistiques/prestataire/nb-prestation-heure":"statistiques-prestataire",
         "/api/statistiques/prestataire/average-purchase":"statistiques-prestataire",
         "/api/statistiques/prestataire/best-client":"statistiques-prestataire",
-        "/api/statistiques/prestataire/sales-revenue-by-type":"statistiques-prestataire"
-        ,
+        "/api/statistiques/prestataire/sales-revenue-by-type":"statistiques-prestataire",
+
+        "/api/statistiques/best-seller-prestation":"statistiques-admin",
+        "/api/statistiques/new-stand-by-month":"statistiques-admin",
+        "/api/statistiques/nb-stands":"statistiques-admin",
+        "/api/statistiques/nb-prestations-available":"statistiques-admin",
+        "/api/statistiques/nb-users":"statistiques-admin",
+        "/api/statistiques/average-purchase":"statistiques-admin",
+        "/api/statistiques/top-seller-stand":"statistiques-admin",
+        "/api/statistiques/top-avis-stand":"statistiques-admin"
     };
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";

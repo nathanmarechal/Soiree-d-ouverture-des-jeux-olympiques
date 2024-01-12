@@ -17,7 +17,7 @@ const rightMiddleware = require('../middlewares/droits.middleware');
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/best-seller-prestation', statistiquesController.getBestSellerPrestation)
+router.get('/best-seller-prestation',rightMiddleware.checkRight, statistiquesController.getBestSellerPrestation)
 
 /**
  * @swagger
@@ -31,7 +31,7 @@ router.get('/best-seller-prestation', statistiquesController.getBestSellerPresta
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.get('/new-stand-by-month', statistiquesController.getNewStandByMonth)
+router.get('/new-stand-by-month',rightMiddleware.checkRight, statistiquesController.getNewStandByMonth)
 
 /**
  * @swagger
@@ -183,16 +183,16 @@ router.get('/prestataire/average-rating',rightMiddleware.checkRight ,statistique
  */
 router.get('/prestataire/count-rating' ,rightMiddleware.checkRight,statistiquesController.getCountRatingByStand)
 
-router.get('/nb-stands',statistiquesController.getNbStands)
+router.get('/nb-stands',rightMiddleware.checkRight,statistiquesController.getNbStands)
 
-router.get('/nb-prestations-available' ,statistiquesController.getNbPrestationsAvailable)
+router.get('/nb-prestations-available',rightMiddleware.checkRight ,statistiquesController.getNbPrestationsAvailable)
 
-router.get('/nb-users',statistiquesController.getNbUsers)
+router.get('/nb-users',rightMiddleware.checkRight,statistiquesController.getNbUsers)
 
-router.get('/average-purchase' ,statistiquesController.getAveragePurchase)
+router.get('/average-purchase',rightMiddleware.checkRight ,statistiquesController.getAveragePurchase)
 
-router.get('/top-seller-stand' ,statistiquesController.getTopSellerStand)
+router.get('/top-seller-stand',rightMiddleware.checkRight ,statistiquesController.getTopSellerStand)
 
-router.get('/top-avis-stand' ,statistiquesController.getTopAvisStand)
+router.get('/top-avis-stand',rightMiddleware.checkRight ,statistiquesController.getTopAvisStand)
 
 module.exports = router;
