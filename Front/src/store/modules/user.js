@@ -175,11 +175,8 @@ export default {
 
 
         DELETE_PRESTATION_FROM_PANIER_USER_COURANT(state, payload) {
-            //console.log("DELETE_PRESTATION_FROM_PANIER_USER_COURANT " + payload.id_prestation + " " + payload.id_creneau);
-            //console.log(state.userCourant.panier)
             state.userCourant.panier = state.userCourant.panier.filter(item =>
                 !(item.id_prestation === payload.id_prestation && item.id_creneau === payload.id_creneau));
-            //console.log(state.userCourant.panier)
         },
 
         UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
@@ -275,7 +272,6 @@ export default {
 
 
         UPDATE_USER_WO_PASSWORD(state, payload) {
-            console.log("UPDATE_USER_WO_PASSWORD AHAHAHAHAHHAHAHAHAHAHAH " + payload.nom + " " + payload.prenom + " " + payload.email + " " + payload.adresse + " " + payload.code_postal + " " + payload.commune);
             state.userCourant.nom = payload.nom;
             state.userCourant.prenom = payload.prenom;
             state.userCourant.email = payload.email;
@@ -388,7 +384,6 @@ export default {
         },
 
         async setEtatLigneCommandeExterieurStore({ commit }, { id_commande, id_prestation, id_creneau}) {
-            console.log({ id_commande, id_prestation, id_creneau})
             try {
                 await setEtatLigneCommandeExterieur({ id_commande, id_prestation, id_creneau});
                 commit('SET_ETAT_LIGNE_COMMANDE_EXTERIEUR', { id_commande, id_prestation, id_creneau});

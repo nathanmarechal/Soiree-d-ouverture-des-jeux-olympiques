@@ -71,7 +71,7 @@ export default {
         async updateIsAvailablePrestationStore({ rootState, commit }, body) {
             try {
                 console.log("session_id : "  + rootState.user.userCourant.session_id)
-                await updateIsAvailablePrestation(body.id, rootState.user.userCourant.session_id);
+                await updateIsAvailablePrestation(body.id, body, rootState.user.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
@@ -110,10 +110,7 @@ export default {
             }
         },
 
-
 //-----------------------------------------------------------------TypePrestation-----------------------------------------------------------------------//
-
-
 
         async getTypePrestationsStore({ commit }) {
             try {
