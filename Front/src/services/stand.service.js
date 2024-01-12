@@ -59,12 +59,13 @@ async function getStandByUserId(id) {
     return answer
 }
 
-async function updateDescriptionStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands/description?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATEDESCRIPTIONSTAND')
+async function updateDescriptionStandFromAPI(body, session_id) {
+    console.log("body, session_id ", body, session_id)
+    return patchRequest('/stands/description?session_id=' + session_id, body, 'UPDATEDESCRIPTIONSTAND')
 }
 
-async function updateDescriptionStand(id, body, session_id) {
-    let answer = await updateDescriptionStandFromAPI(id, body, session_id)
+async function updateDescriptionStand(body, session_id) {
+    let answer = await updateDescriptionStandFromAPI(body, session_id)
     return answer
 }
 

@@ -18,7 +18,7 @@ async function deleteRole(id,session_id) {
 }
 
 async function deleteRolefromAPI(id,session_id) {
-    let answer = deleteRequest('/roles/delete?id=' + id+"&session_id="+session_id, 'DELETEROLE')
+    let answer = await deleteRequest('/roles/delete?id_role=' + id+"&session_id="+session_id, 'DELETEROLE')
     return answer
 }
 

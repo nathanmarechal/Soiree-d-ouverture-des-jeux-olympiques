@@ -98,18 +98,15 @@ async function getUserBySessionIdAsync(session_id) {
 const updateUser = (id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand, callback) => {
     updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune, solde, id_role, id_stand)
         .then(res => {
-            console.log("updateUserAsync resolved");
             callback(null, res);
         })
         .catch(error => {
-            console.log("updateUserAsync error:", error);
             callback(error, null);
         }) 
 }
 
 async function updateUserAsync(id_user, prenom, nom, email, password, adresse, code_postal, commune,solde, id_role, id_stand) {
     try {
-        console.log("Entered updateUserAsync");
         const conn = await pool.connect();
         let result;
         result = await conn.query(
@@ -117,7 +114,6 @@ async function updateUserAsync(id_user, prenom, nom, email, password, adresse, c
             [id_user, email, password, nom, prenom, code_postal, adresse, commune, solde, id_stand, id_role]
         );
         conn.release();
-        console.log("result.rows[0] = ", result.rows[0]);
         return result.rows;
     } catch (error) {
         console.error('Error in updateUserAsync:', error);
@@ -137,8 +133,7 @@ const deleteUser = (id, callback) => {
 }
 
 async function deleteUserAsync(id) {
-    console.log("id = "+id)
-    try {   
+    try {
         const conn = await pool.connect();
         await conn.query('DELETE FROM utilisateur WHERE id_user = $1', [id]);
         conn.release();
@@ -162,7 +157,6 @@ const updateSolde = (id, newsolde, callback) => {
 async function updateSoldeAsync(id_user, newsolde) {
     try {
         const conn = await pool.connect();
-        console.log("TEMA LA GUEULE DU STEAK"+newsolde + " " + id_user)
         const result = await conn.query("UPDATE utilisateur SET solde = $1 WHERE id_user = $2 RETURNING *", [newsolde, id_user]);
         conn.release();
         return result.rows;
@@ -172,8 +166,8 @@ async function updateSoldeAsync(id_user, newsolde) {
     }
 }
 
-const updateUserCourantWoPassword = (id_user, prenom, nom, email, adresse, code_postal, commune, callback) => {
-    updateUserCourantWoPasswordAsync(id_user, prenom, nom, email, adresse, code_postal, commune)
+const updateUserCourantWoPassword = (id, prenom, nom, email, adresse, code_postal, commune, callback) => {
+    updateUserCourantWoPasswordAsync(id, prenom, nom, email, adresse, code_postal, commune)
         .then(res => {
             callback(null, res);
         })
@@ -207,13 +201,9 @@ const createUserWithStand =  (prenom, nom, email, password, adresse, code_postal
 }
 
 async function createUserWithStandAsync(prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement) {
-    console.log(id_emplacement + "eeessees3")
-    console.log('Parameters:', prenom, nom, email, password, adresse, code_postal, commune, id_role, nom_stand, image_stand, description_stand, prix, id_emplacement);
     let id_stand;
     try {
         id_stand = await createStandAttenteAsync(nom_stand, image_stand, description_stand, prix, id_emplacement);
-        console.log(nom_stand, image_stand, description_stand, prix)
-        console.log("id_stand creer = " + id_stand)
         const conn = await pool.connect();
         const res = await conn.query("INSERT INTO utilisateurAttente (email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role,solde) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,0) RETURNING *", [email, password, nom, prenom, code_postal, adresse, commune, id_stand, id_role]);
         conn.release();
@@ -231,7 +221,6 @@ async function createStandAttenteAsync(nom_stand, image_stand, description_stand
             "INSERT INTO standAttente (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING id_stand", [nom_stand, image_stand, description_stand, prix, id_emplacement]
         );
         conn.release();
-        console.log("id_stand du stand creer la tu coannais = " + result.rows[0].id_stand)
         return result.rows[0].id_stand;
     } catch (error) {
         console.error('Error in createStandAsync:', error);
@@ -280,7 +269,6 @@ async function acceptUserAsync(id_user) {
         const user = resultUser.rows[0];
         const resultStand = await conn.query("SELECT * FROM standAttente WHERE id_stand = $1", [user.id_stand]);
         const stand = resultStand.rows[0];
-        console.log("stand : ", stand)
         const standAccept = await conn.query("INSERT INTO stand (nom_stand, image_stand, description_stand, date_achat, prix, id_emplacement) VALUES ($1, $2, $3, CURRENT_DATE, $4, $5) RETURNING *", [stand.nom_stand, stand.image_stand, stand.description_stand, stand.prix, stand.id_emplacement]);
         await conn.query("DELETE FROM standAttente WHERE id_stand = $1", [user.id_stand])
         const id_stand_accept = standAccept.rows[0].id_stand;

@@ -74,7 +74,7 @@ export default {
         async updateDescriptionStandStore({ rootState, commit }, {id, body}) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                await updateDescriptionStand(id, body, session_id);
+                await updateDescriptionStand(body, session_id);
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);

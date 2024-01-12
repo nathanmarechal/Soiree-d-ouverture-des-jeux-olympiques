@@ -99,22 +99,22 @@ async function deleteUserFromAPI(id,session_id) {
     return deleteRequest('/users/delete?id_user='+ id+"&session_id="+session_id, 'DELETEUSER')
 }
 
-async function updateSolde(session_id, id_user, body) {
+async function updateSolde(session_id, body) {
     body = {solde: body}
-    return await updateSoldeFromAPI(session_id, id_user, body)
+    return await updateSoldeFromAPI(session_id, body)
 }
 
-async function updateSoldeFromAPI(session_id, id_user, body) {
-    return patchRequest('/users/updateSolde?session_id='+session_id+'&id_user='+id_user,body, 'UPDATESOLDE')
+async function updateSoldeFromAPI(session_id, body) {
+    return patchRequest('/users/updateSolde?session_id='+session_id,body, 'UPDATESOLDE')
 }
 
-async function updateUserCourantWoPassword(session_id, id, body) {
-    let answer = await updateUserCourantWoPasswordFromAPI(session_id,id, body)
+async function updateUserCourantWoPassword(session_id, body) {
+    let answer = await updateUserCourantWoPasswordFromAPI(session_id, body)
     return answer
 }
 
-async function updateUserCourantWoPasswordFromAPI(session_id, id, body) {
-    return patchRequest('/users/updateUserCourantWoPassword?session_id='+session_id + '&id_user='+id, body, 'UPDATEUSERCOURANTWOPASSWORD')
+async function updateUserCourantWoPasswordFromAPI(session_id, body) {
+    return patchRequest('/users/updateUserCourantWoPassword?session_id='+session_id, body, 'UPDATEUSERCOURANTWOPASSWORD')
 }
 
 async function getUserFromSessionIdFromAPI(session_id) {

@@ -121,9 +121,12 @@ export default {
 
         async deleteRoleStore({rootState, commit}, id) {
             try {
-                const data = await deleteRole(id, rootState.user.userCourant.session_id);
-                //console.log("datadelete: ", data[0].id_role);
-                commit('DELETE_ROLE', data[0].id_role);
+                const res = await deleteRole(id, rootState.user.userCourant.session_id);
+                if (res.error != 1)
+                {
+                    commit('DELETE_ROLE', id);
+                }
+
             } catch (err) {
                 console.error("Error in deleteRoleStore():", err);
             }

@@ -1,4 +1,5 @@
 const standsService = require("../services/stands.service");
+const usersService = require("../services/users.service");
 
 exports.getStands = (req, res) => {
     standsService.getAllStands((error, data) => {
@@ -90,10 +91,14 @@ exports.uploadingPictureDescription = (req, res) => {
     });
 };
 
-exports.updateStandDescription = (req, res) => {
-    const id = req.query.id_stand;
+exports.updateStandDescription = async (req, res) => {
+    const session_id = req.query.session_id;
+
+    const user_courant = await usersService.getUserBySessionIdAsync(session_id);
+
     const body = req.body;
-    standsService.updateStandDescription(id, body, (error, data) => {
+
+    standsService.updateStandDescription(user_courant.id_user, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

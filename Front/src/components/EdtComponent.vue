@@ -15,18 +15,23 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import {translate} from "../lang/translationService";
 
 export default {
   methods: {translate},
+  async loadData() {
+    await this.getScheduleByUserIdStore(this.getCurrentUser.id_user);
+  },
+  ...mapActions('user', ['getScheduleByUserIdStore']),
   computed: {
     ...mapGetters('user', ['getCurrentUser']),
     schedule() {
       return this.getCurrentUser.schedule;
     }
   },
-  mounted() {
+  async mounted() {
+    await this.loadData();
     console.log(JSON.stringify(this.getCurrentUser.schedule) + " dans le vue");
   }
 

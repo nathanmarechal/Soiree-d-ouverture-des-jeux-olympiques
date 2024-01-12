@@ -115,6 +115,7 @@
   "shopC_1": "Add to cart",
 
   "login_title": "Log in",
+  "login_errorPasswordForm" : "Wrong password or e-mail",
   "login_0": "Email : ",
   "login_1":"Password : ",
   "login_2":"Log in",
@@ -394,5 +395,14 @@
   "protectedData_2": " : ",
   "protectedData_3": "is associated with other data, please remove them before deleting this",
 
-  "EditAreas_1": "Delete"
+  "EditAreas_1": "Delete",
+
+  "roleList_droits": "Rights",
+
+  "roleList_droits": "Rights",
+  "droitCategory": "Rights Categories",
+  "allCategories": "All Categories",
+  "droit": "Rights : ",
+  "editRole_confirm": "Confirm",
+  "editRole_annuler": "Cancel"
 }

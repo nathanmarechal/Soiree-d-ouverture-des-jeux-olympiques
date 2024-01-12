@@ -1,9 +1,10 @@
 <template>
   <div v-if="isLoginOpen">
     <div class="d-flex justify-content-center align-items-center overlay">
-      <div class="login-box bg-white p-4 rounded shadow">
+      <div class=" d-flex flex-column gap-3 login-box bg-white p-4 rounded shadow">
         <h2 class="text-center mb-4">{{translate("login_title")}}</h2>
-        <form @submit.prevent="submitForm">
+        <div v-if="incorrectLog"><span style="color: red">{{translate("login_errorPasswordForm")}}</span></div>
+        <form  class="d-flex flex-column gap-1" @submit.prevent="submitForm">
           <div class="form-group">
             <label for="email">{{translate("login_0")}}</label>
             <input type="email" v-model="email" id="email" class="form-control" required>
@@ -14,8 +15,17 @@
           </div>
           <button type="submit" class="btn btn-primary w-100">{{translate("login_2")}}</button>
         </form>
-        <a @click="closeModal"> <router-link to="/sign-up" > {{translate("login_3")}}</router-link> </a>
-        <button @click="closeModal" class="btn btn-danger w-100">{{translate("login_4")}}</button>
+
+        <div class="d-flex flex-column gap-1">
+          <button type="button" class="btn btn-warning" @click="closeModalAndNavigate">
+            {{ translate("login_3") }}
+          </button>
+          <button @click="closeModal" class="btn btn-danger w-100">
+            {{ translate("login_4") }}
+          </button>
+        </div>
+
+
 
       </div>
     </div>
@@ -37,8 +47,8 @@ export default {
     return {
       sessionId: '',
       email: '',
-
-      password: '', //variable locale
+      incorrectLog : false,
+      password: '',
     }
   },
 
@@ -91,6 +101,11 @@ export default {
       this.$store.commit('user/SET_LOGIN_MODAL', false);
     },
 
+    closeModalAndNavigate() {
+      this.closeModal();
+      this.$router.push("/sign-up");
+    },
+
     isEmpty() {
       return this.email === '' || this.password === '';
     },
@@ -103,13 +118,14 @@ export default {
     },
 
     submitForm() {
+      this.incorrectLog = false;
+
       if (this.isEmailValid() && this.isPasswordValid()) {
         //alert('Formulaire envoyé !')
         getSession(this.email,this.password)
             .then(res=> {
-              //getUserData()
               this.sessionId = res;
-              if(this.sessionId!=""){
+              if(this.sessionId.error!=1){
                 getUserFromSessionId(this.sessionId)
                     .then(res=>{
                       this.currentUser.id_user = res.id_user;
@@ -150,12 +166,15 @@ export default {
               }
               else
               {
-                alert(this.translate("emailOuMdpIncorrect"))
-                this.email=""
-                this.password=""
+                this.incorrectLog = true; // Activation du message d'erreur
+                this.email = "";
+                this.password = "";
               }
-            })
-
+            }).catch(error => {
+          // Gérer d'autres erreurs potentielles ici
+          console.error("Erreur lors de la connexion", error);
+          this.incorrectLog = true; // Activation du message d'erreur en cas d'erreur système
+        });
       } else {
         alert('Veuillez remplir correctement le formulaire !')
       }

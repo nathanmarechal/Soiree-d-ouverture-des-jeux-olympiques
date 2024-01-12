@@ -114,10 +114,11 @@
   "shopC_1": "Réserver",
 
   "login_title": "Se connecter",
+  "login_errorPasswordForm" : "Mot de passe ou e-mail inccorect",
   "login_0": "Email : ",
   "login_1":"Mot de passe : ",
   "login_2":"Se connecter",
-  "login_3":"s'inscrire",
+  "login_3":"S'inscrire",
   "login_4":"Fermer",
 
 
@@ -402,5 +403,12 @@
   "protectedData_2": " suivant : ",
   "protectedData_3":"est lié à d'autres données, veuillez les supprimer avant de supprimer ce",
 
-  "EditAreas_1": "Supprimer"
+  "EditAreas_1": "Supprimer",
+
+  "roleList_droits": "Droits",
+  "droitCategory": "Catégories de droits",
+  "allCategories": "Toutes les catégories",
+  "droit": "Droits : ",
+  "editRole_confirm": "Confirmer",
+  "editRole_annuler": "Annuler"
 }

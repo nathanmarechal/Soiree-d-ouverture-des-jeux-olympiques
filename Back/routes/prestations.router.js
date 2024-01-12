@@ -21,9 +21,9 @@ router.get("/get", prestationController.getPrestations);
 
 /**
  * @swagger
- * /api/prestations/add:
+ * /api/prestations/addOwnPrestation:
  *   post:
- *     summary: Creates a new prestation
+ *     summary: Creates a new prestation for the current user
  *     tags: [Prestation]
  *     parameters:
  *       - in: query
@@ -78,13 +78,13 @@ router.get("/get", prestationController.getPrestations);
  *       '500':
  *         description: Internal server error
  */
-router.post("/add", rightMiddleware.checkRight, prestationMiddleware.checkTypePrestationExists, standMiddleware.checkStandExists, prestationController.addPrestation);
+router.post("/addOwnPrestation", rightMiddleware.checkRight, prestationMiddleware.checkIfPrestationBelongsToUserExists, prestationMiddleware.checkTypePrestationExists, standMiddleware.checkStandExists, prestationController.addPrestation);
 
 /**
  * @swagger
- * /api/prestations/update/is-available:
+ * /api/prestations/updateOwnPrestation/is-available:
  *   patch:
- *     summary: Updates the availability of a prestation
+ *     summary: Updates the availability of a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
  *       - in: query
@@ -104,18 +104,20 @@ router.post("/add", rightMiddleware.checkRight, prestationMiddleware.checkTypePr
  *         description: Prestation availability updated successfully
  *       '400':
  *         description: Invalid request
+ *       '403':
+ *         description: Interdiction
  *       '404':
  *         description: Non trouvé
  *       '500':
  *         description: Internal server error
  */
-router.patch("/update/is-available", prestationMiddleware.checkPrestationExists, prestationController.updateIsAvailablePrestation);
+router.patch("/updateOwnPrestation/is-available", rightMiddleware.checkRight, prestationMiddleware.checkIfPrestationBelongsToUserExists, prestationMiddleware.checkPrestationExists, prestationController.updateIsAvailablePrestation);
 
 /**
  * @swagger
- * /api/prestations/update:
+ * /api/prestations/updateOwnPrestation:
  *   patch:
- *     summary: Updates a prestation
+ *     summary: Updates a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
  *       - in: query
@@ -173,13 +175,13 @@ router.patch("/update/is-available", prestationMiddleware.checkPrestationExists,
  *       '500':
  *         description: Internal server error
  */
-router.patch("/update", rightMiddleware.checkRight, prestationMiddleware.checkPrestationExists, prestationMiddleware.checkTypePrestationExists, standMiddleware.checkStandExists, prestationController.updatePrestation);
+router.patch("/updateOwnPrestation", rightMiddleware.checkRight, prestationMiddleware.checkIfPrestationBelongsToUserExists, prestationMiddleware.checkPrestationExists, prestationMiddleware.checkTypePrestationExists, standMiddleware.checkStandExists, prestationController.updatePrestation);
 
 /**
  * @swagger
- * /api/prestations/delete:
+ * /api/prestations/deleteOwnPrestation:
  *   delete:
- *     summary: Deletes a prestation
+ *     summary: Deletes a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
  *       - in: query
@@ -206,7 +208,7 @@ router.patch("/update", rightMiddleware.checkRight, prestationMiddleware.checkPr
  *       '500':
  *         description: Internal server error
  */
-router.delete("/delete", rightMiddleware.checkRight, prestationMiddleware.checkPrestationExists, prestationController.deletePrestation);
+router.delete("/deleteOwnPrestation", rightMiddleware.checkRight, prestationMiddleware.checkIfPrestationBelongsToUserExists, prestationMiddleware.checkPrestationExists, prestationController.deletePrestation);
 
 router.post("/add/picture", prestationController.uploadPicturePresatation);
 
