@@ -216,7 +216,9 @@ export default {
           const descriptionContent = this.$refs.myEditor.editor.getContent();
           this.stand.description_stand = descriptionContent;
         }
+        console.log("stand :", this.stand)
         if (this.imageRaw) {
+          console.log("imageRaw :", this.imageRaw)
           await uploadImageStand(this.imageRaw);
         }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
@@ -280,6 +282,7 @@ export default {
       console.log("maman", data, this.getAllUsers.find(user => user.id_stand === this.stand.id_stand))
       data = data.filter(user => user.id_role === 2);
       //verifie si l'utilisateur peut avoir un stand 
+      this.loadData();
       return data
     }
   },
