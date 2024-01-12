@@ -21,8 +21,10 @@
             <td>{{ user.email }}</td>
             <td>{{ getRoleName(user.id_role) }}</td>
             <td>
-              <router-link v-if="!isProtectorDelete" :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
-              <button class="red-button" @click="removeUser(user.id_user)">{{translate("userList_6")}}</button>
+              <div v-if="!isCurrentUser(user)">
+                <router-link v-if="!isProtectorDelete" :to="{ name: 'AdminEditUsers', params: { selected_user: user } }" class="btn btn-primary">{{translate("userList_5")}}</router-link>
+                <button class="red-button" @click="removeUser(user.id_user)">{{translate("userList_6")}}</button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -69,6 +71,9 @@
       }
     },
     methods: {
+      isCurrentUser(user){
+        return user.id_user === this.getCurrentUser.id_user
+      },
       translate,
       ...mapActions('roleEtDroit', ['getRolesStore']),
       ...mapActions('user', ['getUsersStore', 'deleteUserStore']),
