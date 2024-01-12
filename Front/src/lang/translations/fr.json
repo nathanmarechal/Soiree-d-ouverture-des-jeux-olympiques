@@ -114,6 +114,7 @@
   "shopC_1": "Réserver",
 
   "login_title": "Se connecter",
+  "login_errorPasswordForm" : "Mot de passe ou e-mail inccorect",
   "login_0": "Email : ",
   "login_1":"Mot de passe : ",
   "login_2":"Se connecter",

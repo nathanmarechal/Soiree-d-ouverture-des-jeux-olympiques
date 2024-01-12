@@ -115,6 +115,7 @@
   "shopC_1": "Add to cart",
 
   "login_title": "Log in",
+  "login_errorPasswordForm" : "Wrong password or e-mail",
   "login_0": "Email : ",
   "login_1":"Password : ",
   "login_2":"Log in",
