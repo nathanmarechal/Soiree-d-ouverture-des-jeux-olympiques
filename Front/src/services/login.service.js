@@ -5,9 +5,7 @@ async function getSessionFromApi(userEmail,password) {
 }
 
 async function getSession(userEmail, password){
-    //console.log("getting a token for "+userEmail+", "+password);
     let answer = await getSessionFromApi(userEmail,password)
-    //console.log("token : "+answer);
     return answer;
 }
 

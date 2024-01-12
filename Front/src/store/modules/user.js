@@ -234,7 +234,6 @@ export default {
             });
         },
         UPDATE_SOLDE(state, newsolde) {
-            console.log("update solde " + newsolde);
             state.userCourant.solde = parseFloat(newsolde);
         },
 
@@ -430,7 +429,7 @@ export default {
         async updateUserCourantWoPasswordStore({ commit, state}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
                 let session_id = state.userCourant.session_id
-                await updateUserCourantWoPassword( session_id ,id_user, {nom, prenom, email, adresse, code_postal, commune});
+                await updateUserCourantWoPassword( session_id, {nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);
@@ -438,12 +437,10 @@ export default {
         },
 
 
-        async updateSoldeStore({ commit, state }, {id_user, solde}) {
+        async updateSoldeStore({ commit, state }, {solde}) {
             try {
                 const session_id = state.userCourant.session_id
-                console.log("updateSoldeStore: ", id_user, solde)
-                await updateSolde(session_id, id_user, solde);
-                console.log("updateSoldeStore: ", id_user, solde)
+                await updateSolde(session_id, solde);
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
                 console.error("Error in updateSoldeStore():", err);

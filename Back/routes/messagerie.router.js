@@ -9,13 +9,20 @@ router = express.Router();
  *   get:
  *     summary: Retrieves all conversations
  *     tags: [Messagerie]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID for the user
  *     responses:
  *       '200':
  *         description: All conversations retrieved successfully
  *       '500':
  *         description: Internal server error
  */
-router.get("/get-all-conversations",rightMiddleware.checkRight, messagerieController.getConversations);
+router.get("/get-all-conversations", rightMiddleware.checkRight, messagerieController.getConversations);
 
 router.get("/get-conversations-for-user",rightMiddleware.checkRight, messagerieController.getConversationsForUser);
 
@@ -28,3 +35,4 @@ router.post("/create-conversation", messagerieController.createConversation);
 router.patch("/toggle-resolved-converstation",rightMiddleware.checkRight, messagerieController.toggleResolvedConversation);
 
 module.exports = router
+

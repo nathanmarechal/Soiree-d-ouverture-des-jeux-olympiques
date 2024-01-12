@@ -72,12 +72,6 @@ router.get("/get-by-id", standsMiddleware.checkStandExists, standsController.get
  *         description: ID de session pour l'authentification
  *         schema:
  *           type: string
- *       - in: query
- *         name: id_stand
- *         required: true
- *         description: ID du stand à mettre à jour
- *         schema:
- *           type: integer
  *     requestBody:
  *       required: true
  *       content:
@@ -98,7 +92,7 @@ router.get("/get-by-id", standsMiddleware.checkStandExists, standsController.get
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/description", rightMiddleware.checkRight, standsMiddleware.checkStandExists, standsController.updateStandDescription);
+router.patch("/description", rightMiddleware.checkRight, standsController.updateStandDescription);
 
 
 /**

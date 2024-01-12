@@ -336,6 +336,7 @@ INSERT INTO droits(libelle) VALUES
 ('see_users'),
 ('create_users'),
 ('update_users'),
+('update_self_users'),
 ('delete_users'),
 
 ('see_waiting_users'),
@@ -344,6 +345,7 @@ INSERT INTO droits(libelle) VALUES
 
 ('create_stands'),
 ('update_stands'),
+('update_self_stands'),
 ('delete_stands'),
 
 ('create_zones'),
@@ -358,9 +360,19 @@ INSERT INTO droits(libelle) VALUES
 ('update_roles'),
 ('delete_roles'),
 
+
 ('create_prestations'),
+
+('create_self_prestations'),
+
 ('update_prestations'),
+
+('update_self_prestations'),
+
 ('delete_prestations'),
+
+('delete_self_prestations'),
+
 
 ('create_avis'),
 ('delete_avis'),
@@ -368,7 +380,9 @@ INSERT INTO droits(libelle) VALUES
 ('update_home_page'),
 
 ('messages-admin'),
-('messages-user')
+('messages-user'),
+
+('statistique-admin')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -404,59 +418,22 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (24,1),
 (25,1),
 (26,1),
-(1,2),
-(2,2),
-(3,2),
+(27,1),
+(28,1),
+(29,1),
+(30,1),
+(31,1),
+(33,1),
+
 (4,2),
-(5,2),
-(6,2),
-(7,2),
-(8,2),
-(9,2),
-(10,2),
 (11,2),
-(12,2),
-(13,2),
-(14,2),
-(15,2),
-(16,2),
-(17,2),
-(18,2),
-(19,2),
-(20,2),
-(21,2),
-(22,2),
 (23,2),
-(24,2),
 (25,2),
 (27,2),
-(1,3),
-(2,3),
-(3,3),
-(4,3),
-(5,3),
-(6,3),
-(7,3),
-(8,3),
-(9,3),
-(10,3),
-(11,3),
-(12,3),
-(13,3),
-(14,3),
-(15,3),
-(16,3),
-(17,3),
-(18,3),
-(19,3),
-(20,3),
-(21,3),
-(22,3),
-(23,3),
-(24,3),
-(25,3),
-(27,3)
+(32,2),
 
+(4,3),
+(32,3)
 ;
 
 INSERT INTO type_zone (libelle) VALUES
@@ -894,7 +871,5 @@ VALUES
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())
 ;
-select * from text_accueil;
 
-select * from utilisateur;
-
+SELECT p FROM prestation p JOIN utilisateur u ON p.id_stand = u.id_stand WHERE p.id_stand = 4 AND u.id_stand = 4;

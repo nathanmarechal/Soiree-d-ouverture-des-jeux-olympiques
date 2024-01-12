@@ -142,11 +142,14 @@ exports.deleteUser = (req, res) => {
     });
 }
 
-exports.updateSolde = (req, res) => {
-    const id = req.query.id_user;
+exports.updateSolde = async (req, res) => {
+    const session_id = req.query.session_id;
+
+    const user_courant = await usersService.getUserBySessionIdAsync(session_id);
+
     const newsolde = req.body.solde;
 
-    usersService.updateSolde(id, newsolde, (error, data) => {
+    usersService.updateSolde(user_courant.id_user, newsolde, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
@@ -155,8 +158,13 @@ exports.updateSolde = (req, res) => {
     });
 }
 
-exports.updateUserCourantWoPassword = (req, res) => {
-    const id = req.query.id_user;
+exports.updateUserCourantWoPassword = async (req, res) => {
+
+    const session_id = req.query.session_id;
+    const user_courant = await usersService.getUserBySessionIdAsync(session_id);
+
+    console.log(user_courant)
+
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const email = req.body.email;
@@ -164,7 +172,9 @@ exports.updateUserCourantWoPassword = (req, res) => {
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
 
-    usersService.updateUserCourantWoPassword(id, nom, prenom, email, adresse, code_postal, commune, (error, data) => {
+    console.log("session_id : " + session_id + " id : " + user_courant.id_user + " nom : " + nom + " prenom : " + prenom + " email : " + email + " adresse : " + adresse + " code_postal : " + code_postal + " commune : " + commune)
+
+    usersService.updateUserCourantWoPassword(user_courant.id_user, nom, prenom, email, adresse, code_postal, commune, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

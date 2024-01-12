@@ -180,13 +180,6 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *         description: Identifiant de la session
  *         schema:
  *           type: string
- *       - in: query
- *         name: id_user
- *         required: true
- *         description: ID de l'utilisateur dont le solde doit être mis à jour
- *         schema:
- *           type: integer
- *           format: int64
  *     requestBody:
  *       required: true
  *       content:
@@ -207,7 +200,7 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *       '500':
  *         description: Erreur interne
  */
-router.patch("/updateSolde", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersController.updateSolde);
+router.patch("/updateSolde", rightMiddleware.checkRight, usersController.updateSolde);
 
 
 /**
@@ -223,13 +216,6 @@ router.patch("/updateSolde", rightMiddleware.checkRight, usersMiddleware.checkUs
  *         description: ID de session pour l'authentification
  *         schema:
  *           type: string
- *       - in: query
- *         name: id_user
- *         required: true
- *         description: ID de l'utilisateur à mettre à jour
- *         schema:
- *           type: integer
- *           format: int64
  *     requestBody:
  *       required: true
  *       content:
@@ -270,7 +256,7 @@ router.patch("/updateSolde", rightMiddleware.checkRight, usersMiddleware.checkUs
  *       '500':
  *         description: Internal error
  */
-router.patch("/updateUserCourantWoPassword", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
+router.patch("/updateUserCourantWoPassword", rightMiddleware.checkRight, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
 
 
 /**

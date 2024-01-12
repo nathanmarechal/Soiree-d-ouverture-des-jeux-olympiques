@@ -98,7 +98,7 @@ export default {
     ...mapActions('creneau', ['getCreneauStore']),
 
     ajouterdufric(){
-      this.updateSoldeStore({id_user : this.getCurrentUser.id_user, solde : this.getCurrentUser.solde + 100})
+      this.updateSoldeStore({solde : this.getCurrentUser.solde + 100})
     },
 
     modifierPanier() {
@@ -130,7 +130,7 @@ export default {
       });
 
       let newSolde = this.getCurrentUser.solde - this.calculateTotal();
-      await this.updateSoldeStore({id_user: this.getCurrentUser.id_user, solde: newSolde})
+      await this.updateSoldeStore({solde: newSolde})
       await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
       await this.getCommandeUserCourantStore(this.getCurrentUser.id_user);
       this.$store.commit('user/SET_PANIER_USER_COURANT', [])

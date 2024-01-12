@@ -1,4 +1,5 @@
-const pool = require("../database/db");
+const pool = require("../database/db")
+const usersService = require("../services/users.service")
 
 exports.checkRight = async (req, res, next) => {
     try {
@@ -14,13 +15,16 @@ exports.checkRight = async (req, res, next) => {
         }
         console.log("sessionId", sessionId)
         const hasRight = await checkRight(sessionId, rightName);
+
         if (!hasRight) {
-            return res.status(403).send("L'utilisateur courant ne dispose pas de ce droit");
+            console.log(`User does not have right ${rightName}`);
+            res.status(403).send("L'utilisateur courant ne dispose pas de ce droit");
         }
-        console.log("sessionId", sessionId)
-        next();
+        else{
+            next();
+        }
     } catch (error) {
-        return res.status(400).send(`Erreur: ${error}`);
+        res.status(400).send(`Erreur: ${error}`);
     }
 };
 
@@ -28,8 +32,10 @@ function getRightName(url) {
     const paths = {
         "/api/users/get": "see_users",
         "/api/users/update": "update_users",
-        "/api/users/updateSolde": "update_users",
-        "/api/users/updateUserCourantWoPassword": "update_users",
+
+        "/api/users/updateSolde": "update_self_users",
+        "/api/users/updateUserCourantWoPassword": "update_self_users",
+
         "/api/users/delete": "delete_users",
         "/api/users/create-user": "create_users",
 
@@ -38,7 +44,7 @@ function getRightName(url) {
         "/api/users/acceptUser": "accept_waiting_users",
 
         "/api/stands/add": "create_stands",
-        "/api/stands/description": "update_stands",
+        "/api/stands/description": "update_self_stands",
         "/api/stands/update": "update_stands",
         "/api/stands/delete": "delete_stands",
 
@@ -60,10 +66,10 @@ function getRightName(url) {
         "/api/role-droit/delete": "delete_roles",
         "/api/role-droit/deleteByIdRole": "delete_roles",
 
-        "/api/prestations/add": "create_prestations",
-        "/api/prestations/update": "update_prestations",
-        "/api/prestations/update/is-available": "update_prestations",
-        "/api/prestations/delete": "delete_prestations",
+        "/api/prestations/addOwnPrestation": "create_self_prestations",
+        "/api/prestations/updateOwnPrestation": "update_self_prestations",
+        "/api/prestations/updateOwnPrestation/is-available": "update_self_prestations",
+        "/api/prestations/deleteOwnPrestation": "delete_self_prestations",
 
         "/api/avis/add": "create_avis",
         "/api/avis/deleteAvisByIdStandUser": "delete_avis",
@@ -75,8 +81,6 @@ function getRightName(url) {
         "/api/messagerie/toggle-resolved-converstation":"messages-admin"
 
     };
-
-
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";
 }
