@@ -357,11 +357,11 @@ export default {
 
 //-------------------------------------------------------------------Commande--------------------------------------------------------------------------//
 
-        async getCommandeUserCourantStore({commit},user_id){
+        async getCommandeUserCourantStore({commit, state}){
             try {
-                const commandes = await getCommandeUserCourant(user_id);
+                const session_id = state.userCourant.session_id
+                const commandes = await getCommandeUserCourant(session_id);
                 commit('SET_COMMANDES_USER_COURANT', commandes);
-                console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }

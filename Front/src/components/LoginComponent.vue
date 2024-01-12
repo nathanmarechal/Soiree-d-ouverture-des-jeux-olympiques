@@ -35,7 +35,6 @@
 <script>
 import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
-import {mapActions} from "vuex";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {translate} from "../lang/translationService";
@@ -70,33 +69,8 @@ export default {
       };
     },
   },
-
-
-  /*
-  computed: {
-    email: {
-      get() {
-        return this.$store.getters.getemail;
-      },
-      set(value) {
-        this.$store.commit('SET_EMAIL', value);
-      }
-    },
-    password: {
-      get() {
-        return this.$store.getters.getpassword;
-      },
-      set(value) {
-        this.$store.commit('SET_PASSWORD', value);
-      }
-    },
-  },
-
-   */
   methods: {
     translate,
-    ...mapActions('user', ["getCommandeUserCourantStore"]),
-
     closeModal() {
       this.$store.commit('user/SET_LOGIN_MODAL', false);
     },

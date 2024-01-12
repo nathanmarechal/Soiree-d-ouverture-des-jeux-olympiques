@@ -1,10 +1,12 @@
 const commandeService = require("../services/commande.service");
+const userService = require("../services/users.service");
 
+exports.getCommandeByUserId = async (req, res) => {
+    const session_id = req.query.session_id;
 
-exports.getCommandeByUserId = (req, res) => {
-    const id = req.params.id;
-    console.log("dans le controller" + id)
-    commandeService.getCommandeByUserId(id, (error, data) => {
+    const user = await userService.getUserBySessionIdAsync(session_id);
+
+    commandeService.getCommandeByUserId(user.id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

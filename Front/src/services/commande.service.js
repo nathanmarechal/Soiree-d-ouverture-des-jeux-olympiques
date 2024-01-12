@@ -1,13 +1,13 @@
 import {getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 
-async function getCommandeUserCourant(id_user){
-    let answer = await getCommandeUserCourantFromApi(id_user)
+async function getCommandeUserCourant(session_id){
+    let answer = await getCommandeUserCourantFromApi(session_id)
     return answer;
 }
 
-async function getCommandeUserCourantFromApi(id_user) {
-    return getRequest('/commande/get/' + id_user, 'GETCOMMANDEUSERCOURANT')
+async function getCommandeUserCourantFromApi(session_id) {
+    return getRequest('/commande/getCommandeUserCourant?session_id=' + session_id, 'GETCOMMANDEUSERCOURANT')
 }
 
 async function addCommande(id_user){

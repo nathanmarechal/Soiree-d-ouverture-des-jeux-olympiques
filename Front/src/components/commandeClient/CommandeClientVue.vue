@@ -48,7 +48,7 @@ export default {
     },
 
     async loadData() {
-      await this.getCommandeUserCourantStore(this.getCurrentUser.id_user)
+      await this.getCommandeUserCourantStore()
     },
 
     convertDateFormat(dateString) {

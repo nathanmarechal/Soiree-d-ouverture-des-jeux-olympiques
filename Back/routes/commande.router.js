@@ -3,29 +3,32 @@ var router = express.Router();
 const commandeController = require('../controllers/commande.controller');
 const usersMiddleware = require('../middlewares/users.middleware');
 const commandesMiddleware = require('../middlewares/commandes.middleware');
+const rightMiddleware = require('../middlewares/droits.middleware');
 
 /**
  * @swagger
- * /api/commande/get/{id}:
+ * /api/commande/getCommandeUserCourant:
  *   get:
- *     summary: Retrieves commandes for a specific user by their ID
+ *     summary: Retrieves commandes for the current user based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
  *         required: true
- *         description: User ID to fetch commandes for
+ *         description: Session ID of the user to fetch commandes for
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       '200':
  *         description: Commandes retrieved successfully
  *       '404':
  *         description: User or commande not found
+ *       '403':
+ *         description: Interdiction
  *       '500':
  *         description: Internal server error
  */
-router.get("/get/:id", usersMiddleware.checkUserExists, commandeController.getCommandeByUserId);
+router.get("/getCommandeUserCourant", rightMiddleware.checkRight, commandeController.getCommandeByUserId);
 
 /**
  * @swagger

@@ -28,7 +28,7 @@ const prestationsMiddleware = require("../middlewares/prestation.middleware");
  *       '500':
  *         description: Internal server error
  */
-router.get("/getOwnPanier", rightMiddleware.checkRight, userMiddleware.checkUserExists, panierController.getPanierByUserId);
+router.get("/getOwnPanier", rightMiddleware.checkRight, panierController.getPanierByUserId);
 
 /**
  * @swagger
