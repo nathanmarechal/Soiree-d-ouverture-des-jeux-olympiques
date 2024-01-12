@@ -382,7 +382,7 @@ INSERT INTO droits(libelle) VALUES
 ('messages-admin'),
 ('messages-user'),
 
-('statistique-admin')
+('statistiques-admin')
 ;
 
 INSERT INTO role (libelle) VALUES

@@ -59,7 +59,7 @@
             || currentUserHasRight('delete_roles')">
               <router-link  to="/admin/roles" class = "dp">{{translate("roles")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('statistiques_admin')">
+            <div v-if="currentUserHasRight('statistiques-admin')">
               <router-link to="/admin/statistiques" class = "dp">{{translate("statistiques")}}</router-link>
             </div>
           </b-nav-item-dropdown>
@@ -123,7 +123,7 @@ export default {
           ||this.currentUserHasRight('create_zones') || this.currentUserHasRight('update_zones') || this.currentUserHasRight('delete_zones')
           ||this.currentUserHasRight('create_areas') || this.currentUserHasRight('update_areas') || this.currentUserHasRight('delete_areas')
           ||this.currentUserHasRight('create_roles') || this.currentUserHasRight('update_roles') || this.currentUserHasRight('delete_roles')
-||this.currentUserHasRight('statistiques_admin')
+||this.currentUserHasRight('statistiques-admin')
       return v;
     },
     isUserPrestataire() {
