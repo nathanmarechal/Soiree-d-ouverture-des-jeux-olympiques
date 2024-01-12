@@ -16,12 +16,14 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div v-if="newImage" class="form-group">
         <label for="image_stand">{{ translate("editStand_4") }}</label><br>
         <input type="file" id="image_stand" @change="handleImageUpload" accept="image/*" required>
+        <button type="button" @click="changeImage" class="btn btn-danger">{{ translate("editStand_13") }}</button>
       </div>
-      <div v-if="!croppedImage">
+      <div v-if="!croppedImage && !newImage">
         <img :src="getImageSrc(stand.image_stand)" alt="image_stand" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;">
+        <button type="button" @click="changeImage" class="btn btn-primary">{{ translate("editStand_14") }}</button>
       </div>
       <div v-if="croppedImage">
         <img :src="croppedImage" class="cropped-image" style="max-width: 100%; max-height: 300px; width: auto; height: auto; border-radius: 15%;" />
@@ -34,12 +36,15 @@
 
       <div class="d-flex flex-column">
           <label for="descriptionStand">{{ translate("editStand_5") }}</label>
-          <Editor 
-              ref="myEditor"
-              api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
-          :init="editorConfig" v-model="stand.description_stand"
-          />
+          <Editor
+            ref="myEditor"
+            api-key="q4sg4h4r12ug9lzjx7urncqkiwkg3fevhxjqipuukx146uyt"
+            :init="editorConfig"
+            v-model="stand.description_stand"
+            @init="handleEditorInit"
+        />  
       </div>
+      
       <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-success" @click="toggleSelectEmplacementModal">{{ translate("editStand_6") }}</button>
       </div>
@@ -86,6 +91,7 @@ export default {
       croppedImage: null,
       isImageInputUpload: false,
       imageRaw: null,
+      newImage: false,
       stand: {
         id_stand: null,
         nom_stand: '',
@@ -129,10 +135,16 @@ export default {
       }
     },
     translate,
+    handleEditorInit(editor) {
+      console.log('TinyMCE Editor initialized:', editor);
+    },
     destroyed() {
       if (this.cropper) {
         this.cropper.destroy();
       }
+    },
+    changeImage() {
+      this.newImage = !this.newImage;
     },
     async handleImageUploadDescription(blobInfo, success, failure) {
       const timestamp = Math.floor(Date.now() / 1000);
@@ -160,14 +172,14 @@ export default {
       this.isImageInputUpload = true;
 
       reader.onload = (e) => {
-        this.$refs.image.src = e.target.result;
+        this.$refs.image_stand.src = e.target.result;
         this.initializeCropper();
       };
       reader.readAsDataURL(file);
     },
 
     initializeCropper() {
-      const image = this.$refs.image;
+      const image = this.$refs.image_stand;
       this.cropper = new Cropper(image, {
         aspectRatio: 1,
         viewMode: 3,
@@ -213,18 +225,25 @@ export default {
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
         //if the user changed remove the id_stand from the old user
+        console.log("checkpoint")
+        console.log("user :", user)
+        console.log("stand :", stand)
         if(user.id_stand !== stand.id_stand){
-          const oldUser = this.getAllUsers.find(user => user.id_stand === stand.id_stand);
-          oldUser.id_stand = null;
-          await this.updateUserStore(oldUser);
-          //then add it to the new one
-          user.id_stand = stand.id_stand;
-          await this.updateUserStore(user);
+          if (this.getAllUsers.find(user => user.id_stand === stand.id_stand) != null || this.getAllUsers.find(user => user.id_stand === stand.id_stand) != undefined){
+            const oldUser = this.getAllUsers.find(user => user.id_stand === stand.id_stand);
+            oldUser.id_stand = null;
+            await this.updateUserStore(oldUser);
+            //then add it to the new one
+            user.id_stand = stand.id_stand;
+            await this.updateUserStore(user);
+          }else{
+            user.id_stand = stand.id_stand;
+            await this.updateUserStore(user);
+          }
         }
-        
         this.$router.push('/admin/stands');
       } catch (error) {
-        console.error('Erreur lors de la création du stand :', error);
+        console.error('Erreur lors de la modif du stand :', error);
       }
 
     },
@@ -255,7 +274,9 @@ export default {
       console.log("papa", data, this.getAllUsers.filter(user => user.id_stand === null))
       //add the user that already had this stand
       console.log("id_stand", this.stand.id_stand)
-      data.push(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand));
+      if(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand) != null || this.getAllUsers.find(user => user.id_stand === this.stand.id_stand) != undefined){
+        data.push(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand));
+      } 
       console.log("maman", data, this.getAllUsers.find(user => user.id_stand === this.stand.id_stand))
       data = data.filter(user => user.id_role === 2);
       //verifie si l'utilisateur peut avoir un stand 
