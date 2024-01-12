@@ -97,14 +97,14 @@
       ...mapActions('emplacements', ['getAreasStore']),
       ...mapActions('prestationEtType', ['updatePrestationStore']),
       ...mapActions('stands', ['getStandsStore', 'deleteStandStore']),
+      ...mapActions('roleEtDroit', ['getAllRoleDroitAssociationStore', 'getDroitsStore', 'getRolesStore']),
+      ...mapActions('user', ['getUsersStore', 'updateUserStore']),    
       async loadData() {
-        if (this.getAllStand.length === 0) {
-          await this.getStandsStore();
-        }
-        if (this.getAllArea.length === 0) {
-          await this.getAllArea();
-        }
-
+        await this.getUsersStore();
+        await this.getRolesStore();
+        await this.getDroitsStore();
+        await this.getAllRoleDroitAssociationStore();
+        await this.getStandsStore();
       },
       async removeStand(id) {
         const stand = this.getAllStand.find(stand => stand.id_stand === id);

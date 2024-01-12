@@ -282,7 +282,6 @@ export default {
       console.log("maman", data, this.getAllUsers.find(user => user.id_stand === this.stand.id_stand))
       data = data.filter(user => user.id_role === 2);
       //verifie si l'utilisateur peut avoir un stand 
-      this.loadData();
       return data
     }
   },
