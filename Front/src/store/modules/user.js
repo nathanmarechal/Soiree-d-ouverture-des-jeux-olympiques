@@ -80,6 +80,7 @@ export default {
     getters: {
         getSessionId: state => state.userCourant.session_id,
         getUserId: state => state.userCourant.id_user,
+        getStandId: state => state.userCourant.id_stand,
 
         getAllUsers : state => state.users,
         getAllUsersAttente : state => state.usersAttente,

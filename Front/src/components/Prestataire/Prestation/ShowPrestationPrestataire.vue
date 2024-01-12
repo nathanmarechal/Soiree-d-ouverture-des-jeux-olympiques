@@ -44,7 +44,6 @@ export default {
   },
   async mounted() {
     await this.loadData()
-    this.getPrestationByUserId(this.getCurrentUser.id_stand)
   },
   methods: {
     translate,
@@ -57,6 +56,11 @@ export default {
         if (this.getAllTypePrestation.length === 0) {
           await this.getTypePrestationsStore()
         }
+
+        await this.getPrestationByUserId(this.getCurrentUser.id_stand);
+
+        console.log(this.prestations)
+
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -68,6 +72,7 @@ export default {
         return require('@/assets/clown.png'); // Image par défaut en cas d'erreur
       }
     },
+
     getPrestationByUserId(id){
       this.prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === id);
     },

@@ -134,11 +134,10 @@ export default {
     },
     async submitForm() {
       try {
-
+        await uploadImagePresation(this.image_raw)
         await this.createPrestationStore(this.prestation);
-        await uploadImagePresation(this.image_raw);
 
-        await this.$router.push('/prestataire/prestations/');
+        this.$router.push('/prestataire/prestations/');
       } catch (error) {
         // Gestion des erreurs
         console.error("Erreur lors de la création de la prestation :", error);

@@ -13,7 +13,7 @@
     <div class="stat-box">
       <h3>{{translate("statistiquesPrestataire_4")}}</h3>
       <div class="stat-content" v-if="averagePurchase">
-        <p class="stat-value"> <span>{{ averagePurchase.average_purchase.toFixed(2) }}€</span></p>
+        <p class="stat-value"> <span>{{ averagePurchase.average_purchase }}€</span></p>
       </div>
       <p v-else>Chargement...</p>
     </div>
@@ -68,7 +68,7 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        const standId = this.$store.getters["user/getUserId"];
+        const standId = this.$store.getters["user/getStandId"];
         console.log(standId);
         [this.bestClient] = await getBestClientByStand(standId);
         [this.averagePurchase] = await getAveragePurchaseByStand(standId);

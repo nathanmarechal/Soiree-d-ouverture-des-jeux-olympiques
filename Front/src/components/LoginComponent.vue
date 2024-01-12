@@ -209,4 +209,5 @@ export default {
   max-width: 90%;
 }
 
+
 </style>
