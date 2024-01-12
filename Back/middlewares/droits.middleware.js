@@ -99,7 +99,7 @@ function getRightName(url) {
         "/api/statistiques/nb-users":"statistiques-admin",
         "/api/statistiques/average-purchase":"statistiques-admin",
         "/api/statistiques/top-seller-stand":"statistiques-admin",
-        "/api/statistiques/top-avis-stand":"statistiques-admin"
+        "/api/statistiques/top-avis-stand":"statistiques-admin",
 
         "/api/commande/getCommandeUserCourant": "see_self_commande",
         "/api/commande/getLigneCommandeBycommandeId": "see_self_commande",

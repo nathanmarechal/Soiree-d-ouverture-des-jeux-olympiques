@@ -2,6 +2,7 @@ import en from './translations/en.json'
 import fr from './translations/fr.json'
 import jp from './translations/jp.json'
 import es from './translations/es.json'
+import kr from './translations/kr.json'
 
 
 const translations = {
@@ -9,6 +10,7 @@ const translations = {
     fr: fr,
     jp: jp,
     es: es,
+    kr: kr,
 };
 export function changeLanguage(lang) {
     console.log("changing language to "+lang)

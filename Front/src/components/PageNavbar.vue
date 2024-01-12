@@ -85,6 +85,7 @@
         <option value="en">English</option>
         <option value="jp">日本語</option>
         <option value="es">Español</option>
+        <option value="kr">한국인</option>
       </select>
       </div>
     </b-navbar>

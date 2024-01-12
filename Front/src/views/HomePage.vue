@@ -12,6 +12,9 @@
     <div v-if="$store.getters['user/getLang']==='es'">
       <MainImageAndTitle_en/>
     </div>
+    <div v-if="$store.getters['user/getLang']==='kr'">
+      <MainImageAndTitle_en/>
+    </div>
     <PageTitle />
     <PageDescription :id="1"/>
     <SlideshowTitleComponent/>
