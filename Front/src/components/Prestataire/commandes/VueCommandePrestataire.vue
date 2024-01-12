@@ -42,7 +42,7 @@ export default {
     translate,
     ...mapActions('user', ['getCommandesPrestataireStore']),
     async loadData(){
-      await this.getCommandesPrestataireStore(this.getCurrentUser.id_user);
+      await this.getCommandesPrestataireStore();
       this.commandes = this.getCommandePrestataire;
     },
   }

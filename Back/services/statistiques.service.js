@@ -307,7 +307,6 @@ async function getBestClientByStandAsync(idStand) {
                        GROUP BY  u.prenom, u.nom
                        ORDER BY best_client DESC
                            LIMIT 1;`;
-
         const result = await conn.query(query, [idStand]);
         conn.release();
         return result.rows;

@@ -100,6 +100,11 @@ function getRightName(url) {
         "/api/statistiques/average-purchase":"statistiques-admin",
         "/api/statistiques/top-seller-stand":"statistiques-admin",
         "/api/statistiques/top-avis-stand":"statistiques-admin"
+
+        "/api/commande/getCommandeUserCourant": "see_self_commande",
+        "/api/commande/getLigneCommandeBycommandeId": "see_self_commande",
+
+        "/api/commande/getCommandesCurrentPrestataires": "see_self_commande_received",
     };
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";

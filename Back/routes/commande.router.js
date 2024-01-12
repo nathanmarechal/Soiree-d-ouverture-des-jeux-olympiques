@@ -4,6 +4,7 @@ const commandeController = require('../controllers/commande.controller');
 const usersMiddleware = require('../middlewares/users.middleware');
 const commandesMiddleware = require('../middlewares/commandes.middleware');
 const rightMiddleware = require('../middlewares/droits.middleware');
+const prestationsMiddleware = require("../middlewares/prestation.middleware");
 
 /**
  * @swagger
@@ -32,13 +33,19 @@ router.get("/getCommandeUserCourant", rightMiddleware.checkRight, commandeContro
 
 /**
  * @swagger
- * /api/commande/getligne/{id}:
+ * /api/commande/getLigneCommandeBycommandeId:
  *   get:
- *     summary: Retrieves ligne de commande for a specific commande by its ID
+ *     summary: Retrieves ligne de commande for a specific commande based on commande ID and user's session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: Session ID of the user to check right
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id_commande
  *         required: true
  *         description: Commande ID to fetch ligne de commande for
  *         schema:
@@ -46,58 +53,64 @@ router.get("/getCommandeUserCourant", rightMiddleware.checkRight, commandeContro
  *     responses:
  *       '200':
  *         description: Ligne de commande retrieved successfully
+ *       '403':
+ *         description: Interdiction
  *       '404':
- *         description: Commande not found
+ *         description: Non trouvé
  *       '500':
  *         description: Internal server error
  */
-router.get("/getligne/:id", commandesMiddleware.checkCommandeExists, commandeController.getLigneCommandeBycommandeId);
+router.get("/getLigneCommandeBycommandeId", rightMiddleware.checkRight, commandesMiddleware.checkCommandeExists, commandesMiddleware.checkCommandeBelongsToUserExists, commandeController.getLigneCommandeBycommandeId);
 
 /**
  * @swagger
- * /api/commande/getSchedule/{id}:
+ * /api/commande/getScheduleCurrentUser:
  *   get:
- *     summary: Retrieves schedule for a specific user by their ID
+ *     summary: Retrieves schedule for a specific user by their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
  *         required: true
- *         description: User ID to fetch schedule for
+ *         description: Session ID of the user to check right and to fetch schedule for
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       '200':
  *         description: Schedule retrieved successfully
+ *       '403':
+ *         description: Interdiction
  *       '404':
- *         description: User not found
+ *         description: Non trouvé
  *       '500':
  *         description: Internal server error
  */
-router.get("/getSchedule/:id", usersMiddleware.checkUserExists, commandeController.getScheduleByUserId);
+router.get("/getScheduleCurrentUser", rightMiddleware.checkRight, commandeController.getScheduleByUserId);
 
 /**
  * @swagger
- * /api/commande/getCommandesPrestataires/{id}:
+ * /api/commande/getCommandesCurrentPrestataires:
  *   get:
- *     summary: Retrieves commandes for a specific prestataire by their ID
+ *     summary: Retrieves commandes for the current prestataire based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: session_id
  *         required: true
- *         description: Prestataire ID to fetch commandes for
+ *         description: Session ID of the prestataire to fetch commandes for
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       '200':
  *         description: Commandes for the prestataire retrieved successfully
+ *       '403':
+ *         description: Interdiction
  *       '404':
- *         description: Prestataire not found
+ *         description: Non trouvé
  *       '500':
  *         description: Internal server error
  */
-router.get("/getCommandesPrestataires/:id", usersMiddleware.checkUserExists, commandeController.getCommandesPrestataires);
+router.get("/getCommandesCurrentPrestataires", rightMiddleware.checkRight, commandeController.getCommandesPrestataires);
 
 /**
  * @swagger
@@ -105,33 +118,34 @@ router.get("/getCommandesPrestataires/:id", usersMiddleware.checkUserExists, com
  *   patch:
  *     summary: Met à jour l'état d'une ligne de commande
  *     tags: [Commande]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - id_prestation
- *               - id_creneau
- *               - id_commande
- *             properties:
- *               id_prestation:
- *                 type: integer
- *                 description: ID de la prestation
- *               id_creneau:
- *                 type: integer
- *                 description: ID du créneau
- *               id_commande:
- *                 type: integer
- *                 description: ID de la commande
+ *     parameters:
+ *       - in: query
+ *         name: id_prestation
+ *         required: true
+ *         description: ID de la prestation
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: id_creneau
+ *         required: true
+ *         description: ID du créneau
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: id_commande
+ *         required: true
+ *         description: ID de la commande
+ *         schema:
+ *           type: integer
  *     responses:
  *       '200':
  *         description: L'état de la ligne de commande a été mis à jour avec succès
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
+router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prestationsMiddleware.checkCreneauExists, commandesMiddleware.checkCommandeExists, commandeController.setEtatLigneCommandeExterieur);
+
+
 
 router.post("/add", commandeController.addCommande);
 

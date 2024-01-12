@@ -15,27 +15,26 @@ async function addCommande(id_user){
     return answer;
 }
 
-async function getScheduleByUserId(id_user){
-    let answer = await getScheduleByUserIdFromApi(id_user)
+async function getScheduleByUserId(session_id){
+    let answer = await getScheduleByUserIdFromApi(session_id)
     return answer;
 }
 
-async function getScheduleByUserIdFromApi(id_user) {
-    return getRequest('/commande/getSchedule/' + id_user, 'GETSCHEDULEBYUSERID')
-
+async function getScheduleByUserIdFromApi(session_id) {
+    return getRequest('/commande/getScheduleCurrentUser?session_id=' + session_id, 'GETSCHEDULEBYUSERID')
 }
 async function addCommandeFromApi(id_user){
     id_user = {id_user: id_user}
-    return postRequest('/commande/add', id_user, 'ADDCOMMANDEFROMPANIERUSER')
+    return postRequest('/commande/addCommandeFromPanierUserCourant', id_user, 'ADDCOMMANDEFROMPANIERUSER')
 }
 
-async function getLigneCommandeBycommandeId(id_commande){
-    let answer = await getLigneCommandeBycommandeIdFromApi(id_commande)
+async function getLigneCommandeBycommandeId(id_commande, session_id){
+    let answer = await getLigneCommandeBycommandeIdFromApi(id_commande, session_id)
     return answer;
 }
 
-async function getLigneCommandeBycommandeIdFromApi(id_commande) {
-    return getRequest('/commande/getligne/' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
+async function getLigneCommandeBycommandeIdFromApi(id_commande, session_id) {
+    return getRequest('/commande/getLigneCommandeBycommandeId?session_id=' + session_id + '&id_commande=' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
 }
 
 async function setEtatLigneCommandeExterieur({id_commande, id_prestation, id_creneau}){
@@ -47,13 +46,13 @@ async function setEtatLigneCommandeExterieurFromAPI({ id_commande,id_prestation,
     return patchRequest('/commande/setetatligne', {id_commande, id_prestation, id_creneau}, 'SETETATLIGNECOMMANDEEXTERIEUR')
 }
 
-async function getCommandesPrestataires(id_prestataire){
-    let answer = await getCommandesPrestatairesFromApi(id_prestataire)
+async function getCommandesPrestataires(session_id){
+    let answer = await getCommandesPrestatairesFromApi(session_id)
     return answer;
 }
 
-async function getCommandesPrestatairesFromApi(id_prestataire) {
-    return getRequest('/commande/getCommandesPrestataires/' + id_prestataire, 'GETCOMMANDESPRESTATAIRES')
+async function getCommandesPrestatairesFromApi(session_id) {
+    return getRequest('/commande/getCommandesCurrentPrestataires?session_id=' + session_id, 'GETCOMMANDESPRESTATAIRES')
 }
 
 export {

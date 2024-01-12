@@ -155,7 +155,7 @@ router.post("/addPrestationToOwnPanier", rightMiddleware.checkRight, prestations
  *       - in: query
  *         name: id_creneau
  *         required: true
- *         description: ID of the creneau associated with the prestation (optional)
+ *         description: ID of the creneau associated with the prestation
  *         schema:
  *           type: integer
  *     responses:

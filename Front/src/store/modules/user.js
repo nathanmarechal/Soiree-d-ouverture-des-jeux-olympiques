@@ -237,40 +237,33 @@ export default {
                 return item;
             });
         },
+
         UPDATE_SOLDE(state, newsolde) {
             state.userCourant.solde = parseFloat(newsolde);
         },
-
 
         UPDATE_NOM(state, nom) {
             console.log("update nom " + nom);
             state.userCourant.nom = nom;
         },
 
-
         UPDATE_PRENOM(state, prenom) {
             console.log("update prenom " + prenom);
             state.userCourant.prenom = prenom;
         },
-
 
         UPDATE_EMAIL(state, email) {
             console.log("update email " + email);
             state.userCourant.email = email;
         },
 
-
-        SET_LANG(state,lang)
-        {
+        SET_LANG(state,lang){
             state.lang = lang;
         },
 
         SET_ETAT_LIGNE_COMMANDE_EXTERIEUR(state, { id_commande, id_prestation, id_creneau}) {
             console.log("SET_ETAT_LIGNE_COMMANDE_EXTERIEUR " + id_commande + " " + id_prestation + " " + id_creneau);
         },
-
-
-
 
         UPDATE_USER_WO_PASSWORD(state, payload) {
             state.userCourant.nom = payload.nom;
@@ -367,11 +360,11 @@ export default {
             }
         },
 
-        async getCommandesPrestataireStore({commit},id_user){
+        async getCommandesPrestataireStore({commit, state}){
             try {
-                const commandes = await getCommandesPrestataires(id_user);
+                const session_id = state.userCourant.session_id
+                const commandes = await getCommandesPrestataires(session_id);
                 commit('SET_COMMANDS_PRESTATAIRE', commandes);
-                console.log("commande envoyée au store" + JSON.stringify(commandes))
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
@@ -379,7 +372,6 @@ export default {
 
         async addCommandeFromPanierStore({commit},id_user){
             try {
-                console.log("dans le store" + id_user)
                 const lastinstert = await addCommande(id_user);
                 commit('ADD_COMMANDES_USER_COURANT', lastinstert);
             } catch (error) {
@@ -396,12 +388,27 @@ export default {
             }
         },
 
-        async getLigneCommandebyIdCommandeStore({commit}, id_commande){
+        async getLigneCommandebyIdCommandeStore({commit, state}, id_commande){
             try {
-                const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
+                const session_id = state.userCourant.session_id
+                const ligne_commande = await getLigneCommandeBycommandeId(id_commande, session_id);
                 commit('SET_LIGNE_COMMANDE', { id_commande, ligne_commande });
             } catch (error) {
                 console.error('Error fetching commandes:', error);
+            }
+        },
+
+//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
+
+
+        async getScheduleByUserIdStore({commit, state}){
+            try {
+                const session_id = state.userCourant.session_id
+                const schedule = await getScheduleByUserId(session_id);
+                console.log("schedule envoyée au store" + JSON.stringify(schedule))
+                commit('SET_SCHEDULE', schedule);
+            } catch (error) {
+                console.error('Error fetching schedule:', error);
             }
         },
 
@@ -450,19 +457,6 @@ export default {
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
                 console.error("Error in updateSoldeStore():", err);
-            }
-        },
-
-//-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
-
-
-        async getScheduleByUserIdStore({commit}, id){
-            try {
-                const schedule = await getScheduleByUserId(id);
-                console.log("schedule envoyée au store" + JSON.stringify(schedule))
-                commit('SET_SCHEDULE', schedule);
-            } catch (error) {
-                console.error('Error fetching schedule:', error);
             }
         },
 

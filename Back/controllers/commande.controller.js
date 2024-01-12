@@ -15,12 +15,12 @@ exports.getCommandeByUserId = async (req, res) => {
     })
 }
 
-exports.addCommande = (req, res) => {
+exports.addCommande = async (req, res) => {
+    const session_id = req.query.session_id;
 
-    const id_user = req.body.id_user;
-    console.log("id_user:" + id_user + " dans le controller commande.controller.js")
+    const user = await userService.getUserBySessionIdAsync(session_id);
 
-    commandeService.addCommande(id_user, (error, data) => {
+    commandeService.addCommande(user.id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
@@ -30,8 +30,8 @@ exports.addCommande = (req, res) => {
 }
 
 exports.getLigneCommandeBycommandeId = (req, res) => {
-    const id = req.params.id;
-    console.log("dans le controller" + id)
+    const id = req.query.id_commande
+
     commandeService.getLigneCommandeBycommandeId(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -41,10 +41,12 @@ exports.getLigneCommandeBycommandeId = (req, res) => {
     })
 }
 
-exports.getScheduleByUserId = (req, res) => {
-    const id = req.params.id;
-    console.log("dans le controller" + id)
-    commandeService.getScheduleByUserId(id, (error, data) => {
+exports.getScheduleByUserId = async (req, res) => {
+    const session_id = req.query.session_id;
+
+    const user = await userService.getUserBySessionIdAsync(session_id)
+
+    commandeService.getScheduleByUserId(user.id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
@@ -54,11 +56,12 @@ exports.getScheduleByUserId = (req, res) => {
 }
 
 exports.setEtatLigneCommandeExterieur = (req, res) => {
-    const id_presta = req.body.id_prestation;
-    const id_creneau = req.body.id_creneau;
-    const id_commande = req.body.id_commande;
-    console.log("id_presta:" + id_presta + ", id_creneau:" + id_creneau + ", id_commande:" + id_commande + " dans le controller commande.controller.js")
-    commandeService.setEtatLigneCommandeExterieur({ id_presta, id_creneau, id_commande}, (error, data) => {
+
+    const id_presta = req.query.id_prestation;
+    const id_creneau = req.query.id_creneau;
+    const id_commande = req.query.id_commande;
+
+    commandeService.setEtatLigneCommandeExterieur({ id_commande, id_presta, id_creneau }, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
@@ -67,10 +70,12 @@ exports.setEtatLigneCommandeExterieur = (req, res) => {
     })
 }
 
-exports.getCommandesPrestataires = (req, res) => {
-    const id = req.params.id;
-    console.log("dans le controller" + id)
-    commandeService.getCommandesPrestataires(id, (error, data) => {
+exports.getCommandesPrestataires = async (req, res) => {
+    const session_id = req.query.session_id;
+
+    const user = await userService.getUserBySessionIdAsync(session_id);
+
+    commandeService.getCommandesPrestataires(user.id_user, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {

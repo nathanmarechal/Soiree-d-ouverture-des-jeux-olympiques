@@ -388,7 +388,9 @@ INSERT INTO droits(libelle) VALUES
 ('see_self_panier'),
 ('add_self_panier'),
 ('update_self_panier'),
-('delete_self_panier')
+('delete_self_panier'),
+
+('see_self_commande')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -907,8 +909,4 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 
 SELECT p FROM prestation p JOIN utilisateur u ON p.id_stand = u.id_stand WHERE p.id_stand = 4 AND u.id_stand = 4;
 
-SELECT * FROM ligne_panier;
-
-UPDATE ligne_panier SET quantite = quantite + 2 WHERE id_user = 1 AND id_prestation = 1 AND id_creneau = 1;
-
-INSERT INTO ligne_panier (id_user, id_prestation, id_creneau, quantite) VALUES (1, 1, 1, 50);
+SELECT * FROM commande WHERE id_commande = 2 AND id_user = 1;

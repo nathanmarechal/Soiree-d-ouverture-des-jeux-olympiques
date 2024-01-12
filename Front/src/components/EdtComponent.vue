@@ -21,7 +21,7 @@ import {translate} from "../lang/translationService";
 export default {
   methods: {translate},
   async loadData() {
-    await this.getScheduleByUserIdStore(this.getCurrentUser.id_user);
+    await this.getScheduleByUserIdStore();
   },
   ...mapActions('user', ['getScheduleByUserIdStore']),
   computed: {
