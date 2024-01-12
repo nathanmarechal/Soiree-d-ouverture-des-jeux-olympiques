@@ -35,12 +35,14 @@
                     </ul>
                   </td>
                   <td>
+                    <div v-if="getCurrentUser.id_role!==role.id_role">
                     <router-link v-if="!isProtectorDelete" :to="{ name: 'AdminEditRoles', params: { selected_role: role } }" class="btn btn-primary">
                       {{ translate("roleList_modifier") }} 
                     </router-link>
                     <button class="btn btn-danger" @click="removeRole(role.id_role)">
                       {{ translate("roleList_supprimer") }}
                     </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
