@@ -195,9 +195,14 @@ export default {
         },
 
         ADD_PRESTATION_TO_PANIER_USER_COURANT(state, id_user, id_prestation, quantite, id_creneau) {
-            state.userCourant.panier.push({"id_user" : id_user, "id_prestation" : id_prestation, "quantite" : quantite, "id_creneau": id_creneau});
-        },
+            let item = state.userCourant.panier.find(item => item.id_prestation === id_prestation && item.id_creneau === id_creneau);
 
+            if (item) {
+                item.quantite += quantite;
+            } else {
+                state.userCourant.panier.push({"id_user" : id_user, "id_prestation" : id_prestation, "quantite" : quantite, "id_creneau": id_creneau});
+            }
+        },
 
         SET_COMMANDES_USER_COURANT(state, commandes) {
             state.userCourant.commandes = commandes;
