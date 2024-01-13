@@ -15,6 +15,7 @@ exports.checkRight = async (req, res, next) => {
         const hasRight = await checkRight(sessionId, rightName);
 
         if (!hasRight) {
+            console.log(`L'utilisateur courant ne dispose pas du droit nécessaire: ${rightName}`);
             res.status(403).send(`L'utilisateur courant ne dispose pas du droit nécessaire: ${rightName}`);
         }
         else{
@@ -73,31 +74,31 @@ function getRightName(url) {
 
         "/api/homePage/description": "update_home_page",
 
-        "/api/messagerie/get-all-conversations":"messages-admin",
-        "/api/messagerie/toggle-resolved-converstation":"messages-admin",
+        "/api/messagerie/get-all-conversations":"messages_admin",
+        "/api/messagerie/toggle-resolved-converstation":"messages_admin",
 
-        "/api/messagerie/get-conversations-for-user":"messages-user",
+        "/api/messagerie/get-conversations-for-user":"messages_user",
 
         "/api/panier/getOwnPanier": "see_self_panier",
         "/api/panier/addPrestationToOwnPanier": "add_self_panier",
         "/api/panier/updateOwnPanier": "update_self_panier",
         "/api/panier/deletePrestationFromPanierOwnUser": "delete_self_panier",
 
-        "/api/statistiques/prestataire/count-rating":"statistiques-prestataire",
-        "/api/statistiques/prestataire/average-rating":"statistiques-prestataire",
-        "/api/statistiques/prestataire/nb-prestation-heure":"statistiques-prestataire",
-        "/api/statistiques/prestataire/average-purchase":"statistiques-prestataire",
-        "/api/statistiques/prestataire/best-client":"statistiques-prestataire",
-        "/api/statistiques/prestataire/sales-revenue-by-type":"statistiques-prestataire",
+        "/api/statistiques/prestataire/count-rating":"statistiques_prestataire",
+        "/api/statistiques/prestataire/average-rating":"statistiques_prestataire",
+        "/api/statistiques/prestataire/nb-prestation-heure":"statistiques_prestataire",
+        "/api/statistiques/prestataire/average-purchase":"statistiques_prestataire",
+        "/api/statistiques/prestataire/best-client":"statistiques_prestataire",
+        "/api/statistiques/prestataire/sales-revenue-by-type":"statistiques_prestataire",
 
-        "/api/statistiques/best-seller-prestation":"statistiques-admin",
-        "/api/statistiques/new-stand-by-month":"statistiques-admin",
-        "/api/statistiques/nb-stands":"statistiques-admin",
-        "/api/statistiques/nb-prestations-available":"statistiques-admin",
-        "/api/statistiques/nb-users":"statistiques-admin",
-        "/api/statistiques/average-purchase":"statistiques-admin",
-        "/api/statistiques/top-seller-stand":"statistiques-admin",
-        "/api/statistiques/top-avis-stand":"statistiques-admin",
+        "/api/statistiques/best-seller-prestation":"statistiques_admin",
+        "/api/statistiques/new-stand-by-month":"statistiques_admin",
+        "/api/statistiques/nb-stands":"statistiques_admin",
+        "/api/statistiques/nb-prestations-available":"statistiques_admin",
+        "/api/statistiques/nb-users":"statistiques_admin",
+        "/api/statistiques/average-purchase":"statistiques_admin",
+        "/api/statistiques/top-seller-stand":"statistiques_admin",
+        "/api/statistiques/top-avis-stand":"statistiques_admin",
 
         "/api/commande/getCommandeUserCourant": "see_self_commande",
         "/api/commande/getScheduleCurrentUser": "see_self_commande",
@@ -110,6 +111,8 @@ function getRightName(url) {
 }
 
 async function checkRight(sessionId, rightName) {
+    console.log("session_id = " + sessionId)
+    console.log("right_name = " + rightName)
     const query = `
         SELECT EXISTS (
             SELECT 1
@@ -126,6 +129,7 @@ async function checkRight(sessionId, rightName) {
     const conn = await pool.connect();
     const res = await conn.query(query, [sessionId, rightName]);
     conn.release();
+    console.log("res : " + res.rows[0].has_right)
     return res.rows[0].has_right;
 }
 

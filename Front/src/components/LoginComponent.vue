@@ -37,7 +37,7 @@ import {getSession} from "@/services/login.service";
 import {getUserFromSessionId} from "@/services/utilisateur.service";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
-import {translate} from "../lang/translationService";
+import {translate} from "@/lang/translationService";
 import {getDroitsRole} from "@/services/droit.service";
 
 export default {
@@ -113,15 +113,15 @@ export default {
                       this.currentUser.id_stand = res.id_stand;
                       this.currentUser.solde = parseFloat(res.solde);
                       this.$store.commit('user/SET_CURRENT_USER', this.currentUser)
-                      getPanierUserCourant(res.id_user)
+                      getPanierUserCourant(this.sessionId)
                           .then(res=>{
                             this.$store.commit('user/SET_PANIER_USER_COURANT', res)
                           })
-                      getCommandeUserCourant(res.id_user)
+                      getCommandeUserCourant(this.sessionId)
                           .then(res=>{
                             this.$store.commit('user/SET_COMMANDES_USER_COURANT', res)
                           })
-                      getScheduleByUserId(res.id_user)
+                      getScheduleByUserId(this.sessionId)
                           .then(res=>{
                             this.$store.commit('user/SET_SCHEDULE', res)
                           })

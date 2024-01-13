@@ -373,11 +373,11 @@ INSERT INTO droits(libelle) VALUES
 
 ('update_home_page'),
 
-('messages-admin'),
-('messages-user'),
+('messages_admin'),
+('messages_user'),
 
-('statistiques-admin'),
-('statistiques-prestataire'),
+('statistiques_admin'),
+('statistiques_prestataire'),
 
 ('see_self_panier'),
 ('add_self_panier'),
@@ -385,7 +385,7 @@ INSERT INTO droits(libelle) VALUES
 ('delete_self_panier'),
 
 ('see_self_commande'),
-('add-self-commande')
+('add_self_commande')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -913,4 +913,3 @@ VALUES
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())
 ;
-
