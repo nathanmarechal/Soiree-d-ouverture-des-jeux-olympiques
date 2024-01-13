@@ -10,9 +10,9 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
-          <b-nav-item v-if="currentUserHasRight('messages-admin')" to="/messages-admin" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+          <b-nav-item v-if="currentUserHasRight('messages_admin')" to="/messages-admin" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
-          <b-nav-item v-if="currentUserHasRight('messages-user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+          <b-nav-item v-if="currentUserHasRight('messages_user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
 
           <div v-if="isUserPrestataire">
@@ -59,7 +59,7 @@
             || currentUserHasRight('delete_roles')">
               <router-link  to="/admin/roles" class = "dp">{{translate("roles")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('statistiques-admin')">
+            <div v-if="currentUserHasRight('statistiques_admin')">
               <router-link to="/admin/statistiques" class = "dp">{{translate("statistiques")}}</router-link>
             </div>
           </b-nav-item-dropdown>
@@ -126,7 +126,7 @@ export default {
           ||this.currentUserHasRight('create_zones') || this.currentUserHasRight('update_zones') || this.currentUserHasRight('delete_zones')
           ||this.currentUserHasRight('create_areas') || this.currentUserHasRight('update_areas') || this.currentUserHasRight('delete_areas')
           ||this.currentUserHasRight('create_roles') || this.currentUserHasRight('update_roles') || this.currentUserHasRight('delete_roles')
-||this.currentUserHasRight('statistiques-admin')
+||this.currentUserHasRight('statistiques_admin')
       return v;
     },
     isUserPrestataire() {

@@ -1,6 +1,8 @@
 const rightMiddleware = require("../middlewares/droits.middleware");
 const messagerieController = require("../controllers/messagerie.controller");
 const express = require("express");
+const messagerieMiddleware = require("../middlewares/messagerie.middleware");
+const sessionMiddleware = require("../middlewares/session.middleware");
 router = express.Router();
 
 /**
@@ -50,10 +52,6 @@ router.get("/get-all-conversations", rightMiddleware.checkRight, messagerieContr
 router.get("/get-conversations-for-user", rightMiddleware.checkRight, messagerieController.getConversationsForUser);
 
 
-
-
-
-
 /**
  * @swagger
  * /api/messagerie/get-messages-by-conversation:
@@ -62,18 +60,26 @@ router.get("/get-conversations-for-user", rightMiddleware.checkRight, messagerie
  *     tags: [Messagerie]
  *     parameters:
  *       - in: query
- *         name: conversation_id
+ *         name: id_conversation
  *         required: true
  *         schema:
  *           type: integer
  *         description: ID of the conversation to fetch messages for
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID of the user to verify access to the conversation
  *     responses:
  *       '200':
  *         description: Messages for the conversation retrieved successfully
+ *       '404':
+ *         description: Conversation not found
  *       '500':
  *         description: Internal server error
  */
-router.get("/get-messages-by-conversation", messagerieController.getMessagesByConversation);
+router.get("/get-messages-by-conversation", sessionMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.getMessagesByConversation);
 
 /**
  * @swagger
@@ -81,6 +87,13 @@ router.get("/get-messages-by-conversation", messagerieController.getMessagesByCo
  *   post:
  *     summary: Sends a message in a conversation
  *     tags: [Messagerie]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID of the user sending the message
  *     requestBody:
  *       required: true
  *       content:
@@ -88,14 +101,11 @@ router.get("/get-messages-by-conversation", messagerieController.getMessagesByCo
  *           schema:
  *             type: object
  *             required:
- *               - conversation_id
- *               - session_id
+ *               - id_conversation
  *               - message
  *             properties:
- *               conversation_id:
+ *               id_conversation:
  *                 type: integer
- *               session_id:
- *                 type: string
  *               message:
  *                 type: string
  *     responses:
@@ -104,7 +114,7 @@ router.get("/get-messages-by-conversation", messagerieController.getMessagesByCo
  *       '500':
  *         description: Internal server error
  */
-router.post("/send-message", messagerieController.sendMessage);
+router.post("/send-message", sessionMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.sendMessage);
 
 /**
  * @swagger
@@ -112,6 +122,13 @@ router.post("/send-message", messagerieController.sendMessage);
  *   post:
  *     summary: Creates a new conversation
  *     tags: [Messagerie]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID of the user initiating the conversation
  *     requestBody:
  *       required: true
  *       content:
@@ -119,22 +136,20 @@ router.post("/send-message", messagerieController.sendMessage);
  *           schema:
  *             type: object
  *             required:
- *               - session_id
- *               - participant_ids
+ *               - message
  *             properties:
- *               session_id:
+ *               message:
  *                 type: string
- *               participant_ids:
- *                 type: array
- *                 items:
- *                   type: integer
  *     responses:
  *       '200':
- *         description: Conversation created successfully
+ *         description: Conversation created successfully, returns the details of the new conversation
+ *       '404':
+ *         description: Non trouvé
  *       '500':
  *         description: Internal server error
  */
-router.post("/create-conversation", messagerieController.createConversation);
+router.post("/create-conversation", sessionMiddleware.checkSessionExists, messagerieController.createConversation);
+
 
 /**
  * @swagger
@@ -142,6 +157,13 @@ router.post("/create-conversation", messagerieController.createConversation);
  *   patch:
  *     summary: Toggles the resolved status of a conversation
  *     tags: [Messagerie]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID of the user
  *     requestBody:
  *       required: true
  *       content:
@@ -149,20 +171,19 @@ router.post("/create-conversation", messagerieController.createConversation);
  *           schema:
  *             type: object
  *             required:
- *               - conversation_id
- *               - session_id
+ *               - id_conversation
  *             properties:
- *               conversation_id:
+ *               id_conversation:
  *                 type: integer
- *               session_id:
- *                 type: string
+ *                 description: ID of the conversation to toggle the resolved status
  *     responses:
  *       '200':
  *         description: Conversation status toggled successfully
+ *       '404':
+ *         description: Conversation not found
  *       '500':
  *         description: Internal server error
  */
 router.patch("/toggle-resolved-conversation", rightMiddleware.checkRight, messagerieController.toggleResolvedConversation);
 
 module.exports = router
-

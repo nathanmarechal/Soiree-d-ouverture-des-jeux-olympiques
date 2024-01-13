@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="currentUserHasRight('messages-user')" class="main">
+    <div v-if="currentUserHasRight('messages_user')" class="main">
       <conversations-list></conversations-list>
     </div>
     <div v-else>

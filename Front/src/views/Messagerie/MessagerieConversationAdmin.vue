@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-if="currentUserHasRight('messages-admin')">
+  <div class="main" v-if="currentUserHasRight('messages_admin')">
     <conversation-messages></conversation-messages>
   </div>
   <div v-else>

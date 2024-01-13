@@ -39,11 +39,15 @@ exports.getMessagesByConversation = (req, res)=>{
     })
 }
 
-exports.sendMessage = (req, res)=>{
+exports.sendMessage = async (req, res)=>{
+    const session_id = req.query.session_id;
     const id_conversation = req.body.id_conversation;
+
     const message = req.body.message;
-    const session_id = req.body.session_id;
-    messagerieService.sendMessage(id_conversation,message,session_id,(error, data) => {
+
+    const user = await usersService.getUserBySessionIdAsync(session_id);
+
+    messagerieService.sendMessage(id_conversation,message,user.id_user,(error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }
@@ -53,10 +57,13 @@ exports.sendMessage = (req, res)=>{
     })
 }
 
-exports.createConversation = (req, res)=>{
-    const id_user = req.body.id_user;
+exports.createConversation = async (req, res)=>{
+    const session_id = req.query.session_id;
+
+    const user = await usersService.getUserBySessionIdAsync(session_id);
+
     const message = req.body.message;
-    messagerieService.createConversation(message,id_user,(error, data) => {
+    messagerieService.createConversation(message,user.id_user,(error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

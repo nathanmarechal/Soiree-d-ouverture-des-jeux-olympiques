@@ -72,10 +72,9 @@ export default({
       try {
         const body = {
           message: this.newConversationMessage,
-          id_user: this.getCurrentUser.id_user
         };
 
-        let response = await createConversation(body);
+        let response = await createConversation(body, this.getCurrentUser.session_id);
 
         // Vérifiez si la réponse contient des données et extrayez la conversation de la réponse
         if (response && response.length > 0) {

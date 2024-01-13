@@ -75,7 +75,7 @@ function getRightName(url) {
         "/api/homePage/description": "update_home_page",
 
         "/api/messagerie/get-all-conversations":"messages_admin",
-        "/api/messagerie/toggle-resolved-converstation":"messages_admin",
+        "/api/messagerie/toggle-resolved-conversation":"messages_admin",
 
         "/api/messagerie/get-conversations-for-user":"messages_user",
 

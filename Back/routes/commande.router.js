@@ -145,7 +145,7 @@ router.get("/getCommandesCurrentPrestataires", rightMiddleware.checkRight, comma
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
+router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prestationsMiddleware.checkCreneauExists, commandesMiddleware.checkCommandeExists, commandesMiddleware.checkLigneCommandeExists, commandeController.setEtatLigneCommandeExterieur);
 
 
 /**
