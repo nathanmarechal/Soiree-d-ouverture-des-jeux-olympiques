@@ -34,7 +34,7 @@ export default {
         },
         async getConversationsUserStore({rootState, commit}){
             try {
-                const result = await getConversationsForUser(rootState.user.userCourant.id_user,rootState.user.userCourant.session_id);
+                const result = await getConversationsForUser(rootState.user.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
                 } else {

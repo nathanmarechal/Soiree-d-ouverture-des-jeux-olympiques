@@ -116,8 +116,9 @@ const setEtatLigneCommandeExterieur = ({ id_commande, id_presta, id_creneau}, ca
 async function setEtatLigneCommandeExterieurAsync({ id_commande, id_presta, id_creneau}) {
     try {
         const conn = await pool.connect();
-        await conn.query("UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = $1 AND id_prestation = $2 AND id_creneau = $3;", [  id_commande, id_presta, id_creneau]);
+        const result = await conn.query("UPDATE ligne_commande SET id_etat_commande = 2 WHERE  id_commande = $1 AND id_prestation = $2 AND id_creneau = $3 RETURNING *;", [  id_commande, id_presta, id_creneau]);
         conn.release();
+        return result.rows;
     } catch (error) {
         console.error('Error in setEtatLigneCommandeExterieurAsync:', error);
         throw error;

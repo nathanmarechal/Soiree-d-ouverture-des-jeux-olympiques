@@ -90,7 +90,6 @@ async function getNbPrestationHeureFromAPI(session_id) {
 
 async function getNbPrestationHeure(session_id) {
     let answer = await getNbPrestationHeureFromAPI(session_id)
-    console.log("getPrestationByUserId: ", answer)
     return answer
 }
 
@@ -100,7 +99,6 @@ async function getAveragePurchaseByStandFromAPI(session_id) {
 
 async function getAveragePurchaseByStand(session_id) {
     let answer = await getAveragePurchaseByStandFromAPI(session_id)
-    console.log("getAveragePurchaseByStand: ", answer)
     return answer
 }
 

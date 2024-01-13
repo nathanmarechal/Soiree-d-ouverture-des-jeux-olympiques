@@ -76,7 +76,6 @@ export default {
   async mounted() {
     this.conversation = this.$route.params.selected_conversation;
     this.messages = await getMessagesByConversation(this.conversation.id_conversation);
-
   },
 };
 </script>

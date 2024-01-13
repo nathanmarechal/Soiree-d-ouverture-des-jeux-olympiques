@@ -1,5 +1,5 @@
 const messagerieService = require("../services/messagerie.service");
-
+const usersService = require("../services/users.service");
 
 exports.getConversations = (req, res) => {
     messagerieService.getAllConversations((error, data) => {
@@ -12,9 +12,12 @@ exports.getConversations = (req, res) => {
     })
 }
 
-exports.getConversationsForUser = (req, res) => {
-    const id_user = req.query.id_user;
-    messagerieService.getConversationsForUser(id_user,(error, data) => {
+exports.getConversationsForUser = async (req, res) => {
+    const session_id = req.query.session_id;
+
+    const user = await usersService.getUserBySessionIdAsync(session_id);
+
+    messagerieService.getConversationsForUser(user.id_user,(error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
         }

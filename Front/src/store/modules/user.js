@@ -370,9 +370,10 @@ export default {
             }
         },
 
-        async addCommandeFromPanierStore({commit},id_user){
+        async addCommandeFromPanierStore({commit, state}){
             try {
-                const lastinstert = await addCommande(id_user);
+                const session_id = state.userCourant.session_id
+                const lastinstert = await addCommande(session_id);
                 commit('ADD_COMMANDES_USER_COURANT', lastinstert);
             } catch (error) {
                 console.error('Error fetching commandes:', error);

@@ -122,7 +122,6 @@ exports.getAveragePurchaseByStand = async (req, res) => {
 }
 
 exports.getBestClientByStand = async (req, res) => {
-    console.log("debut de getBestClientByStand")
     const session_id = req.query.session_id;
 
     console.log(session_id)

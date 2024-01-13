@@ -131,7 +131,7 @@ export default {
 
       let newSolde = this.getCurrentUser.solde - this.calculateTotal();
       await this.updateSoldeStore({solde: newSolde})
-      await this.addCommandeFromPanierStore(this.getCurrentUser.id_user);
+      await this.addCommandeFromPanierStore();
       await this.getCommandeUserCourantStore();
       this.$store.commit('user/SET_PANIER_USER_COURANT', [])
 

@@ -10,8 +10,8 @@ async function getCommandeUserCourantFromApi(session_id) {
     return getRequest('/commande/getCommandeUserCourant?session_id=' + session_id, 'GETCOMMANDEUSERCOURANT')
 }
 
-async function addCommande(id_user){
-    let answer = await addCommandeFromApi(id_user)
+async function addCommande(session_id){
+    let answer = await addCommandeFromApi(session_id)
     return answer;
 }
 
@@ -23,9 +23,8 @@ async function getScheduleByUserId(session_id){
 async function getScheduleByUserIdFromApi(session_id) {
     return getRequest('/commande/getScheduleCurrentUser?session_id=' + session_id, 'GETSCHEDULEBYUSERID')
 }
-async function addCommandeFromApi(id_user){
-    id_user = {id_user: id_user}
-    return postRequest('/commande/addCommandeFromPanierUserCourant', id_user, 'ADDCOMMANDEFROMPANIERUSER')
+async function addCommandeFromApi(session_id) {
+    return postRequest('/commande/addCommandeFromPanierUserCourant?session_id=' + session_id, {}, 'ADDCOMMANDEFROMPANIERUSER')
 }
 
 async function getLigneCommandeBycommandeId(id_commande, session_id){

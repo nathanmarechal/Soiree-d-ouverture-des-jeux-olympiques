@@ -360,19 +360,13 @@ INSERT INTO droits(libelle) VALUES
 ('update_roles'),
 ('delete_roles'),
 
-
 ('create_prestations'),
-
-('create_self_prestations'),
-
 ('update_prestations'),
-
-('update_self_prestations'),
-
 ('delete_prestations'),
 
+('create_self_prestations'),
+('update_self_prestations'),
 ('delete_self_prestations'),
-
 
 ('create_avis'),
 ('delete_avis'),
@@ -390,7 +384,8 @@ INSERT INTO droits(libelle) VALUES
 ('update_self_panier'),
 ('delete_self_panier'),
 
-('see_self_commande')
+('see_self_commande'),
+('add-self-commande')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -415,7 +410,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (8,1),
 (9,1),
 (10,1),
-(11,1),
+
 (12,1),
 (13,1),
 (14,1),
@@ -427,36 +422,48 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (20,1),
 (21,1),
 (22,1),
+(23,1),
 (24,1),
-(26,1),
+
+
+
 (28,1),
 (29,1),
 (30,1),
 (31,1),
+
 (33,1),
+
 (35,1),
 (36,1),
 (37,1),
 (38,1),
+(39,1),
+(40,1),
 
 (4,2),
 (11,2),
-(23,2),
 (25,2),
+(26,2),
 (27,2),
+(28,2),
 (32,2),
 (34,2),
 (35,2),
 (36,2),
 (37,2),
 (38,2),
+(39,2),
+(40,2),
 
 (4,3),
 (32,3),
 (35,3),
 (36,3),
 (37,3),
-(38,3)
+(38,3),
+(39,3),
+(40,3)
 ;
 
 INSERT INTO type_zone (libelle) VALUES
@@ -907,6 +914,3 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 (1,1,'jdjdlqkjd',now())
 ;
 
-SELECT p FROM prestation p JOIN utilisateur u ON p.id_stand = u.id_stand WHERE p.id_stand = 4 AND u.id_stand = 4;
-
-SELECT * FROM commande WHERE id_commande = 2 AND id_user = 1;

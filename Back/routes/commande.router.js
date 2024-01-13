@@ -1,7 +1,6 @@
 const express = require('express');
 var router = express.Router();
 const commandeController = require('../controllers/commande.controller');
-const usersMiddleware = require('../middlewares/users.middleware');
 const commandesMiddleware = require('../middlewares/commandes.middleware');
 const rightMiddleware = require('../middlewares/droits.middleware');
 const prestationsMiddleware = require("../middlewares/prestation.middleware");
@@ -22,10 +21,10 @@ const prestationsMiddleware = require("../middlewares/prestation.middleware");
  *     responses:
  *       '200':
  *         description: Commandes retrieved successfully
- *       '404':
- *         description: User or commande not found
  *       '403':
  *         description: Interdiction
+ *       '404':
+ *         description: User or commande not found
  *       '500':
  *         description: Internal server error
  */
@@ -140,13 +139,35 @@ router.get("/getCommandesCurrentPrestataires", rightMiddleware.checkRight, comma
  *     responses:
  *       '200':
  *         description: L'état de la ligne de commande a été mis à jour avec succès
+ *       '404':
+ *         description: Non trouvé
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prestationsMiddleware.checkCreneauExists, commandesMiddleware.checkCommandeExists, commandeController.setEtatLigneCommandeExterieur);
+router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prestationsMiddleware.checkCreneauExists, commandesMiddleware.checkCommandeExists, commandesMiddleware.checkLigneCommandeExists, commandeController.setEtatLigneCommandeExterieur);
 
 
-
-router.post("/add", commandeController.addCommande);
+/**
+ * @swagger
+ * /api/commande/addCommandeFromPanierUserCourant:
+ *   post:
+ *     summary: Adds a new commande for the current user based on their session ID
+ *     tags: [Commande]
+ *     parameters:
+ *       - in: query
+ *         name: session_id
+ *         required: true
+ *         description: Session ID of the user to add a new commande for
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: New commande added successfully, returns the details of the new commande
+ *       '403':
+ *         description: Interdiction
+ *       '500':
+ *         description: Internal server error
+ */
+router.post("/addCommandeFromPanierUserCourant", rightMiddleware.checkRight, commandeController.addCommande);
 
 module.exports = router;

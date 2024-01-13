@@ -416,10 +416,10 @@ module.exports = {
     getSalesRevnueByTypeByStand:getSalesRevnueByTypeByStand,
     getAvgRatingByStand:getAvgRatingByStand,
     getCountRatingByStand:getCountRatingByStand,
-    getNbStands,
-    getNbPrestationsAvailable,
-    getNbUsers,
-    getAveragePurchase,
-    getTopSellerStand,
-    getTopAvisStand
+    getNbStands:getNbStands,
+    getNbPrestationsAvailable:getNbPrestationsAvailable,
+    getNbUsers:getNbUsers,
+    getAveragePurchase:getAveragePurchase,
+    getTopSellerStand:getTopSellerStand,
+    getTopAvisStand:getTopAvisStand
 }

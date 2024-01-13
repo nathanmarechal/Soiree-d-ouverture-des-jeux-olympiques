@@ -10,15 +10,12 @@ exports.checkRight = async (req, res, next) => {
         console.log(req.body)
 
         if (!rightName) {
-            console.log(`No right assigned to path: ${req.originalUrl}`);
             return res.status(403).send("Aucun droit associé à ce chemin");
         }
-        console.log("sessionId", sessionId)
         const hasRight = await checkRight(sessionId, rightName);
 
         if (!hasRight) {
-            console.log(`User does not have right ${rightName}`);
-            res.status(403).send("L'utilisateur courant ne dispose pas de ce droit");
+            res.status(403).send(`L'utilisateur courant ne dispose pas du droit nécessaire: ${rightName}`);
         }
         else{
             next();
@@ -77,8 +74,9 @@ function getRightName(url) {
         "/api/homePage/description": "update_home_page",
 
         "/api/messagerie/get-all-conversations":"messages-admin",
-        "/api/messagerie/get-conversations-for-user":"messages-user",
         "/api/messagerie/toggle-resolved-converstation":"messages-admin",
+
+        "/api/messagerie/get-conversations-for-user":"messages-user",
 
         "/api/panier/getOwnPanier": "see_self_panier",
         "/api/panier/addPrestationToOwnPanier": "add_self_panier",
@@ -102,9 +100,10 @@ function getRightName(url) {
         "/api/statistiques/top-avis-stand":"statistiques-admin",
 
         "/api/commande/getCommandeUserCourant": "see_self_commande",
+        "/api/commande/getScheduleCurrentUser": "see_self_commande",
         "/api/commande/getLigneCommandeBycommandeId": "see_self_commande",
-
         "/api/commande/getCommandesCurrentPrestataires": "see_self_commande_received",
+        "/api/commande/addCommandeFromPanierUserCourant": "add_self_commande",
     };
     const path = url.split('?')[0]; // Enlève la query string
     return paths[path] || "";
