@@ -23,9 +23,9 @@ exports.checkCommandeExists = async (req, res, next) => {
 };
 
 exports.checkLigneCommandeExists = async (req, res, next) => {
-    const id_presta = req.query.id_prestation;
-    const id_creneau = req.query.id_creneau;
-    const id_commande = req.query.id_commande;
+    const id_presta = req.query.id_prestation || req.body.id_prestation;
+    const id_creneau = req.query.id_creneau || req.body.id_creneau;
+    const id_commande = req.query.id_commande || req.body.id_commande;
     if (!id) {
         return res.status(400).send("ID commande requis.");
     }
