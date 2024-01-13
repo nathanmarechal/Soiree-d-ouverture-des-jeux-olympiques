@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="form-check form-switch" v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1" style="margin-left: 5px">
+    <div class="form-check form-switch" v-if="currentUserHasRight('update_home_page')" style="margin-left: 5px">
       <input class="form-check-input" type="checkbox" id="editModeSwitch" v-model="editMode">
       <label class="form-check-label" for="editModeSwitch">Edit Mode</label>
     </div>
-    <div v-if="getCurrentUser.session_id !== null && getCurrentUser.id_user !== null && getCurrentUser.id_role === 1 && editMode === true">
+    <div v-if="currentUserHasRight('update_home_page') && editMode === true">
       <page-description-update @contentSaved="handleContentSaved" :id="id" :hd="HomeDescription"></page-description-update>
     </div>
     <div v-else>
@@ -16,6 +16,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import PageDescriptionUpdate from "@/components/HomePage/pageDescriptionUpdate.vue";
+import {currentUserHasRight} from "@/droits/droitUtil";
 
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
     ...mapGetters('roleEtDroit', ['getAllRoles']),
   },
   methods: {
+    currentUserHasRight,
     ...mapActions('textsHome', ['getTextsHomeStore', 'updateDescriptionHomePageStore']),
     ...mapActions('roleEtDroit', ['getRolesStore']),
     async loadData() {
