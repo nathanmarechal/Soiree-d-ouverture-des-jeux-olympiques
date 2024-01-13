@@ -124,11 +124,7 @@ exports.getAveragePurchaseByStand = async (req, res) => {
 exports.getBestClientByStand = async (req, res) => {
     const session_id = req.query.session_id;
 
-    console.log(session_id)
-
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
-
-    console.log("stand : "+stand)
 
     const id_stand = stand.id_stand;
 

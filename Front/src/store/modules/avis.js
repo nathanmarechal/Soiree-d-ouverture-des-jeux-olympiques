@@ -57,6 +57,6 @@ export default {
                 console.error('Error fetching avis:', error);
             }
         },
-        },
+    },
 
 };

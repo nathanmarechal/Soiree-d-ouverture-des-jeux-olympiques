@@ -59,7 +59,6 @@ exports.createStand = (req, res) => {
 exports.updateStand = (req, res) => {
     const id = req.query.id_stand;
     const body = req.body;
-    console.log("back",id, body)
     standsService.updateStand(id, body, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

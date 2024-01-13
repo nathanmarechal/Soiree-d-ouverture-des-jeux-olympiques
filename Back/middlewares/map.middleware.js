@@ -5,10 +5,6 @@ exports.checkEmplacementExists = async (req, res, next) => {
     const id_emplacement_body = req.body.id_emplacement || (req.body.stand && req.body.stand.id_emplacement);
     const id_emplacement = id_emplacement_query || id_emplacement_body;
     const id_stand = req.query.id_stand
-    console.log("id_emplacement", id_emplacement)
-    console.log("id_stand", id_stand)
-    console.log("id_emplacement_body", id_emplacement_body)
-    console.log("req.body", req.body)
     if (!id_emplacement) {
         return res.status(400).send("ID emplacement requis.");
     }

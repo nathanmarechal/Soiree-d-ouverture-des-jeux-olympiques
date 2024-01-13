@@ -163,8 +163,6 @@ exports.updateUserCourantWoPassword = async (req, res) => {
     const session_id = req.query.session_id;
     const user_courant = await usersService.getUserBySessionIdAsync(session_id);
 
-    console.log(user_courant)
-
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const email = req.body.email;
