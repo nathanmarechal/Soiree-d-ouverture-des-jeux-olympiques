@@ -117,25 +117,26 @@ router.get("/getCommandesCurrentPrestataires", rightMiddleware.checkRight, comma
  *   patch:
  *     summary: Met à jour l'état d'une ligne de commande
  *     tags: [Commande]
- *     parameters:
- *       - in: query
- *         name: id_prestation
- *         required: true
- *         description: ID de la prestation
- *         schema:
- *           type: integer
- *       - in: query
- *         name: id_creneau
- *         required: true
- *         description: ID du créneau
- *         schema:
- *           type: integer
- *       - in: query
- *         name: id_commande
- *         required: true
- *         description: ID de la commande
- *         schema:
- *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id_prestation
+ *               - id_creneau
+ *               - id_commande
+ *             properties:
+ *               id_prestation:
+ *                 type: integer
+ *                 description: ID de la prestation
+ *               id_creneau:
+ *                 type: integer
+ *                 description: ID du créneau
+ *               id_commande:
+ *                 type: integer
+ *                 description: ID de la commande
  *     responses:
  *       '200':
  *         description: L'état de la ligne de commande a été mis à jour avec succès
@@ -144,7 +145,7 @@ router.get("/getCommandesCurrentPrestataires", rightMiddleware.checkRight, comma
  *       '500':
  *         description: Erreur interne du serveur
  */
-router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prestationsMiddleware.checkCreneauExists, commandesMiddleware.checkCommandeExists, commandesMiddleware.checkLigneCommandeExists, commandeController.setEtatLigneCommandeExterieur);
+router.patch("/setetatligne", commandeController.setEtatLigneCommandeExterieur);
 
 
 /**

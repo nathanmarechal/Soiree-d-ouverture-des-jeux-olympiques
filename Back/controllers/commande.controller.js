@@ -57,9 +57,9 @@ exports.getScheduleByUserId = async (req, res) => {
 
 exports.setEtatLigneCommandeExterieur = (req, res) => {
 
-    const id_presta = req.query.id_prestation;
-    const id_creneau = req.query.id_creneau;
-    const id_commande = req.query.id_commande;
+    const id_presta = req.body.id_prestation;
+    const id_creneau = req.body.id_creneau;
+    const id_commande = req.body.id_commande;
 
     commandeService.setEtatLigneCommandeExterieur({ id_commande, id_presta, id_creneau }, (error, data) => {
         if (error) {
