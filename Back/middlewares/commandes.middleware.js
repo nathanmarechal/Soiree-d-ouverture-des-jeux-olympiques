@@ -26,7 +26,7 @@ exports.checkLigneCommandeExists = async (req, res, next) => {
     const id_presta = req.query.id_prestation;
     const id_creneau = req.query.id_creneau;
     const id_commande = req.query.id_commande;
-    if (!id) {
+    if (!id_commande) {
         return res.status(400).send("ID commande requis.");
     }
 
@@ -48,7 +48,7 @@ exports.checkCommandeBelongsToUserExists = async (req, res, next) => {
     const id_commande = req.query.id_commande;
     const session_id = req.query.session_id;
 
-    const user = userService.getUserBySessionIdAsync(session_id)
+    const user = await userService.getUserBySessionIdAsync(session_id)
 
     try {
         const conn = await pool.connect();
