@@ -5,9 +5,6 @@ exports.checkRight = async (req, res, next) => {
     try {
         const sessionId = req.query.session_id;
         const rightName = getRightName(req.originalUrl);
-        console.log("rightName", rightName)
-        console.log("sessionId", sessionId)
-        console.log(req.body)
 
         if (!rightName) {
             return res.status(403).send("Aucun droit associé à ce chemin");
@@ -111,8 +108,6 @@ function getRightName(url) {
 }
 
 async function checkRight(sessionId, rightName) {
-    console.log("session_id = " + sessionId)
-    console.log("right_name = " + rightName)
     const query = `
         SELECT EXISTS (
             SELECT 1
@@ -129,7 +124,6 @@ async function checkRight(sessionId, rightName) {
     const conn = await pool.connect();
     const res = await conn.query(query, [sessionId, rightName]);
     conn.release();
-    console.log("res : " + res.rows[0].has_right)
     return res.rows[0].has_right;
 }
 

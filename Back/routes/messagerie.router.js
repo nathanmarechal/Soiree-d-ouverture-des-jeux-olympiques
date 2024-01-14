@@ -2,7 +2,7 @@ const rightMiddleware = require("../middlewares/droits.middleware");
 const messagerieController = require("../controllers/messagerie.controller");
 const express = require("express");
 const messagerieMiddleware = require("../middlewares/messagerie.middleware");
-const sessionMiddleware = require("../middlewares/session.middleware");
+const userMiddleware = require("../middlewares/users.middleware");
 router = express.Router();
 
 /**
@@ -79,7 +79,7 @@ router.get("/get-conversations-for-user", rightMiddleware.checkRight, messagerie
  *       '500':
  *         description: Internal server error
  */
-router.get("/get-messages-by-conversation", sessionMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.getMessagesByConversation);
+router.get("/get-messages-by-conversation", userMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.getMessagesByConversation);
 
 /**
  * @swagger
@@ -114,7 +114,7 @@ router.get("/get-messages-by-conversation", sessionMiddleware.checkSessionExists
  *       '500':
  *         description: Internal server error
  */
-router.post("/send-message", sessionMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.sendMessage);
+router.post("/send-message", userMiddleware.checkSessionExists, messagerieMiddleware.checkConversationExists, messagerieController.sendMessage);
 
 /**
  * @swagger
@@ -148,7 +148,7 @@ router.post("/send-message", sessionMiddleware.checkSessionExists, messagerieMid
  *       '500':
  *         description: Internal server error
  */
-router.post("/create-conversation", sessionMiddleware.checkSessionExists, messagerieController.createConversation);
+router.post("/create-conversation", userMiddleware.checkSessionExists, messagerieController.createConversation);
 
 
 /**

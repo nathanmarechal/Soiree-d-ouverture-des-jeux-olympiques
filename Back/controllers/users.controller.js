@@ -169,9 +169,6 @@ exports.updateUserCourantWoPassword = async (req, res) => {
     const adresse = req.body.adresse;
     const code_postal = req.body.code_postal;
     const commune = req.body.commune;
-
-    console.log("session_id : " + session_id + " id : " + user_courant.id_user + " nom : " + nom + " prenom : " + prenom + " email : " + email + " adresse : " + adresse + " code_postal : " + code_postal + " commune : " + commune)
-
     usersService.updateUserCourantWoPassword(user_courant.id_user, nom, prenom, email, adresse, code_postal, commune, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

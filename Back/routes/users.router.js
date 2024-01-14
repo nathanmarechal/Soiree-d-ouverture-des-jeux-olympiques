@@ -256,7 +256,7 @@ router.patch("/updateSolde", rightMiddleware.checkRight, usersController.updateS
  *       '500':
  *         description: Internal error
  */
-router.patch("/updateUserCourantWoPassword", rightMiddleware.checkRight, usersMiddleware.checkEmailExists, usersController.updateUserCourantWoPassword);
+router.patch("/updateUserCourantWoPassword", rightMiddleware.checkRight, usersMiddleware.checkEmailUserCourantExists, usersController.updateUserCourantWoPassword);
 
 
 /**
