@@ -457,6 +457,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (40,2),
 
 (4,3),
+(28,3),
 (32,3),
 (35,3),
 (36,3),

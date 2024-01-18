@@ -6,7 +6,6 @@ exports.uploadingPictureHomePageDescription = (req, res) => {
         if (error) {
             return res.status(500).send("Internal error");
         } else {
-            console.log(data)
             return res.status(200).send(data);
         }
     });

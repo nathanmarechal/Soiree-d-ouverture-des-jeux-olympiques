@@ -142,7 +142,6 @@ const sendMessage = (id_conversation,message,id_user,callback) => {
 
 async function createConversationAsync(message, id_user) {
     try {
-        console.log(message, id_user)
         const conn = await pool.connect();
         const result = await conn.query(`INSERT INTO conversations (id_creator, titre, resolu)
                                          VALUES ($1, $2, false) RETURNING *;

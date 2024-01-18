@@ -24,7 +24,6 @@ async function getDroitsByIdAsync(id) {
             "WHERE role_droits.id_role=$1\n" +
             ";", [id]);
         conn.release();
-        console.log(result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error in getDroitsAsync:', error);

@@ -24,7 +24,6 @@ exports.addEmplacementLogistique = (req, res) => {
 
 exports.deleteEmplacementLogistique = (req, res) => {
     const id = req.query.id_emplacement_logistique;
-    console.log("deleteEmplacementLogistique: ", id)
     emplacementLogistiqueService.deleteEmplacementLogistique(id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

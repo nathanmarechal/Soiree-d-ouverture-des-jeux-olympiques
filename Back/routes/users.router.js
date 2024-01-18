@@ -1,7 +1,6 @@
 const express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/users.controller');
-
 const usersMiddleware = require("../middlewares/users.middleware");
 const standsMiddleware = require("../middlewares/stands.middleware");
 const rolesMiddleware = require("../middlewares/role.middleware");
@@ -132,7 +131,6 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *         description: Internal error
  */
 router.patch("/update", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, standsMiddleware.checkStandAppartenance, rolesMiddleware.checkRoleExists, usersController.updateUser);
-
 
 /**
  * @swagger
