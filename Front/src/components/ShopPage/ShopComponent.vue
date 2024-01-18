@@ -41,9 +41,6 @@ export default {
   },
   data() {
     return {
-      //prestations : [],
-      //typePrestations: [],
-      //stands: [],
       selectedPrestationId: null,
     }
   },
@@ -53,9 +50,6 @@ export default {
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }
-    //this.prestations = await this.getPrestations();
-    //this.typePrestations = await this.getTypePrestations();
-    //this.stands = await this.getStands();
     this.equalizeCardHeights();
   },
   computed: {

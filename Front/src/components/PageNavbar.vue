@@ -157,8 +157,6 @@ export default {
     disconnect() {
       this.$store.commit('user/SET_IS_USER_CONNECTED', false);
       this.$store.commit('user/SET_CURRENT_USER', null);
-      //this.$store.commit('SET_EMAIL', '');
-      //this.$store.commit('SET_PASSWORD', '');
     },
   },
 };

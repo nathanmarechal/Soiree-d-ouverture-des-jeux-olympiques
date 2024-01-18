@@ -95,7 +95,6 @@ export default {
       this.incorrectLog = false;
 
       if (this.isEmailValid() && this.isPasswordValid()) {
-        //alert('Formulaire envoyé !')
         getSession(this.email,this.password)
             .then(res=> {
               this.sessionId = res;

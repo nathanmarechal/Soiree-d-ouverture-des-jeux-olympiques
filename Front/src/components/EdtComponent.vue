@@ -32,7 +32,6 @@ export default {
   },
   async mounted() {
     await this.loadData();
-    console.log(JSON.stringify(this.getCurrentUser.schedule) + " dans le vue");
   }
 
 };

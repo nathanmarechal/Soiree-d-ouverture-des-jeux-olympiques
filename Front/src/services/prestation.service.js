@@ -2,25 +2,21 @@ import {deleteRequest, getRequest, patchRequest, postRequest, postRequestPicture
 
 async function getAllPrestationsFromAPI() {
     let answer = await getRequest('/prestations/get', 'GETALLPRESTATIONS')
-    console.log("getAllPrestationsFromAPI: ", answer)
     return answer
 }
 
 async function getAllPrestations() {
     let answer = await getAllPrestationsFromAPI()
-    console.log("getAllPrestations: ", answer)
     return answer
 }
 
 async function getAllTypePrestationsFromAPI() {
     let answer = await getRequest('/typePrestations/get', 'GETALLTYPEPRESTATIONS')
-    console.log("getAllTypePrestationsFromAPI: ", answer)
     return answer
 }
 
 async function getAllTypePrestations() {
     let answer = await getAllTypePrestationsFromAPI()
-    console.log("getAllTypePrestations: ", answer)
     return answer
 }
 
@@ -36,7 +32,6 @@ async function uploadImagePresation(image) {
 
 async function createPrestation(body, session_id) {
     let answer = await createPrestationFromAPI(body, session_id)
-    //console.log("createZone: ", answer)
     return answer
 }
 
@@ -52,7 +47,6 @@ async function updateIsAvailablePrestationFromAPI(id, body, session_id) {
 
 async function updateIsAvailablePrestation(id, body, session_id) {
     let answer = await updateIsAvailablePrestationFromAPI(id, body, session_id)
-    //console.log("updateZone: ", answer)
     return answer
 }
 async function updatePrestationFromAPI(id, body, session_id) {

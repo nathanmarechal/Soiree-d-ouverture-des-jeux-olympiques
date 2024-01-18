@@ -76,9 +76,6 @@ export default {
     ...mapGetters('stands', ['getAllStand']),
     filteredAreas() {
       var data = [];
-      console.log('filteredAreasaaaaaaaaaaaa');
-      console.log("filtered protector", this.filterProtector);
-      console.log("all area", this.getAllArea);
       if(!this.isProtectorDelete){
         return data = this.getAllArea;
       }else{

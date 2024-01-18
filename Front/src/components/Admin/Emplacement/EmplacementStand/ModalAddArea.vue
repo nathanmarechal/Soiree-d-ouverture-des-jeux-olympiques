@@ -27,8 +27,6 @@
 
 <script>
 
-//import { createArea } from "@/services/map.service";
-
 import {mapGetters, mapActions} from "vuex";
 import {translate} from "@/lang/translationService";
 

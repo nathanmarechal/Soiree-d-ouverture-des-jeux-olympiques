@@ -20,8 +20,6 @@ export default {
 
   data() {
     return {
-      //areas : [],
-      //zones : [],
       areasShow : [],
       map: null,
       selectedStand: null,
@@ -33,10 +31,6 @@ export default {
     try {
       this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
       this.$store.commit('stands/SET_SELECTED_STANDS', []);
-      //this.areas = await this.getAreas();
-      //this.zones = await this.getZones();
-      //await this.$store.dispatch('getAreas');
-      //await this.$store.dispatch('getZones');
       await this.loadData();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
@@ -49,8 +43,6 @@ export default {
     ...mapGetters('prestationEtType', ['getAllPrestation', 'getSelectedTypePrestation']),
     ...mapGetters('emplacements', ['getAllArea']),
     ...mapGetters('user', ['getSearchQuery'])
-
-    //...mapState(['areas', 'zones']),
   },
 
 methods: {
@@ -116,10 +108,6 @@ methods: {
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
-
-      if (this.map == null) {
-        console.log("MAP NULL 1")
-      }
       this.updateMap()
     },
     showZoneInfo(zone) {
@@ -128,11 +116,6 @@ methods: {
     },
     updateMap() {
       // Supprimez les polygones actuels de la carte
-
-      if (this.map == null) {
-        console.log("MAP NULL")
-      }
-      
       this.polygons.forEach(polygon => {
         this.map.removeLayer(polygon);
       });
@@ -140,7 +123,6 @@ methods: {
       const selectedZoneIds = this.getSelectedZone;
       const selectedTypePrestationIds = this.getSelectedTypePrestation;
       const searchQuery = this.getSearchQuery;
-      //const areas = this.areas;
 
       const hasSearchCriteria = searchQuery.trim() !== '' || selectedZoneIds.length > 0 || selectedTypePrestationIds.length > 0;
 

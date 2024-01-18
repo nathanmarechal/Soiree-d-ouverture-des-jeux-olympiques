@@ -66,7 +66,6 @@ export default {
     if (this.getAllCreneau.length > 0) {
       this.creneau = this.getAllCreneau[0].id_creneau;
     }
-    //this.creneau = this.getAllCreneau;
   },
 
   computed: {
@@ -94,8 +93,6 @@ export default {
         quantite: this.quantite,
         id_creneau: this.creneau,
       });
-      console.log("valider reservation : "+ this.prestation.id_prestation + " " + this.getCurrentUser.id_user + " " + this.quantite + " " + this.creneau)
-
       await this.getPanierUserCourantStore()
       this.$emit('close');},
   },

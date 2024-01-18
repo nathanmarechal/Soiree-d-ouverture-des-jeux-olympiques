@@ -181,14 +181,10 @@ export default {
         },
 
         UPDATE_PRESTATION_QUANTITY_IN_PANIER(state, { id_user, id_prestation, quantite, id_creneau }) {
-            console.log("nouvelleQuantite " + quantite);
             state.userCourant.panier = state.userCourant.panier.map(item => {
                 if (item.id_user === id_user && item.id_prestation === Number(id_prestation) && item.id_creneau === id_creneau) {
-                    console.log("quantite " + item.quantite);
-                    console.log("nouvelleQuantite " + quantite);
                     return { ...item, quantite: quantite };
                 }
-                console.log("UPDATE_PRESTATION_QUANTITY_IN_PANIER " + item.id_user + " presta " + item.id_prestation + " creneau " + item.id_creneau + " quantité " + item.quantite);
                 return item;
             });
         },
@@ -243,17 +239,14 @@ export default {
         },
 
         UPDATE_NOM(state, nom) {
-            console.log("update nom " + nom);
             state.userCourant.nom = nom;
         },
 
         UPDATE_PRENOM(state, prenom) {
-            console.log("update prenom " + prenom);
             state.userCourant.prenom = prenom;
         },
 
         UPDATE_EMAIL(state, email) {
-            console.log("update email " + email);
             state.userCourant.email = email;
         },
 
@@ -309,7 +302,6 @@ export default {
                 const session_id = state.userCourant.session_id
                 const panier = await getPanierUserCourant(session_id);
                 commit('SET_PANIER_USER_COURANT', panier);
-                console.log("le panier dans le store : " + panier)
             } catch (error) {
                 console.error('Error fetching panier:', error);
             }
@@ -406,7 +398,6 @@ export default {
             try {
                 const session_id = state.userCourant.session_id
                 const schedule = await getScheduleByUserId(session_id);
-                console.log("schedule envoyée au store" + JSON.stringify(schedule))
                 commit('SET_SCHEDULE', schedule);
             } catch (error) {
                 console.error('Error fetching schedule:', error);
@@ -417,7 +408,6 @@ export default {
 
         async getUsersStore({ commit, state }) {
             try {
-                console.log("getUsersStore" + state.userCourant.session_id)
                 const result = await getAllUsers(state.userCourant.session_id);
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
@@ -433,8 +423,6 @@ export default {
             try {
                 const usersAttente = await getAllUsersAttente(state.userCourant.session_id);
                 commit('SET_USERS_ATTENTE', usersAttente);
-                console.log("usersAttente: ", usersAttente)
-                console.log("usersAttente: ", this.state.usersAttente)
             } catch (error) {
                 console.error('Error fetching creneau:', error);
             }
@@ -518,7 +506,6 @@ export default {
 
         async updateUserStore({ commit , state }, body) {
             try {
-                console.log('up', {body}, body)
                 await updateUser(body.id_user, body, state.userCourant.session_id);
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
@@ -528,7 +515,6 @@ export default {
 
         async deleteUserStore({ commit, state }, id) {
             try {
-                console.log("in delete user store")
                 const session_id = state.userCourant.session_id
                 await deleteUser(id,session_id);
                 commit('DELETE_USER', id);

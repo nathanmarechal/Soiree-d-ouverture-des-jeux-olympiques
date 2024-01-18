@@ -3,7 +3,6 @@ import { getRequest, postRequest, deleteRequest, patchRequest } from "@/services
 
 async function createRole(body, session_id) {
     let answer = await createRoleFromAPI(body, session_id)
-    console.log("createRole: ", answer)
     return answer
 }
 
@@ -29,10 +28,8 @@ async function updateRole(body, session_id) {
 
 async function updateRoleFromAPI(body, session_id) {
     body.session_id = session_id
-    console.log("updateRoleFromAPI: ", body)
     let id = body.id_role
     let answer = patchRequest('/roles/update?session_id=' + session_id + '&id_role=' + id, body, 'UPDATEROLE')
-    console.log("updateRole: ", answer)
     return answer
 }
 

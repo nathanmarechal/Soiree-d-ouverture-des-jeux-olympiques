@@ -69,7 +69,6 @@ export default {
     async loadStatistics() {
       try {
         const session_id = this.$store.getters["user/getSessionId"];
-        console.log(session_id);
         [this.bestClient] = await getBestClientByStand(session_id);
         [this.averagePurchase] = await getAveragePurchaseByStand(session_id);
         [this.avgRating] = await getAvgRatingByStand(session_id);

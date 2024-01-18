@@ -37,9 +37,6 @@ import {translate} from "../../lang/translationService";
 export default {
   data() {
     return {
-      //typePrestations : [],
-      //zones : [],
-
       selectedTypePrestations:[],
       selectedZones:[],
       searchQuery: this.$store.state.user.searchQuery
@@ -47,10 +44,7 @@ export default {
   },
   async mounted() {
     try {
-      //await this.$store.dispatch('getTypePrestations');
       await this.loadData();
-      //this.typePrestations = await this.getTypePrestations();
-      //this.zones = await this.getZones();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }

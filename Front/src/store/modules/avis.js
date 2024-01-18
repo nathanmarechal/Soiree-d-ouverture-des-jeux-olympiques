@@ -7,10 +7,6 @@ export default {
     },
     getters: {
         getAvis : state => state.avis,
-        // getAvisByStandId: (state) => (id) => {
-        //     cons
-        //     return state.avis.filter(avis => avis.id_stand === id);
-        // },
     },
     mutations: {
         SET_AVIS(state, avis) {
@@ -24,9 +20,7 @@ export default {
 
 
         DELETE_AVIS(state, id) {
-            console.log(state.avis)
             state.avis = state.avis.filter(item => item.id_avis_stand_utilisateur !== id);
-            console.log(state.avis)
         },
     },
     actions: {
@@ -51,7 +45,6 @@ export default {
         async deleteAvisStore({ rootState, commit }, id) {
             try {
                 await deleteAvis(id, rootState.user.userCourant.session_id);
-                console.log("deleteAvisStore: ", id)
                 commit('DELETE_AVIS', id);
             } catch (error) {
                 console.error('Error fetching avis:', error);

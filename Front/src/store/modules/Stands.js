@@ -35,7 +35,6 @@ export default {
             state.selectedStands = stands;
         },
         ADD_TO_STANDS(state, data) {
-            console.log("data", data)
             state.stands.push(data);
         },
         CREATE_STAND(state, stand) {
@@ -53,7 +52,6 @@ export default {
             try {
                 const session_id = rootState.user.userCourant.session_id
                 const data = await createStand(body, session_id);
-                console.log(data[0])
                 commit('CREATE_STAND', data[0]);
             } catch (err) {
                 console.error("Error in createStandStore():", err);
@@ -61,8 +59,6 @@ export default {
         },
         async updateStandStore({ rootState, commit }, {id, body}) {
             try {
-                console.log("id", id)
-                console.log("body", body)
                 const session_id = rootState.user.userCourant.session_id
                 await updateStand(id, body, session_id);
                 commit('UPDATE_STAND', id, body);
@@ -115,7 +111,6 @@ export default {
         },
 
         addToStands({ commit }, data) {
-            console.log("data et je passe", data)
             commit('ADD_TO_STANDS', data);
         },
     },

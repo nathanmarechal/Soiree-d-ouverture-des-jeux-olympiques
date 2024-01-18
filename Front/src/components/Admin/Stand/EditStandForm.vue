@@ -113,7 +113,7 @@ export default {
         toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image',
         images_upload_handler: this.handleImageUploadDescription
       },
-      image_stand: null // Initialize to null
+      image_stand: null
     };
   },
   methods: {
@@ -129,7 +129,6 @@ export default {
         await this.getStandsStore();
         this.stand = this.selected_stand;
         this.id_user = this.getAllUsers.find(user => user.id_stand === this.stand.id_stand).id_user;
-        console.log("id_user :", this.id_user)
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }
@@ -203,7 +202,6 @@ export default {
       });
     },
     async submitForm() {
-      // Perform form submission logic here to create a new stand
       try {
         if(this.stand.id_emplacement === null){
           window.alert("Veuillez choisir un emplacement");
@@ -216,26 +214,18 @@ export default {
           const descriptionContent = this.$refs.myEditor.editor.getContent();
           this.stand.description_stand = descriptionContent;
         }
-        console.log("stand :", this.stand)
         if (this.imageRaw) {
-          console.log("imageRaw :", this.imageRaw)
           await uploadImageStand(this.imageRaw);
         }
         this.stand.date_achat = new Date().toISOString().slice(0, 10);
-        console.log("stand :", this.stand)
         await this.updateStandStore({id : this.stand.id_stand, body : this.stand});
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
-        //if the user changed remove the id_stand from the old user
-        console.log("checkpoint")
-        console.log("user :", user)
-        console.log("stand :", stand)
         if(user.id_stand !== stand.id_stand){
           if (this.getAllUsers.find(user => user.id_stand === stand.id_stand) != null || this.getAllUsers.find(user => user.id_stand === stand.id_stand) != undefined){
             const oldUser = this.getAllUsers.find(user => user.id_stand === stand.id_stand);
             oldUser.id_stand = null;
             await this.updateUserStore(oldUser);
-            //then add it to the new one
             user.id_stand = stand.id_stand;
             await this.updateUserStore(user);
           }else{
@@ -253,7 +243,7 @@ export default {
       try {
         return require('./../../../../../Back/assets/stand/profile/' + fileName)
       } catch {
-        return "pas d'image"// Image par défaut en cas d'erreur
+        return "pas d'image"
       }
     },
     toggleSelectEmplacementModal() {
@@ -273,15 +263,10 @@ export default {
     getAllUsersWithoutStand() {
       var data;
       data = this.getAllUsers.filter(user => user.id_stand === null);
-      console.log("papa", data, this.getAllUsers.filter(user => user.id_stand === null))
-      //add the user that already had this stand
-      console.log("id_stand", this.stand.id_stand)
       if(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand) != null || this.getAllUsers.find(user => user.id_stand === this.stand.id_stand) != undefined){
         data.push(this.getAllUsers.find(user => user.id_stand === this.stand.id_stand));
       } 
-      console.log("maman", data, this.getAllUsers.find(user => user.id_stand === this.stand.id_stand))
       data = data.filter(user => user.id_role === 2);
-      //verifie si l'utilisateur peut avoir un stand 
       return data
     }
   },

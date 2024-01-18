@@ -16,14 +16,12 @@ async function createEmplacementLogistique(body, session_id) {
 }
 
 async function createEmplacementLogistiqueFromAPI(body, session_id) {
-    console.log("createEmplacementLogistiqueFromAPI: ", body)
     let answer = await postRequest('/emplacement-logistique/add?session_id=' + session_id, body, 'CREATEEmplacementLogistique')
     return answer
 }
 
 async function deleteEmplacementLogistique(id, session_id) {
     let answer = await deleteEmplacementLogistiqueFromAPI(id, session_id)
-    //console.log("deleteArea: ", answer)
     return answer
 }
 
@@ -34,7 +32,6 @@ async function deleteEmplacementLogistiqueFromAPI(id, session_id) {
 
 async function updateEmplacementLogistique(id, body, session_id) {
     let answer = await updateEmplacementLogistiqueFromAPI(id, body, session_id)
-    //console.log("updateArea: ", answer)
     return answer
 }
 

@@ -56,11 +56,7 @@ export default {
         if (this.getAllTypePrestation.length === 0) {
           await this.getTypePrestationsStore()
         }
-
         await this.getPrestationByUserId(this.getCurrentUser.id_stand);
-
-        console.log(this.prestations)
-
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

@@ -29,8 +29,6 @@ export default {
 
         SET_PRESTATIONS(state, prestations) {
             state.prestations = prestations;
-            console.log("prestation" +state.prestations)
-            console.log("state.prestations : " + state.prestations)
         },
 
         SET_SELECTED_TYPE_PRESTATION(state, type) {
@@ -55,9 +53,7 @@ export default {
     actions: {
         async getPrestationsStore({ commit }) {
             try {
-                console.log("getPresta")
                 const result = await getAllPrestations();
-                console.log("result : " + result)
                 if (Array.isArray(result)) {
                     commit('SET_PRESTATIONS', result);
                 } else {
@@ -70,7 +66,6 @@ export default {
 
         async updateIsAvailablePrestationStore({ rootState, commit }, body) {
             try {
-                console.log("session_id : "  + rootState.user.userCourant.session_id)
                 await updateIsAvailablePrestation(body.id, body, rootState.user.userCourant.session_id);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
@@ -80,7 +75,6 @@ export default {
 
         async updatePrestationStore({rootState,  commit }, body) {
             try {
-                console.log("session_id : "  + rootState.user.userCourant.session_id)
                 await updatePrestation(body.id_prestation, body, rootState.user.userCourant.session_id)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
@@ -91,7 +85,6 @@ export default {
         async deletePrestationStore({ rootState, commit }, id) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                console.log("session_id : "  + session_id)
                 await deletePrestation(id, session_id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
@@ -102,7 +95,6 @@ export default {
         async createPrestationStore({ rootState, commit }, body) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                console.log("session_id : "  + session_id)
                 let response = await createPrestation(body, session_id);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {

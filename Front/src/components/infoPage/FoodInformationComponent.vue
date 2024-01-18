@@ -20,13 +20,11 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
   data() {
     return {
-      //typePrestations: [],
       selectedTypePrestation: [],
     }
   },
   async mounted() {
     await this.loadData()
-    //this.typePrestations = await this.getTypePrestations();
   },
   computed: {
     ...mapGetters('prestationEtType', ['getAllTypePrestation','getSelectedTypePrestation']),

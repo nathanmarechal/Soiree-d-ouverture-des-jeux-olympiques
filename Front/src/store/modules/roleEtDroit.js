@@ -20,21 +20,16 @@ export default {
         getRoleDroits : (state) => (id_role) => {
             const getThisRoleDroitsAssociation = []
             const getThisRoleDroits = []
-            //console.log(state.roleDroitAssociation)
             state.roleDroitAssociation.forEach(item => {
                 if (item.id_role === id_role.id_role) {
                     getThisRoleDroitsAssociation.push(item.id_droit)
                 }
             })
-            // console.log("getThisRoleDroitsAssociation: ", getThisRoleDroitsAssociation)
-            // console.log("state.droits: ", state.droits)
             state.droits.forEach(item => {
-                //console.log("item.id: ", item.id)
                 if (getThisRoleDroitsAssociation.includes(item.id)) {
                     getThisRoleDroits.push(item)
                 }
             })
-            //console.log("getThisRoleDroits: ", getThisRoleDroits)
             return getThisRoleDroits;
         },
     },
@@ -94,8 +89,6 @@ export default {
         async getRolesStore({commit}) {
             try {
                 const roles = await getAllRoles();
-                console.log("ROLEROLEROLE SANS CROCHET 0: ", roles)
-                console.log("ROLEROLEROLE [0]: ", roles[0])
                 if (Array.isArray(roles)) {
                     commit('SET_ROLES', roles);
                 } else {
@@ -108,10 +101,7 @@ export default {
 
         async createRoleStore({rootState, commit}, body) {
             try {
-                console.log("createRoleStore: ", body)
                 const data = await createRole(body, rootState.user.userCourant.session_id);
-                console.log("datacreate: ", data);
-                console.log("datacreate: ", data[0]);
                 commit('CREATE_ROLE', data[0]);
                 return data[0];
             } catch (err) {
@@ -134,11 +124,8 @@ export default {
 
         async updateRoleStore({rootState, commit}, body) {
             try {
-                console.log("updateRoleStore: ", body)
                 const data = await updateRole(body, rootState.user.userCourant.session_id);
-                console.log("dataupdate: ", data, data[0].id_role);
                 commit('UPDATE_ROLE', data[0].id_role);
-                console.log("dataupdate2: ", data[0]);
                 return data;
             } catch (err) {
                 console.error("Error in updateRoleStore():", err);
@@ -164,7 +151,6 @@ export default {
             try {
                 const result = await getAllRoleDroitAssociation(); // Wait for the Promise to resolve
                 // print what kind of object is result
-                //console.log("result: ", result);
 
                 if (Array.isArray(result)) {
                     commit('SET_ROLE_DROIT_ASSOCIATION', result);
@@ -188,9 +174,7 @@ export default {
 
         async deleteRoleDroitAssociationStore({rootState, commit}, body) {
             try {
-                //console.log("deleteRoleDroitAssociationStore: ", body)
                 const data = await deleteRoleDroitAssociation(body, rootState.user.userCourant.session_id);
-                //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationStore():", err);
@@ -199,9 +183,7 @@ export default {
 
         async deleteRoleDroitAssociationForSpecificRoleStore({rootState, commit}, id_role) {
             try {
-                //console.log("deleteRoleDroitAssociationForSpecificRoleStore: ", id_role)
                 const data = await deleteRoleDroitAssociationForSpecificRole(id_role, rootState.user.userCourant.session_id);
-                //console.log("datdeletea: ", data[0]);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationForSpecificRoleStore():", err);

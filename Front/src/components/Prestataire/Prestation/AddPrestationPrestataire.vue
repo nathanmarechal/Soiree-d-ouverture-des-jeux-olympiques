@@ -37,9 +37,8 @@
 
 <script>
 
-import {getAllTypePrestations, uploadImagePresation} from '@/services/prestation.service'
+import {uploadImagePresation} from '@/services/prestation.service'
 import { mapActions, mapGetters } from 'vuex';
-//import { createPrestation } from "@/services/prestation.service";
 import Cropper from 'cropperjs';
 
 
@@ -57,9 +56,6 @@ export default {
         id_stand: null,
         is_available: false
       },
-
-      //type_prestations: [], // Remplacez par vos données de type de prestation
-      //stands: [], // Remplacez par vos données de stand
     };
   },
   computed: {
@@ -80,8 +76,6 @@ export default {
       if (this.getAllTypePrestation.length === 0)
         await this.getTypePrestationsStore()
       this.prestation.id_stand = this.getCurrentUser.id_stand
-
-      console.log(getAllTypePrestations)
     },
 
 

@@ -10,13 +10,6 @@ export default {
   },
   components: {
     ValidLigneCommandeComponent,
-  },
-  mounted() {
-    console.log("id_prestation page")
-    console.log(this.$route.params.id_prestation)
-    console.log(this.$route.params.id_creneau)
-    console.log(this.$route.params.id_commande)
-
   }
 };
 </script>

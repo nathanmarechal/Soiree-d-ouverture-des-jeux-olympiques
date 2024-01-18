@@ -145,15 +145,11 @@ import {translate} from "../../lang/translationService";
 export default {
   data() {
     return {
-      //stands : [],
-      //selectedStand: [],
       discoverMore : false
     };
   },
   async mounted() {
     try {
-      //await this.$store.dispatch('getStands');
-      //this.$store.commit('SET_SELECTED_STANDS', []);    // voir si judicieux
       await this.loadData();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);

@@ -16,7 +16,6 @@ export default {
         UPDATE_HomePage(state, payload) {
             state.texts_home = state.texts_home.map(item => {
                 if (item.id_text_accueil === payload.id_text_accueil) {
-                    console.log("item.id_text_accueil " + item.id_text_accueil + " payload.id_text_accueil " + payload.id_text_accueil);
                     return { ...item, ...payload.body };
                 }
                 return item;

@@ -26,8 +26,6 @@ export default {
   methods: {
     handleEdit() {
       this.modif = true;
-      console.log("edit initiated");
-      console.log(this.modif);
     },
     cancelEdit() {
       this.modif = false;

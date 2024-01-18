@@ -104,7 +104,6 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        console.log(this.getSessionId);
         [this.nbStands] = await getNbStands(this.getSessionId);
         [this.nbPrestationsAvailable] = await getNbPrestationsAvailable(this.getSessionId);
         [this.nbUsers] = await getNbUsers(this.getSessionId);
@@ -118,7 +117,6 @@ export default {
     },
     getImageSrc(imageName) {
       try {
-        console.log(imageName)
         return require('./../../../../../Back/assets/stand/profile/' + imageName)
       } catch {
         return require('@/assets/clown.png'); // Image par défaut en cas d'erreur

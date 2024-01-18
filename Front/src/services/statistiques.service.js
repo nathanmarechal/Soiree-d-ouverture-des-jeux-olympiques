@@ -108,7 +108,6 @@ async function getBestClientByStandFromAPI(session_id) {
 
 async function getBestClientByStand(session_id) {
     let answer = await getBestClientByStandFromAPI(session_id)
-    console.log("getBestClientByStand: ", answer)
     return answer
 }
 
@@ -118,7 +117,6 @@ async function getSalesRevnueByTypeByStandFromAPI(session_id) {
 
 async function getSalesRevnueByTypeByStand(session_id) {
     let answer = await getSalesRevnueByTypeByStandFromAPI(session_id)
-    console.log("getSalesRevnueByTypeByStand: ", answer)
     return answer
 }
 async function getAvgRatingByStandFromAPI(session_id) {
@@ -127,7 +125,6 @@ async function getAvgRatingByStandFromAPI(session_id) {
 
 async function getAvgRatingByStand(session_id) {
     let answer = await getAvgRatingByStandFromAPI(session_id)
-    console.log("getSalesRevnueByTypeByStand: ", answer)
     return answer
 }
 async function getCountRatingByStandFromAPI(session_id) {
@@ -136,7 +133,6 @@ async function getCountRatingByStandFromAPI(session_id) {
 
 async function getCountRatingByStand(session_id) {
     let answer = await getCountRatingByStandFromAPI(session_id)
-    console.log("getSalesRevnueByTypeByStand: ", answer)
     return answer
 }
 

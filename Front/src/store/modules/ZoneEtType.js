@@ -81,7 +81,6 @@ export default {
         async deleteZoneStore({ rootState,commit }, id) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                console.log("deleteZoneStore: ", id, session_id)
                 await deleteZone(id, session_id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
@@ -102,9 +101,7 @@ export default {
         async createZoneStore({ rootState,commit }, body) {
             try {
                 const session_id = rootState.user.userCourant.session_id
-                console.log("createZoneStore KEUSCH: " + session_id)
                 const newZone = await createZone(body, session_id);
-                console.log("newZone: ", newZone, newZone[0])
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);

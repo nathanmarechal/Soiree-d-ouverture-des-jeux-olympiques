@@ -46,7 +46,6 @@ export default({
   },
 
   methods: {
-    //...mapActions(['getConversationsAdminStore']),
     ...mapActions('messagerie', ['getConversationsAdminStore']),
     async loadData() {
       try {

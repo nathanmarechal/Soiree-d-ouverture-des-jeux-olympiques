@@ -14,7 +14,6 @@
         </select>
       </div>
 
-      <!-- Add checkboxes for droits based on selected category -->
       <div class="form-group">
         <label>{{ translate("droit") }}</label>
         <div class="form-check" v-for="droit in filteredDroits" :key="droit.id">
@@ -111,10 +110,7 @@ export default {
       try {
         this.role.session_id = this.getCurrentUser.session_id;
         let result = await this.updateRoleStore(this.role);
-        console.log('Résultat de la modification du rôle :', result);
-        // delete all the selected droits for the role
         await this.deleteRoleDroitAssociationForSpecificRoleStore(this.role.id_role);
-        // Save the selected droits for the role
         for (const droitId of this.selectedDroits) {
           await this.createRoleDroitAssociationStore({
             id_role: result[0].id_role,

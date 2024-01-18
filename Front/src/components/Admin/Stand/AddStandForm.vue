@@ -208,8 +208,6 @@ export default {
         const stand = this.getAllStand.find(stand => stand.id_emplacement === this.stand.id_emplacement);
         const user = this.getAllUsers.find(user => user.id_user === this.id_user);
         user.id_stand = stand.id_stand;
-        console.log("user", user);
-        console.log("id_stand", stand.id_stand)
         await this.updateUserStore(user);
         this.$router.push('/admin/stands');
       } catch (error) {

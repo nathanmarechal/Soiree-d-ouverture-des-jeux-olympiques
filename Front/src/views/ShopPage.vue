@@ -35,22 +35,7 @@ import StandShopComponent from "@/components/ShopPage/StandShopComponent.vue";
 import TypePrestaShopComponent from "@/components/ShopPage/TypePrestaShopComponent.vue";
 import AvisComponent from "@/components/Avis/AvisComponent.vue";
 import {mapGetters} from "vuex";
-//import {mapGetters, mapMutations} from "vuex";
 export default {
-
-  /*
-  async mounted() {
-    try {
-      //await this.$store.dispatch('getTypePrestations');
-      //await this.$store.dispatch('getStands');
-      //await this.$store.dispatch('getPrestations');
-
-    } catch (error) {
-      console.error('Erreur lors du chargement des données :', error);
-    }
-  },
-   */
-
   components: {
     TypePrestaShopComponent,
     filterByTypeComponent,

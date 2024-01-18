@@ -24,8 +24,6 @@ export default {
 
   async created(){
       await this.loadData();
-      //this.$store.dispatch('getZones');
-      //this.$store.dispatch('getTypeZone');
   },
 
   computed: {

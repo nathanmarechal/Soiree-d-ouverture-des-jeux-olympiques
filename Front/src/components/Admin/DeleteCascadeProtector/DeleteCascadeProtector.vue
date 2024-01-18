@@ -46,7 +46,6 @@ export default {
   },
   data() {
     return {
-      //dataToProtect is the data that need to be protected
       dataToProtect: [],
       //dataToProtectType is the type of the data that need to be protected
       dataToProtectType: '',
@@ -82,8 +81,6 @@ export default {
     ...mapActions('emplacements', ['getAreasStore']),
     ...mapActions('ZoneEtType', ['getTypeZonesStore', 'getZonesStore']),    async loadData() {
       try {
-        console.log("props data", this.dataProp);
-        console.log("data type", this.dataType);
         await this.getRolesStore();
         await this.getUsersStore();
         await this.getStandsStore();
@@ -96,7 +93,6 @@ export default {
       }
     },
     async getAllData(){
-      console.log("-----------------------------------------------");
       if (this.isLevel2Prop){
         this.isLevel2 = this.isLevel2Prop;
       }
@@ -107,11 +103,9 @@ export default {
         this.previousDataId = this.previousDataIdProp;
       }
       if (this.previousDataId == null || this.previousDataType == ''){
-        console.log("no previous data");
         this.dataToProtect = this.dataProp;
         this.dataToProtectType = this.dataType;
       }else{
-        console.log("previous data switch", this.previousDataType, this.previousDataId);
         switch (this.previousDataType) {
           case 'role':
             this.dataToProtect = this.getAllRoles.find(role => role.id_role === this.previousDataId);
@@ -180,7 +174,6 @@ export default {
       }
     },
     async handleNeedProtection(data) {
-      console.log("HandleNeedPRotection");
       this.dataToProtect = data.dataProp;
       this.dataToProtectType = data.dataType;
       this.getAllDataToDelete();
@@ -213,8 +206,6 @@ export default {
             break;
         }
       this.getAllDataToDelete();
-      console.log("data to protect", this.dataToProtect, this.dataToProtectType);
-      console.log("data to delete", this.dataToDelete, this.dataToDeleteType);
     },
   }
 }

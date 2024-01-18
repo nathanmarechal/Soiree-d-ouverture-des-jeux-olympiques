@@ -49,14 +49,12 @@ export default {
     this.size = this.avis.length
   },
   computed: {
-    //...mapGetters(['getSelectedStands', 'getAvis', "getCurrentUser"]),
     ...mapGetters('user', ['getCurrentUser']),
     ...mapGetters('avis', ['getAvis']),
     ...mapGetters('stands', ['getSelectedStands'])
 
   },
   methods: {
-//    ...mapActions(['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
     ...mapActions('avis', ['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
 
     async loadData(){

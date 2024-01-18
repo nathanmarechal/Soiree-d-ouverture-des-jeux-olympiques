@@ -28,10 +28,6 @@ export default {
     try {
       this.$store.commit('prestationEtType/SET_SELECTED_TYPE_PRESTATION', []);
       this.$store.commit('stands/SET_SELECTED_STANDS', []);
-      //this.areas = await this.getAreas();
-      //this.zones = await this.getZones();
-      //await this.$store.dispatch('getAreas');
-      //await this.$store.dispatch('getZones');
       await this.loadData();
       this.initializeMap(); // Appelez initializeMap() après avoir attendu le chargement des données
     } catch (error) {
@@ -43,8 +39,6 @@ export default {
     ...mapGetters('emplacements', ['getAllArea',]),
     ...mapGetters('stands', ['getAllStand']),
     ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique','getLogisticsRequirements']),
-
-    //...mapState(['areas', 'zones']),
   },
 
   methods: {
@@ -129,21 +123,15 @@ export default {
     },
     updateMap() {
       // Supprimez les polygones actuels de la carte
-
-      console.log(this.getLogisticsRequirements)
-
       this.polygons.forEach(polygon => {
         this.map.removeLayer(polygon);
       });
 
       const selectedZoneIds = this.getSelectedZone;
-      //const areas = this.areas;
 
       const hasSearchCriteria = selectedZoneIds.length > 0
 
-
       this.areasShow = this.mergeData();
-      console.log( this.areasShow)
       let filteredAreas = [];
 
       if (hasSearchCriteria) {

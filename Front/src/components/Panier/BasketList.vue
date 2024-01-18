@@ -114,13 +114,11 @@ export default {
         return;
       }
       if(this.getPanierUserCourant.length === 0){
-        console.log(this.getPanierUserCourant.length)
         alert("Votre panier est vide")
         return;
       }
 
       this.getPanierUserCourant.forEach(item => {
-        console.log(JSON.stringify(item) + " dans le vue");
         this.ADD_SCHEDULE({
           id_creneau: item.id_creneau,
           heure_creneau: item.heure_creneau,

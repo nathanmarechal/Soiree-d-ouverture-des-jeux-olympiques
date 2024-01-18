@@ -83,7 +83,6 @@
       ...mapGetters('emplacements', ['getAllArea']),
       ...mapGetters('prestationEtType', ['getAllPrestation']),
       ...mapGetters('stands' , ['getAllStand']),      filteredProtector: function(){
-        // verify that the data in filterProtector is still in the getAllStand so for each data in filterProtector, check if it is in getAllStand or else remove it from filterProtector
         if(this.filterProtector != null){
           let filteredProtector = this.filterProtector.filter(protector => this.getAllStand.includes(protector));
           return filteredProtector;
@@ -112,12 +111,6 @@
         if (window.confirm(confirmMessage)) {
           try {
             await this.deleteStandStore(stand.id_stand);
-            //delete all prestations that ahve the same id_stand
-            const prestations = this.getAllPrestation.filter(prestation => prestation.id_stand === stand.id_stand);
-            console.log(prestations);
-            //prestations.forEach(prestation => {
-            //update the status of prestations BUT DOES NOT EXIST RIGHT NOW
-            //});
           } catch (error) {
             console.error('Erreur lors de la suppression du stand :', error);
           }

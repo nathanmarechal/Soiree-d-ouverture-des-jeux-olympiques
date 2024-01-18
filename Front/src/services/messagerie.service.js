@@ -54,7 +54,6 @@ async function toggleResolvedConversationFromAPI(body, session_id) {
 
 async function toggleResolvedConversation(body, session_id) {
     let answer = await toggleResolvedConversationFromAPI(body, session_id)
-    //console.log("updateZone: ", answer)
     return answer
 }
 

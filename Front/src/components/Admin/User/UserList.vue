@@ -138,7 +138,6 @@
           }
           else{
             try {
-              console.log("delete user");
              await this.deleteUserStore(user.id_user);
             } catch (error) {
              console.error('Erreur lors de la suppression de l\'utilisateur :', error);
@@ -164,9 +163,7 @@
           const confirmMessage = `Êtes-vous sûr de vouloir supprimer tous les utilisateurs ?`;
           if (confirm(confirmMessage)) {
             try {
-              console.log("filteredProtector", this.filteredProtector);
               this.filteredProtector.forEach(async user => {
-                console.log("user", user, user.id_user);
                 this.removeUser(user.id_user, true, true);
               });
             } catch (error) {

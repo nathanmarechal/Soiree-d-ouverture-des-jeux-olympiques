@@ -22,14 +22,12 @@ import {translate} from "../../lang/translationService";
 export default {
   data() {
     return {
-      //typePrestations : [],
       selectedTypePrestation: []
     };
   },
   async mounted() {
     try {
       await this.loadData();
-      //this.typePrestations = await this.getTypePrestations();
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
     }

@@ -57,7 +57,6 @@ export default {
           await this.getRolesStore()
         }
         this.homeText = this.getTextsHome.find(txt => txt.id_text_accueil === this.id);
-        console.log(this.homeText);
         this.HomeDescription = this.homeText.description;
 
       } catch (error) {
