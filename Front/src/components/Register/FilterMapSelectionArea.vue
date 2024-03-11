@@ -23,7 +23,7 @@
         {{ type.libelle }} ({{ type.libelle_unite }}) - Max: {{ findMaxUnit(type.id_type_emplacement_logistique) }}
       </label>
       <input type="number" :id="'logistics' + type.id_type_emplacement_logistique" class="form-control"
-             :max="findMaxUnit(type.id_type_emplacement_logistique)" @change="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
+             :max="findMaxUnit(type.id_type_emplacement_logistique)" @input="updateLogisticsRequirement(type.id_type_emplacement_logistique, $event.target.value)">
     </div>
   </div>
 </template>
