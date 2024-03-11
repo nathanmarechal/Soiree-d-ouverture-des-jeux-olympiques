@@ -12,11 +12,11 @@ export const prestataireRoutes = [
     path: '/prestataire',
     component: Prestataire,
     children: [
-        { path: 'prestations', name: 'PrestatairePrestationShowView', component: PrestatairePrestationShowPage },
-        { path: 'prestations/add', name: 'PrestatairePrestationAddView', component: PrestatairePrestationAddPage },
-        { path: 'prestations/edit', name: 'PrestatairePrestationEditView', component: PrestatairePrestationEditPage },
+        { path: 'prestations', name: 'PrestatairePrestationShowView', component: PrestatairePrestationShowPage  },
+        { path: 'prestations/add', name: 'PrestatairePrestationAddView', component: PrestatairePrestationAddPage , meta: { rightToAccess: "create_self_prestations"}},
+        { path: 'prestations/edit', name: 'PrestatairePrestationEditView', component: PrestatairePrestationEditPage, meta: { rightToAccess: "update_self_prestations"} },
         { path: 'stand', name: 'ShowStandPrestataireView', component: ShowStandPrestatairePage },
-        { path: 'statistiques', name: 'PrestataireStatistiqueView', component: PrestataireStatistiquePage },
+        { path: 'statistiques', name: 'PrestataireStatistiqueView', component: PrestataireStatistiquePage, meta: { rightToAccess: "statistiques_prestataire"} },
         { path: 'commandes', name: 'PrestataireCommandesView', component: CommandePrestatairePage },
         { path: 'avis', name: 'PrestataireAvisView', component: AvisPagePrestataire }
     ]

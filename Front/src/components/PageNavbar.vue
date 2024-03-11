@@ -21,7 +21,7 @@
               <br>
               <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
               <br>
-              <router-link v-if="currentUserHasRight('statistiques-prestataire')" to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
               <br>
               <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
               <br>

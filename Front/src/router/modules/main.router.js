@@ -81,22 +81,27 @@ export const mainRoutes = [
   {
     path: '/messages-admin',
     name: 'MessagesAdmin',
-    component: MessagerieAdmin
+    component: MessagerieAdmin,
+    meta: { rightToAccess: "messages_admin"}
   },
   {
     path: '/messages-admin-conversation',
     name: 'MessagesAdminConversation',
-    component: MessagerieConversationAdmin
+    component: MessagerieConversationAdmin,
+    meta: { rightToAccess: "messages_admin"}
   },
   {
     path: '/messages-user',
     name: 'MessagesUser',
-    component: MessagerieUser
+    component: MessagerieUser,
+    meta: { rightToAccess: "messages_user"}
+
   },
   {
     path: '/messages-user-conversation',
     name: 'MessagesConversationUser',
-    component: MessagerieConversationUser
+    component: MessagerieConversationUser,
+    meta: { rightToAccess: "messages_user"}
   },
     //Error 404
   {
