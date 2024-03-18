@@ -522,5 +522,9 @@ export default {
                 console.error("Error in deleteUserStore():", err);
             }
         },
+
+        async checkIfUserHasRight({ state }, right) {
+            return state.userCourant && state.userCourant.droits && state.userCourant.droits.includes(right);
+        }
     },
 };
