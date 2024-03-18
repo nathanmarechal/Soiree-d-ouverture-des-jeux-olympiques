@@ -16,7 +16,6 @@ import MessagerieConversationAdmin from "@/views/Messagerie/MessagerieConversati
 import MessagerieUser from "@/views/Messagerie/MessagerieUser.vue";
 import MessagerieConversationUser from "@/views/Messagerie/MessagerieConversationUser.vue";
 
-
 export const mainRoutes = [
   {
     path: '/',

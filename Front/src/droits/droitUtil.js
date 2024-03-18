@@ -1,3 +1,4 @@
+
 export function currentUserHasRight(right_name){
     if(this.$store.getters['user/getCurrentUser'] === null)
         return false;
