@@ -103,6 +103,8 @@ export default {
       try {
         const session_id = await getSession(this.email, this.password);
 
+        this.session_id = session_id;
+
         await this.$store.dispatch('user/setSessionId', session_id);
 
         if (this.sessionId.error === 1) {
