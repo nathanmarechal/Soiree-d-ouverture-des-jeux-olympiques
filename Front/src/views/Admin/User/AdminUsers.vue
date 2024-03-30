@@ -13,14 +13,16 @@
   <script>
   import UserList from '@/components/Admin/User/UserList.vue';
   import {translate} from "../../../lang/translationService";
-  import {mapActions} from "vuex";
+  import { mapGetters} from "vuex";
 
   export default {
       components: {
           UserList
       },
+    computed:{
+      ...mapGetters('user',['checkIfUserHasRight'])
+    },
       methods: {
-        ...mapActions('user',['checkIfUserHasRight']),
         translate,
       error404() {
         this.$router.push("/404");

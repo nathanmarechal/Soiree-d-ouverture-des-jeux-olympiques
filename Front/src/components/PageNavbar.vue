@@ -16,15 +16,29 @@
 
           <b-nav-item-dropdown right text="Mes Services" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
 
-            <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
-            <br>
+            <div v-if="this.checkIfUserHasRight('create_self_prestations') || this.checkIfUserHasRight('update_self_prestations') ||  this.checkIfUserHasRight('delete_self_prestations')">
+              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
+            </div>
+
+            <div v-if="this.checkIfUserHasRight('update_self_stands')">
+
             <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
-            <br>
-            <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
-            <br>
+            </div>
+
+
+            <div v-if="this.checkIfUserHasRight('statistiques_prestataire')">
+              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
+            </div>
+            
+            <div v-if="this.checkIfUserHasRight('see_self_commande_received') ">
+
             <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
-            <br>
-            <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
+
+            </div>
+
+            <div v-if="this.checkIfUserHasRight('create_self_prestations') || this.checkIfUserHasRight('update_self_prestations') ||  this.checkIfUserHasRight('delete_self_prestations')">
+              <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
+            </div>
 
             <div v-if="this.checkIfUserHasRight('see_users')">
               <router-link  to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
@@ -77,9 +91,6 @@
 
         <b-nav-text style="font-weight: bold; color: red;">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
 
-
-
-
         <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>
@@ -125,12 +136,12 @@ export default {
       return this.$store.getters['user/getCurrentUser'];
     },
 
+    ...mapGetters('user',['checkIfUserHasRight'])
   },
   components: {
     'login-component': LoginComponent
   },
   methods: {
-    ...mapActions('user',['checkIfUserHasRight']),
     ...mapActions('roleEtDroit',['getRolesStore']),
     translate,
     changeLanguage,
@@ -139,6 +150,11 @@ export default {
       if (this.getAllRoles.length === 0) {
         await this.getRolesStore();
       }
+    },
+
+    async kaks(right) {
+      // Utilisez la méthode mappée, attendez le résultat même si l'action est synchrone
+      return await this.checkIfUserHasRight(right);
     },
 
     getRoleCurrentUserLabel() {

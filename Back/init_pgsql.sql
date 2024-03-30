@@ -385,7 +385,9 @@ INSERT INTO droits(libelle) VALUES
 ('delete_self_panier'),
 
 ('see_self_commande'),
-('add_self_commande')
+('add_self_commande'),
+
+('see_self_commande_received')
 ;
 
 INSERT INTO role (libelle) VALUES
@@ -455,6 +457,7 @@ INSERT INTO role_droits(id_droit, id_role) VALUES
 (38,2),
 (39,2),
 (40,2),
+(41,2),
 
 (4,3),
 (28,3),
@@ -915,4 +918,5 @@ INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUE
 (1,1,'jdjdlqkjd',now())
 ;
 
-SELECT d.libelle FROM droits d JOIN role_droits rd on d.id = rd.id_droit JOIN role r on r.id_role = rd.id_role WHERE r.libelle = 'admin';
+SELECT d.libelle, d.id FROM droits d JOIN role_droits rd on d.id = rd.id_droit JOIN role r on r.id_role = rd.id_role WHERE r.libelle = 'prestataire';
+SELECT * from droits;

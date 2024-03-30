@@ -100,6 +100,11 @@ export default {
         },
 
 
+            checkIfUserHasRight: (state) => (right) => {
+            return state.userCourant && state.userCourant.droits && state.userCourant.droits.includes(right);
+        },
+
+
         getCommandePrestataire : state => state.commandesPrestataire,
         getSearchQuery: state => state.searchQuery,
         isLoginOpen: state => state.isLoginOpen,

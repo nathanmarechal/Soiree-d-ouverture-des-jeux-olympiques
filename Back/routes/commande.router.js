@@ -155,7 +155,7 @@ router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prest
  *     summary: Adds a new commande for the current user based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: header
+     *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user to add a new commande for
