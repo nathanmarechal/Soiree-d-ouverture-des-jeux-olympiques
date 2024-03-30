@@ -14,8 +14,6 @@
 
           <b-nav-item v-if="this.checkIfUserHasRight('messages_user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
-
-
           <b-nav-item-dropdown right text="Mes Services" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
 
             <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
@@ -28,23 +26,26 @@
             <br>
             <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
 
-
             <div v-if="this.checkIfUserHasRight('see_users')">
               <router-link  to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
             </div>
+
             <div v-if="this.checkIfUserHasRight('see_waiting_users')">
               <router-link  to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
             </div>
+
             <div v-if="this.checkIfUserHasRight('create_stands')
             || this.checkIfUserHasRight('update_stands')
             || this.checkIfUserHasRight('delete_stands')">
               <router-link  to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             </div>
+
             <div v-if="this.checkIfUserHasRight('create_areas')
             || this.checkIfUserHasRight('update_areas')
             || this.checkIfUserHasRight('delete_areas')">
               <router-link  to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
             </div>
+
             <div v-if="this.checkIfUserHasRight('create_zones')
             || this.checkIfUserHasRight('update_zones')
             || this.checkIfUserHasRight('delete_zones')">
@@ -61,6 +62,7 @@
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
+
       </b-collapse>
 
       <div style="display: contents;">
@@ -73,9 +75,12 @@
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
 
+        <b-nav-text style="font-weight: bold; color: red;">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
 
 
-      <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
+
+
+        <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>
         <option value="jp">日本語</option>
@@ -96,7 +101,7 @@
 <script>
 import LoginComponent from './LoginComponent.vue';
 import {changeLanguage, translate} from "@/lang/translationService.js";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
   data() {
@@ -108,6 +113,8 @@ export default {
     };
   },
   computed: {
+    ...mapState('user',['userCourant']),
+    ...mapGetters('roleEtDroit',['getAllRoles']),
     isLoginOpen() {
       return this.$store.getters['user/isLoginOpen'];
     },
@@ -124,8 +131,24 @@ export default {
   },
   methods: {
     ...mapActions('user',['checkIfUserHasRight']),
+    ...mapActions('roleEtDroit',['getRolesStore']),
     translate,
     changeLanguage,
+
+    async loadData() {
+      if (this.getAllRoles.length === 0) {
+        await this.getRolesStore();
+      }
+    },
+
+    getRoleCurrentUserLabel() {
+      // Utiliser `this.userCourant.id_role` pour obtenir l'id_role de l'utilisateur courant
+      // et `this.getAllRoles` pour accéder au tableau des rôles disponibles
+      const role = this.getAllRoles.find(role => role.id_role === this.userCourant.id_role);
+
+      // Retourner le libellé du rôle si trouvé, sinon retourner une valeur par défaut ou null
+      return role ? role.libelle : 'Rôle non défini'; // Vous pouvez choisir une valeur par défaut appropriée
+    },
 
     fromNav() {
       this.$store.commit('user/SET_PROVENANCE', -1);
@@ -140,6 +163,14 @@ export default {
       this.$store.commit('user/SET_CURRENT_USER', null);
     },
   },
+
+  async mounted() {
+    try {
+      await this.loadData();
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  }
 };
 </script>
 

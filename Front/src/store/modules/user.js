@@ -522,7 +522,7 @@ export default {
 //-----------------------------------------------------------------CHECK RIGHT-----------------------------------------------------------------------//
 
         async checkIfUserHasRight({ state }, right) {
-            return state.userCourant && state.userCourant.droits && state.userCourant.droits[right] === true;
+            return state.userCourant && state.userCourant.droits && state.userCourant.droits.includes(right);
         },
 
 //-----------------------------------------------------------------SESSION ID-----------------------------------------------------------------------//

@@ -20,7 +20,7 @@ export const adminRoutes = [
     path: '/admin',
     component: Admin,
     children: [
-        { path: 'users', name: 'AdminUsers', component: AdminUsers, meta: { rightToAccess: "see_users"}  },
+        { path: 'users', name: 'AdminUsers', component: AdminUsers, meta: { rightToAccess: "see_users"}},
         { path: 'users/add', name: 'AdminAddUser', component: AdminAddUser , meta: { rightToAccess: "create_users"}},
         { path: 'users/edit', name: 'AdminEditUsers', component: AdminEditUsers, meta: { rightToAccess: "update_users"} },
         { path: 'stands', name: 'AdminStand', component: AdminStand },

@@ -914,3 +914,5 @@ VALUES
 INSERT INTO messages(id_sender, id_conversation, message, temps_emmission) VALUES
 (1,1,'jdjdlqkjd',now())
 ;
+
+SELECT d.libelle FROM droits d JOIN role_droits rd on d.id = rd.id_droit JOIN role r on r.id_role = rd.id_role WHERE r.libelle = 'admin';
