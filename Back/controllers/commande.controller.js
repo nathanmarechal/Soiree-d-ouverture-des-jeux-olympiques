@@ -2,8 +2,7 @@ const commandeService = require("../services/commande.service");
 const userService = require("../services/users.service");
 
 exports.getCommandeByUserId = async (req, res) => {
-    const session_id = req.query.session_id;
-
+    const session_id = req.headers['session_id'];
     const user = await userService.getUserBySessionIdAsync(session_id);
 
     commandeService.getCommandeByUserId(user.id_user, (error, data) => {
@@ -16,7 +15,7 @@ exports.getCommandeByUserId = async (req, res) => {
 }
 
 exports.addCommande = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 
@@ -42,7 +41,7 @@ exports.getLigneCommandeBycommandeId = (req, res) => {
 }
 
 exports.getScheduleByUserId = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id)
 
@@ -71,7 +70,7 @@ exports.setEtatLigneCommandeExterieur = (req, res) => {
 }
 
 exports.getCommandesPrestataires = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 

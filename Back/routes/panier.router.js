@@ -12,7 +12,7 @@ const prestationsMiddleware = require("../middlewares/prestation.middleware");
  *     summary: Retrieves a user's panier by their session ID
  *     tags: [Panier]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session of the user
@@ -51,7 +51,7 @@ router.get("/getCreneaux", panierController.getAllCreneaux);
  *     summary: Updates the quantity of an item in the user's panier
  *     tags: [Panier]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user
@@ -95,7 +95,7 @@ router.patch("/updateOwnPanier", rightMiddleware.checkRight, prestationsMiddlewa
  *     summary: Adds a prestation to the user's panier
  *     tags: [Panier]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user
@@ -140,7 +140,7 @@ router.post("/addPrestationToOwnPanier", rightMiddleware.checkRight, prestations
  *     summary: Deletes a prestation from the user's panier
  *     tags: [Panier]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user

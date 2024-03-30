@@ -25,7 +25,7 @@ router.get("/get", emplacementLogistiqueController.getEmplacementLogistique);
  *     summary: Adds a new emplacement logistique
  *     tags: [EmplacementLogistique]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -80,7 +80,7 @@ router.post("/add", rightMiddleware.checkRight, emplacementLogistiqueMiddleware.
  *     summary: Deletes an emplacement logistique
  *     tags: [EmplacementLogistique]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -113,7 +113,7 @@ router.delete("/delete", rightMiddleware.checkRight, emplacementLogistiqueMiddle
  *     summary: Updates an emplacement logistique
  *     tags: [EmplacementLogistique]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

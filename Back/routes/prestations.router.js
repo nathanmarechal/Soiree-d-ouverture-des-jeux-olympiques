@@ -26,7 +26,7 @@ router.get("/get", prestationController.getPrestations);
  *     summary: Creates a new prestation for the current user
  *     tags: [Prestation]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -87,7 +87,7 @@ router.post("/addOwnPrestation", rightMiddleware.checkRight, prestationMiddlewar
  *     summary: Updates the availability of a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -120,7 +120,7 @@ router.patch("/updateOwnPrestation/is-available", rightMiddleware.checkRight, pr
  *     summary: Updates a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -184,7 +184,7 @@ router.patch("/updateOwnPrestation", rightMiddleware.checkRight, prestationMiddl
  *     summary: Deletes a prestation for the current user
  *     tags: [Prestation]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

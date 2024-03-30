@@ -91,7 +91,7 @@ exports.uploadingPictureDescription = (req, res) => {
 };
 
 exports.updateStandDescription = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user_courant = await usersService.getUserBySessionIdAsync(session_id);
 

@@ -30,7 +30,7 @@ export default {
     translate,
     async loadPrestationData() {
       try {
-        this.prestations = await getNbPrestationHeure(this.getSessionId);
+        this.prestations = await getNbPrestationHeure();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

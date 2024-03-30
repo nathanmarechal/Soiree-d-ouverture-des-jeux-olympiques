@@ -25,7 +25,7 @@ router.get("/get" ,rolesController.getRoles);
  *     summary: Updates a role
  *     tags: [Roles]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -70,7 +70,7 @@ router.patch("/update",rightMiddleware.checkRight, rolesMiddleware.checkRoleExis
  *     summary: Creates a new role
  *     tags: [Roles]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -107,7 +107,7 @@ router.post("/add",rightMiddleware.checkRight, rolesController.createRole);
  *     summary: Deletes a role
  *     tags: [Roles]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div v-if="currentUserHasRight('see_users')" class="main">
+      <div v-if="this.checkIfUserHasRight('see_users')" class="main">
           <router-link to="/admin/users/add" class="btn btn-success">{{translate("adminUser_1")}}</router-link>
           <user-list></user-list>
       </div>
@@ -13,14 +13,14 @@
   <script>
   import UserList from '@/components/Admin/User/UserList.vue';
   import {translate} from "../../../lang/translationService";
-  import {currentUserHasRight} from "@/droits/droitUtil";
+  import {mapActions} from "vuex";
 
   export default {
       components: {
           UserList
       },
       methods: {
-        currentUserHasRight,
+        ...mapActions('user',['checkIfUserHasRight']),
         translate,
       error404() {
         this.$router.push("/404");

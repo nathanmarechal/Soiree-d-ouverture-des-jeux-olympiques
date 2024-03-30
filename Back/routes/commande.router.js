@@ -12,7 +12,7 @@ const prestationsMiddleware = require("../middlewares/prestation.middleware");
  *     summary: Retrieves commandes for the current user based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user to fetch commandes for
@@ -37,7 +37,7 @@ router.get("/getCommandeUserCourant", rightMiddleware.checkRight, commandeContro
  *     summary: Retrieves ligne de commande for a specific commande based on commande ID and user's session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user to check right
@@ -68,7 +68,7 @@ router.get("/getLigneCommandeBycommandeId", rightMiddleware.checkRight, commande
  *     summary: Retrieves schedule for a specific user by their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user to check right and to fetch schedule for
@@ -93,7 +93,7 @@ router.get("/getScheduleCurrentUser", rightMiddleware.checkRight, commandeContro
  *     summary: Retrieves commandes for the current prestataire based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the prestataire to fetch commandes for
@@ -155,7 +155,7 @@ router.patch("/setetatligne", prestationsMiddleware.checkPrestationExists, prest
  *     summary: Adds a new commande for the current user based on their session ID
  *     tags: [Commande]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID of the user to add a new commande for

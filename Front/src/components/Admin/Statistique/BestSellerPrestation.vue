@@ -32,7 +32,7 @@ export default {
     translate,
     async loadData() {
       try {
-        const response = await getBestSellerPrestation(this.getSessionId);
+        const response = await getBestSellerPrestation();
         this.data = response.map(item => ({
           prestation: item.libelle,
           total: +item.prix_total

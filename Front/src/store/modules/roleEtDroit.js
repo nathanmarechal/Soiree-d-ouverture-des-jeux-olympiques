@@ -99,9 +99,9 @@ export default {
             }
         },
 
-        async createRoleStore({rootState, commit}, body) {
+        async createRoleStore({commit}, body) {
             try {
-                const data = await createRole(body, rootState.user.userCourant.session_id);
+                const data = await createRole(body);
                 commit('CREATE_ROLE', data[0]);
                 return data[0];
             } catch (err) {
@@ -109,9 +109,9 @@ export default {
             }
         },
 
-        async deleteRoleStore({rootState, commit}, id) {
+        async deleteRoleStore({ commit}, id) {
             try {
-                const res = await deleteRole(id, rootState.user.userCourant.session_id);
+                const res = await deleteRole(id);
                 if (res.error != 1)
                 {
                     commit('DELETE_ROLE', id);
@@ -122,9 +122,9 @@ export default {
             }
         },
 
-        async updateRoleStore({rootState, commit}, body) {
+        async updateRoleStore({ commit}, body) {
             try {
-                const data = await updateRole(body, rootState.user.userCourant.session_id);
+                const data = await updateRole(body);
                 commit('UPDATE_ROLE', data[0].id_role);
                 return data;
             } catch (err) {
@@ -162,9 +162,9 @@ export default {
             }
         },
 
-        async createRoleDroitAssociationStore({rootState , commit}, body) {
+        async createRoleDroitAssociationStore({ commit}, body) {
             try {
-                const data = await createRoleDroitAssociation(body, rootState.user.userCourant.session_id);
+                const data = await createRoleDroitAssociation(body);
                 commit('CREATE_ROLE_DROIT_ASSOCIATION', data[0]);
                 return data[0];
             } catch (err) {
@@ -172,18 +172,18 @@ export default {
             }
         },
 
-        async deleteRoleDroitAssociationStore({rootState, commit}, body) {
+        async deleteRoleDroitAssociationStore({commit}, body) {
             try {
-                const data = await deleteRoleDroitAssociation(body, rootState.user.userCourant.session_id);
+                const data = await deleteRoleDroitAssociation(body);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationStore():", err);
             }
         },
 
-        async deleteRoleDroitAssociationForSpecificRoleStore({rootState, commit}, id_role) {
+        async deleteRoleDroitAssociationForSpecificRoleStore({ commit}, id_role) {
             try {
-                const data = await deleteRoleDroitAssociationForSpecificRole(id_role, rootState.user.userCourant.session_id);
+                const data = await deleteRoleDroitAssociationForSpecificRole(id_role);
                 commit('DELETE_ROLE_DROIT_ASSOCIATION_FOR_SPECIFIC_ROLE', data[0]);
             } catch (err) {
                 console.error("Error in deleteRoleDroitAssociationForSpecificRoleStore():", err);

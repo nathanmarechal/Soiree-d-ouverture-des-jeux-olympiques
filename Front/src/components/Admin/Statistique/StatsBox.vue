@@ -104,12 +104,12 @@ export default {
     translate,
     async loadStatistics() {
       try {
-        [this.nbStands] = await getNbStands(this.getSessionId);
-        [this.nbPrestationsAvailable] = await getNbPrestationsAvailable(this.getSessionId);
-        [this.nbUsers] = await getNbUsers(this.getSessionId);
-        [this.averagePurchase] = await getAveragePurchase(this.getSessionId);
-        [this.topSellerStand] = await getTopSellerStand(this.getSessionId);
-        [this.topAvisStand] = await getTopAvisStand(this.getSessionId);
+        [this.nbStands] = await getNbStands();
+        [this.nbPrestationsAvailable] = await getNbPrestationsAvailable();
+        [this.nbUsers] = await getNbUsers();
+        [this.averagePurchase] = await getAveragePurchase();
+        [this.topSellerStand] = await getTopSellerStand();
+        [this.topAvisStand] = await getTopAvisStand();
 
       } catch (error) {
         console.error('Erreur lors du chargement des statistiques:', error);

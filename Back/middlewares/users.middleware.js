@@ -75,15 +75,15 @@ exports.checkPrestataireExists = async (req, res, next) => {
 
 
 exports.checkSessionExists = async (req, res, next) => {
-    const id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
-    if (!id) {
+    if (!session_id) {
         return res.status(400).send("ID session requis.");
     }
 
     try {
         const conn = await pool.connect();
-        const checkResult = await conn.query("SELECT * FROM session WHERE session_id = $1", [id]);
+        const checkResult = await conn.query("SELECT * FROM session WHERE session_id = $1", [session_id]);
         if (checkResult.rows.length === 0) {
             conn.release();
             return res.status(404).send("Session non trouvée");
@@ -129,7 +129,7 @@ exports.checkEmailExists = async (req, res, next) => {
 }
 
 exports.checkEmailUserCourantExists = async (req, res, next) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const user = await userServices.getUserBySessionIdAsync(session_id);
     const email = req.body.email;
 

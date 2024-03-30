@@ -26,7 +26,7 @@ router.get("/get", rolesController.getRoleDroitAssociation);
  *     summary: Creates a new role-droit association
  *     tags: [RoleDroit]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -71,7 +71,7 @@ router.post("/add", rightsMiddleware.checkRight, roleMiddleware.checkRoleExists,
  *     summary: Deletes a role-droit association
  *     tags: [RoleDroit]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -114,7 +114,7 @@ router.delete("/delete", rightsMiddleware.checkRight, roleMiddleware.checkRoleEx
  *     summary: Deletes role-droit association for a specific role
  *     tags: [RoleDroit]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: id_role
  *         required: true
  *         description: ID of the role for which to delete the association

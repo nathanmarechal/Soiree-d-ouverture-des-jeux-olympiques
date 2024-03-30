@@ -45,7 +45,7 @@ exports.checkCreneauExists = async (req, res, next) => {
 };
 
 exports.checkIfPrestationBelongsToUserExists = async (req, res, next) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const id_prestation = req.query.id_prestation;
     const id_stand = req.body.id_stand;
 

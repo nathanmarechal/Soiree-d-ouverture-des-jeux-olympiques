@@ -78,30 +78,27 @@ export default {
             }
         },
 
-        async deleteZoneStore({ rootState,commit }, id) {
+        async deleteZoneStore({ commit }, id) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await deleteZone(id, session_id);
+                await deleteZone(id);
                 commit('DELETE_ZONE', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
             }
         },
 
-        async updateZoneStore({ rootState,commit }, {id, body}) {
+        async updateZoneStore({ commit }, {id, body}) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await updateZone(id, body, session_id);
+                await updateZone(id, body);
                 commit('UPDATE_ZONE', id, body);
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
             }
         },
 
-        async createZoneStore({ rootState,commit }, body) {
+        async createZoneStore({ commit }, body) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                const newZone = await createZone(body, session_id);
+                const newZone = await createZone(body);
                 commit('CREATE_ZONE', newZone[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);

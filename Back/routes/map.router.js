@@ -39,7 +39,7 @@ router.get("/get-all-areas", mapController.getAreas);
  *     summary: Updates an area
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -83,7 +83,7 @@ router.patch("/update-area", rightMiddleware.checkRight, mapMiddleware.checkEmpl
  *     summary: Deletes an area
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -114,7 +114,7 @@ router.delete("/delete-area", rightMiddleware.checkRight, mapMiddleware.checkEmp
  *     summary: Creates a new area
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -194,7 +194,7 @@ router.get("/get-all-zones", mapController.getZones);
  *     summary: Retrieves a zone by ID
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: id_zone
  *         required: true
  *         description: ID of the zone to retrieve
@@ -217,7 +217,7 @@ router.get("/get-zone", mapMiddleware.checkZoneExists, mapController.getZoneById
  *     summary: Updates a zone
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -266,7 +266,7 @@ router.patch("/update-zone", rightMiddleware.checkRight, mapMiddleware.checkZone
  *     summary: Deletes a zone
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -295,7 +295,7 @@ router.delete("/delete-zone", rightMiddleware.checkRight, mapMiddleware.checkZon
  *     summary: Creates a new zone
  *     tags: [Map]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

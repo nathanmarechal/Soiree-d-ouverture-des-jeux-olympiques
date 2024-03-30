@@ -27,7 +27,7 @@ export default {
 
   async mounted() {
     try {
-      const dataFromService = await getNewStandByMonth(this.getSessionId);
+      const dataFromService = await getNewStandByMonth();
       this.chartData = dataFromService.map(d => ({
         mois: d.mois,
         nombre_stands: parseInt(d.nombre_stands)

@@ -289,6 +289,12 @@ export default {
             state.commandesPrestataire = commandesPrestataire;
         },
 
+        SET_SESSION_ID(state, sessionId) {
+            if (state.userCourant) {
+                state.userCourant.session_id = sessionId;
+            }
+        },
+
 
     },
 
@@ -297,10 +303,10 @@ export default {
 
 //-----------------------------------------------------------------Panier-----------------------------------------------------------------------//
 
-        async getPanierUserCourantStore({commit, state}){
+        async getPanierUserCourantStore({commit}){
             try {
-                const session_id = state.userCourant.session_id
-                const panier = await getPanierUserCourant(session_id);
+                
+                const panier = await getPanierUserCourant();
                 commit('SET_PANIER_USER_COURANT', panier);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -308,10 +314,9 @@ export default {
         },
 
 
-        async updateQuantityInPanierStore({commit, state}, {id_user, id_prestation, id_creneau , quantite}) {
+        async updateQuantityInPanierStore({commit}, {id_user, id_prestation, id_creneau , quantite}) {
             try {
-                const session_id = state.userCourant.session_id
-                await updateQuantityInPanier(session_id, {id_prestation, id_creneau , quantite});
+                await updateQuantityInPanier({id_prestation, id_creneau , quantite});
                 commit('UPDATE_PRESTATION_QUANTITY_IN_PANIER', {id_user, id_prestation, id_creneau , quantite});
             }
             catch (error) {
@@ -319,10 +324,9 @@ export default {
             }
         },
 
-        async addPrestationToPanierUserCourantStore({commit, state},{id_user, id_prestation, quantite, id_creneau}){
+        async addPrestationToPanierUserCourantStore({commit},{id_user, id_prestation, quantite, id_creneau}){
             try {
-                const session_id = state.userCourant.session_id
-                await addPrestationToPanierUser(session_id, id_prestation, quantite, id_creneau);
+                await addPrestationToPanierUser(id_prestation, quantite, id_creneau);
                 commit('ADD_PRESTATION_TO_PANIER_USER_COURANT', id_user, id_prestation, quantite, id_creneau);
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -330,10 +334,9 @@ export default {
         },
 
 
-        async deletePrestationFromPanierUserCourantStore({ commit, state },{id_prestation, id_creneau}){
+        async deletePrestationFromPanierUserCourantStore({ commit },{id_prestation, id_creneau}){
             try {
-                const session_id = state.userCourant.session_id
-                await deletePrestationFromPanierUser( session_id, id_prestation, id_creneau);
+                await deletePrestationFromPanierUser(id_prestation, id_creneau);
                 commit('DELETE_PRESTATION_FROM_PANIER_USER_COURANT', {id_prestation, id_creneau,});
             } catch (error) {
                 console.error('Error fetching panier:', error);
@@ -342,30 +345,27 @@ export default {
 
 //-------------------------------------------------------------------Commande--------------------------------------------------------------------------//
 
-        async getCommandeUserCourantStore({commit, state}){
+        async getCommandeUserCourantStore({commit}){
             try {
-                const session_id = state.userCourant.session_id
-                const commandes = await getCommandeUserCourant(session_id);
+                const commandes = await getCommandeUserCourant();
                 commit('SET_COMMANDES_USER_COURANT', commandes);
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
         },
 
-        async getCommandesPrestataireStore({commit, state}){
+        async getCommandesPrestataireStore({commit}){
             try {
-                const session_id = state.userCourant.session_id
-                const commandes = await getCommandesPrestataires(session_id);
+                const commandes = await getCommandesPrestataires();
                 commit('SET_COMMANDS_PRESTATAIRE', commandes);
             } catch (error) {
                 console.error('Error fetching commandes:', error);
             }
         },
 
-        async addCommandeFromPanierStore({commit, state}){
+        async addCommandeFromPanierStore({commit}){
             try {
-                const session_id = state.userCourant.session_id
-                const lastinstert = await addCommande(session_id);
+                const lastinstert = await addCommande();
                 commit('ADD_COMMANDES_USER_COURANT', lastinstert);
             } catch (error) {
                 console.error('Error fetching commandes:', error);
@@ -381,10 +381,9 @@ export default {
             }
         },
 
-        async getLigneCommandebyIdCommandeStore({commit, state}, id_commande){
+        async getLigneCommandebyIdCommandeStore({commit}, id_commande){
             try {
-                const session_id = state.userCourant.session_id
-                const ligne_commande = await getLigneCommandeBycommandeId(id_commande, session_id);
+                const ligne_commande = await getLigneCommandeBycommandeId(id_commande);
                 commit('SET_LIGNE_COMMANDE', { id_commande, ligne_commande });
             } catch (error) {
                 console.error('Error fetching commandes:', error);
@@ -394,10 +393,9 @@ export default {
 //-----------------------------------------------------------------Schedule-----------------------------------------------------------------------//
 
 
-        async getScheduleByUserIdStore({commit, state}){
+        async getScheduleByUserIdStore({commit}){
             try {
-                const session_id = state.userCourant.session_id
-                const schedule = await getScheduleByUserId(session_id);
+                const schedule = await getScheduleByUserId();
                 commit('SET_SCHEDULE', schedule);
             } catch (error) {
                 console.error('Error fetching schedule:', error);
@@ -406,9 +404,9 @@ export default {
 
 //-----------------------------------------------------------------User-----------------------------------------------------------------------//
 
-        async getUsersStore({ commit, state }) {
+        async getUsersStore({ commit }) {
             try {
-                const result = await getAllUsers(state.userCourant.session_id);
+                const result = await getAllUsers();
                 if (Array.isArray(result)) {
                     commit('SET_USERS', result);
                 } else {
@@ -419,19 +417,18 @@ export default {
             }
         },
 
-        async getAllUsersAttenteStore({ commit, state }) {
+        async getAllUsersAttenteStore({ commit }) {
             try {
-                const usersAttente = await getAllUsersAttente(state.userCourant.session_id);
+                const usersAttente = await getAllUsersAttente();
                 commit('SET_USERS_ATTENTE', usersAttente);
             } catch (error) {
                 console.error('Error fetching creneau:', error);
             }
         },
 
-        async updateUserCourantWoPasswordStore({ commit, state}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
+        async updateUserCourantWoPasswordStore({ commit}, {id_user, nom, prenom, email, adresse, code_postal, commune}) {
             try {
-                let session_id = state.userCourant.session_id
-                await updateUserCourantWoPassword( session_id, {nom, prenom, email, adresse, code_postal, commune});
+                await updateUserCourantWoPassword( {nom, prenom, email, adresse, code_postal, commune});
                 commit('UPDATE_USER_WO_PASSWORD', {id_user, nom, prenom, email, adresse, code_postal, commune});
             } catch (err) {
                 console.error("Error in updateNomStore():", err);
@@ -439,19 +436,18 @@ export default {
         },
 
 
-        async updateSoldeStore({ commit, state }, {solde}) {
+        async updateSoldeStore({ commit }, {solde}) {
             try {
-                const session_id = state.userCourant.session_id
-                await updateSolde(session_id, solde);
+                await updateSolde(solde);
                 commit('UPDATE_SOLDE', solde);
             } catch (err) {
                 console.error("Error in updateSoldeStore():", err);
             }
         },
 
-        async acceptUserStore({ commit, state, rootState }, id) {
+        async acceptUserStore({ commit,  rootState }, id) {
             try {
-                let result = await acceptUser(id,state.userCourant.session_id);
+                let result = await acceptUser(id);
                 commit('ACCEPT_USER_DELETE', id);
                 commit('ACCEPT_USER_ADD', result);
                 rootState.stands.stands.push(result.standAccept[0]);
@@ -463,19 +459,19 @@ export default {
         },
 
 
-        async refuseUserStore({ commit ,state }, id) {
+        async refuseUserStore({ commit }, id) {
             try {
-                await refuseUser(id,state.userCourant.session_id);
+                await refuseUser(id);
                 commit('REFUSE_USER', id);
             } catch (err) {
                 console.error("Error in refuseUserStore():", err);
             }
         },
 
-        async createUserStore({ commit, state }, body) {
+        async createUserStore({ commit }, body) {
             try {
                 const user = body.user;
-                await createUser(user, state.userCourant.session_id);
+                await createUser(user);
                 commit('CREATE_USER', body);
             } catch (err) {
                 console.error("Error in createUserStore():", err);
@@ -504,27 +500,37 @@ export default {
         },
 
 
-        async updateUserStore({ commit , state }, body) {
+        async updateUserStore({ commit }, body) {
             try {
-                await updateUser(body.id_user, body, state.userCourant.session_id);
+                await updateUser(body.id_user, body);
                 commit('UPDATE_USER', body.id_user, body);
             } catch (err) {
                 console.error("Error in updateUserStore():", err);
             }
         },
 
-        async deleteUserStore({ commit, state }, id) {
+        async deleteUserStore({ commit }, id) {
             try {
-                const session_id = state.userCourant.session_id
-                await deleteUser(id,session_id);
+                await deleteUser(id);
                 commit('DELETE_USER', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
             }
         },
 
+
+//-----------------------------------------------------------------CHECK RIGHT-----------------------------------------------------------------------//
+
         async checkIfUserHasRight({ state }, right) {
-            return state.userCourant && state.userCourant.droits && state.userCourant.droits.includes(right);
-        }
+            return state.userCourant && state.userCourant.droits && state.userCourant.droits[right] === true;
+        },
+
+//-----------------------------------------------------------------SESSION ID-----------------------------------------------------------------------//
+
+        async setSessionId({ commit }, sessionId) {
+            commit('SET_SESSION_ID', sessionId);
+        },
+
+
     },
 };

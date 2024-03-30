@@ -42,7 +42,7 @@ router.get("/get-stands-attente", standsController.getStandsAttente);
  *     summary: Renvoie un stand par son ID
  *     tags: [Stands]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: id_stand
  *         required: true
  *         description: ID du stand
@@ -66,7 +66,7 @@ router.get("/get-by-id", standsMiddleware.checkStandExists, standsController.get
  *     summary: Met à jour la description d'un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -102,7 +102,7 @@ router.patch("/description", rightMiddleware.checkRight, standsController.update
  *     summary: Met à jour un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -161,7 +161,7 @@ router.patch("/update", rightMiddleware.checkRight, standsMiddleware.checkStandE
  *     summary: Supprime un stand
  *     tags: [Stands]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -191,7 +191,7 @@ router.delete("/delete", rightMiddleware.checkRight, standsMiddleware.checkStand
  *     summary: Crée un nouveau stand
  *     tags: [Stands]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification

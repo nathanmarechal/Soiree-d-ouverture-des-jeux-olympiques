@@ -29,7 +29,7 @@ export default {
     translate,
     async loadSalesData() {
       try {
-        this.salesData = await getSalesRevnueByTypeByStand(this.getSessionId);
+        this.salesData = await getSalesRevnueByTypeByStand();
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

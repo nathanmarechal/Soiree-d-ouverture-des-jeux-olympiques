@@ -1,39 +1,39 @@
 import {getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 
-async function getCommandeUserCourant(session_id){
-    let answer = await getCommandeUserCourantFromApi(session_id)
+async function getCommandeUserCourant(){
+    let answer = await getCommandeUserCourantFromApi()
     return answer;
 }
 
-async function getCommandeUserCourantFromApi(session_id) {
-    return getRequest('/commande/getCommandeUserCourant?session_id=' + session_id, 'GETCOMMANDEUSERCOURANT')
+async function getCommandeUserCourantFromApi() {
+    return getRequest('/commande/getCommandeUserCourant', 'GETCOMMANDEUSERCOURANT')
 }
 
-async function addCommande(session_id){
-    let answer = await addCommandeFromApi(session_id)
+async function addCommande(){
+    let answer = await addCommandeFromApi()
     return answer;
 }
 
-async function getScheduleByUserId(session_id){
-    let answer = await getScheduleByUserIdFromApi(session_id)
+async function getScheduleByUserId(){
+    let answer = await getScheduleByUserIdFromApi()
     return answer;
 }
 
-async function getScheduleByUserIdFromApi(session_id) {
-    return getRequest('/commande/getScheduleCurrentUser?session_id=' + session_id, 'GETSCHEDULEBYUSERID')
+async function getScheduleByUserIdFromApi() {
+    return getRequest('/commande/getScheduleCurrentUser' , 'GETSCHEDULEBYUSERID')
 }
-async function addCommandeFromApi(session_id) {
-    return postRequest('/commande/addCommandeFromPanierUserCourant?session_id=' + session_id, {}, 'ADDCOMMANDEFROMPANIERUSER')
+async function addCommandeFromApi() {
+    return postRequest('/commande/addCommandeFromPanierUserCourant', {}, 'ADDCOMMANDEFROMPANIERUSER')
 }
 
-async function getLigneCommandeBycommandeId(id_commande, session_id){
-    let answer = await getLigneCommandeBycommandeIdFromApi(id_commande, session_id)
+async function getLigneCommandeBycommandeId(id_commande){
+    let answer = await getLigneCommandeBycommandeIdFromApi(id_commande)
     return answer;
 }
 
-async function getLigneCommandeBycommandeIdFromApi(id_commande, session_id) {
-    return getRequest('/commande/getLigneCommandeBycommandeId?session_id=' + session_id + '&id_commande=' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
+async function getLigneCommandeBycommandeIdFromApi(id_commande) {
+    return getRequest('/commande/getLigneCommandeBycommandeId?id_commande=' + id_commande, 'GETLIGNECOMMANDEBYCOMMANDEID')
 }
 
 async function setEtatLigneCommandeExterieur({id_commande, id_prestation, id_creneau}){
@@ -45,13 +45,13 @@ async function setEtatLigneCommandeExterieurFromAPI({ id_commande,id_prestation,
     return patchRequest('/commande/setetatligne', {id_commande, id_prestation, id_creneau}, 'SETETATLIGNECOMMANDEEXTERIEUR')
 }
 
-async function getCommandesPrestataires(session_id){
-    let answer = await getCommandesPrestatairesFromApi(session_id)
+async function getCommandesPrestataires(){
+    let answer = await getCommandesPrestatairesFromApi()
     return answer;
 }
 
-async function getCommandesPrestatairesFromApi(session_id) {
-    return getRequest('/commande/getCommandesCurrentPrestataires?session_id=' + session_id, 'GETCOMMANDESPRESTATAIRES')
+async function getCommandesPrestatairesFromApi() {
+    return getRequest('/commande/getCommandesCurrentPrestataires', 'GETCOMMANDESPRESTATAIRES')
 }
 
 export {

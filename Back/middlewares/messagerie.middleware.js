@@ -24,7 +24,7 @@ exports.checkConversationExists = async (req, res, next) => {
 
 exports.checkConversationBelongsToCurrentUserExists = async (req, res, next) => {
     const id_conversation = req.query.id_conversation;
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id)
 

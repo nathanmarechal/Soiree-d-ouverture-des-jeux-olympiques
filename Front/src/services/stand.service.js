@@ -10,32 +10,32 @@ async function getAllStands() {
     return answer
 }
 
-async function updateStand(id, body, session_id) {
-    let answer = await updateStandFromAPI(id, body, session_id)
+async function updateStand(id, body) {
+    let answer = await updateStandFromAPI(id, body)
     return answer
 }
 
-async function updateStandFromAPI(id, body, session_id) {
-    return patchRequest('/stands/update?session_id=' + session_id + "&id_stand=" + id, body, 'UPDATESTAND')
+async function updateStandFromAPI(id, body) {
+    return patchRequest('/stands/update?id_stand=' + id, body, 'UPDATESTAND')
 }
 
-async function createStandFromAPI(body, session_id) {
-    let answer = await postRequest('/stands/add?session_id=' + session_id, body, 'CREATESTAND')
+async function createStandFromAPI(body) {
+    let answer = await postRequest('/stands/add', body, 'CREATESTAND')
     return answer
 }
 
-async function createStand(body, session_id) {
-    let answer = await createStandFromAPI(body, session_id)
+async function createStand(body) {
+    let answer = await createStandFromAPI(body)
     return answer
 }
 
-async function deleteStand(id, session_id) {
-    let answer = await deleteStandFromAPI(id, session_id)
+async function deleteStand(id) {
+    let answer = await deleteStandFromAPI(id)
     return answer
 }
 
-async function deleteStandFromAPI(id, session_id) {
-    return deleteRequest('/stands/delete?session_id=' + session_id  + "&id_stand=" + id, 'DELETESTAND')
+async function deleteStandFromAPI(id) {
+    return deleteRequest('/stands/delete?id_stand=' + id, 'DELETESTAND')
 }
 
 

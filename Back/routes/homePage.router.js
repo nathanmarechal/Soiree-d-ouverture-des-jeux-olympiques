@@ -26,7 +26,7 @@ router.get("/getAllDescription", homePageController.getAllDescription);
  *     summary: Updates the description on the home page
  *     tags: [HomePage]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

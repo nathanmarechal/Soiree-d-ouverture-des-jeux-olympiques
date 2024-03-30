@@ -13,7 +13,7 @@ exports.getConversations = (req, res) => {
 }
 
 exports.getConversationsForUser = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await usersService.getUserBySessionIdAsync(session_id);
 
@@ -40,7 +40,7 @@ exports.getMessagesByConversation = (req, res)=>{
 }
 
 exports.sendMessage = async (req, res)=>{
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const id_conversation = req.body.id_conversation;
 
     const message = req.body.message;
@@ -58,7 +58,7 @@ exports.sendMessage = async (req, res)=>{
 }
 
 exports.createConversation = async (req, res)=>{
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await usersService.getUserBySessionIdAsync(session_id);
 

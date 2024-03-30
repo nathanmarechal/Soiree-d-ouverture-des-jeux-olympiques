@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="currentUserHasRight('messages_admin')" class="main">
+    <div v-if="this.checkIfUserHasRight('messages_admin')" class="main">
       <conversations-list></conversations-list>
     </div>
     <div v-else>
@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import {currentUserHasRight} from "@/droits/droitUtil";
 import ConversationsList from "@/components/Messagerie/conversations-list-admin.vue";
 import {translate} from "@/lang/translationService";
+import {mapActions} from "vuex";
 
 export default {
   components: {
     ConversationsList,
   },
   methods: {
-    currentUserHasRight,
+    ...mapActions('user',['checkIfUserHasRight']),
     translate,
     error404() {
       this.$router.push("/404");

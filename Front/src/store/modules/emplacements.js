@@ -56,10 +56,9 @@ export default {
         },
 
 
-        async updateAreasStore({ rootState, commit },{id, body}) {
+        async updateAreasStore({commit},{id, body}) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await updateArea(id, body, session_id);
+                await updateArea(id, body);
                 commit('UPDATE_AREA', {id, body});
             } catch (err) {
                 console.error("Error in updateZoneStore():", err);
@@ -67,10 +66,9 @@ export default {
         },
 
 
-        async deleteAreasStore({ rootState, commit }, id) {
+        async deleteAreasStore({ commit }, id) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await deleteArea(id, session_id);
+                await deleteArea(id);
                 commit('DELETE_AREA', id);
             } catch (err) {
                 console.error("Error in deleteZoneStore():", err);
@@ -78,10 +76,9 @@ export default {
         },
 
 
-        async createAreasStore({ rootState, commit }, body) {
+        async createAreasStore({  commit }, body) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                let response =  await createArea(body, session_id);
+                let response =  await createArea(body);
                 commit('CREATE_AREA', response[0]);
             } catch (err) {
                 console.error("Error in createZoneStore():", err);

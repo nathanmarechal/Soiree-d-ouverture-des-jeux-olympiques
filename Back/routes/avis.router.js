@@ -37,7 +37,7 @@ router.get("/getAvisByIdStand", standMiddleware.checkStandExists, avisController
  *     summary: Adds a new avis
  *     tags: [Avis]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication
@@ -74,6 +74,7 @@ router.get("/getAvisByIdStand", standMiddleware.checkStandExists, avisController
  *       '500':
  *         description: Internal server error
  */
+
 router.post("/add", rightMiddleware.checkRight, standMiddleware.checkStandExists, userMiddleware.checkUserExists,avisController.addAvis);
 
 /**
@@ -83,7 +84,7 @@ router.post("/add", rightMiddleware.checkRight, standMiddleware.checkStandExists
  *     summary: Deletes an avis
  *     tags: [Avis]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID for authentication

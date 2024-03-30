@@ -14,7 +14,7 @@ const rightMiddleware = require("../middlewares/droits.middleware");
  *     summary: Renvoie tous les utilisateurs
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:
@@ -38,7 +38,7 @@ router.get("/get", rightMiddleware.checkRight, usersController.getUsers);
  *     summary: Renvoie l'utilisateur correspondant à un ID de session donné
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session de l'utilisateur
@@ -62,7 +62,7 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *     summary: Met à jour les informations d'un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Identifiant de la session
@@ -139,7 +139,7 @@ router.patch("/update", rightMiddleware.checkRight, usersMiddleware.checkUserExi
  *     summary: Supprime un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -172,7 +172,7 @@ router.delete("/delete", rightMiddleware.checkRight, usersMiddleware.checkUserEx
  *     summary: Met à jour le solde de l'utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Identifiant de la session
@@ -208,7 +208,7 @@ router.patch("/updateSolde", rightMiddleware.checkRight, usersController.updateS
  *     summary: Met à jour les informations de l'utilisateur courant sans changer le mot de passe
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -389,7 +389,7 @@ router.post("/registerPrestataire", usersMiddleware.validateUserInput, usersMidd
  *     summary: Crée un nouvel utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: L'ID de session de l'utilisateur
@@ -460,7 +460,7 @@ router.post("/create-user", rightMiddleware.checkRight, usersMiddleware.checkEma
  *     summary: Renvoie les utilisateurs en attente d'approbation
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -485,7 +485,7 @@ router.get("/getUserAttente", rightMiddleware.checkRight, usersController.getUse
  *     summary: Accepte un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification
@@ -518,7 +518,7 @@ router.post("/acceptUser", rightMiddleware.checkRight, usersMiddleware.checkUser
  *     summary: Refuse un utilisateur
  *     tags: [Users]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: ID de session pour l'authentification

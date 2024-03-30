@@ -11,7 +11,7 @@ const statistiquesMiddleware = require('../middlewares/stats.middleware');
  *     summary: Renvoie la prestation la plus vendue
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID de l'utilisateur
@@ -34,7 +34,7 @@ router.get('/best-seller-prestation',rightMiddleware.checkRight, statistiquesCon
  *     summary: Renvoie le nombre de nouveaux stands créés par mois
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID de l'utilisateur pour l'accès aux statistiques
@@ -57,7 +57,7 @@ router.get('/new-stand-by-month',rightMiddleware.checkRight, statistiquesControl
  *     summary: Renvoie le nombre de prestations par heure pour un prestataire spécifique
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du prestataire
@@ -84,7 +84,7 @@ router.get('/prestataire/nb-prestation-heure',rightMiddleware.checkRight, statis
  *     summary: Renvoie la moyenne des achats pour un stand spécifique basé sur la session
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du stand
@@ -111,7 +111,7 @@ router.get('/prestataire/average-purchase',rightMiddleware.checkRight, statistiq
  *     summary: Renvoie le meilleur client pour un stand spécifique basé sur la session
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du stand
@@ -138,7 +138,7 @@ router.get('/prestataire/best-client',rightMiddleware.checkRight, statistiquesMi
  *     summary: Renvoie les revenus de vente par type pour un stand spécifique basé sur la session
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du stand
@@ -165,7 +165,7 @@ router.get('/prestataire/sales-revenue-by-type' ,rightMiddleware.checkRight, sta
  *     summary: Renvoie la note moyenne pour un stand spécifique basé sur la session
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du stand
@@ -192,7 +192,7 @@ router.get('/prestataire/average-rating',rightMiddleware.checkRight, statistique
  *     summary: Renvoie le nombre d'évaluations pour un stand spécifique basé sur la session
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID du stand
@@ -219,7 +219,7 @@ router.get('/prestataire/count-rating' ,rightMiddleware.checkRight, statistiques
  *     summary: Renvoie le nombre total de stands
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID de l'utilisateur pour l'autorisation
@@ -242,7 +242,7 @@ router.get('/nb-stands', rightMiddleware.checkRight, statistiquesController.getN
  *     summary: Renvoie le nombre total de prestations disponibles
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID pour l'autorisation
@@ -265,7 +265,7 @@ router.get('/nb-prestations-available',rightMiddleware.checkRight ,statistiquesC
  *     summary: Renvoie le nombre total d'utilisateurs
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID pour l'autorisation
@@ -288,7 +288,7 @@ router.get('/nb-users',rightMiddleware.checkRight,statistiquesController.getNbUs
  *     summary: Renvoie la moyenne des achats
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID pour l'autorisation
@@ -311,7 +311,7 @@ router.get('/average-purchase',rightMiddleware.checkRight ,statistiquesControlle
  *     summary: Renvoie le stand ayant le plus de ventes
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID pour l'autorisation
@@ -334,7 +334,7 @@ router.get('/top-seller-stand',rightMiddleware.checkRight ,statistiquesControlle
  *     summary: Renvoie le stand avec les meilleurs avis
  *     tags: [Statistiques]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         description: Session ID pour l'autorisation

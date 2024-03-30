@@ -1,40 +1,40 @@
 import {deleteRequest, getRequest, patchRequest, postRequest} from "@/services/axios.service";
 
 
-async function updateQuantityInPanierFromAPI(session_id, {id_prestation, id_creneau, quantite}){
-    return patchRequest('/panier/updateOwnPanier?session_id=' + session_id, {id_prestation, id_creneau, quantite}, 'UPDATEQUANTITYPRESTATIONFROMPANIERUSER')
+async function updateQuantityInPanierFromAPI( {id_prestation, id_creneau, quantite}){
+    return patchRequest('/panier/updateOwnPanier', {id_prestation, id_creneau, quantite}, 'UPDATEQUANTITYPRESTATIONFROMPANIERUSER')
 }
 
-async function updateQuantityInPanier(session_id, {id_prestation, id_creneau, quantite}){
-    let answer = await updateQuantityInPanierFromAPI(session_id, {id_prestation, id_creneau, quantite})
+async function updateQuantityInPanier({id_prestation, id_creneau, quantite}){
+    let answer = await updateQuantityInPanierFromAPI({id_prestation, id_creneau, quantite})
     return answer;
 
 }
 
-async function getPanierUserCourantFromApi(session_id) {
-    return getRequest('/panier/getOwnPanier?session_id=' + session_id, 'GETPANIERUSERCOURANT')
+async function getPanierUserCourantFromApi() {
+    return getRequest('/panier/getOwnPanier', 'GETPANIERUSERCOURANT')
 }
 
-async function getPanierUserCourant(session_id){
-    let answer = await getPanierUserCourantFromApi(session_id)
+async function getPanierUserCourant(){
+    let answer = await getPanierUserCourantFromApi()
     return answer;
 }
 
-async function deletePrestationFromPanierUser(session_id, id_prestation, id_creneau){
-    let answer = await deletePrestationFromPanierUserFromApi(session_id, id_prestation, id_creneau)
+async function deletePrestationFromPanierUser( id_prestation, id_creneau){
+    let answer = await deletePrestationFromPanierUserFromApi( id_prestation, id_creneau)
     return answer;
 }
 
-async function deletePrestationFromPanierUserFromApi(session_id, id_prestation, id_creneau){
-    return deleteRequest('/panier/deletePrestationFromPanierOwnUser?session_id=' + session_id + '&id_prestation=' + id_prestation + '&id_creneau=' + id_creneau, 'DELETEPRESTATIONFROMPANIERUSER')
+async function deletePrestationFromPanierUserFromApi(id_prestation, id_creneau){
+    return deleteRequest('/panier/deletePrestationFromPanierOwnUser?id_prestation=' + id_prestation + '&id_creneau=' + id_creneau, 'DELETEPRESTATIONFROMPANIERUSER')
 }
 
-async function addPrestationToPanierUserFromApi(session_id, id_prestation, quantite, id_creneau){
-    return postRequest('/panier/addPrestationToOwnPanier?session_id=' + session_id, {id_prestation, quantite, id_creneau}, 'ADDPRESTATIONTOPANIERUSER')
+async function addPrestationToPanierUserFromApi(id_prestation, quantite, id_creneau){
+    return postRequest('/panier/addPrestationToOwnPanier', {id_prestation, quantite, id_creneau}, 'ADDPRESTATIONTOPANIERUSER')
 }
 
-async function addPrestationToPanierUser(session_id, id_prestation, quantite, id_creneau){
-    let answer = await addPrestationToPanierUserFromApi(session_id, id_prestation, quantite, id_creneau)
+async function addPrestationToPanierUser( id_prestation, quantite, id_creneau){
+    let answer = await addPrestationToPanierUserFromApi(id_prestation, quantite, id_creneau)
     return answer;
 }
 

@@ -91,7 +91,7 @@ exports.getTopAvisStand = (req, res) => {
 
 exports.getNbPrestationHeure = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
     const id = stand.id_stand;
 
@@ -107,7 +107,7 @@ exports.getNbPrestationHeure = async (req, res) => {
 
 exports.getAveragePurchaseByStand = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
     const id = stand.id_stand;
 
@@ -122,7 +122,7 @@ exports.getAveragePurchaseByStand = async (req, res) => {
 }
 
 exports.getBestClientByStand = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
 
@@ -139,7 +139,7 @@ exports.getBestClientByStand = async (req, res) => {
 }
 
 exports.getSalesRevnueByTypeByStand = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
     const id = stand.id_stand;
 
@@ -153,7 +153,7 @@ exports.getSalesRevnueByTypeByStand = async (req, res) => {
     })
 }
 exports.getAvgRatingByStand = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
     const id = stand.id_stand;
     statistiquesService.getAvgRatingByStand(id, (error, data) => {
@@ -167,7 +167,7 @@ exports.getAvgRatingByStand = async (req, res) => {
 }
 exports.getCountRatingByStand = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const stand =  await standsService.getStandBySessionIdAsync(session_id)
     const id = stand.id_stand;
 

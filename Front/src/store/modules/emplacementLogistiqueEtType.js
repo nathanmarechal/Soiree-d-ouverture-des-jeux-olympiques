@@ -79,30 +79,27 @@ export default {
             }
         },
 
-        async createEmplacementLogistiqueStore({rootState, commit}, body) {
+        async createEmplacementLogistiqueStore({commit}, body) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                let response = await createEmplacementLogistique(body, session_id);
+                let response = await createEmplacementLogistique(body);
                 commit('CREATE_EMPLACEMENT_LOGISITIQUE', response[0]);
             } catch (err) {
                 console.error("Error in createEmplacementLogistiqueStore():", err);
             }
         },
 
-        async updateEmplacementLogistiqueStore({rootState, commit}, {id, body}) {
+        async updateEmplacementLogistiqueStore({ commit}, {id, body}) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                let response = await updateEmplacementLogistique(id, body, session_id);
+                let response = await updateEmplacementLogistique(id, body);
                 commit('UPDATE_EMPLACEMENT_LOGISITIQUE', {id: id, body: response[0]});
             } catch (err) {
                 console.error("Error in updateEmplacementLogistiqueStore():", err);
             }
         },
 
-        async deleteEmplacementLogistiqueStore({rootState, commit}, id) {
+        async deleteEmplacementLogistiqueStore({ commit}, id) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await deleteEmplacementLogistique(id, session_id);
+                await deleteEmplacementLogistique(id);
                 await commit('DELETE_EMPLACEMENT_LOGISITIQUE', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);

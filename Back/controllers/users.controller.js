@@ -103,7 +103,7 @@ exports.getUserById = (req, res) => {
 }
 
 exports.getUserBySessionId = (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     usersService.getUserBySessionId(session_id, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -143,7 +143,7 @@ exports.deleteUser = (req, res) => {
 }
 
 exports.updateSolde = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user_courant = await usersService.getUserBySessionIdAsync(session_id);
 
@@ -160,7 +160,7 @@ exports.updateSolde = async (req, res) => {
 
 exports.updateUserCourantWoPassword = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
     const user_courant = await usersService.getUserBySessionIdAsync(session_id);
 
     const nom = req.body.nom;

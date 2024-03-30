@@ -2,7 +2,7 @@ const pool = require("../database/db");
 const usersService = require("../services/users.service");
 
 exports.checkIfUserWithStandThatExists = async (req, res, next) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await usersService.getUserBySessionIdAsync(session_id);
 

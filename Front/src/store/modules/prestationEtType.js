@@ -64,38 +64,36 @@ export default {
             }
         },
 
-        async updateIsAvailablePrestationStore({ rootState, commit }, body) {
+        async updateIsAvailablePrestationStore({ commit }, body) {
             try {
-                await updateIsAvailablePrestation(body.id, body, rootState.user.userCourant.session_id);
+                await updateIsAvailablePrestation(body.id, body);
                 commit('UPDATE_PRESTATION', body.id, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-        async updatePrestationStore({rootState,  commit }, body) {
+        async updatePrestationStore({ commit }, body) {
             try {
-                await updatePrestation(body.id_prestation, body, rootState.user.userCourant.session_id)
+                await updatePrestation(body.id_prestation, body)
                 commit('UPDATE_PRESTATION', body.id_prestation, body);
             } catch (err) {
                 console.error("Error in updatePrestationIsAvailableRoleStore():", err);
             }
         },
 
-        async deletePrestationStore({ rootState, commit }, id) {
+        async deletePrestationStore({  commit }, id) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await deletePrestation(id, session_id);
+                await deletePrestation(id);
                 commit('DELETE_PRESTATION', id);
             } catch (err) {
                 console.error("Error in deleteUserStore():", err);
             }
         },
 
-        async createPrestationStore({ rootState, commit }, body) {
+        async createPrestationStore({ commit }, body) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                let response = await createPrestation(body, session_id);
+                let response = await createPrestation(body);
                 commit('CREATE_PRESTATION', response[0]);
             } catch (err) {
                 console.error("Error in createPrestationStore():", err);

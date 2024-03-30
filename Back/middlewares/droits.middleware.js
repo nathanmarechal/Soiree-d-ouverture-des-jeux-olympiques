@@ -3,7 +3,7 @@ const usersService = require("../services/users.service")
 
 exports.checkRight = async (req, res, next) => {
     try {
-        const sessionId = req.query.session_id;
+        const sessionId = req.headers['session_id'];
         const rightName = getRightName(req.originalUrl);
 
         if (!rightName) {

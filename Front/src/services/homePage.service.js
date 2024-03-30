@@ -9,12 +9,12 @@ async function uploadImageDescriptionHomePage(image) {
     return answer;
 }
 
-async function updateDescriptionHomePageFromAPI(id, body, session_id) {
-    return patchRequest('/homePage/description?session_id=' + session_id + '&id_text_accueil=' + id, body, 'UPDATEDESCRIPTIONHOMEPAGE')
+async function updateDescriptionHomePageFromAPI(id, body) {
+    return patchRequest('/homePage/description?id_text_accueil=' + id, body, 'UPDATEDESCRIPTIONHOMEPAGE')
 }
 
-async function updateDescriptionHomePage(id, body, session_id) {
-    let answer = await updateDescriptionHomePageFromAPI(id, body, session_id)
+async function updateDescriptionHomePage(id, body) {
+    let answer = await updateDescriptionHomePageFromAPI(id, body)
     return answer
 }
 

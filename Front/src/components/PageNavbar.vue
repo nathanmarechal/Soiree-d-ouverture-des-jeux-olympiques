@@ -10,62 +10,59 @@
           <b-nav-item to="/map" href="#" @mouseover="underline = 'Carte'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Carte' }">{{translate("carte")}}</b-nav-item>
           <b-nav-item :to="{ name: 'shopView'}" @click="fromNav()" href="#" @mouseover="underline = 'hop'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Shop' }">{{translate("magasin")}}</b-nav-item>
 
-          <b-nav-item v-if="currentUserHasRight('messages_admin')" to="/messages-admin" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+          <b-nav-item v-if="this.checkIfUserHasRight('messages_admin')" to="/messages-admin" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
-          <b-nav-item v-if="currentUserHasRight('messages_user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
+          <b-nav-item v-if="this.checkIfUserHasRight('messages_user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
 
-          <div v-if="isUserPrestataire">
-            <b-nav-item-dropdown name="prestataire" right text="Prestataire" @mouseover="underline = 'Prestataire'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Prestataire' }">
-              <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
-              <br>
-              <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
-              <br>
-              <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
-              <br>
-              <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
-              <br>
-              <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
-            </b-nav-item-dropdown>
-          </div>
 
-          <b-nav-item-dropdown
-              v-if="isUserAdmin"
+          <b-nav-item-dropdown right text="Mes Services" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
 
-              right text="Administration" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
-            <div v-if="currentUserHasRight('see_users')">
+            <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
+            <br>
+            <router-link to="/prestataire/stand" class = "dp">{{translate("monStand")}}</router-link>
+            <br>
+            <router-link to="/prestataire/statistiques" class = "dp">{{translate("mesStatistiques")}}</router-link>
+            <br>
+            <router-link to="/prestataire/commandes" class = "dp">{{translate("commandes")}}</router-link>
+            <br>
+            <router-link to="/prestataire/avis" class = "dp"> {{translate("avis")}}</router-link>
+
+
+            <div v-if="this.checkIfUserHasRight('see_users')">
               <router-link  to="/admin/users" class = "dp">{{translate("comptes")}} </router-link>
             </div>
-            <div v-if="currentUserHasRight('see_waiting_users')">
+            <div v-if="this.checkIfUserHasRight('see_waiting_users')">
               <router-link  to="/admin/userWaiting" class = "dp">{{ translate("inscriptions") }}</router-link>
             </div>
-            <div v-if="currentUserHasRight('create_stands')
-            || currentUserHasRight('update_stands')
-            || currentUserHasRight('delete_stands')">
+            <div v-if="this.checkIfUserHasRight('create_stands')
+            || this.checkIfUserHasRight('update_stands')
+            || this.checkIfUserHasRight('delete_stands')">
               <router-link  to="/admin/stands" class = "dp">{{translate("stands")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('create_areas')
-            || currentUserHasRight('update_areas')
-            || currentUserHasRight('delete_areas')">
+            <div v-if="this.checkIfUserHasRight('create_areas')
+            || this.checkIfUserHasRight('update_areas')
+            || this.checkIfUserHasRight('delete_areas')">
               <router-link  to="/admin/areas" class = "dp">{{translate("emplacements")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('create_zones')
-            || currentUserHasRight('update_zones')
-            || currentUserHasRight('delete_zones')">
+            <div v-if="this.checkIfUserHasRight('create_zones')
+            || this.checkIfUserHasRight('update_zones')
+            || this.checkIfUserHasRight('delete_zones')">
               <router-link  to="/admin/zones" class = "dp">{{translate("zones")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('create_roles')
-            || currentUserHasRight('update_roles')
-            || currentUserHasRight('delete_roles')">
+            <div v-if="this.checkIfUserHasRight('create_roles')
+            || this.checkIfUserHasRight('update_roles')
+            || this.checkIfUserHasRight('delete_roles')">
               <router-link  to="/admin/roles" class = "dp">{{translate("roles")}}</router-link>
             </div>
-            <div v-if="currentUserHasRight('statistiques_admin')">
+            <div v-if="this.checkIfUserHasRight('statistiques_admin')">
               <router-link to="/admin/statistiques" class = "dp">{{translate("statistiques")}}</router-link>
             </div>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
       </b-collapse>
+
       <div style="display: contents;">
       <b-navbar-brand v-if="!isUserConnected" href="#" @click="showLoginModal" > <img src="../assets/Logos/login-18.svg" alt="Logo login" class="navbar-svg-login"></b-navbar-brand>
       <b-nav-item-dropdown v-if="isUserConnected" style="color: grey" :text="currentUser.email">
@@ -75,8 +72,6 @@
         <b-dropdown-item ><router-link to="/schedule" class = "dp">{{translate("monEmploiDuTemps")}}</router-link></b-dropdown-item>
         <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
-      <img v-if="isUserAdmin" src="@/assets/Logos/isAdminIcon.png" alt="admin" style="width: 25px;">
-      <img v-if="isUserPrestataire" src="@/assets/Logos/isPrestataireIcon.png" alt="prestataire" style="width: 25px;">
 
 
 
@@ -101,7 +96,7 @@
 <script>
 import LoginComponent from './LoginComponent.vue';
 import {changeLanguage, translate} from "@/lang/translationService.js";
-import {currentUserHasRight} from "@/droits/droitUtil";
+import {mapActions} from "vuex";
 
 export default {
   data() {
@@ -119,19 +114,6 @@ export default {
     isUserConnected() {
       return this.$store.getters['user/isUserConnected'];
     },
-    isUserAdmin() {
-      const v = this.currentUserHasRight('see_users')
-          ||this.currentUserHasRight('see_waiting_users')
-          ||this.currentUserHasRight('create_stands') || this.currentUserHasRight('update_stands') || this.currentUserHasRight('delete_stands')
-          ||this.currentUserHasRight('create_zones') || this.currentUserHasRight('update_zones') || this.currentUserHasRight('delete_zones')
-          ||this.currentUserHasRight('create_areas') || this.currentUserHasRight('update_areas') || this.currentUserHasRight('delete_areas')
-          ||this.currentUserHasRight('create_roles') || this.currentUserHasRight('update_roles') || this.currentUserHasRight('delete_roles')
-||this.currentUserHasRight('statistiques_admin')
-      return v;
-    },
-    isUserPrestataire() {
-      return this.currentUserHasRight('create_self_prestations') || this.currentUserHasRight('update_self_prestations') || this.currentUserHasRight('delete_self_prestations') || this.currentUserHasRight('statistiques-prestataire')
-    },
     currentUser() {
       return this.$store.getters['user/getCurrentUser'];
     },
@@ -141,10 +123,9 @@ export default {
     'login-component': LoginComponent
   },
   methods: {
-    currentUserHasRight,
+    ...mapActions('user',['checkIfUserHasRight']),
     translate,
     changeLanguage,
-
 
     fromNav() {
       this.$store.commit('user/SET_PROVENANCE', -1);

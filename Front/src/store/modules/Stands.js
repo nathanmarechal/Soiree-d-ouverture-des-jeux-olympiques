@@ -48,39 +48,35 @@ export default {
 
     },
     actions: {
-        async createStandStore({ rootState, commit }, body) {
+        async createStandStore({ commit }, body) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                const data = await createStand(body, session_id);
+                const data = await createStand(body);
                 commit('CREATE_STAND', data[0]);
             } catch (err) {
                 console.error("Error in createStandStore():", err);
             }
         },
-        async updateStandStore({ rootState, commit }, {id, body}) {
+        async updateStandStore({ commit }, {id, body}) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await updateStand(id, body, session_id);
+                await updateStand(id, body);
                 commit('UPDATE_STAND', id, body);
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
             }
         },
 
-        async updateDescriptionStandStore({ rootState, commit }, {id, body}) {
+        async updateDescriptionStandStore({ commit }, {id, body}) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await updateDescriptionStand(body, session_id);
+                await updateDescriptionStand(body, );
                 commit('UPDATE_STAND', {id, body});
             } catch (err) {
                 console.error("Error in updateStandStore():", err);
             }
         },
 
-        async deleteStandStore({ rootState, commit }, id) {
+        async deleteStandStore({ commit }, id) {
             try {
-                const session_id = rootState.user.userCourant.session_id
-                await deleteStand(id, session_id);
+                await deleteStand(id, );
                 commit('DELETE_STAND', id);
             } catch (err) {
                 console.error("Error in deleteStandStore():", err);

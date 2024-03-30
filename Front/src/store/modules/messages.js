@@ -19,10 +19,9 @@ export default {
     actions:{
         //-----------------------------------------------------------------------Messagerie--------------------------------------------------------------------//
 
-        async getConversationsAdminStore({rootState, commit}){
+        async getConversationsAdminStore({commit}){
             try {
-                let session_id = rootState.user.userCourant.session_id
-                const result = await getAllConversations(session_id);
+                const result = await getAllConversations();
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
                 } else {
@@ -32,9 +31,9 @@ export default {
                 console.error("Error in getConversations():", err);
             }
         },
-        async getConversationsUserStore({rootState, commit}){
+        async getConversationsUserStore({commit}){
             try {
-                const result = await getConversationsForUser(rootState.user.userCourant.session_id);
+                const result = await getConversationsForUser();
                 if (Array.isArray(result)) {
                     commit('SET_CONVERSATIONS', result);
                 } else {

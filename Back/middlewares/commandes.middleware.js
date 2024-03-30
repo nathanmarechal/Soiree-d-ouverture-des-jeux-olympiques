@@ -46,7 +46,7 @@ exports.checkLigneCommandeExists = async (req, res, next) => {
 
 exports.checkCommandeBelongsToUserExists = async (req, res, next) => {
     const id_commande = req.query.id_commande;
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id)
 

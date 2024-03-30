@@ -2,7 +2,7 @@ const panierService = require("../services/panier.service");
 const userService = require("../services/users.service");
 
 exports.getPanierByUserId = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 
@@ -18,7 +18,7 @@ exports.getPanierByUserId = async (req, res) => {
 
 exports.updateQuantityInPanier = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 
@@ -36,7 +36,7 @@ exports.updateQuantityInPanier = async (req, res) => {
 }
 
 exports.deletePrestationFromPanierUser = async (req, res) => {
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 
@@ -65,7 +65,7 @@ exports.getAllCreneaux = (req, res) => {
 
 exports.addPrestationToPanierUser = async (req, res) => {
 
-    const session_id = req.query.session_id;
+    const session_id = req.headers['session_id'];
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 

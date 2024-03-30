@@ -1,22 +1,22 @@
 import { getRequest, postRequest, deleteRequest, patchRequest } from "@/services/axios.service";
 
-async function getAllUsersFromAPI(session_id) {
-    let answer = await getRequest('/users/get?session_id='+session_id, 'GETALLUSERS')
+async function getAllUsersFromAPI() {
+    let answer = await getRequest('/users/get', 'GETALLUSERS')
     return answer
 }
 
-async function getAllUsers(session_id) {
-    let answer = await getAllUsersFromAPI(session_id)
+async function getAllUsers() {
+    let answer = await getAllUsersFromAPI()
     return answer
 }
 
-async function getAllUsersAttente(session_id){
-    let answer = await getAllUsersAttenteFromAPI(session_id)
+async function getAllUsersAttente(){
+    let answer = await getAllUsersAttenteFromAPI()
     return answer
 }
 
-async function getAllUsersAttenteFromAPI(session_id) {
-    let answer = await getRequest('/users/getUserAttente?session_id='+session_id, 'GETALLUSERSATTENTE')
+async function getAllUsersAttenteFromAPI() {
+    let answer = await getRequest('/users/getUserAttente', 'GETALLUSERSATTENTE')
     return answer
 }
 
@@ -31,33 +31,33 @@ async function getAllStandAttenteFromAPI() {
 
 }
 
-async function acceptUser(id,session_id) {
-    let answer = await acceptUserFromAPI(id,session_id)
+async function acceptUser(id) {
+    let answer = await acceptUserFromAPI(id)
     return answer
 }
 
-async function acceptUserFromAPI(id,session_id) {
-    let answer = await postRequest('/users/acceptUser?id_user=' + id+'&session_id='+session_id, 'ACCEPTUSER')
+async function acceptUserFromAPI(id) {
+    let answer = await postRequest('/users/acceptUser?id_user=' + id, 'ACCEPTUSER')
     return answer
 }
 
-async function refuseUser(id,session_id) {
-    let answer = await refuseUserFromAPI(id,session_id)
+async function refuseUser(id) {
+    let answer = await refuseUserFromAPI(id)
     return answer
 }
 
-async function refuseUserFromAPI(id,session_id) {
-    let answer = await postRequest('/users/refuseUser?id_user=' + id+"&session_id="+session_id, 'REFUSEUSER')
+async function refuseUserFromAPI(id) {
+    let answer = await postRequest('/users/refuseUser?id_user=' + id, 'REFUSEUSER')
     return answer
 }
 
-async function createUser(user,session_id) {
-    let answer = await createUserFromAPI(user,session_id)
+async function createUser(user) {
+    let answer = await createUserFromAPI(user)
     return answer
 }
 
-async function createUserFromAPI(user, session_id) {
-    let answer = await postRequest( '/users/create-user?session_id='+session_id,user, 'CREATEUSER')
+async function createUserFromAPI(user) {
+    let answer = await postRequest( '/users/create-user',user, 'CREATEUSER')
     return answer
 }
 
@@ -81,49 +81,48 @@ async function RegisterPrestaireFromAPI(body) {
     return answer
 }
 
-async function updateUser(id, body, session_id) {
-    let answer = await updateUserFromAPI(id, body, session_id)
+async function updateUser(id, body) {
+    let answer = await updateUserFromAPI(id, body)
     return answer
 }
 
-async function updateUserFromAPI(id, body, session_id) {
-    return patchRequest('/users/update?session_id='+session_id + '&id_user=' + id, body, 'UPDATEUSER')
+async function updateUserFromAPI(id, body) {
+    return patchRequest('/users/update?id_user=' + id, body, 'UPDATEUSER')
 }
 
-async function deleteUser(id,session_id) {
-    let answer = await deleteUserFromAPI(id,session_id)
+async function deleteUser(id) {
+    let answer = await deleteUserFromAPI(id)
     return answer
 }
 
-async function deleteUserFromAPI(id,session_id) {
-    return deleteRequest('/users/delete?id_user='+ id+"&session_id="+session_id, 'DELETEUSER')
+async function deleteUserFromAPI(id) {
+    return deleteRequest('/users/delete?id_user='+ id, 'DELETEUSER')
 }
 
-async function updateSolde(session_id, body) {
+async function updateSolde(body) {
     body = {solde: body}
-    return await updateSoldeFromAPI(session_id, body)
+    return await updateSoldeFromAPI(body)
 }
 
-async function updateSoldeFromAPI(session_id, body) {
-    return patchRequest('/users/updateSolde?session_id='+session_id,body, 'UPDATESOLDE')
+async function updateSoldeFromAPI(body) {
+    return patchRequest('/users/updateSolde',body, 'UPDATESOLDE')
 }
 
-async function updateUserCourantWoPassword(session_id, body) {
-    let answer = await updateUserCourantWoPasswordFromAPI(session_id, body)
+async function updateUserCourantWoPassword(body) {
+    let answer = await updateUserCourantWoPasswordFromAPI(body)
     return answer
 }
 
-async function updateUserCourantWoPasswordFromAPI(session_id, body) {
-    return patchRequest('/users/updateUserCourantWoPassword?session_id='+session_id, body, 'UPDATEUSERCOURANTWOPASSWORD')
+async function updateUserCourantWoPasswordFromAPI(body) {
+    return patchRequest('/users/updateUserCourantWoPassword', body, 'UPDATEUSERCOURANTWOPASSWORD')
 }
 
-async function getUserFromSessionIdFromAPI(session_id) {
-    const request = '/users/getBySessionId?session_id='+session_id;
-    return await getRequest(request, 'GETUSER_BY_SESSION_ID');
+async function getUserFromSessionIdFromAPI() {
+    return await getRequest( '/users/getBySessionId', 'GETUSER_BY_SESSION_ID');
 }
 
-async function getUserFromSessionId(session_id) {
-    return await getUserFromSessionIdFromAPI(session_id);
+async function getUserFromSessionId() {
+    return await getUserFromSessionIdFromAPI();
 }
 
 export {

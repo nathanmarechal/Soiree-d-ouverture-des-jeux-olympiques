@@ -12,7 +12,7 @@ router = express.Router();
  *     summary: Retrieves all conversations
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:
@@ -35,7 +35,7 @@ router.get("/get-all-conversations", rightMiddleware.checkRight, messagerieContr
  *     summary: Retrieves conversations for a specific user
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:
@@ -59,7 +59,7 @@ router.get("/get-conversations-for-user", rightMiddleware.checkRight, messagerie
  *     summary: Retrieves messages for a specific conversation
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: id_conversation
  *         required: true
  *         schema:
@@ -88,7 +88,7 @@ router.get("/get-messages-by-conversation", userMiddleware.checkSessionExists, m
  *     summary: Sends a message in a conversation
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:
@@ -123,7 +123,7 @@ router.post("/send-message", userMiddleware.checkSessionExists, messagerieMiddle
  *     summary: Creates a new conversation
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:
@@ -158,7 +158,7 @@ router.post("/create-conversation", userMiddleware.checkSessionExists, messageri
  *     summary: Toggles the resolved status of a conversation
  *     tags: [Messagerie]
  *     parameters:
- *       - in: query
+ *       - in: header
  *         name: session_id
  *         required: true
  *         schema:

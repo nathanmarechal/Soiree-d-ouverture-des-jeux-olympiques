@@ -1,138 +1,138 @@
 import {getRequest} from "@/services/axios.service";
 
-async function getBestSellerPrestationFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/best-seller-prestation?session_id=' + session_id, 'GETBESTSELLERPRESTATION')
+async function getBestSellerPrestationFromAPI() {
+    let answer = await getRequest('/statistiques/best-seller-prestation', 'GETBESTSELLERPRESTATION')
     return answer
 }
 
-async function getBestSellerPrestation(session_id) {
-    let answer = await getBestSellerPrestationFromAPI(session_id)
+async function getBestSellerPrestation() {
+    let answer = await getBestSellerPrestationFromAPI()
     return answer
 }
 
-async function getNbUsersFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/nb-users?session_id=' + session_id, 'GETNBUSERS')
+async function getNbUsersFromAPI() {
+    let answer = await getRequest('/statistiques/nb-users', 'GETNBUSERS')
     return answer
 }
 
-async function getNbUsers(session_id) {
-    let answer = await getNbUsersFromAPI(session_id)
-    return answer
-}
-
-
-async function getNbStandsFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/nb-stands?session_id=' + session_id, 'GETNBSTANDS')
-    return answer
-}
-
-async function getNbStands(session_id) {
-    let answer = await getNbStandsFromAPI(session_id)
+async function getNbUsers() {
+    let answer = await getNbUsersFromAPI()
     return answer
 }
 
 
-async function getNbPrestationsAvailableFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/nb-prestations-available?session_id=' + session_id, 'GETPRESTATIONAVAILABLE')
+async function getNbStandsFromAPI() {
+    let answer = await getRequest('/statistiques/nb-stands', 'GETNBSTANDS')
     return answer
 }
 
-async function getNbPrestationsAvailable(session_id) {
-    let answer = await getNbPrestationsAvailableFromAPI(session_id)
-    return answer
-}
-
-
-async function getAveragePurchaseFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/average-purchase?session_id=' + session_id, 'GETPRESTATIONAVAILABLE')
-    return answer
-}
-
-async function getAveragePurchase(session_id) {
-    let answer = await getAveragePurchaseFromAPI(session_id)
+async function getNbStands() {
+    let answer = await getNbStandsFromAPI()
     return answer
 }
 
 
-async function getTopSellerStandFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/top-seller-stand?session_id=' + session_id, 'GETPRESTATIONAVAILABLE')
+async function getNbPrestationsAvailableFromAPI() {
+    let answer = await getRequest('/statistiques/nb-prestations-available', 'GETPRESTATIONAVAILABLE')
     return answer
 }
 
-async function getTopSellerStand(session_id) {
-    let answer = await getTopSellerStandFromAPI(session_id)
+async function getNbPrestationsAvailable() {
+    let answer = await getNbPrestationsAvailableFromAPI()
     return answer
 }
 
-async function getTopAvisStandFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/top-avis-stand?session_id=' + session_id, 'GETTOPAVISSTAND')
+
+async function getAveragePurchaseFromAPI() {
+    let answer = await getRequest('/statistiques/average-purchase', 'GETPRESTATIONAVAILABLE')
     return answer
 }
 
-async function getTopAvisStand(session_id) {
-    let answer = await getTopAvisStandFromAPI(session_id)
+async function getAveragePurchase() {
+    let answer = await getAveragePurchaseFromAPI()
     return answer
 }
 
-async function getNewStandByMonthFromAPI(session_id) {
-    let answer = await getRequest('/statistiques/new-stand-by-month?session_id=' + session_id, 'GETNEWSTANDBYMONTH')
+
+async function getTopSellerStandFromAPI() {
+    let answer = await getRequest('/statistiques/top-seller-stand', 'GETPRESTATIONAVAILABLE')
     return answer
 }
 
-async function getNewStandByMonth(session_id) {
-    let answer = await getNewStandByMonthFromAPI(session_id)
+async function getTopSellerStand() {
+    let answer = await getTopSellerStandFromAPI()
     return answer
 }
 
-async function getNbPrestationHeureFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/nb-prestation-heure?session_id=' + session_id, 'GETPRESTATAIREPRESTATIONBYHOURS')
-}
-
-async function getNbPrestationHeure(session_id) {
-    let answer = await getNbPrestationHeureFromAPI(session_id)
+async function getTopAvisStandFromAPI() {
+    let answer = await getRequest('/statistiques/top-avis-stand', 'GETTOPAVISSTAND')
     return answer
 }
 
-async function getAveragePurchaseByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/average-purchase?session_id=' + session_id, 'GETAVERAGEPURCHASEBUSTAND')
-}
-
-async function getAveragePurchaseByStand(session_id) {
-    let answer = await getAveragePurchaseByStandFromAPI(session_id)
+async function getTopAvisStand() {
+    let answer = await getTopAvisStandFromAPI()
     return answer
 }
 
-async function getBestClientByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/best-client?session_id=' + session_id, 'BESTCLIENTBYSTAND')
-}
-
-async function getBestClientByStand(session_id) {
-    let answer = await getBestClientByStandFromAPI(session_id)
+async function getNewStandByMonthFromAPI() {
+    let answer = await getRequest('/statistiques/new-stand-by-month', 'GETNEWSTANDBYMONTH')
     return answer
 }
 
-async function getSalesRevnueByTypeByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/sales-revenue-by-type?session_id=' + session_id, 'BESTSALESREVENUE')
-}
-
-async function getSalesRevnueByTypeByStand(session_id) {
-    let answer = await getSalesRevnueByTypeByStandFromAPI(session_id)
+async function getNewStandByMonth() {
+    let answer = await getNewStandByMonthFromAPI()
     return answer
 }
-async function getAvgRatingByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/average-rating?session_id=' + session_id, 'BESTSALESREVENUE')
+
+async function getNbPrestationHeureFromAPI() {
+    return getRequest('/statistiques/prestataire/nb-prestation-heure', 'GETPRESTATAIREPRESTATIONBYHOURS')
 }
 
-async function getAvgRatingByStand(session_id) {
-    let answer = await getAvgRatingByStandFromAPI(session_id)
+async function getNbPrestationHeure() {
+    let answer = await getNbPrestationHeureFromAPI()
     return answer
 }
-async function getCountRatingByStandFromAPI(session_id) {
-    return getRequest('/statistiques/prestataire/count-rating?session_id=' + session_id, 'BESTSALESREVENUE')
+
+async function getAveragePurchaseByStandFromAPI() {
+    return getRequest('/statistiques/prestataire/average-purchase', 'GETAVERAGEPURCHASEBUSTAND')
 }
 
-async function getCountRatingByStand(session_id) {
-    let answer = await getCountRatingByStandFromAPI(session_id)
+async function getAveragePurchaseByStand() {
+    let answer = await getAveragePurchaseByStandFromAPI()
+    return answer
+}
+
+async function getBestClientByStandFromAPI() {
+    return getRequest('/statistiques/prestataire/best-client', 'BESTCLIENTBYSTAND')
+}
+
+async function getBestClientByStand() {
+    let answer = await getBestClientByStandFromAPI()
+    return answer
+}
+
+async function getSalesRevnueByTypeByStandFromAPI() {
+    return getRequest('/statistiques/prestataire/sales-revenue-by-type', 'BESTSALESREVENUE')
+}
+
+async function getSalesRevnueByTypeByStand() {
+    let answer = await getSalesRevnueByTypeByStandFromAPI()
+    return answer
+}
+async function getAvgRatingByStandFromAPI() {
+    return getRequest('/statistiques/prestataire/average-rating', 'BESTSALESREVENUE')
+}
+
+async function getAvgRatingByStand() {
+    let answer = await getAvgRatingByStandFromAPI()
+    return answer
+}
+async function getCountRatingByStandFromAPI() {
+    return getRequest('/statistiques/prestataire/count-rating', 'BESTSALESREVENUE')
+}
+
+async function getCountRatingByStand() {
+    let answer = await getCountRatingByStandFromAPI()
     return answer
 }
 

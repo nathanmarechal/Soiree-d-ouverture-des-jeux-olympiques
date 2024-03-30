@@ -33,18 +33,18 @@ export default {
             }
         },
 
-        async uploadAvisStore({rootState, commit }, {id_stand, id_user, note, commentaire}) {
+        async uploadAvisStore({commit }, {id_stand, id_user, note, commentaire}) {
             try {
-                const avis = await uploadAvis({id_stand, id_user, note, commentaire},rootState.user.userCourant.session_id);
+                const avis = await uploadAvis({id_stand, id_user, note, commentaire});
                 commit('ADD_AVIS', avis);
             } catch (error) {
                 console.error('Error fetching avis:', error);
             }
         },
 
-        async deleteAvisStore({ rootState, commit }, id) {
+        async deleteAvisStore({commit }, id) {
             try {
-                await deleteAvis(id, rootState.user.userCourant.session_id);
+                await deleteAvis(id);
                 commit('DELETE_AVIS', id);
             } catch (error) {
                 console.error('Error fetching avis:', error);

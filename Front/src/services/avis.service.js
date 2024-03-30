@@ -15,12 +15,12 @@ async function getAvisByIdStand(id_stand){
     return answer;
 }
 
-async function uploadAvisFromAPI(body, session_id) {
-    return postRequest('/avis/add?session_id=' + session_id , body, 'UPDATEDESCRIPTIONHOMEPAGE')
+async function uploadAvisFromAPI(body) {
+    return postRequest('/avis/add' , body, 'UPDATEDESCRIPTIONHOMEPAGE')
 }
 
-async function uploadAvis(body, id_session) {
-    let answer = await uploadAvisFromAPI(body, id_session)
+async function uploadAvis(body) {
+    let answer = await uploadAvisFromAPI(body)
     return answer
 }
 
@@ -29,13 +29,13 @@ async function getAvisByIdStandAsync(id_stand) {
     return getRequest('/avis/getAvisByIdStand?id_stand=' + id_stand, 'GETAVISBYIDSTAND')
 }
 
-async function deleteAvis(id, session_id) {
-    let answer = await deleteAvisFromAPI(id, session_id)
+async function deleteAvis(id) {
+    let answer = await deleteAvisFromAPI(id)
     return answer
 }
 
-async function deleteAvisFromAPI(id, session_id) {
-    return deleteRequest('/avis/deleteAvisByIdStandUser?session_id=' + session_id + "&id_avis=" + id, 'DELETEAVIS')
+async function deleteAvisFromAPI(id) {
+    return deleteRequest('/avis/deleteAvisByIdStandUser?id_avis' + id, 'DELETEAVIS')
 }
 
 export {
