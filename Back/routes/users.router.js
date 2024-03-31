@@ -130,6 +130,7 @@ router.get("/getBySessionId",usersMiddleware.checkSessionExists, usersController
  *       '500':
  *         description: Internal error
  */
+
 router.patch("/update", rightMiddleware.checkRight, usersMiddleware.checkUserExists, usersMiddleware.validateUserInput, usersMiddleware.checkEmailExists, standsMiddleware.checkStandAppartenance, rolesMiddleware.checkRoleExists, usersController.updateUser);
 
 /**

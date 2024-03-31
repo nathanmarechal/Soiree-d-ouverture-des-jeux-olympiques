@@ -41,9 +41,10 @@ export default {
     ...mapGetters('textsHome', ['getTextsHome']),
     ...mapGetters('user', ['getCurrentUser']),
     ...mapGetters('roleEtDroit', ['getAllRoles']),
+    ...mapGetters('user',['checkIfUserHasRight']),
+
   },
   methods: {
-    ...mapActions('user',['checkIfUserHasRight']),
     ...mapActions('textsHome', ['getTextsHomeStore', 'updateDescriptionHomePageStore']),
     ...mapActions('roleEtDroit', ['getRolesStore']),
     async loadData() {
