@@ -66,7 +66,7 @@ export default {
         id_conversation : this.conversation.id_conversation,
         message : this.newMessage
       }
-      let response = await sendMessage(this.getCurrentUser['session_id'], body)
+            let response = await sendMessage(body)
       this.messages.push(response);
       this.newMessage='';
     },
@@ -74,7 +74,7 @@ export default {
   },
   async mounted() {
     this.conversation = this.$route.params.selected_conversation;
-    this.messages = await getMessagesByConversation(this.conversation.id_conversation, this.getCurrentUser['session_id']);
+    this.messages = await getMessagesByConversation(this.conversation.id_conversation);
   },
 };
 </script>

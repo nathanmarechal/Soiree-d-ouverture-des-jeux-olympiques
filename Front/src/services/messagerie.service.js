@@ -47,7 +47,7 @@ async function sendMessageFromAPI(body){
 }
 
 async function toggleResolvedConversationFromAPI(body) {
-    return patchRequest('/messagerie/toggle-resolved-conversation=' , body, 'TOGGLERESOLVEDCONVERSATION')
+    return patchRequest('/messagerie/toggle-resolved-conversation' , body, 'TOGGLERESOLVEDCONVERSATION')
 }
 
 async function toggleResolvedConversation(body) {
