@@ -5,6 +5,7 @@
     <h4>{{ translate("filterMap_3") }}</h4>
     <div>
       <label for="typeZoneSelect">Select Type of Zone:</label>
+      <label for="typeZoneSelect">{{ translate("filterMap_5") }}</label>
 
       <select id="typeZoneSelect" v-model="selectedTypeZone" >
         <option v-for="type in getAllTypeZone" :key="type.id_type_zone" :value="type.id_type_zone">{{ type.libelle }}</option>
@@ -37,7 +38,7 @@ export default {
     return {
       selectedTypePrestations: [],
       selectedZones: [],
-      selectedTypeZone: null,
+selectedTypeZone: null,
       logisticsRequirements: [],
       searchQuery: this.$store.state.user.searchQuery
     };
@@ -45,7 +46,7 @@ export default {
   computed: {
     ...mapGetters('ZoneEtType', ['getAllZone', 'getAllTypeZone']),
     ...mapGetters('emplacementLogistiqueEtType', ['getAllTypeEmplacementLogistique', 'getAllEmplacementLogistique']),
-    filteredZones() {
+  filteredZones() {
       if (this.selectedTypeZone) {
         return this.getAllZone.filter(zone => zone.id_type_zone === this.selectedTypeZone);
       }
@@ -60,7 +61,7 @@ export default {
       if (this.getAllZone.length === 0){
         await this.getZonesStore();
       }
-      if (this.getAllTypeEmplacementLogistique.length === 0){
+    if (this.getAllTypeEmplacementLogistique.length === 0){
         await this.getTypeEmplacementLogistiqueStore();
       }
       if (this.getAllEmplacementLogistique.length === 0){
@@ -77,7 +78,7 @@ export default {
     },
     updateFilterZone() {
       this.$store.commit('ZoneEtType/SET_SELECTED_ZONE', this.selectedZones);
-    },
+},
     updateLogisticsRequirement(typeId, value) {
       const intValue = value === '' ? null : parseInt(value, 10); // Convert to integer, use null for empty strings
 
@@ -119,16 +120,14 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .color-circle {
-  width: 20px; /* Ajustez la taille du cercle selon vos préférences */
-  height: 20px; /* Ajustez la taille du cercle selon vos préférences */
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: black solid 1px;
   display: inline-block;
-  margin-left: 10px; /* Ajoutez une marge à gauche pour séparer le cercle du texte */
-  vertical-align: middle; /* Alignez le cercle au milieu du texte */
+  margin-left: 10px;
+  vertical-align: middle;
 }
-
 </style>

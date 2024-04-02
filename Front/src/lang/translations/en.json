@@ -137,6 +137,7 @@
   "filterMap_2": "Company",
   "filterMap_3": "Zone",
   "filterMap_4": "Performance type",
+  "filterMap_5": "Select Type of Zone",
 
   "addZone_libelle": "Label : ",
   "addZone_couleur": "Color : ",
