@@ -4,7 +4,6 @@
 
     <h4>{{ translate("filterMap_3") }}</h4>
     <div>
-      <label for="typeZoneSelect">Select Type of Zone:</label>
       <label for="typeZoneSelect">{{ translate("filterMap_5") }}</label>
 
       <select id="typeZoneSelect" v-model="selectedTypeZone" >
