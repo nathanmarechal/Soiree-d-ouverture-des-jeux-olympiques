@@ -91,10 +91,6 @@ export default {
     async areaUpdate() {
       if (this.selectedArea) {
         try {
-          const updatedData = {
-            id_zone: this.zone,
-          };
-          const response = await this.updateAreasStore({id: this.selectedArea.id_emplacement, body: updatedData});
           this.$emit('close'); // close the modal
         } catch (error) {
           console.error('Error updating area:', error);
