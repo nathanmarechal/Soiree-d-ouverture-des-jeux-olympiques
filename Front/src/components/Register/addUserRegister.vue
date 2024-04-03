@@ -38,7 +38,7 @@
 
       <div  class="form-group">
         <label for="password">{{translate("addUser_4")}} </label>
-        <input type="password" id="password" v-model="utilisateur.password" required>
+        <input type="password" id="password" v-model="utilisateur.password" required minlength="8">
       </div>
 
 
@@ -85,7 +85,7 @@
 
       <div  class="form-group">
         <label for="password">{{translate("addUser_4")}} </label>
-        <input type="password" id="password" v-model="utilisateur.password" required>
+        <input type="password" id="password" v-model="utilisateur.password" required minlength="8">
       </div>
 
       <div class="form-group">
