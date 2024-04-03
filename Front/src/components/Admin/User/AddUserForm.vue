@@ -58,6 +58,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {translate} from "../../../lang/translationService";
+import sha256 from "crypto-js/sha256";
 
 
 export default {
@@ -104,8 +105,16 @@ export default {
         let role = this.utilisateur.id_role.id_role;
         if (role)
           this.utilisateur.id_role = role;
+
+        const user = { ...this.utilisateur };
+
+        const passwordHash = sha256(user.password).toString();
+
+        user.password = passwordHash;
+
+
         await this.createUserStore({
-          user: this.utilisateur,
+          user: user,
         });
         this.$router.push('/admin/users');
       } catch (error) {
