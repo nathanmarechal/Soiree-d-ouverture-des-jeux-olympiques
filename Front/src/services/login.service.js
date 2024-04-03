@@ -1,7 +1,8 @@
 import {getRequest, postRequest} from "@/services/axios.service";
-
-async function getSessionFromApi(userEmail,password) {
-    return getRequest('/login?email='+userEmail+'&password='+password, 'LOGIN')
+import sha256 from 'crypto-js/sha256';
+async function getSessionFromApi(userEmail,passwordHash) {
+    console.log("getSessionFromApi : "+passwordHash)
+    return getRequest('/login?email='+userEmail+'&password='+passwordHash, 'LOGIN')
 }
 
 async function getSession(userEmail, password){
