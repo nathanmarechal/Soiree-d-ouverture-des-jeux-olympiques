@@ -4,6 +4,38 @@ const loginController = require('../controllers/authentication.controller');
 
 /**
  * @swagger
+ * /api/login/cookies:
+ *   get:
+ *     summary: renvoie une session à partir des cookies
+ *     tags: [Authentication]
+ *     responses:
+ *       '200':
+ *         description: Authentification réussie
+ *       '401':
+ *         description: Échec de l'authentification
+ *       '500':
+ *         description: Internal error
+ */
+router.get("/cookies",loginController.getLoginCookiesToken);
+
+/**
+ * @swagger
+ * /api/login/logout:
+ *   get:
+ *     summary: Déconnecte un utilisateur en supprimant sa session des cookies
+ *     tags: [Authentication]
+ *     responses:
+ *       '200':
+ *         description: déconnexion réussie
+ *       '401':
+ *         description: Échec de la déconnexion
+ *       '500':
+ *         description: Internal error
+ */
+router.post("/logout",loginController.logout);
+
+/**
+ * @swagger
  * /api/login:
  *   get:
  *     summary: Authentifie un utilisateur et renvoie une session
@@ -31,5 +63,7 @@ const loginController = require('../controllers/authentication.controller');
  *         description: Internal error
  */
 router.get("/",loginController.getLoginToken);
+
+
 
 module.exports = router;

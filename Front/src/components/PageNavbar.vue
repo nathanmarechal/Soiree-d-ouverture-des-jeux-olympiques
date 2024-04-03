@@ -110,9 +110,10 @@
 </template>
 
 <script>
+import {logout} from "@/services/login.service";
 import LoginComponent from './LoginComponent.vue';
 import {changeLanguage, translate} from "@/lang/translationService.js";
-import {mapActions, mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState, mapMutations} from "vuex";
 
 export default {
   data() {
@@ -143,6 +144,16 @@ export default {
   },
   methods: {
     ...mapActions('roleEtDroit',['getRolesStore']),
+    ...mapMutations('user',['SET_CURRENT_USER',
+    'SET_PANIER_USER_COURANT',
+    'SET_COMMANDES_USER_COURANT',
+    'SET_SCHEDULE',
+    'SET_DROITS_USER_COURANT',
+    'SET_IS_USER_CONNECTED',
+    'SET_LOGIN_MODAL',
+    'SET_PROVENANCE',
+    'SET_SELECTED_STANDS',
+    'SET_SELECTED_TYPE_PRESTATION']),
     translate,
     changeLanguage,
 
@@ -174,10 +185,30 @@ export default {
     showLoginModal() {
       this.$store.commit('user/SET_LOGIN_MODAL', true);
     },
-    disconnect() {
-      this.$store.commit('user/SET_IS_USER_CONNECTED', false);
-      this.$store.commit('user/SET_CURRENT_USER', null);
-    },
+
+
+  async disconnect() {
+  console.log('disconnect');
+  await logout();
+
+  /*
+  this.$store.commit('user/SET_CURRENT_USER', null);
+  this.$store.commit('user/SET_PANIER_USER_COURANT', null);
+  this.$store.commit('user/SET_COMMANDES_USER_COURANT', null);
+  this.$store.commit('user/SET_SCHEDULE', null);
+  this.$store.commit('user/SET_DROITS_USER_COURANT', null);
+  this.$store.commit('user/SET_IS_USER_CONNECTED', false);
+  */
+
+  this.SET_CURRENT_USER(null);
+  this.SET_PANIER_USER_COURANT(null);
+  this.SET_COMMANDES_USER_COURANT(null);
+  this.SET_SCHEDULE(null);
+  this.SET_DROITS_USER_COURANT(null);
+  this.SET_IS_USER_CONNECTED(false);
+  
+  },
+
   },
 
   async mounted() {
