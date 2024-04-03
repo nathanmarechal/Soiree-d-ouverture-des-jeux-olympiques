@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -32,20 +33,26 @@ const cors = require('cors');
 
 // Middleware
 app.use(cors({
-  origin: '*'  // Autorise les requêtes de toutes les origines
+  origin: 'http://localhost:8080',
+  credentials: true,
 }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 app.use(session({
-  secret: 'votre_secret',
+  secret: 'SuperMegaUltraSecretDeLaSaeDeDingos',
   resave: false,
   saveUninitialized: true,
   cookie: {
     maxAge: 2 * 60 * 60 * 1000,  // 2 heures
     httpOnly: true,
+    secure: true,
+    sameSite: 'none',
   },
 }));
+
 
 // Routes
 app.use("/api/panier", panierRoutes);

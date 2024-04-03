@@ -2,7 +2,8 @@ import axios from 'axios'
 import store from "@/store";
 
 const axiosAgent = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: 'http://localhost:3000/api',
+  withCredentials: true
 });
 
 

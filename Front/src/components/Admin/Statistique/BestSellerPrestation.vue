@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>{{translate("bestSellerStats_1")}}</h4>
+    <h4>{{ translate("bestSellerStats_1") }}</h4>
     <svg ref="svg" :width="width" :height="height"></svg>
   </div>
 </template>
@@ -8,15 +8,15 @@
 <script>
 import * as d3 from 'd3';
 import { getBestSellerPrestation } from '@/services/statistiques.service';
-import {translate} from "../../../lang/translationService";
-import {mapGetters} from "vuex";
+import { translate } from "../../../lang/translationService";
+import { mapGetters } from "vuex";
 
 export default {
   name: 'BarChart',
   data() {
     return {
-      data: [], // Les données sont maintenant initialisées vides
-      width: 800,
+      data: [],
+      width: 700, // Ajusté pour plus d'espace
       height: 500
     };
   },
@@ -24,7 +24,6 @@ export default {
     await this.loadData();
     this.createBarChart();
   },
-
   computed: {
     ...mapGetters('user', ['getSessionId'])
   },
@@ -43,7 +42,7 @@ export default {
     },
     createBarChart() {
       const svg = d3.select(this.$refs.svg);
-      const margin = {top: 20, right: 30, bottom: 40, left: 90};
+      const margin = {top: 40, right: 40, bottom: 70, left: 100}; // Ajusté pour éviter le tronçage
       const chartWidth = this.width - margin.left - margin.right;
       const chartHeight = this.height - margin.top - margin.bottom;
 
@@ -66,14 +65,37 @@ export default {
           .attr("y", d => yScale(d.prestation))
           .attr("height", yScale.bandwidth())
           .attr("x", 0)
-          .attr("width", d => xScale(d.total));
+          .attr("width", d => xScale(d.total))
+          .on('mouseover', function () {
+            d3.select(this).transition().duration(300).attr('fill', 'orange');
+          })
+          .on('mouseout', function () {
+            d3.select(this).transition().duration(300).attr('fill', 'steelblue');
+          });
 
-      g.append("g")
-          .call(d3.axisLeft(yScale));
+      // Ajout des noms de prestations sur les barres
+      g.selectAll(".text")
+          .data(this.data)
+          .enter().append("text")
+          .attr("class", "label")
+          .attr("y", (d) => yScale(d.prestation) + yScale.bandwidth() / 2 + 4)
+          .attr("x", d => xScale(d.total) + 3)
+          .text(d => d.total)
+          .attr("text-anchor", "start")
+          .attr("font-size", "12px");
 
+      // Axe Y
+      g.append("g").call(d3.axisLeft(yScale));
+
+      // Axe X avec rotation des labels pour meilleure lisibilité
       g.append("g")
           .attr("transform", `translate(0,${chartHeight})`)
-          .call(d3.axisBottom(xScale));
+          .call(d3.axisBottom(xScale))
+          .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", "rotate(-65)");
     }
   }
 };
@@ -84,8 +106,8 @@ export default {
   fill: steelblue;
 }
 
-.bar:hover {
-  fill: orange;
+.label {
+  fill: black;
 }
 
 .axis-label {

@@ -38,7 +38,7 @@
 
       <div  class="form-group">
         <label for="password">{{translate("addUser_4")}} </label>
-        <input type="password" id="password" v-model="utilisateur.password" required>
+        <input type="password" id="password" v-model="utilisateur.password" required minlength="8">
       </div>
 
 
@@ -85,7 +85,7 @@
 
       <div  class="form-group">
         <label for="password">{{translate("addUser_4")}} </label>
-        <input type="password" id="password" v-model="utilisateur.password" required>
+        <input type="password" id="password" v-model="utilisateur.password" required minlength="8">
       </div>
 
       <div class="form-group">
@@ -143,15 +143,13 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import {translate} from "../../lang/translationService";
+import { mapActions, mapGetters } from "vuex";
+import { translate } from "../../lang/translationService";
 import Editor from '@tinymce/tinymce-vue';
 import Cropper from 'cropperjs';
-import { uploadImageStand } from "@/services/stand.service";
-import {uploadImageDescriptionStand} from "@/services/stand.service";
-
+import { uploadImageStand, uploadImageDescriptionStand } from "@/services/stand.service";
 import SelectArea from "@/components/Register/SelectArea.vue";
-
+import sha256 from 'crypto-js/sha256';
 
 export default {
   components: {
@@ -243,8 +241,15 @@ export default {
 
     async submitFormClient() {
       try {
+
+        const user = { ...this.utilisateur };
+
+        const passwordHash = sha256(user.password).toString();
+
+        user.password = passwordHash;
+
         await this.registerClientStore({
-          user: this.utilisateur,
+          user: user,
         });
         this.$router.push('/');
       } catch (error) {
@@ -263,9 +268,14 @@ export default {
           await uploadImageStand(this.imageRaw);
         }
 
+        const user = { ...this.utilisateur };
+
+        const passwordHash = sha256(user.password).toString();
+
+        user.password = passwordHash;
 
         await this.registerPrestataireStore({
-          user: this.utilisateur,
+          user: user,
           stand: this.stand,
         });
         this.$router.push('/');
