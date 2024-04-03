@@ -277,19 +277,6 @@ export default {
             state.userCourant.schedule = schedule;
         },
 
-
-        ADD_SCHEDULE(state, schedule) {
-            const index = state.userCourant.schedule.findIndex(item => item.id_creneau > schedule.id_creneau);
-
-
-            if (index === -1) {
-                state.userCourant.schedule.push(schedule);
-            } else {
-                state.userCourant.schedule.splice(index, 0, schedule);
-            }
-        },
-
-
         SET_COMMANDS_PRESTATAIRE(state, commandesPrestataire) {
             state.commandesPrestataire = commandesPrestataire;
         },

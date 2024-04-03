@@ -240,7 +240,6 @@ export default {
     },
 
     async submitFormClient() {
-      console.log("user === "+JSON.stringify(this.utilisateur))
       try {
 
         const user = { ...this.utilisateur };

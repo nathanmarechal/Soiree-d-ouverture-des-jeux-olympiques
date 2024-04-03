@@ -101,7 +101,6 @@ export default {
       }
 
       try {
-        console.log("getting session : "+this.password)
         const session_id = await getSession(this.email, this.password);
 
         this.sessionId = session_id;

@@ -58,7 +58,7 @@
 
 
 <script>
-import {mapActions, mapGetters, mapMutations} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   data() {
@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     ...mapActions('user', ['deletePrestationFromPanierUserCourantStore']),
-    ...mapMutations('user', ['ADD_SCHEDULE']),
     deleteLigne(id_prestation, id_creneau) {
       this.deletePrestationFromPanierUserCourantStore({id_prestation :id_prestation, id_creneau: id_creneau});
     },
@@ -94,7 +93,7 @@ export default {
     },
 
 
-    ...mapActions('user', [ "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "updateSoldeStore"]),
+    ...mapActions('user', [ "updateQuantityInPanierStore", "addCommandeFromPanierStore", "getCommandeUserCourantStore", "updateSoldeStore", "getScheduleByUserIdStore"]),
     ...mapActions('creneau', ['getCreneauStore']),
 
     ajouterdufric(){
@@ -118,21 +117,13 @@ export default {
         return;
       }
 
-      this.getPanierUserCourant.forEach(item => {
-        this.ADD_SCHEDULE({
-          id_creneau: item.id_creneau,
-          heure_creneau: item.heure_creneau,
-          libelle: item.libelle,
-          nom_stand: this.getAllStand.find(stand => stand.id_stand === this.getAllPrestation.find(prestation => prestation.id_prestation).id_stand ).nom_stand,
-        });
-      });
-
       let newSolde = this.getCurrentUser.solde - this.calculateTotal();
       await this.updateSoldeStore({solde: newSolde})
       await this.addCommandeFromPanierStore();
       await this.getCommandeUserCourantStore();
       this.$store.commit('user/SET_PANIER_USER_COURANT', [])
 
+      await this.getScheduleByUserIdStore();
     },
 
     confirmerModifPanier() {

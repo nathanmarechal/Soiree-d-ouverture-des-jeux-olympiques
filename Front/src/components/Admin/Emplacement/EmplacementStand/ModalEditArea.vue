@@ -95,8 +95,6 @@ export default {
             id_zone: this.zone,
           };
           const response = await this.updateAreasStore({id: this.selectedArea.id_emplacement, body: updatedData});
-          console.log("response: " + JSON.stringify(response, null, 2));
-          //alert('Zone updated successfully');
           this.$emit('close'); // close the modal
         } catch (error) {
           console.error('Error updating area:', error);

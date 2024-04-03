@@ -19,19 +19,24 @@ import {mapActions, mapGetters} from "vuex";
 import {translate} from "../lang/translationService";
 
 export default {
-  methods: {translate},
-  async loadData() {
-    await this.getScheduleByUserIdStore();
-  },
-  ...mapActions('user', ['getScheduleByUserIdStore']),
+
   computed: {
     ...mapGetters('user', ['getCurrentUser']),
     schedule() {
       return this.getCurrentUser.schedule;
     }
   },
+
   async mounted() {
     await this.loadData();
+  },
+
+  methods: {
+    translate,
+    ...mapActions('user', ['getScheduleByUserIdStore']),
+    async loadData() {
+      await this.getScheduleByUserIdStore();
+    },
   }
 
 };
