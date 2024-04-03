@@ -31,7 +31,6 @@
 </template>
 <script>
 
-
 import {mapActions, mapGetters} from "vuex";
 import {createConversation} from "@/services/messagerie.service";
 import {translate} from "@/lang/translationService";

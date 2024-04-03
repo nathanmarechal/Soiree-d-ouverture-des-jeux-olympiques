@@ -1,127 +1,91 @@
 <template>
-  <div style="width: 50%">
-    <div class="title-line"></div>
-    <h2 class="conversation-title">{{ conversation.titre }}</h2>
-    <div class="title-line"></div>
-    <h4 class="conversation-subtitle">{{conversation.email_creator}}</h4>
-    <br>
-    <div  class="box" v-for="(message, index) in messages" :key="index" >
-      <div v-if="message.id_sender === getCurrentUser.id_user" class="message-container-own">
-        <div class="message-header">
-          <p>{{ message.name }} - {{ message.email }}</p>
-        </div>
-        <div class="message-body">
-          <p style="word-wrap: break-word; max-width: 100%;">{{ message.message }}</p>
-        </div>
-        <div class="message-footer">
-          <p>{{ message.temps_emmission }}</p>
-        </div>
-      </div>
-
-      <div v-else class="message-container">
-        <div class="message-header">
-          <p>{{ message.name }} - {{ message.email }}</p>
-        </div>
-        <div class="message-body">
-          <p style="word-wrap: break-word; max-width: 100%;">{{ message.message }}</p>
-        </div>
-        <div class="message-footer">
-          <p>{{ message.temps_emmission }}</p>
-        </div>
-      </div>
-
+  <div class="container py-4">
+    <div class="mb-4">
+      <h2 class="text-center">{{ conversation.titre }}</h2>
+      <h4 class="text-center text-muted">{{ conversation.email_creator }}</h4>
     </div>
 
-
-    <div class="mb-3">
-      <textarea class="form-control" maxlength="1024" v-model="newMessage" name="newMessage" id="newMessage" rows="3" :placeholder="translate('conversationMessages_5')"></textarea>
+    <div class="messages">
+      <div v-for="(message, index) in messages" :key="index" class="card mb-3" :class="{'border-success': message.id_sender === getCurrentUser.id_user, 'border-warning': message.id_sender !== getCurrentUser.id_user}">
+        <div class="card-header text-primary">
+          {{ message.name }} - {{ message.email }}
+        </div>
+        <div class="card-body">
+          <p class="card-text" style="word-wrap: break-word;">{{ message.message }}</p>
+        </div>
+        <div class="card-footer text-muted">
+          {{ message.temps_emmission }}
+        </div>
+      </div>
     </div>
-    <button type="button" class="btn btn-primary" @click="send">{{translate("conversationMessages_6")}}</button>
 
+    <div class="input-group mb-3">
+      <textarea class="form-control" maxlength="1024" v-model="newMessage" name="newMessage" id="newMessage" rows="3" placeholder="Type your message here..." aria-label="New message"></textarea>
+      <button class="btn btn-outline-secondary" type="button" id="button-addonEmoji" data-bs-toggle="dropdown" aria-expanded="false">
+        😊
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end p-2" style="width: 300px;" aria-labelledby="button-addonEmoji">
+        <emoji-picker class="emoji-picker" @emoji-click="addEmoji"></emoji-picker>
+      </ul>
+      <button class="btn btn-primary" type="button" @click="send">Send</button>
+    </div>
   </div>
 </template>
 
 <script>
-import {getMessagesByConversation, sendMessage} from "@/services/messagerie.service";
-import {mapGetters} from "vuex";
-import {translate} from "@/lang/translationService";
+import { connectSocket, sendMessageSocket, onMessageReceived, disconnectSocket } from "@/services/socket.service";
+import { getMessagesByConversation,sendMessage } from "@/services/messagerie.service";
+import { mapGetters } from "vuex";
+import { translate } from "@/lang/translationService";
+
+import { EmojiPickerElement } from 'emoji-picker-element';
 
 
 export default {
   props: ['selected_conversation'],
   data() {
     return {
-      newMessage:'',
+      newMessage: '',
       conversation: {},
       messages: [],
     };
   },
-  computed:{
+  components: {
+    EmojiPicker: EmojiPickerElement
+  },
+
+  computed: {
     ...mapGetters('user', ['getCurrentUser'])
   },
-  methods:{
+  methods: {
+    addEmoji(event) {
+      this.newMessage += event.detail.unicode;
+    },
+
     translate,
     async send() {
       const body = {
-        id_conversation : this.conversation.id_conversation,
-        message : this.newMessage
-      }
-            let response = await sendMessage(body)
-      this.messages.push(response);
-      this.newMessage='';
-    },
+        id_conversation: this.conversation.id_conversation,
+        message: this.newMessage
 
+      };
+      let response = await sendMessage(body); // Assurez-vous que cela correspond à l'appel API pour envoyer un message
+      await sendMessageSocket(response);
+      this.newMessage = '';
+    },
   },
   async mounted() {
     this.conversation = this.$route.params.selected_conversation;
     this.messages = await getMessagesByConversation(this.conversation.id_conversation);
+
+    connectSocket();
+
+    onMessageReceived((newMessage) => {
+      this.messages.push(newMessage);
+    });
   },
+  beforeDestroy() {
+    disconnectSocket();
+  }
 };
 </script>
-
-<style scoped>
-.message-container {
-  background-color: white;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 2px solid yellow;
-  border-radius: 5px;
-}
-.message-container-own {
-  background-color: white;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 2px solid green;
-  border-radius: 5px;
-}
-
-.message-header {
-  font-weight: bold;
-}
-
-.message-body {
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-
-.message-footer {
-  font-size: 12px;
-  color: rgb(128, 128, 128);
-}
- .title-line {
-   border-top: 2px solid rgb(128, 128, 128);
-   width: 100%;
-   margin: 10px 0;
- }
-
-.conversation-title {
-  text-align: center;
-  margin: 10px 0;
-}
-
-.conversation-subtitle {
-  text-align: center;
-  margin: 4px 0;
-  color: rgb(128, 128, 128);
-}
-</style>

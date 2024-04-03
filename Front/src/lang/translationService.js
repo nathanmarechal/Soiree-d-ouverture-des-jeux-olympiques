@@ -11,6 +11,7 @@ const translations = {
     jp: jp,
     es: es,
     kr: kr,
+
 };
 export function changeLanguage(lang) {
     import(`./translations/${lang}.json`)

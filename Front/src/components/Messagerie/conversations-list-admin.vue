@@ -58,7 +58,7 @@ export default({
     },
     async toggleResolved(id_conversation) {
       let body = {id_conversation: id_conversation}
-      await toggleResolvedConversation(body, this.getCurrentUser.session_id);
+      await toggleResolvedConversation(body);
       this.updateLocalConversationStatus(id_conversation);
     },
     translate,
