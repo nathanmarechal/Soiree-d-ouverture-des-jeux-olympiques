@@ -62,9 +62,11 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(~@/assets/Logos/logotest.png) repeat;
+  background: url(~@/assets/Logos/logovecto-rm.png) repeat;
   background-color: #FEFEE2 ;
-  opacity: 0.2;
+  background-size: 10%; /* Réduire la taille de l'image à 50% */
+  background-position: 20px 20px; /* Espacer les images de 20px */
+  opacity: 0.1;
   z-index: -1;
 }
 </style>

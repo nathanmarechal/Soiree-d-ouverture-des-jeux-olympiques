@@ -51,7 +51,7 @@ export default {
         <li  class="list-group-item">Prénom : <input required type="text" v-model="newsurname"> </li>
         <li  class="list-group-item">Email : <input required type="text" v-model="newemail"> </li>
         <li  class="list-group-item">Adresse : <input required type="text" v-model="newadresse"></li>
-        <li  class="list-group-item">Code postal : <input required type="text" v-model="newcode_postal"></li>
+        <li  class="list-group-item">Code postal : <input required type="number" v-model="newcode_postal"></li>
         <li  class="list-group-item">Ville : <input required type="text" v-model="newcommune"></li>
       </ul>
       <button class="btn btn-info btn-sm" @click="cancelEdit">Valider</button>
