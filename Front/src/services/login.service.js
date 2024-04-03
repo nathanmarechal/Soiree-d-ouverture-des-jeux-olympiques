@@ -6,8 +6,9 @@ async function getSessionFromApi(userEmail,passwordHash) {
 }
 
 async function getSession(userEmail, password){
-    let answer = await getSessionFromApi(userEmail,password)
-    return answer;
+    const passwordHash = sha256(password).toString();
+    let answer = await getSessionFromApi(userEmail,passwordHash)
+    return answer; 
 }
 
 async function getSessionCookiesFromApi(){
