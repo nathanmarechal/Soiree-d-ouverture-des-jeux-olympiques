@@ -27,6 +27,8 @@
   "commandes": "Orders",
   "avis": "Reviews",
   "messagerie": "Messages",
+  "services" : "My services",
+  "role_non_defini": "Undefined role",
 
 
   "desc_1": "26th of july 2024 : An unforgettable experience along the docks of Paris",

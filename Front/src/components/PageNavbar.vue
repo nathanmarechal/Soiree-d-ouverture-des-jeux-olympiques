@@ -14,7 +14,30 @@
 
           <b-nav-item v-if="this.checkIfUserHasRight('messages_user')" to="/messages-user" href="#" @mouseover="underline = 'Messagerie'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Messagerie' }">{{translate("messagerie")}}</b-nav-item>
 
-          <b-nav-item-dropdown v-if="this.checkIfUserHasRight('create_self_prestations') || this.checkIfUserHasRight('update_self_prestations') ||  this.checkIfUserHasRight('delete_self_prestations') || this.checkIfUserHasRight('update_self_stands') || this.checkIfUserHasRight('statistiques_prestataire') || this.checkIfUserHasRight('see_self_commande_received') || this.checkIfUserHasRight('create_self_prestations') || this.checkIfUserHasRight('update_self_prestations') ||  this.checkIfUserHasRight('delete_self_prestations') || this.checkIfUserHasRight('see_users') || this.checkIfUserHasRight('see_waiting_users') || this.checkIfUserHasRight('create_stands') || this.checkIfUserHasRight('update_stands') || this.checkIfUserHasRight('delete_stands') || this.checkIfUserHasRight('create_areas') || this.checkIfUserHasRight('update_areas') || this.checkIfUserHasRight('delete_areas') || this.checkIfUserHasRight('create_zones') || this.checkIfUserHasRight('update_zones') || this.checkIfUserHasRight('delete_zones') || this.checkIfUserHasRight('create_roles') || this.checkIfUserHasRight('update_roles') || this.checkIfUserHasRight('delete_roles') || this.checkIfUserHasRight('statistiques_admin')" right text="Mes Services" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
+          <b-nav-item-dropdown v-if="this.checkIfUserHasRight('create_self_prestations')
+          || this.checkIfUserHasRight('update_self_prestations')
+          ||  this.checkIfUserHasRight('delete_self_prestations')
+          || this.checkIfUserHasRight('update_self_stands')
+          || this.checkIfUserHasRight('statistiques_prestataire')
+          || this.checkIfUserHasRight('see_self_commande_received')
+          || this.checkIfUserHasRight('create_self_prestations')
+          || this.checkIfUserHasRight('update_self_prestations')
+          ||  this.checkIfUserHasRight('delete_self_prestations')
+          || this.checkIfUserHasRight('see_users')
+          || this.checkIfUserHasRight('see_waiting_users')
+          || this.checkIfUserHasRight('create_stands')
+          || this.checkIfUserHasRight('update_stands')
+          || this.checkIfUserHasRight('delete_stands')
+          || this.checkIfUserHasRight('create_areas')
+          || this.checkIfUserHasRight('update_areas')
+          || this.checkIfUserHasRight('delete_areas')
+          || this.checkIfUserHasRight('create_zones')
+          || this.checkIfUserHasRight('update_zones')
+          || this.checkIfUserHasRight('delete_zones')
+          || this.checkIfUserHasRight('create_roles')
+          || this.checkIfUserHasRight('update_roles')
+          || this.checkIfUserHasRight('delete_roles')
+          || this.checkIfUserHasRight('statistiques_admin')" :text="translate('services')" @mouseover="underline = 'Administration'" @mouseleave="underline = null" :class="{ 'underline': underline === 'Administration' }">
 
             <div v-if="this.checkIfUserHasRight('create_self_prestations') || this.checkIfUserHasRight('update_self_prestations') ||  this.checkIfUserHasRight('delete_self_prestations')">
               <router-link to="/prestataire/prestations" class = "dp">{{ translate("prestations") }}</router-link>
@@ -89,7 +112,7 @@
         <b-dropdown-item v-if="isUserConnected" @click="disconnect"  class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
 
-        <b-nav-text style="font-weight: bold; color: red;">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
+        <b-nav-text style="font-weight: bold; color: red; padding-right: 10px">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
 
         <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
@@ -162,19 +185,11 @@ export default {
         await this.getRolesStore();
       }
     },
-
-    async kaks(right) {
-      // Utilisez la méthode mappée, attendez le résultat même si l'action est synchrone
-      return await this.checkIfUserHasRight(right);
-    },
-
     getRoleCurrentUserLabel() {
-      // Utiliser `this.userCourant.id_role` pour obtenir l'id_role de l'utilisateur courant
-      // et `this.getAllRoles` pour accéder au tableau des rôles disponibles
       const role = this.getAllRoles.find(role => role.id_role === this.userCourant.id_role);
 
-      // Retourner le libellé du rôle si trouvé, sinon retourner une valeur par défaut ou null
-      return role ? role.libelle : 'Rôle non défini'; // Vous pouvez choisir une valeur par défaut appropriée
+      //return role ? role.libelle : 'Rôle non défini'; // Vous pouvez choisir une valeur par défaut appropriée
+      return role ? role.libelle : this.translate("role_non_defini"); // Vous pouvez choisir une valeur par défaut appropriée
     },
 
     fromNav() {
@@ -186,26 +201,15 @@ export default {
       this.$store.commit('user/SET_LOGIN_MODAL', true);
     },
 
-
-  async disconnect() {
-  /*
-  this.$store.commit('user/SET_CURRENT_USER', null);
-  this.$store.commit('user/SET_PANIER_USER_COURANT', null);
-  this.$store.commit('user/SET_COMMANDES_USER_COURANT', null);
-  this.$store.commit('user/SET_SCHEDULE', null);
-  this.$store.commit('user/SET_DROITS_USER_COURANT', null);
-  this.$store.commit('user/SET_IS_USER_CONNECTED', false);
-  */
-  console.log('disconnect');
-  await logout();
-  this.SET_PANIER_USER_COURANT(null);
-  this.SET_COMMANDES_USER_COURANT(null);
-  this.SET_SCHEDULE(null);
-  this.SET_DROITS_USER_COURANT(null);
-  this.SET_IS_USER_CONNECTED(false);
-  console.log('disconnect');
-  await logout();
-  },
+    async disconnect() {
+      await logout();
+      this.SET_PANIER_USER_COURANT(null);
+      this.SET_COMMANDES_USER_COURANT(null);
+      this.SET_SCHEDULE(null);
+      this.SET_DROITS_USER_COURANT(null);
+      this.SET_IS_USER_CONNECTED(false);
+      await logout();
+    },
 
   },
 
