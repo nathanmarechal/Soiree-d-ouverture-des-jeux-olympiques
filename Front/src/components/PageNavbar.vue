@@ -188,9 +188,6 @@ export default {
 
 
   async disconnect() {
-  console.log('disconnect');
-  await logout();
-
   /*
   this.$store.commit('user/SET_CURRENT_USER', null);
   this.$store.commit('user/SET_PANIER_USER_COURANT', null);
@@ -199,14 +196,16 @@ export default {
   this.$store.commit('user/SET_DROITS_USER_COURANT', null);
   this.$store.commit('user/SET_IS_USER_CONNECTED', false);
   */
-
+  console.log('disconnect');
+  await logout();
   this.SET_CURRENT_USER(null);
   this.SET_PANIER_USER_COURANT(null);
   this.SET_COMMANDES_USER_COURANT(null);
   this.SET_SCHEDULE(null);
   this.SET_DROITS_USER_COURANT(null);
   this.SET_IS_USER_CONNECTED(false);
-  
+  console.log('disconnect');
+  await logout();
   },
 
   },
