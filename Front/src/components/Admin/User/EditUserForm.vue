@@ -34,8 +34,10 @@
                 <input type="text" id="code_postal" v-model="user.code_postal" required>
             </div>
             <div>
-                <label for="password">Password :</label>
-                <input type="text" id="password" v-model="user.password" required>
+
+                <p>passwordHash : {{user.password}}</p>
+                <label for="password">New Password :</label>
+                <input type="text" id="password" v-model="password" required>
             </div>
             <div>
                 <label for="role">Role:</label>
@@ -52,12 +54,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import sha256 from "crypto-js/sha256";
 
 export default {
     props: ['selected_user'],
     data() {
         return {
           user : {},
+          password : ""
         };
     },
     async mounted() {
@@ -87,6 +91,16 @@ export default {
         },
         async submitForm() {
             try {
+              var password;
+              if(this.password!=="")
+              {
+                password = sha256(this.password).toString();
+              }
+              else
+              {
+                password = this.user.password;
+              }
+
                 await this.updateUserStore({
                     id_user: this.selected_user.id_user,
                     prenom: this.user.prenom,
@@ -96,7 +110,7 @@ export default {
                     commune : this.user.commune,
                     solde : this.user.solde,
                     code_postal: this.user.code_postal,
-                    password: this.user.password,
+                    password: password,
                     id_role: this.user.id_role,
                 });
                 await this.$router.push('/admin/users/');

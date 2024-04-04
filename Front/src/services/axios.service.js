@@ -11,8 +11,6 @@ axiosAgent.interceptors.request.use(config => {
   // Récupération de la phrase secrète directement depuis le store Vuex
   const session_id = store.getters["user/getSessionId"];
 
-  console.log("axios config "+ session_id);
-
   if (session_id) {
     config.headers['session_id'] = session_id;
   }

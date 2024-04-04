@@ -55,7 +55,7 @@ export default {
 
   },
   methods: {
-    ...mapActions('avis', ['getAvisStore', "uploadAvisStore", "deleteAvisStore"]),
+    ...mapActions('avis', ['getAvisStore', "deleteAvisStore"]),
 
     async loadData(){
       try {

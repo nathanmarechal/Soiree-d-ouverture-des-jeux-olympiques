@@ -43,11 +43,6 @@ async function deleteSessionAsync(userId){
 
 async function getUserIdAsync(email,password){
     const conn = await pool.connect();
-
-    const foo = await conn.query('SELECT * FROM utilisateur WHERE email=$1', [email]);
-
-    console.log("email : "+email+", foo : "+JSON.stringify(foo.rows));
-
     const res = await conn.query('SELECT id_user FROM utilisateur WHERE email=$1 AND password=$2', [email,password]);
     conn.release();
     if(res.rows.length!==1)

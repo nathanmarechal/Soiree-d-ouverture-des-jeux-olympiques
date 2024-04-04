@@ -32,14 +32,11 @@ export default {
         const session_id = await getSessionCookies();
 
         this.sessionId = session_id;
-        console.log("session_id", session_id);
 
         if (!session_id) {
           return;
         }
-        console.log("session_id", session_id);
 
-        console.log("session_id", session_id);
         await this.$store.dispatch('user/setSessionId', session_id);
 
         if (this.sessionId.error === 1) {

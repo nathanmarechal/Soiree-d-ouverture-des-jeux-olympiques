@@ -49,9 +49,7 @@ export default({
     ...mapActions('messagerie', ['getConversationsAdminStore']),
     async loadData() {
       try {
-        if (this.getConversations.length === 0) {
           await this.getConversationsAdminStore();
-        }
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

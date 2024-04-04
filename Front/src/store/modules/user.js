@@ -163,7 +163,6 @@ export default {
 
         ADD_COMMANDES_USER_COURANT(state, id_commande) {
             console.log("ADD_COMMANDES_USER_COURANT " + id_commande);
-
         },
 
 
@@ -297,7 +296,7 @@ export default {
 
         async getPanierUserCourantStore({commit}){
             try {
-                
+
                 const panier = await getPanierUserCourant();
                 commit('SET_PANIER_USER_COURANT', panier);
             } catch (error) {
