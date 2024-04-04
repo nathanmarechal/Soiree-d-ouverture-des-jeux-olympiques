@@ -1,53 +1,53 @@
 <template>
     <div class="edit-user-form"><br><br><br>
-        <h2>Modifier Utilisateur</h2>
+        <h2>{{translate("edit_user_formTitle")}}</h2>
         <form @submit.prevent="submitForm">
             <div>
                 <input type="hidden" id="id_user" v-model="user.id_user" required>
             </div>
             <div>
-                <label for="first-name">Prénom:</label>
+                <label for="first-name">{{translate("edit_user_form1")}}</label>
                 <input type="text" id="first-name" v-model="user.prenom" required>
             </div>
             <div>
-                <label for="last-name">Nom:</label>
+                <label for="last-name">{{translate("edit_user_form2")}}</label>
                 <input type="text" id="last-name" v-model="user.nom" required>
             </div>
             <div>
-                <label for="email">Email:</label>
+                <label for="email">{{translate("edit_user_form3")}}</label>
                 <input type="email" id="email" v-model="user.email" required>
             </div>
             <div>
-                <label for="adresse">Adresse :</label>
+                <label for="adresse">{{translate("edit_user_form4")}}</label>
                 <input type="text" id="adresse" v-model="user.adresse" required>
             </div>
             <div>
-                <label for="commune">Commune :</label>
+                <label for="commune">{{translate("edit_user_form5")}}</label>
                 <input type="text" id="commune" v-model="user.commune" required>
             </div>
             <div>
-                <label for="solde">Solde :</label>
+                <label for="solde">{{translate("edit_user_form6")}}</label>
                 <input type="text" id="solde" v-model="user.solde" required>
             </div>
             <div>
-                <label for="code_postal">Code Postal :</label>
+                <label for="code_postal">{{translate("edit_user_form7")}}</label>
                 <input type="text" id="code_postal" v-model="user.code_postal" required>
             </div>
             <div>
 
-                <p>passwordHash : {{user.password}}</p>
-                <label for="password">New Password :</label>
+                <p>{{translate("edit_user_form8")}}{{user.password}}</p>
+                <label for="password">{{translate("edit_user_form9")}}</label>
                 <input type="text" id="password" v-model="password" required>
             </div>
             <div>
-                <label for="role">Role:</label>
+                <label for="role">{{translate("edit_user_form10")}}</label>
                 <select id="role" v-model="user.id_role" required>
-                    <option value="">Sélectionner un role</option>
+                    <option value="">{{translate("edit_user_form11")}}</option>
                     <option v-for="role in getAllRoles" :key="role.id_role" :value="role.id_role">{{ role.libelle }}</option>
                 </select>
             </div>
-            <button class="btn btn-primary">Sauvegarder</button>
-            <router-link to="/admin/users/" class="btn btn-danger">Quitter</router-link>
+            <button class="btn btn-primary">{{translate("edit_user_form12")}}</button>
+            <router-link to="/admin/users/" class="btn btn-danger">{{translate("edit_user_form13")}}</router-link>
         </form>
     </div>
 </template>
@@ -55,6 +55,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import sha256 from "crypto-js/sha256";
+import {translate} from "@/lang/translationService";
 
 export default {
     props: ['selected_user'],
@@ -79,6 +80,7 @@ export default {
       ...mapGetters('roleEtDroit', ['getAllRoles']),
     },
     methods: {
+      translate,
       ...mapActions('roleEtDroit', ['getRolesStore']),
       ...mapActions('user', ['updateUserStore']),
       async loadData() {

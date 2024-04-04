@@ -401,6 +401,21 @@
     "allCategories": "Todas las categorías",
     "droit": "Derechos: ",
     "editRole_confirm": "Confirmar",
-    "editRole_annuler": "Cancelar"
+    "editRole_annuler": "Cancelar",
+
+    "edit_user_formTitle": "Editar usuario",
+    "edit_user_form1": "Nombre: ",
+    "edit_user_form2": "Apellido: ",
+    "edit_user_form3": "Correo electrónico: ",
+    "edit_user_form4": "Dirección: ",
+    "edit_user_form5": "Ciudad: ",
+    "edit_user_form6": "Saldo: ",
+    "edit_user_form7": "Código postal: ",
+    "edit_user_form8": "Hash de contraseña: ",
+    "edit_user_form9": "Nueva contraseña: ",
+    "edit_user_form10": "Rol: ",
+    "edit_user_form11": "Seleccionar un rol",
+    "edit_user_form12": "Guardar",
+    "edit_user_form13": "Salir"
 
   }

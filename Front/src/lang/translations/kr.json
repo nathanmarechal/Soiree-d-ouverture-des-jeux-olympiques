@@ -406,5 +406,20 @@
   "allCategories": "모든 카테고리",
   "droit": "권한: ",
   "editRole_confirm": "확인",
-  "editRole_annuler": "취소"
+  "editRole_annuler": "취소",
+
+  "edit_user_formTitle": "사용자 수정",
+  "edit_user_form1": "이름: ",
+  "edit_user_form2": "성: ",
+  "edit_user_form3": "이메일: ",
+  "edit_user_form4": "주소: ",
+  "edit_user_form5": "도시: ",
+  "edit_user_form6": "잔고: ",
+  "edit_user_form7": "우편 번호: ",
+  "edit_user_form8": "비밀번호 해시: ",
+  "edit_user_form9": "새 비밀번호: ",
+  "edit_user_form10": "역할: ",
+  "edit_user_form11": "역할 선택",
+  "edit_user_form12": "저장",
+  "edit_user_form13": "종료"
 }

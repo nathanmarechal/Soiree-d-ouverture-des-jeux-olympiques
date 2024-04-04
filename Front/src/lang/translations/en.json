@@ -402,10 +402,24 @@
 
   "roleList_droits": "Rights",
 
-  "roleList_droits": "Rights",
   "droitCategory": "Rights Categories",
   "allCategories": "All Categories",
   "droit": "Rights : ",
   "editRole_confirm": "Confirm",
-  "editRole_annuler": "Cancel"
+  "editRole_annuler": "Cancel",
+
+  "edit_user_formTitle": "Edit User",
+  "edit_user_form1": "First Name: ",
+  "edit_user_form2": "Last Name: ",
+  "edit_user_form3": "Email: ",
+  "edit_user_form4": "Address: ",
+  "edit_user_form5": "City: ",
+  "edit_user_form6": "Balance: ",
+  "edit_user_form7": "Postal Code: ",
+  "edit_user_form8": "Password Hash: ",
+  "edit_user_form9": "New Password: ",
+  "edit_user_form10": "Role: ",
+  "edit_user_form11": "Select a role",
+  "edit_user_form12": "Save",
+  "edit_user_form13": "Quit"
 }

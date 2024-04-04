@@ -414,5 +414,21 @@
   "allCategories": "Toutes les catégories",
   "droit": "Droits : ",
   "editRole_confirm": "Confirmer",
-  "editRole_annuler": "Annuler"
+  "editRole_annuler": "Annuler",
+
+  "edit_user_formTitle": "Modifier Utilisateur",
+  "edit_user_form1": "Prénom : ",
+  "edit_user_form2": "Nom : ",
+  "edit_user_form3": "Email : ",
+  "edit_user_form4": "Adresse : ",
+  "edit_user_form5": "Commune : ",
+  "edit_user_form6": "Solde : ",
+  "edit_user_form7": "Code Postal : ",
+  "edit_user_form8": "Hash du mot de passe : ",
+  "edit_user_form9": "Nouveau mot de passe : ",
+  "edit_user_form10": "Role : ",
+  "edit_user_form11": "Sélectionner un role",
+  "edit_user_form12": "Sauvegarder",
+  "edit_user_form13": "Quitter"
+
 }

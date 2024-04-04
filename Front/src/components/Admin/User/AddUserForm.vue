@@ -57,7 +57,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import {translate} from "../../../lang/translationService";
+import {translate} from "@/lang/translationService";
 import sha256 from "crypto-js/sha256";
 
 
