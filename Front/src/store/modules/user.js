@@ -155,6 +155,10 @@ export default {
             state.userCourant = users;
         },
 
+        SET_ID_ROLE_USER_COURANT(state, id_role) {
+            state.userCourant.id_role = id_role;
+        },
+
 
         SET_PANIER_USER_COURANT(state, panier) {
             state.userCourant.panier = panier;

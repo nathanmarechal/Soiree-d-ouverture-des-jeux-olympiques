@@ -168,6 +168,7 @@ export default {
   methods: {
     ...mapActions('roleEtDroit',['getRolesStore']),
     ...mapMutations('user',['SET_CURRENT_USER',
+    'SET_ID_ROLE_USER_COURANT',
     'SET_PANIER_USER_COURANT',
     'SET_COMMANDES_USER_COURANT',
     'SET_SCHEDULE',
@@ -185,11 +186,11 @@ export default {
         await this.getRolesStore();
       }
     },
-    getRoleCurrentUserLabel() {
-      const role = this.getAllRoles.find(role => role.id_role === this.userCourant.id_role);
 
-      //return role ? role.libelle : 'Rôle non défini'; // Vous pouvez choisir une valeur par défaut appropriée
-      return role ? role.libelle : this.translate("role_non_defini"); // Vous pouvez choisir une valeur par défaut appropriée
+    getRoleCurrentUserLabel() {
+      if (!this.userCourant) return this.translate("role_non_defini");
+      const role = this.getAllRoles.find(role => role.id_role === this.userCourant.id_role);
+      return role ? role.libelle : this.translate("role_non_defini");
     },
 
     fromNav() {
@@ -208,6 +209,10 @@ export default {
       this.SET_SCHEDULE(null);
       this.SET_DROITS_USER_COURANT(null);
       this.SET_IS_USER_CONNECTED(false);
+
+      this.SET_ID_ROLE_USER_COURANT(null);
+
+      this.getRoleCurrentUserLabel()
       await logout();
     },
 
