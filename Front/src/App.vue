@@ -48,7 +48,6 @@ export default {
         const commandes = await getCommandeUserCourant();
         const schedule = await getScheduleByUserId();
         const droits = await getDroitsRole(user.id_role);
-
         this.$store.commit('user/SET_CURRENT_USER', user);
         this.$store.commit('user/SET_PANIER_USER_COURANT', panier);
         this.$store.commit('user/SET_COMMANDES_USER_COURANT', commandes);

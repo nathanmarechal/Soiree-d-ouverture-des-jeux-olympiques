@@ -21,7 +21,7 @@ exports.getLoginToken = (req, res) => {
 exports.getLoginCookiesToken = (req, res) => {
     const session_id = req.cookies.session;
     if (session_id==null)
-        return res.status(200).send("Pas de session trouvée");
+        return res.status(404).send("Pas de session trouvée");
     return res.status(200).send(session_id);
 } 
 
