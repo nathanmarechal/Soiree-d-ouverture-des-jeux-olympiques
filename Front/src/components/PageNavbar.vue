@@ -114,7 +114,7 @@
 
         <b-nav-text style="font-weight: bold; color: red; padding-right: 10px">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
 
-        <select v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
+        <select style="margin-right: 15px" v-model="selectedLanguage" id="selectedLanguage" @change="changeLanguage(selectedLanguage)">
         <option value="fr">Français</option>
         <option value="en">English</option>
         <option value="jp">日本語</option>
@@ -125,7 +125,7 @@
     </b-navbar>
     <b-button v-if="!isSidebarOpen" v-b-toggle.mobile-nav class="mobile-navbar-btn d-md-none">☰</b-button>
     <div id="loginModal" title="Login" class="centered hide-footer">
-      <login-component :isLoginOpen="isLoginOpen" @closeModal="isLoginOpen = false"></login-component> <!-- pour refiler le booléen à l'enfant -->
+      <login-component :isLoginOpen="isLoginOpen" @closeModal="isLoginOpen = false"></login-component>
     </div>
   </div>
 
