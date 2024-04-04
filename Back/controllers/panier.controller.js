@@ -40,8 +40,9 @@ exports.deletePrestationFromPanierUser = async (req, res) => {
 
     const user = await userService.getUserBySessionIdAsync(session_id);
 
-    const id_prestation = req.query.presta;
-    const id_creneau = req.query.creneau;
+    const id_prestation = req.query.id_prestation;
+    const id_creneau = req.query.id_creneau;
+
     panierService.deletePrestationFromPanierUser(user.id_user, id_prestation, id_creneau, (error, data) => {
         if (error) {
             return res.status(500).send("Internal error");

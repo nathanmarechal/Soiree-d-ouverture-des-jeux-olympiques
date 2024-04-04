@@ -12,7 +12,7 @@ exports.getLoginToken = (req, res) => {
             if (data==null)
                 return res.status(404).send("Échec de l'authentification");
             //add a cookie that has the session id
-            res.cookie('session', data, { maxAge: 360000, httpOnly: true });
+            res.cookie('session', data, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
             return res.status(200).send(data);
         }
     })
@@ -21,7 +21,7 @@ exports.getLoginToken = (req, res) => {
 exports.getLoginCookiesToken = (req, res) => {
     const session_id = req.cookies.session;
     if (session_id==null)
-        return res.status(404).send("Pas de session trouvée");
+        return res.status(201).send("Pas de session trouvée");
     return res.status(200).send(session_id);
 } 
 

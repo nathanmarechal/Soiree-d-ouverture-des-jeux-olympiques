@@ -105,7 +105,7 @@ export default {
 
         this.sessionId = session_id;
 
-        await this.$store.dispatch('user/setSessionId', session_id);
+        this.$store.commit('user/SET_SESSION_ID', session_id);
 
         if (this.sessionId.error === 1) {
           throw new Error("Identifiants incorrects");

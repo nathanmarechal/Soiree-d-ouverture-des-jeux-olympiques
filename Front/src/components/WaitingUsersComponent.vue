@@ -61,7 +61,7 @@
       }
     },
     computed: {
-      ...mapGetters('user', ['getAllUsersAttente','getAllStandAttente']),
+      ...mapGetters('user', ['getAllUsersAttente']),
     },
     methods: {
       translate,

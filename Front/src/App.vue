@@ -21,40 +21,45 @@ import {getUserFromSessionId} from "@/services/utilisateur.service";
 import {getPanierUserCourant} from "@/services/panier.service";
 import {getCommandeUserCourant, getScheduleByUserId} from "@/services/commande.service";
 import {getDroitsRole} from "@/services/droit.service";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
     PageNavbar,
     PageFooter
   },
+  computed: {
+    ...mapGetters('user', ['getCurrentUser', 'getSessionId'])
+  },
   async mounted() {
       try {
+
         const session_id = await getSessionCookies();
 
-        this.sessionId = session_id;
-
-        if (!session_id) {
+        if (session_id === "Pas de session trouvée") {
           return;
         }
 
-        await this.$store.dispatch('user/setSessionId', session_id);
-
-        if (this.sessionId.error === 1) {
-          throw new Error("Identifiants incorrects");
-        }
+        this.$store.commit('user/SET_SESSION_ID', session_id);
 
         const user = await getUserFromSessionId();
+
         const panier = await getPanierUserCourant();
         const commandes = await getCommandeUserCourant();
         const schedule = await getScheduleByUserId();
         const droits = await getDroitsRole(user.id_role);
+
         this.$store.commit('user/SET_CURRENT_USER', user);
+
+        this.$store.commit('user/SET_SESSION_ID', session_id);
+
         this.$store.commit('user/SET_PANIER_USER_COURANT', panier);
         this.$store.commit('user/SET_COMMANDES_USER_COURANT', commandes);
         this.$store.commit('user/SET_SCHEDULE', schedule);
         this.$store.commit('user/SET_DROITS_USER_COURANT', droits);
 
         this.$store.commit('user/SET_IS_USER_CONNECTED', true);
+
       } catch (error) {
         console.error("pas de session", error);
       }

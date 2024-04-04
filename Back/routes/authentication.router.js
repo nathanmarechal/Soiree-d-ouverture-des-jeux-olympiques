@@ -32,7 +32,7 @@ router.get("/cookies",loginController.getLoginCookiesToken);
  *       '500':
  *         description: Internal error
  */
-router.post("/logout",loginController.logout);
+router.get("/logout",loginController.logout);
 
 /**
  * @swagger

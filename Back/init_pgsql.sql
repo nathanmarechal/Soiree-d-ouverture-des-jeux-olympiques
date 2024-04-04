@@ -184,7 +184,7 @@ CREATE TABLE ligne_commande(
     quantite INT,
     prix FLOAT,
     id_etat_commande INT,
-    PRIMARY KEY(id_user, id_prestation, id_creneau),
+    PRIMARY KEY(id_user, id_prestation, id_creneau, id_commande),
     FOREIGN KEY (id_etat_commande) REFERENCES etat_commande(id_etat) ON DELETE CASCADE,
     FOREIGN KEY (id_creneau) REFERENCES creneau(id_creneau) ON DELETE CASCADE,
     FOREIGN KEY(id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE,

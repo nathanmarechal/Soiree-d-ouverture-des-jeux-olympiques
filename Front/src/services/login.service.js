@@ -1,7 +1,6 @@
-import {getRequest, postRequest} from "@/services/axios.service";
+import {getRequest} from "@/services/axios.service";
 import sha256 from 'crypto-js/sha256';
 async function getSessionFromApi(userEmail,passwordHash) {
-    console.log("getSessionFromApi : "+passwordHash)
     return getRequest('/login?email='+userEmail+'&password='+passwordHash, 'LOGIN')
 }
 
@@ -21,8 +20,7 @@ async function getSessionCookies(){
 }
 
 async function logout(){
-    console.log("logout");
-    return postRequest('/login/logout', 'LOGOUT')
+    return getRequest('/login/logout', 'LOGOUT')
 }
 
 export {

@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import {
   getBestClientByStand,
   getAveragePurchaseByStand,
@@ -57,9 +56,6 @@ export default {
       avgRating: null,
       countRating: null
     };
-  },
-  computed: {
-    ...mapGetters('users'['getCurrentUser'])
   },
   async mounted() {
     await this.loadStatistics();

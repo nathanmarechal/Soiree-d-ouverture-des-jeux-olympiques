@@ -142,45 +142,51 @@ methods: {
 
       const averageCenter = this.findAverageCenter(filteredAreas);
 
-
-      this.map.setView(averageCenter)
+      if(this.map){
+        this.map.setView(averageCenter)
+      }
+      //this.map.setView(averageCenter)
       const bounds = L.latLngBounds();
 
       const self = this;
 
       filteredAreas.forEach((zone) => {
-        const polygon = L.polygon(zone.coordinates, {
-          color: zone.couleur_hexa,
-          fillOpacity: 0.8,
-          weight: 5,
-        }).addTo(this.map);
+        if (this.map){
+          const polygon = L.polygon(zone.coordinates, {
+            color: zone.couleur_hexa,
+            fillOpacity: 0.8,
+            weight: 5,
+          }).addTo(this.map);
 
-        polygon.on('mouseover', function (e) {
-          L.popup()
-              .setLatLng(e.latlng)
-              .setContent(zone.nom_stand)
-              .openOn(self.map); // Utilisez 'self.map' ici
-        });
+          polygon.on('mouseover', function (e) {
+            L.popup()
+                .setLatLng(e.latlng)
+                .setContent(zone.nom_stand)
+                .openOn(self.map); // Utilisez 'self.map' ici
+          });
 
-        polygon.on('mouseout', function() {
-          self.map.closePopup(); // Utilisez 'self.map' ici
-        });
+          polygon.on('mouseout', function() {
+            self.map.closePopup(); // Utilisez 'self.map' ici
+          });
 
-        // Ajuster les limites pour chaque coordonnée
-        zone.coordinates.forEach((coord) => {
-          bounds.extend(coord);
-        });
+          // Ajuster les limites pour chaque coordonnée
+          zone.coordinates.forEach((coord) => {
+            bounds.extend(coord);
+          });
 
-        // Gestionnaire pour l'événement 'click'
-        polygon.on('click', () => {
-          this.showZoneInfo(zone);
-        });
+          // Gestionnaire pour l'événement 'click'
+          polygon.on('click', () => {
+            this.showZoneInfo(zone);
+          });
 
-        // Stockage des polygones
-        this.polygons.push(polygon);
+          // Stockage des polygones
+          this.polygons.push(polygon);
+        }
       });
 
-      this.map.fitBounds(bounds);
+      if (this.map){
+        this.map.fitBounds(bounds);
+      }
     },
     toggleModal() {
       this.modalActive = !this.modalActive;

@@ -175,9 +175,7 @@ export default {
     'SET_DROITS_USER_COURANT',
     'SET_IS_USER_CONNECTED',
     'SET_LOGIN_MODAL',
-    'SET_PROVENANCE',
-    'SET_SELECTED_STANDS',
-    'SET_SELECTED_TYPE_PRESTATION']),
+    'SET_PROVENANCE',]),
     translate,
     changeLanguage,
 
@@ -210,7 +208,46 @@ export default {
       this.SET_DROITS_USER_COURANT(null);
       this.SET_IS_USER_CONNECTED(false);
 
-      this.SET_ID_ROLE_USER_COURANT(null);
+      const user_null ={
+            "session_id": null,
+            "id_user": null,
+            "nom": null,
+            "email": null,
+            "prenom": null,
+            "solde": null,
+            "code_postal": null,
+            "adresse": null,
+            "commune": null,
+            "panier":  [],
+            "droits": [],
+            "schedule": [],
+            "commandes" : [{
+              "id_commande": null,
+              "date_commande": null,
+              "id_etat_commande": null,
+              "prix_total": null,
+              "nbr_presta": null,
+              "libelle": null,
+              "lignes_commande" : [{
+                "id_commande" : null,
+                "prestation_libelle" : null,
+                "id_presta" : null,
+                "id_creneau": null,
+                "quantite": null,
+                "creneau": null,
+                "prix": null,
+                "image": null,
+                "id_type_prestation": null,
+                "type_prestation_libelle": null,
+                "id_etat_commande":null,
+                "etat_libelle":null
+              }]
+            }],
+            "id_role": null,
+            "id_stand" : null,
+          }
+      this.SET_CURRENT_USER(user_null);
+      this.SET_PROVENANCE(null);
 
       this.getRoleCurrentUserLabel()
       await logout();

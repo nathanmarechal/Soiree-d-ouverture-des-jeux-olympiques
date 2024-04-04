@@ -73,7 +73,6 @@ export default {
 
         searchQuery: '',
 
-
         lang:"fr"
 
     },
@@ -117,7 +116,6 @@ export default {
             state.users.splice(0)
             users.forEach(p => state.users.push(p))
         },
-
 
         SET_USERS_ATTENTE(state, usersAttente) {
             state.usersAttente = usersAttente;
@@ -289,10 +287,7 @@ export default {
                 state.userCourant.session_id = sessionId;
             }
         },
-
-
     },
-
 
     actions: {
 
@@ -513,19 +508,11 @@ export default {
             }
         },
 
-
 //-----------------------------------------------------------------CHECK RIGHT-----------------------------------------------------------------------//
 
         async checkIfUserHasRight({ state }, right) {
             return state.userCourant && state.userCourant.droits && state.userCourant.droits.includes(right);
         },
-
-//-----------------------------------------------------------------SESSION ID-----------------------------------------------------------------------//
-
-        async setSessionId({ commit }, sessionId) {
-            commit('SET_SESSION_ID', sessionId);
-        },
-
 
     },
 };
