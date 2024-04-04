@@ -4,7 +4,6 @@ const {sha256} = require("pg/lib/crypto/utils-webcrypto");
 exports.getLoginToken = (req, res) => {
     const email = req.query.email;
     const passwordHash = req.query.password;
-    console.log("in the back : "+passwordHash)
     loginService.getLoginToken(email,passwordHash,(error, data) => {
         if (error) {
             return res.status(500).send("Internal error");
@@ -27,10 +26,7 @@ exports.getLoginCookiesToken = (req, res) => {
 } 
 
 exports.logout = (req, res) => {
-    console.log("logout");
-    console.log(req.cookies.session)
     res.clearCookie('session', { httpOnly: true });
-    console.log(req.cookies.session)
     return res.status(200).send("Déconnexion réussie");
 }
 
@@ -50,7 +46,6 @@ exports.getWithoutHash = async (req, res) => {
         const buffer = await sha256(password);
         // Convertir l'ArrayBuffer en chaîne hexadécimale
         const passwordHash = bufferToHex(buffer);
-        console.log("in the back method not hashed : " + passwordHash);
 
         loginService.getLoginToken(email, passwordHash, (error, data) => {
             if (error) {

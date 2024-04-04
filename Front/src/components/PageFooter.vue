@@ -66,6 +66,11 @@ h6 {
   margin-bottom: 10px;
 }
 
-
+.logo img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 </style>
