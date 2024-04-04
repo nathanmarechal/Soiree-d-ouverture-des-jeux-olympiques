@@ -109,7 +109,7 @@
         <b-dropdown-item ><router-link to="/commande" class = "dp">{{translate("mesCommandes")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/userinfo" class = "dp">{{translate("mesInformations")}}</router-link></b-dropdown-item>
         <b-dropdown-item ><router-link to="/schedule" class = "dp">{{translate("monEmploiDuTemps")}}</router-link></b-dropdown-item>
-        <b-dropdown-item v-if="isUserConnected" @click="disconnect" href="/" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
+        <b-dropdown-item v-if="isUserConnected" @click="disconnect" class = "dp">{{translate("seDeconnecter")}}</b-dropdown-item>
       </b-nav-item-dropdown>
 
         <b-nav-text style="font-weight: bold; color: red; padding-right: 10px">{{ this.getRoleCurrentUserLabel() }}</b-nav-text>
@@ -214,6 +214,7 @@ export default {
 
       this.getRoleCurrentUserLabel()
       await logout();
+      this.$router.go()
     },
 
   },
